@@ -1,0 +1,6 @@
+# XCode build folders and stuff
+build/
+DerivedData/
+
+# User settings
+*xcuserdata*
