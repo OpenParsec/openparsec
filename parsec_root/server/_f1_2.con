@@ -1,0 +1,130 @@
+
+write loading firebird
+
+load texture ea_mat1.3df      file ea_mat1.3df
+load texture ea_mat2.3df      file ea_mat2.3df
+load texture ea_mat3.3df      file ea_mat3.3df
+load texture ea_mat5.3df      file ea_mat5.3df
+load texture ea_mat7.3df      file ea_mat7.3df
+load texture ea_mat11.3df     file ea_mat11.3df
+load texture ea_mat13.3df     file ea_mat13.3df
+load texture ea_mat14.3df     file ea_mat14.3df
+load texture mon_f1           file mon_f1.3df
+
+aux_enable_object_overloading 1
+load object (firebird)    file fighter1.od2
+aux_enable_object_overloading 0
+
+; should be before shipdesc commands
+shipclass class (firebird) texture mon_f1
+
+shipdesc class (firebird) caption firebird
+shipdesc class (firebird) clear text
+shipdesc class (firebird) text (the firebird is for speed junkies. )
+shipdesc class (firebird) text (its quad fusion engine makes it the fastest ship available. )
+shipdesc class (firebird) text (maneuverability and handling is also very good. )
+shipdesc class (firebird) text (the drawback however is the lack of available weapon space. )
+shipdesc class (firebird) text (firebird pilots should be careful with their weapons, otherwise they will have to use the )
+shipdesc class (firebird) text (incredible speed of the ship to flee their enemies. )
+shipdesc class (firebird) text (an advantage is the stable hull design, using a special patented alloy no other ship can offer, )
+shipdesc class (firebird) text (which makes the Firebird very resistant to hostile weapon impact.)
+
+propc (firebird).maxdamage      50
+propc (firebird).energy        400
+propc (firebird).maxenergy     850
+propc (firebird).weapons       257
+propc (firebird).maxspeed    66000
+propc (firebird).dumb            0
+propc (firebird).maxdumb         3
+propc (firebird).guide           0
+propc (firebird).maxguide        5
+propc (firebird).swarm           0
+propc (firebird).maxswarm        2
+propc (firebird).mines           0
+propc (firebird).maxmines       10
+
+propc (firebird).laser1.x1      -0.4
+propc (firebird).laser1.x2      -0.05
+propc (firebird).laser1.x3       0.75
+propc (firebird).laser1.x4       1.1
+propc (firebird).laser1.y1       5.0
+propc (firebird).laser1.y2       5.0
+propc (firebird).laser1.y3       5.0
+propc (firebird).laser1.y4       5.0
+propc (firebird).laser1.z1      30.0
+propc (firebird).laser1.z2      30.0
+propc (firebird).laser1.z3      30.0
+propc (firebird).laser1.z4      30.0
+
+propc (firebird).laser2.x1      -0.4
+propc (firebird).laser2.x2      -0.05
+propc (firebird).laser2.x3       0.75
+propc (firebird).laser2.x4       1.1
+propc (firebird).laser2.y1       5.0
+propc (firebird).laser2.y2       5.0
+propc (firebird).laser2.y3       5.0
+propc (firebird).laser2.y4       5.0
+propc (firebird).laser2.z1      30.0
+propc (firebird).laser2.z2      30.0
+propc (firebird).laser2.z3      30.0
+propc (firebird).laser2.z4      30.0
+
+propc (firebird).laser3.x1      -1.4
+propc (firebird).laser3.x2      -1.05
+propc (firebird).laser3.x3       1.75
+propc (firebird).laser3.x4       2.1
+propc (firebird).laser3.y1       5.0
+propc (firebird).laser3.y2       5.0
+propc (firebird).laser3.y3       5.0
+propc (firebird).laser3.y4       5.0
+propc (firebird).laser3.z1      30.0
+propc (firebird).laser3.z2      30.0
+propc (firebird).laser3.z3      30.0
+propc (firebird).laser3.z4      30.0
+
+propc (firebird).missile1.x1    -9.0
+propc (firebird).missile1.x2    -5.0
+propc (firebird).missile1.x3     5.0
+propc (firebird).missile1.x4     9.0
+propc (firebird).missile1.y1     3.0
+propc (firebird).missile1.y2     3.0
+propc (firebird).missile1.y3     3.0
+propc (firebird).missile1.y4     3.0
+propc (firebird).missile1.z1    18.0
+propc (firebird).missile1.z2    18.0
+propc (firebird).missile1.z3    18.0
+propc (firebird).missile1.z4    18.0
+
+propc (firebird).missile2.x1    -6.0
+propc (firebird).missile2.x2    -2.0
+propc (firebird).missile2.x3     2.0
+propc (firebird).missile2.x4     6.0
+propc (firebird).missile2.y1     5.0
+propc (firebird).missile2.y2     5.0
+propc (firebird).missile2.y3     5.0
+propc (firebird).missile2.y4     5.0
+propc (firebird).missile2.z1    18.0
+propc (firebird).missile2.z2    18.0
+propc (firebird).missile2.z3    18.0
+propc (firebird).missile2.z4    18.0
+
+propc (firebird).beam.x1        -5.0
+propc (firebird).beam.x4         5.0
+propc (firebird).beam.y          1.5
+propc (firebird).beam.z          4.0
+
+propc (firebird).helix.x         0.0
+propc (firebird).helix.y         1.6
+propc (firebird).helix.z        -7.0
+
+propc (firebird).mine1.x         0.0
+propc (firebird).mine1.y         0.0
+;propc (firebird).mine1.z       -35.0
+
+;propc (firebird).spread.x1       0.0
+;propc (firebird).spread.y        0.0
+;propc (firebird).spread.z        0.0
+
+
+;eof
+

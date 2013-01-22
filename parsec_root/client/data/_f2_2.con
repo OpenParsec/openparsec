@@ -1,0 +1,134 @@
+
+write loading bluespire
+
+load texture f5_01.3df      file f5_01.3df
+load texture f5_02.3df      file f5_02.3df
+load texture f5_03.3df      file f5_03.3df
+load texture f5_04.3df      file f5_04.3df
+load texture f5_05.3df      file f5_05.3df
+load texture f5_06.3df      file f5_06.3df
+load texture f5_08.3df      file f5_08.3df
+load texture f5_09.3df      file f5_09.3df
+load texture f5_10.3df      file f5_10.3df
+load texture f5_11.3df      file f5_11.3df
+load texture f5_12.3df      file f5_12.3df
+load texture f5_13.3df      file f5_13.3df
+load texture f5_14.3df      file f5_14.3df
+load texture f5_15.3df      file f5_15.3df
+load texture f5_16.3df      file f5_16.3df
+load texture mon_f2         file mon_f2.3df
+
+.aux37 1
+load object (bluespire)    file fighter2.od2 normth 0.3
+.aux37 0
+
+; should be before shipdesc commands
+shipclass class (bluespire) texture mon_f2
+
+shipdesc class (bluespire) caption bluespire
+shipdesc class (bluespire) clear text
+shipdesc class (bluespire) text (the bluespire is a fighting fortress. )
+shipdesc class (bluespire) text (although it has a bit of a speed handicap, it is the ship of choice for paranoid spacecraft captains. )
+shipdesc class (bluespire) text (it can hold a massive amount of missiles, and has high-quality energy banks, yielding an incredible destructive force. )
+shipdesc class (bluespire) text (however its maneuverability is rather poor, which sometimes can make the ship hard to handle in a dogfight. )
+shipdesc class (bluespire) text (the lightning cannon was originally designed for this ship only, however soon after the bluespire was released, )
+shipdesc class (bluespire) text (all major spacecraft manufacturers have copied this weapon.)
+
+propc (bluespire).maxdamage      60
+propc (bluespire).energy        400
+propc (bluespire).maxenergy     750
+propc (bluespire).weapons       257
+propc (bluespire).maxspeed    60000
+propc (bluespire).dumb            2
+propc (bluespire).maxdumb         4
+propc (bluespire).guide           3
+propc (bluespire).maxguide        6
+propc (bluespire).swarm           0
+propc (bluespire).maxswarm        2
+propc (bluespire).mines           5
+propc (bluespire).maxmines       15
+
+propc (bluespire).laser1.x1      -5.3
+propc (bluespire).laser1.x2      -5.0
+propc (bluespire).laser1.x3       5.0
+propc (bluespire).laser1.x4       5.3
+propc (bluespire).laser1.y1       1.0
+propc (bluespire).laser1.y2       1.0
+propc (bluespire).laser1.y3       1.0
+propc (bluespire).laser1.y4       1.0
+propc (bluespire).laser1.z1      55.0
+propc (bluespire).laser1.z2      55.0
+propc (bluespire).laser1.z3      55.0
+propc (bluespire).laser1.z4      55.0
+
+propc (bluespire).laser2.x1      -5.3
+propc (bluespire).laser2.x2      -5.0
+propc (bluespire).laser2.x3       5.0
+propc (bluespire).laser2.x4       5.3
+propc (bluespire).laser2.y1       1.0
+propc (bluespire).laser2.y2       1.0
+propc (bluespire).laser2.y3       1.0
+propc (bluespire).laser2.y4       1.0
+propc (bluespire).laser2.z1      55.0
+propc (bluespire).laser2.z2      55.0
+propc (bluespire).laser2.z3      55.0
+propc (bluespire).laser2.z4      55.0
+
+propc (bluespire).laser3.x1      -5.3
+propc (bluespire).laser3.x2      -5.0
+propc (bluespire).laser3.x3       5.0
+propc (bluespire).laser3.x4       5.3
+propc (bluespire).laser3.y1       1.0
+propc (bluespire).laser3.y2       1.0
+propc (bluespire).laser3.y3       1.0
+propc (bluespire).laser3.y4       1.0
+propc (bluespire).laser3.z1      55.0
+propc (bluespire).laser3.z2      55.0
+propc (bluespire).laser3.z3      55.0
+propc (bluespire).laser3.z4      55.0
+
+propc (bluespire).missile1.x1   -16.0
+propc (bluespire).missile1.x2   -16.0
+propc (bluespire).missile1.x3    16.0
+propc (bluespire).missile1.x4    16.0
+propc (bluespire).missile1.y1     2.0
+propc (bluespire).missile1.y2     2.0
+propc (bluespire).missile1.y3     2.0
+propc (bluespire).missile1.y4     2.0
+propc (bluespire).missile1.z1     7.0
+propc (bluespire).missile1.z2     7.0
+propc (bluespire).missile1.z3     7.0
+propc (bluespire).missile1.z4     7.0
+
+propc (bluespire).missile2.x1   -16.0
+propc (bluespire).missile2.x2   -16.0
+propc (bluespire).missile2.x3    16.0
+propc (bluespire).missile2.x4    16.0
+propc (bluespire).missile2.y1     2.0
+propc (bluespire).missile2.y2     2.0
+propc (bluespire).missile2.y3     2.0
+propc (bluespire).missile2.y4     2.0
+propc (bluespire).missile2.z1     7.0
+propc (bluespire).missile2.z2     7.0
+propc (bluespire).missile2.z3     7.0
+propc (bluespire).missile2.z4     7.0
+
+propc (bluespire).beam.x1        -4.3
+propc (bluespire).beam.x4         4.3
+propc (bluespire).beam.y         -1.3
+propc (bluespire).beam.z          7.0
+
+propc (bluespire).helix.x         0.0
+propc (bluespire).helix.y         0.0
+propc (bluespire).helix.z         5.0
+
+propc (bluespire).mine1.x         0.0
+propc (bluespire).mine1.y         0.0
+;propc (bluespire).mine1.z       -35.0
+
+;propc (bluespire).spread.x1       0.0
+;propc (bluespire).spread.y        0.0
+;propc (bluespire).spread.z        7.0
+
+;eof
+

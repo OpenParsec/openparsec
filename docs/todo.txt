@@ -1,0 +1,174 @@
+
+------------------------------------------------------------------------------
+PARSEC OPEN SOURCE TODO LIST
+------------------------------------------------------------------------------
+mailto:parsec@parsec.org                               http://www.parsec.org/
+------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------
+1. INTRODUCTION
+------------------------------------------------------------------------------
+
+To help in coordinating the Parsec open-source effort, this document
+describes the most important tasks that need to be done in order to improve
+the initial open-source Parsec release, and to create a truly enjoyable
+gaming experience.
+
+
+------------------------------------------------------------------------------
+2. TASKS FOR PROGRAMMERS
+------------------------------------------------------------------------------
+
+Interested programmers that want to help improve the Parsec code-base, should
+pick tasks from this list first, to avoid a lack of focus and direction.
+Please communicate with the other developers on the openparsec-devel mailing
+list, if you decide to take on one of these tasks.
+
+* Improve client/server code
+  - redesign remote event interface
+  - position interpolation between state snapshots of ships
+  - exact laser positions according to time-delta to clients packet sendtime
+  - stargate jumps must be initiated by the server
+  - finish new clientside prediction model
+  - determine which packets need to be send reliable
+  - priorities for E_Distributables if exceeding bandwidth
+  - first version should work with laser weapons only
+  - get powerups to work completely
+  - plausibility checks of player movements
+  - add rocket weapon support 
+  - after laser and rocket weapons work, get particle weapons to work
+  - collision detection ship/ship must be done on the server
+  - better collision response on ship/ship collisions
+  - teleporters
+  - packet/state compression when exceeding bandwidth constraints
+  - get emp weapon to work
+  - implement new serverside sim
+  
+* Player stats and federation handling
+  - handover player stats when doing stargate-jumps inside of federation
+    ( gameserver to gameserver communication )
+  - introduce unique playerid
+
+* Client/MacOS X: fix vertex-array rendering failure ( e.g.: teleporter, 
+  vaportrail, emp )
+  
+* Server: split BOOT_SV.CON into several console scripts
+
+* Server: console code should load data from the packages ( PSCDATA0.DAT )
+
+* split E_REList in E_REList and G_REListWriter. the latter contains all 
+  gamecode specific functions
+  
+* Win32: introduce precompiled headers to speedup compile times
+
+* Linux/Client: check segfault when connecting to gameserver
+
+* Linux/Client: check segfault in XQueryExtension()
+
+* Win32/Server: check the memory leak we get in the server
+
+* Win32/Server: check crash in CURSES.DLL when running from the IDE
+  
+* consolidate and check packetsize constants ( e.g.NET_MAX_DATA_LENGTH,
+  NET_UDP_DATA_LENGHT, CurMaxDataLength, NET_ALLOC_DATA_LENGTH, 
+  RECORD_PACKET_SIZE )
+  
+* Client: check whether the demo recording for PEER still works ( GMSV 
+  does not have demo recording for now )
+
+* time entries in UTL_LOGFILE should also give the correct date/time
+
+* integrate old ( DEBUG.CPP ) and new ( UTL_MEMORYMANAGER.CPP ) memory 
+  management. we need C++ equivalents for ALLOCMEM/FREEMEM for NEW/DELETE
+
+* Server: get rid of the proxy variable access in CON_INT_SV. 
+  directly modify the members of the global classes ( set/get functions )
+
+* Server: autocompletion does not work in the console
+  
+* Add bots
+  Preliminary bot interface is available. ( GM_BOT_CL.CPP )
+  Server-side vs. client-side bots?
+  Integration with networking code?
+  
+* Improve starmap
+  Add more features, fix the existing problems.
+  
+* Improve planet code (clipping, culling, rendering, collision detection)
+  Preliminary planet code with ring system support is available. Needs work
+  in several areas. Needs changes in REND, needs LOD support.
+  Needs proper integration with server (see starmap spawning code in server).
+
+* Add proper visibility detection code for particle flares. Current method
+  uses Z-Buffer reads, which is incredibly slow on some drivers/GPUs (e.g. 
+  ATI drivers on OS X) or not working at all (Matrox drivers?).
+  Use ray-casting as an alternative method.
+  
+  -or-
+  
+  Revamp ship propulsion effects completely, using more sophisticated iter
+  drawing, and textures. Let go of particle effects?
+
+* Add other objects that can exist in space (e.g. asteroid fields)
+  Implementation should be done using custom objects.
+
+* Rewrite AUD subsystem
+  using FMOD or OpenAL it should be possible to use the same codebase on all
+  platforms (-> licensing issues?)
+
+* Add new music playback system. MP3 support is not available in open-source
+  version. Add Ogg Vorbis support (-> interdependencies with AUD subsystem)
+
+* Revamp VID subsystem to allow various additional resolutions (wide-screen)
+  and improve FOV handling, and view parameters for projection (vid_supp.c)
+  Make this more flexible. Avoid the need for code changes to support new
+  resolutions.
+
+* Add HID Manager joystick support for Mac OS X.
+
+* Add audio CD support for Mac OS X (-> coordinate with AUD subsystem rewrite)
+
+* Fix bugs in X11 that occur at startup when trying to grab the mouse cursor.
+
+* Add Carbon Events support in Mac OS X version.
+
+* Bring NULL subsystems up-to-date.
+
+* Fix and improve launcher application on Win32 and Linux.
+
+* Write a GUI frontend to allow placing of objects in world, e.g. stargates,
+  teleporters, asteroid fields, etc.
+
+* Enhance and improve tool chain. Add additional input object file formats
+  to makeodt/BspLib. Automate process, add a GUI frontend.
+
+* Implement a real scripting language for console scripts.
+  Evaluate existing solutions (Python, JavaScript, etc.). Probably needs a
+  big revamp of the console code, and lots of interfacing with game objects.
+  Huge task!
+
+* Implement big font support in Glide.
+  Need to tile texture in 256x256 pixel chunks, draw using Glide primitives
+  (iter code that is in place doesn't seem to work?).
+
+
+
+------------------------------------------------------------------------------
+3. TASKS FOR ARTISTS
+------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------
+4. TASKS FOR OTHER INDIVIDUALS
+------------------------------------------------------------------------------
+
+* Write generic game documentation
+
+* Provide end-user support
+  Write and maintain the FAQ, answer e-mail requests, update the news section
+  of the webpage.
+  
+* Basically take over tasks that are currently handled by the developers.
+  
+* 

@@ -1,0 +1,12 @@
+
+key akc_f2 say2
+key akc_f3 say4
+key akc_f4 say8
+
+bind akc_f9 vid.setmode windowed
+bind akc_f10 vid.setmode fullscreen
+
+bind akc_home aux_enable_elite_radar 0
+bind akc_end aux_enable_elite_radar 1
+bind akc_pageup radar.range ++4096
+bind akc_pagedown radar.range --4096

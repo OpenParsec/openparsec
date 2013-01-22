@@ -1,0 +1,305 @@
+;------------------------------------------------------------------------------
+; load dummy objects to establish default objectclass order ( was ctrl_h_h.dat ) 
+;------------------------------------------------------------------------------
+load object (firebird)   	type Ship_1        	file extra1.odt
+load object (laser_1a)   	type Laser_1       	file extra1.odt
+load object (laser_1b)   	type Laser_1       	file extra1.odt
+load object (miss_dumb)  	type Missile_1     	file extra1.odt
+load object (miss_guide) 	type Missile_4     	file extra1.odt
+load object (miss_swarm) 	type Missile_2     	file extra1.odt
+load object (ex_energy)  	type Extra_1       	file extra1.odt
+load object (ex_dumb)    	type Extra_2       	file extra1.odt
+load object (cormoran)   	type Ship_2        	file extra1.odt
+load object (bluespire)  	type Ship_1        	file extra1.odt
+load object (ex_guide)   	type Extra_2       	file extra1.odt
+load object (ex_helix)   	type Extra_3       	file extra1.odt
+load object (ex_light)   	type Extra_3       	file extra1.odt
+load object (ex_mine)    	type Extra_2       	file extra1.odt
+load object (mine_proxy) 	type Mine_1        	file extra1.odt
+load object (laser_2)    	type Laser_2       	file extra1.odt
+load object (laser_3)    	type Laser_3       	file extra1.odt
+load object (ex_repair)  	type Extra_1       	file extra1.odt
+load object (ex_aburn)   	type Extra_3       	file extra1.odt
+load object (ex_flare)   	type Extra_2        file extra1.odt
+load object (ex_invis)		type Extra_3       	file extra1.odt
+load object (ex_x2)			type Extra_3       	file extra1.odt
+load object (ex_x3)			type Extra_3       	file extra1.odt
+load object (ex_laser2)		type Extra_2       	file extra1.odt
+load object (ex_laser3)		type Extra_2       	file extra1.odt
+load object (ex_invul)		type Extra_3       	file extra1.odt
+
+;-----------------------------------------------------------------------------
+; load ships
+;-----------------------------------------------------------------------------
+sv.objectclasses.overloading 1
+
+;ships
+_f1_2
+_f2_2
+_f3_2
+_f4_2
+_f5_2
+_f6_2
+_f7_2
+_f8_2
+
+
+;-----------------------------------------------------------------------------
+; load extras and set properties
+;-----------------------------------------------------------------------------
+
+
+write loading power-ups
+
+;-- EX_ENERGY --------------------------------------------------
+load object (ex_energy) file (lgdev_02.od2 lgdev_01.od2 lgdev.od2 lgdev_00.od2) lodmag (110 340 1200) lodmin (160 400 1300) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_energy).rotx 30
+propc (ex_energy).roty 20
+propc (ex_energy).rotz  0
+;propc (ex_energy).lifetime 100000
+
+;-- EX_DUMB ----------------------------------------------------
+load object (ex_dumb) file mpack.od2 flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_dumb).rotx 30
+propc (ex_dumb).roty 20
+propc (ex_dumb).rotz  0
+;propc (ex_dumb).lifetime 100000
+
+;-- EX_GUIDE ---------------------------------------------------
+load object (ex_guide) file mpack.od2 flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_guide).rotx 30
+propc (ex_guide).roty 20
+propc (ex_guide).rotz  0
+;propc (ex_guide).lifetime 100000
+
+;-- EX_SWARM ---------------------------------------------------
+load object (ex_flare) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims)
+
+propc (ex_flare).rotx 30
+propc (ex_flare).roty 20
+propc (ex_flare).rotz  0
+;propc (ex_flare).lifetime 100000
+
+
+;-- EX_HELIX ---------------------------------------------------
+load object (ex_helix) file (hc01_00a.od2 hc01a00a.od2 hc01b00a.od2 hc01c00a.od2 ) lodmag (60 200 800) lodmin (80 250 850) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_helix).rotx 30
+propc (ex_helix).roty 20
+propc (ex_helix).rotz  0
+;propc (ex_helix).lifetime 100000
+
+
+;-- EX_LIGHT ---------------------------------------------------
+load object (ex_light) file (ld01_00a.od2 ld01a00a.od2 ld01b00a.od2 ld01c00a.od2) lodmag (120 370 800) lodmin (150 400 850) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_light).rotx 18
+propc (ex_light).roty 24
+propc (ex_light).rotz  5
+;propc (ex_light).lifetime 100000
+
+
+;-- EX_INVUL ---------------------------------------------------
+load object (ex_invul) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims) type extra_3
+
+propc (ex_invul).rotx 25
+propc (ex_invul).roty 20
+propc (ex_invul).rotz  5
+;propc (ex_invul).lifetime 100000
+
+;-- EX_REPAIR --------------------------------------------------
+load object (ex_repair) file (re01_00a.od2) flags (f_anims p_wedges w_normals w_lighted) maxfanims 2
+
+propc (ex_repair).rotx 30
+propc (ex_repair).roty 20
+propc (ex_repair).rotz  0
+;propc (ex_repair).lifetime 100000
+
+
+;-- MINE_PROXY --------------------------------------------------
+load object (mine_proxy) file (mi01_00a.od2 mi01a00a.od2) lodmag 400 lodmin 450 flags (f_anims v_anims) maxfanims 3
+
+propc (mine_proxy).rotx 15
+propc (mine_proxy).roty  8
+propc (mine_proxy).rotz 24
+;propc (mine_proxy).lifetime 100000
+
+
+;-- EX_MINE -----------------------------------------------------
+load object (ex_mine) file mi01a00a.od2 flags (f_anims v_anims)
+
+propc (ex_mine).rotx 30
+propc (ex_mine).roty 20
+propc (ex_mine).rotz  0
+;propc (ex_mine).lifetime 100000
+
+
+;-- EX_ABURN ----------------------------------------------------
+load object (ex_aburn) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims)
+
+propc (ex_aburn).rotx 25
+propc (ex_aburn).roty 20
+propc (ex_aburn).rotz  5
+;propc (ex_aburn).lifetime 100000
+
+;-- EX_LASER2 ---------------------------------------------------
+load object (ex_laser2) type extra_3 file (lc03_00a.od2 lc03a00a.od2 lc03b00a.od2) lodmag (400 800) lodmin (450 900) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_laser2).rotx 25
+propc (ex_laser2).roty 20
+propc (ex_laser2).rotz  5
+;propc (ex_laser2).lifetime 100000
+
+;-- EX_LASER3 ---------------------------------------------------
+load object (ex_laser3) type extra_3 file (lc02_00a.od2 lc02a00a.od2 lc02b00a.od2) lodmag (400 800) lodmin (450 900) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_laser3).rotx 25
+propc (ex_laser3).roty 20
+propc (ex_laser3).rotz  5
+;propc (ex_laser3).lifetime 100000
+
+
+;-- EX_PHOTON --------------------------------------------------
+load object (ex_x2) type extra_3 file (pc01_00a.od2 pc01a00a.od2 pc01b00a.od2 pc01e00a.od2) lodmag (60 200 800) lodmin (80 250 850) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_x2).rotx 30
+propc (ex_x2).roty 20
+propc (ex_x2).rotz  0
+;propc (ex_x2).lifetime 100000
+
+
+;-- EX_DECOY ----------------------------------------------------
+load object (ex_x3) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims) type extra_3
+
+propc (ex_x3).rotx 25
+propc (ex_x3).roty 20
+propc (ex_x3).rotz  5
+;propc (ex_x3).lifetime 100000
+
+
+;-- EX_EMP ---------------------------------------------------
+load object (ex_emp) file (em01_00a.od2) flags (f_anims p_wedges w_normals w_lighted) type extra_3
+
+propc (ex_emp).rotx 30
+propc (ex_emp).roty 20
+propc (ex_emp).rotz  0
+;propc (ex_emp).lifetime 100000
+
+extraclass class (ex_emp)
+
+;-- EX_EMP2 --------------------------------------------------
+load object (ex_emp2) file (em01_00a.od2) flags (f_anims p_wedges w_normals w_lighted) type extra_3
+
+propc (ex_emp2).rotx 30
+propc (ex_emp2).roty 20
+propc (ex_emp2).rotz  0
+;propc (ex_emp2).lifetime 100000
+
+extraclass class (ex_emp2)
+
+;---------------------------------------------------------------
+
+load object (laser_1a)		type Laser_1		file phaser1.bin
+
+sv.objectclasses.overloading 0
+
+;---------------------------------------------------------------
+; load stargate object
+;---------------------------------------------------------------
+load object  stargate    file stargate.odt type stargate
+
+;------------------------------------------------------------------------------
+; //FIXME: should come from _props.con
+;------------------------------------------------------------------------------
+propc missl1.hitpoints    14
+propc missl2.hitpoints     7
+propc mine1.hitpoints     35
+
+prop laser_1.hitpoints     4
+prop laser_1.energy        4
+prop laser_2.hitpoints     6
+prop laser_2.energy        5
+prop laser_3.hitpoints     7
+prop laser_3.energy        5
+
+nebula.id 5
+;extras
+
+extras.max                35
+
+energy.boost              360
+repair.boost              20
+
+pack.dumb.size             2
+pack.guide.size            2
+pack.mine.size             4
+pack.swarm.size            1
+
+;probabilities
+
+prob.energyfield           6
+prob.helix                 4
+prob.lightning             4
+prob.photon                0
+prob.mine                  4
+prob.lupgrade             24
+prob.misspack             20 
+prob.repair                7
+prob.aburner               2
+prob.invulnerable          0
+
+prob.lupgrade1            60
+prob.lupgrade2            40
+
+prob.dumb                 42
+prob.guide                56
+prob.swarm                2
+
+;------------------------------------------------------------------------------
+; server config
+;------------------------------------------------------------------------------
+sv.conf 			name 		server1.openparsec.com
+sv.conf				maxplayers 	16
+sv.conf				simfreq		100
+sv.serverid			10
+;sv.fedid			0
+
+
+;------------------------------------------------------------------------------
+; server network config
+;------------------------------------------------------------------------------
+;sv.netconf.port		7777
+
+;------------------------------------------------------------------------------
+; game settings
+;------------------------------------------------------------------------------
+;sv.game.killlimit			15
+;sv.game.timelimit			600
+;sv.game.restart.timeout		10
+;sv.game.extras.autocreate	1
+;sv.game.extras.max			25
+;sv.game.extras.testplace	0
+
+;------------------------------------------------------------------------------
+; masterserver settings
+;------------------------------------------------------------------------------
+sv.masterserver.conf 		name master.openparsec.com interval 5
+;sv.masterserver.conf 		name 192.168.1.103 interval 5
+sv.masterserver.sendheartbeat	1
+;sv.masterserver.sendheartbeat	1
+
+write loading map
+;intlev
+;------------------------------------------------------------------------------
+; server links
+;------------------------------------------------------------------------------
+;sv.link 			serverid 2  	pos ( 500   500   1000 ) 	dir ( 0 0 1 )
+;sv.link 			serverid 100  	pos (   0  -300   400  ) 	dir ( 0 0 1 )
+;sv.link 			serverid 1  	pos ( 1000 0 -1000 ) 	dir ( 0 0 1 )
+;sv.link 			serverid 2  	pos ( 2000 0 -1000 ) 	dir ( 0 0 1 )
+;sv.link 			serverid 3  	pos ( 2000 0 -2000 ) 	dir ( 0 0 1 )
+;sv.link 			serverid 4  	pos ( 1000 0 -2000 ) 	dir ( 0 0 1 )
+;sv.link 			serverid 4  pos ( 0   0   600 ) dir ( 0 0 1 )

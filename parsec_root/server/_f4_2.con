@@ -1,0 +1,125 @@
+
+write loading stingray
+
+load texture top_tex.3df  file top_tex.3df
+load texture bot_tex.3df  file bot_tex.3df
+load texture backmid.3df  file backmid.3df
+load texture inle1.3df    file inle1.3df
+load texture endlef.3df   file endlef.3df
+load texture mon_f4       file mon_f4.3df
+
+aux_enable_object_overloading 1
+load object (stingray)    file fighter4.od2 type ship_2
+aux_enable_object_overloading 0
+
+; should be before shipdesc commands
+shipclass class (stingray) texture mon_f4
+
+shipdesc class (stingray) caption stingray
+shipdesc class (stingray) clear text
+shipdesc class (stingray) text (meet the stingray, a space tank. although it's pretty old by now, it should not be underestimated. )
+shipdesc class (stingray) text (originally designed for military use, it primarily served as escort vessel for transport fleets. )
+shipdesc class (stingray) text (some time ago refurbished models of the stingray were made available to the public, )
+shipdesc class (stingray) text (sporting an attractive price/performance ratio. )
+shipdesc class (stingray) text (its flat hull is pretty hard to crack, and the engines give some decent speed. )
+shipdesc class (stingray) text (the interior design is somewhat lacking, but this is compensated for by the cool military look. )
+
+
+propc (stingray).maxdamage      50
+propc (stingray).energy        400
+propc (stingray).maxenergy     850
+propc (stingray).weapons       257
+propc (stingray).maxspeed    60000
+propc (stingray).dumb            0
+propc (stingray).maxdumb         4
+propc (stingray).guide           0
+propc (stingray).maxguide        5
+propc (stingray).swarm           0
+propc (stingray).maxswarm        2
+propc (stingray).mines           0
+propc (stingray).maxmines       10
+
+propc (stingray).spread.x1       0.0
+propc (stingray).spread.y        0.0
+propc (stingray).spread.z        0.0
+
+propc (stingray).helix.x         0.0
+propc (stingray).helix.y         0.0
+propc (stingray).helix.z         0.0
+
+propc (stingray).laser1.x1      -10.0
+propc (stingray).laser1.x2      -10.2
+propc (stingray).laser1.x3       10.2
+propc (stingray).laser1.x4       10.0
+propc (stingray).laser1.y1        5.0
+propc (stingray).laser1.y2        5.0
+propc (stingray).laser1.y3        5.0
+propc (stingray).laser1.y4        5.0
+propc (stingray).laser1.z1       30.0
+propc (stingray).laser1.z2       30.0
+propc (stingray).laser1.z3       30.0
+propc (stingray).laser1.z4       30.0
+
+propc (stingray).laser2.x1      -10.0
+propc (stingray).laser2.x2      -10.2
+propc (stingray).laser2.x3       10.2
+propc (stingray).laser2.x4       10.0
+propc (stingray).laser2.y1        5.0
+propc (stingray).laser2.y2        5.0
+propc (stingray).laser2.y3        5.0
+propc (stingray).laser2.y4        5.0
+propc (stingray).laser2.z1       30.0
+propc (stingray).laser2.z2       30.0
+propc (stingray).laser2.z3       30.0
+propc (stingray).laser2.z4       30.0
+
+propc (stingray).laser3.x1      -10.0
+propc (stingray).laser3.x2      -10.2
+propc (stingray).laser3.x3       10.2
+propc (stingray).laser3.x4       10.0
+propc (stingray).laser3.y1        5.0
+propc (stingray).laser3.y2        5.0
+propc (stingray).laser3.y3        5.0
+propc (stingray).laser3.y4        5.0
+propc (stingray).laser3.z1       30.0
+propc (stingray).laser3.z2       30.0
+propc (stingray).laser3.z3       30.0
+propc (stingray).laser3.z4       30.0
+
+propc (stingray).missile1.x1    16.0
+propc (stingray).missile1.x2    19.0
+propc (stingray).missile1.x3   -19.0
+propc (stingray).missile1.x4   -16.0
+propc (stingray).missile1.y1     0.0
+propc (stingray).missile1.y2     0.0
+propc (stingray).missile1.y3     0.0
+propc (stingray).missile1.y4     0.0
+propc (stingray).missile1.z1     0.0
+propc (stingray).missile1.z2     0.0
+propc (stingray).missile1.z3     0.0
+propc (stingray).missile1.z4     0.0
+
+propc (stingray).missile2.x1    16.0
+propc (stingray).missile2.x2    19.0
+propc (stingray).missile2.x3   -19.0
+propc (stingray).missile2.x4   -16.0
+propc (stingray).missile2.y1     4.0
+propc (stingray).missile2.y2     4.0
+propc (stingray).missile2.y3     4.0
+propc (stingray).missile2.y4     4.0
+propc (stingray).missile2.z1     0.0
+propc (stingray).missile2.z2     0.0
+propc (stingray).missile2.z3     0.0
+propc (stingray).missile2.z4     0.0
+
+propc (stingray).mine1.x         0.0
+propc (stingray).mine1.y         0.0
+;propc (stingray).mine1.z       -35.0
+
+propc (stingray).beam.x1        10.0
+propc (stingray).beam.x4       -10.0
+propc (stingray).beam.y          1.0
+propc (stingray).beam.z         16.0
+
+;eof
+

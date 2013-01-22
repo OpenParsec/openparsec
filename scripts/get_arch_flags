@@ -1,0 +1,22 @@
+#!/bin/bash
+
+ARCH_TEST=`uname -p`
+case "$ARCH_TEST" in
+
+	"x86_64")
+		case "$1" in
+
+			"cxx")
+				#building on a x86_64 system
+				echo " -m32 -march=i686"
+			;;
+
+			"ld")
+				echo " -m elf_i386"
+			;;
+		esac
+	;;
+
+
+esac
+

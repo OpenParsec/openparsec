@@ -1,0 +1,217 @@
+
+write loading assassin
+
+;load texture fi07_01a.3df  file fi07_01a.3df
+;load texture fi07_02a.3df  file fi07_02a.3df
+;load texture fi07_03a.3df  file fi07_03a.3df
+;load texture fi07_04a.3df  file fi07_04a.3df
+;load texture fi07_05a.3df  file fi07_05a.3df
+;load texture fi07_06a.3df  file fi07_06a.3df
+;load texture fi07_07a.3df  file fi07_07a.3df
+;load texture fi07_08a.3df  file fi07_08a.3df
+;load texture fi07_09a.3df  file fi07_09a.3df
+;load texture fi07_01a.3df  file fi07_01a.tga format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress)
+;load texture fi07_02a.3df  file fi07_02a.tga format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi07_03a.3df  file fi07_03a.tga format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+;load texture fi07_04a.3df  file fi07_04a.tga format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi07_05a.3df  file fi07_05a.tga format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_06a.3df  file fi07_06a.tga format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_07a.3df  file fi07_07a.tga format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_08a.3df  file fi07_08a.tga format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_09a.3df  file fi07_09a.tga format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+load texture fi07_01a.3df  file fi07_01a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress)
+load texture fi07_02a.3df  file fi07_02a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+load texture fi07_03a.3df  file fi07_03a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+load texture fi07_04a.3df  file fi07_04a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+load texture fi07_05a.3df  file fi07_05a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+load texture fi07_06a.3df  file fi07_06a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+load texture fi07_07a.3df  file fi07_07a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+load texture fi07_08a.3df  file fi07_08a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+load texture fi07_09a.3df  file fi07_09a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+load texture mon_f7     file mon_f7.3df
+
+aux_enable_object_overloading 1
+load object (assassin) type ship_1 file fi07_00a.od2
+aux_enable_object_overloading 0
+
+; should be before shipdesc commands
+shipclass class (assassin) texture mon_f7
+shipclass class (assassin)
+
+shipdesc class (assassin) caption assassin
+shipdesc class (assassin) clear text
+shipdesc class (assassin) text (the ship that has by now come to be known as the assassin has apparently already been on active duty for a long time. )
+shipdesc class (assassin) text (developed by some ominous military agency, unconfirmed reports state that its main purpose was to take out specific targets without being noticed at all. )
+shipdesc class (assassin) text (it seems to have played a key role in several armed conflicts over at least a decade. )
+shipdesc class (assassin) text (by now, assassin sightings are reported at increasing frequency. )
+shipdesc class (assassin) text (this could be due to the fact that nowadays some brigands have been able to acquire this sophisticated craft, but are not familiar enough with its stealth technology.)
+
+propc (assassin).maxdamage      50
+propc (assassin).energy        400
+propc (assassin).maxenergy     850
+propc (assassin).weapons       257
+propc (assassin).maxspeed    51200
+propc (assassin).dumb            0
+propc (assassin).maxdumb         3
+propc (assassin).guide           0
+propc (assassin).maxguide        5
+propc (assassin).mines           0
+propc (assassin).maxmines       10
+
+propc (assassin).laser1.x1      -0.8
+propc (assassin).laser1.x2      -0.8
+propc (assassin).laser1.x3       0.8
+propc (assassin).laser1.x4       0.8
+propc (assassin).laser1.y1       5.0
+propc (assassin).laser1.y2       5.0
+propc (assassin).laser1.y3       5.0
+propc (assassin).laser1.y4       5.0
+propc (assassin).laser1.z1      30.0
+propc (assassin).laser1.z2      30.0
+propc (assassin).laser1.z3      30.0
+propc (assassin).laser1.z4      30.0
+
+propc (assassin).missile1.x1    -9.0
+propc (assassin).missile1.x2    -9.0
+propc (assassin).missile1.x3     9.0
+propc (assassin).missile1.x4     9.0
+propc (assassin).missile1.y1     3.0
+propc (assassin).missile1.y2     3.0
+propc (assassin).missile1.y3     3.0
+propc (assassin).missile1.y4     3.0
+propc (assassin).missile1.z1    18.0
+propc (assassin).missile1.z2    18.0
+propc (assassin).missile1.z3    18.0
+propc (assassin).missile1.z4    18.0
+
+propc (assassin).missile2.x1    -9.0
+propc (assassin).missile2.x2    -9.0
+propc (assassin).missile2.x3     9.0
+propc (assassin).missile2.x4     9.0
+propc (assassin).missile2.y1     3.0
+propc (assassin).missile2.y2     3.0
+propc (assassin).missile2.y3     3.0
+propc (assassin).missile2.y4     3.0
+propc (assassin).missile2.z1    18.0
+propc (assassin).missile2.z2    18.0
+propc (assassin).missile2.z3    18.0
+propc (assassin).missile2.z4    18.0
+
+propc (assassin).beam.x1        -4.5
+propc (assassin).beam.x4         4.5
+propc (assassin).beam.y          1.5
+propc (assassin).beam.z          4.0
+
+propc (assassin).helix.x         0.0
+propc (assassin).helix.y         1.6
+propc (assassin).helix.z        -7.0
+
+propc (assassin).mine1.x         0.0
+propc (assassin).mine1.y         0.0
+;propc (assassin).mine1.z       -35.0
+
+;propc (assassin).spread.x1       0.0
+;propc (assassin).spread.y        0.0
+;propc (assassin).spread.z        0.0
+
+classpart class (assassin) cmd reset trafo (0 0 0)
+
+classpart class (assassin) pdef (thrust1) pos (  -3.4  -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -2.55 -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -1.7  -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -0.85 -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   0.0  -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   0.85 -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   1.7  -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   2.55 -1.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   3.4  -1.4 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (   3.4  -0.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   3.4   0.2 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   3.4   1.0 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   3.4   1.8 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (   3.4   2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   2.55  2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   1.7   2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   0.85  2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   0.0   2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -0.85  2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -1.7   2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -2.55  2.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -3.4   2.6 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (  -3.4   1.8 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -3.4   1.0 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -3.4   0.2 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -3.4  -0.6 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (   9.1  -0.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   9.72 -0.5 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  10.34 -0.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  10.96 -0.3 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  11.58 -0.2 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  12.2  -0.1 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (  12.06  0.68 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  11.92  1.46 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  11.78  2.24 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  11.64  3.02 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (  11.5   3.8 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  10.88  3.7 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  10.26  3.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   9.64  3.5 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   9.02  3.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   8.4   3.3 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (   8.54  2.52 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   8.68  1.74 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   8.82  0.96 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (   8.96   0.18 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (  -9.1  -0.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -9.72 -0.5 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -10.34 -0.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -10.96 -0.3 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -11.58 -0.2 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -12.2  -0.1 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos ( -12.06  0.68 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -11.92  1.46 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -11.78  2.24 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -11.64  3.02 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos ( -11.5   3.8 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -10.88  3.7 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos ( -10.26  3.6 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -9.64  3.5 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -9.02  3.4 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -8.4   3.3 -47.0 ) size 14.8 render thrust
+
+classpart class (assassin) pdef (thrust1) pos (  -8.54  2.52 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -8.68  1.74 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -8.82  0.96 -47.0 ) size 14.8 render thrust
+classpart class (assassin) pdef (thrust1) pos (  -8.96   0.18 -47.0 ) size 14.8 render thrust
+
+classiter class (assassin) cmd reset trafo (0 0 0)
+
+classiter class (assassin) apex (0) prim tri vtxs (  -9.1 -0.6 -47.0   -10.3 1.6 -47.0  -12.2 -0.1 -47.0 )
+classiter class (assassin) apex (0) prim tri vtxs ( -12.1 -0.1 -47.0   -10.3 1.6 -47.0  -11.5  3.8 -47.0 )
+classiter class (assassin) apex (0) prim tri vtxs ( -11.5  3.8 -47.0   -10.3 1.6 -47.0   -8.4  3.3 -47.0 )
+classiter class (assassin) apex (0) prim tri vtxs (  -8.4  3.4 -47.0   -10.3 1.6 -47.0   -9.1 -0.6 -47.0 )
+
+classiter class (assassin) apex (1) prim tri vtxs (   9.1 -0.6 -47.0    10.3 1.6 -47.0   12.2 -0.1 -47.0 )
+classiter class (assassin) apex (1) prim tri vtxs (  12.1 -0.1 -47.0    10.3 1.6 -47.0   11.5  3.8 -47.0 )
+classiter class (assassin) apex (1) prim tri vtxs (  11.5  3.8 -47.0    10.3 1.6 -47.0    8.4  3.3 -47.0 )
+classiter class (assassin) apex (1) prim tri vtxs (   8.4  3.4 -47.0    10.3 1.6 -47.0    9.1 -0.6 -47.0 )
+
+classiter class (assassin) apex (2) prim quad vtxs ( -3.4 -1.4 -47.0  -2.4 0.6 -47.0  2.4 0.6 -47.0  3.4 -1.4 -47.0 )
+
+classiter class (assassin) apex (2) prim tri vtxs (   3.4 -1.4 -47.0   2.4 0.6 -47.0   3.4 2.6 -47.0 )
+classiter class (assassin) apex (2) prim tri vtxs (  -3.4 -1.4 -47.0  -2.4 0.6 -47.0  -3.4 2.6 -47.0 )
+
+classiter class (assassin) apex (2) prim quad vtxs ( -3.4  2.6 -47.0  -2.4 0.6 -47.0  2.4 0.6 -47.0  3.4  2.6 -47.0 )
+
+;eof
+

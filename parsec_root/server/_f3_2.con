@@ -1,0 +1,124 @@
+
+write loading cormoran
+
+load texture fi3_1n4.3df   file fi3_1n4.3df
+load texture fi3_2n.3df    file fi3_2n.3df
+load texture fi3_3.3df     file fi3_3.3df
+load texture fi3_4n.3df    file fi3_4n.3df
+load texture fi3_5n1.3df   file fi3_5n1.3df
+load texture fi3_6n.3df    file fi3_6n.3df
+load texture mon_f3        file mon_f3.3df
+
+aux_enable_object_overloading 1
+load object (cormoran)    file fighter3.od2
+aux_enable_object_overloading 0
+
+; should be before shipdesc commands
+shipclass class (cormoran) texture mon_f3
+
+shipdesc class (cormoran) caption cormoran
+shipdesc class (cormoran) clear text
+shipdesc class (cormoran) text (if you are looking for something special in a ship, the cormoran is probably for you. )
+shipdesc class (cormoran) text (its extraordinary design is unique in the field of spacecraft engineering, and over time it has become a very popular ship. )
+shipdesc class (cormoran) text (actually it is pretty hard to get one these days, except on the black market. featuring an outstanding asymmetric hull design, )
+shipdesc class (cormoran) text (the cormoran has the best possible maneuverability. )
+shipdesc class (cormoran) text (however, due to the off-center location of the cockpit, it is not recommended for first-time spacecraft pilots. )
+
+propc (cormoran).maxdamage      70
+propc (cormoran).energy        400
+propc (cormoran).maxenergy     850
+propc (cormoran).weapons       257
+propc (cormoran).maxspeed    51000
+propc (cormoran).dumb            0
+propc (cormoran).maxdumb         8
+propc (cormoran).guide           0
+propc (cormoran).maxguide        8
+propc (cormoran).swarm           0
+propc (cormoran).maxswarm        2
+propc (cormoran).mines           0
+propc (cormoran).maxmines       15
+
+propc (cormoran).laser1.x1      -0.3
+propc (cormoran).laser1.x2      -0.1
+propc (cormoran).laser1.x3       0.1
+propc (cormoran).laser1.x4       0.3
+propc (cormoran).laser1.y1       5.0
+propc (cormoran).laser1.y2       5.0
+propc (cormoran).laser1.y3       5.0
+propc (cormoran).laser1.y4       5.0
+propc (cormoran).laser1.z1      28.0
+propc (cormoran).laser1.z2      28.0
+propc (cormoran).laser1.z3      28.0
+propc (cormoran).laser1.z4      28.0
+
+propc (cormoran).laser2.x1      -0.3
+propc (cormoran).laser2.x2      -0.1
+propc (cormoran).laser2.x3       0.1
+propc (cormoran).laser2.x4       0.3
+propc (cormoran).laser2.y1       5.0
+propc (cormoran).laser2.y2       5.0
+propc (cormoran).laser2.y3       5.0
+propc (cormoran).laser2.y4       5.0
+propc (cormoran).laser2.z1      28.0
+propc (cormoran).laser2.z2      28.0
+propc (cormoran).laser2.z3      28.0
+propc (cormoran).laser2.z4      28.0
+
+propc (cormoran).laser3.x1      -0.3
+propc (cormoran).laser3.x2      -0.1
+propc (cormoran).laser3.x3       0.1
+propc (cormoran).laser3.x4       0.3
+propc (cormoran).laser3.y1       2.0
+propc (cormoran).laser3.y2       5.0
+propc (cormoran).laser3.y3       2.0
+propc (cormoran).laser3.y4       5.0
+propc (cormoran).laser3.z1      28.0
+propc (cormoran).laser3.z2      28.0
+propc (cormoran).laser3.z3      28.0
+propc (cormoran).laser3.z4      28.0
+
+propc (cormoran).missile1.x1     4.0
+propc (cormoran).missile1.x2    14.0
+propc (cormoran).missile1.x3    19.0
+propc (cormoran).missile1.x4     9.0
+propc (cormoran).missile1.y1    -2.3
+propc (cormoran).missile1.y2    -2.3
+propc (cormoran).missile1.y3    -2.3
+propc (cormoran).missile1.y4    -2.3
+propc (cormoran).missile1.z1    15.0
+propc (cormoran).missile1.z2    15.0
+propc (cormoran).missile1.z3    15.0
+propc (cormoran).missile1.z4    15.0
+
+propc (cormoran).missile2.x1     4.0
+propc (cormoran).missile2.x2    14.0
+propc (cormoran).missile2.x3    19.0
+propc (cormoran).missile2.x4     9.0
+propc (cormoran).missile2.y1    -2.3
+propc (cormoran).missile2.y2    -2.3
+propc (cormoran).missile2.y3    -2.3
+propc (cormoran).missile2.y4    -2.3
+propc (cormoran).missile2.z1    15.0
+propc (cormoran).missile2.z2    15.0
+propc (cormoran).missile2.z3    15.0
+propc (cormoran).missile2.z4    15.0
+
+propc (cormoran).beam.x1         3.0
+propc (cormoran).beam.x4        40.0
+propc (cormoran).beam.y         -2.3
+propc (cormoran).beam.z          2.0
+
+propc (cormoran).mine1.x         0.0
+propc (cormoran).mine1.y         0.0
+;propc (cormoran).mine1.z       -45.0
+
+propc (cormoran).spread.x1       0.0
+propc (cormoran).spread.y        0.0
+propc (cormoran).spread.z        5.0
+
+propc (cormoran).helix.x         0.0
+propc (cormoran).helix.y         0.0
+propc (cormoran).helix.z         5.0
+
+;eof
+

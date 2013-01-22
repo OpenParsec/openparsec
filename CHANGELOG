@@ -1,0 +1,40 @@
+Oct 04, 2004  Jason Williams <jwilliams@project-lace.org>
+    - fixes for Win32 build, committing a new vcproj file
+    - did some more fixup on audio code, changed the buffer
+      size to 4096 to help with some skipping.  Works in win32
+      will test more in Linux later.
+      1
+Sep 25, 2004  Jason Williams <jwilliams@project-lace.org>
+    - applied Pierre's patch, sf patch id 1032157 
+      to fix a bunch of warnings and fix the 
+      optimization errors.
+
+Sep 14, 2004  Jason Williams <jwilliams@project-lace.org>
+    - took out the openal lib hooks
+    - added sdl_mixer audio support
+    - fixed assert code in linux so it no longer
+      segfaults but actually asserts with usable
+      messages
+    - Fixed and implemented mine collision code
+      in peer to peer mode.  This was previously
+      causing an assert.
+    - took out a bunch of unneeded MSGOUT's and 
+      LOGOUT's in the game server code.
+
+Oct 26, 2003 	Jason Williams <jwilliams@project-lace.org>
+		- CHANGLOG started.
+		- Applied openal/ogg patch
+		  version 0.5 for Linux build
+		- fixed up background music buffers so that 
+		  there was little to no skipping.  
+		- removed or commented out references to libcdaudio
+		  in Linux build files (make files and modules.inc)
+		- fixed GCC newline complaints
+		- removed ^M character at the end of lines in 
+		  source files.
+		- Implemented game server missle launch code 
+		  (Not yet tested)
+		- Began implementation of Mine launch and 
+		  swarm launch code, not fully implemented
+		  in server/engine/e_simnetinput.cpp yet
+		

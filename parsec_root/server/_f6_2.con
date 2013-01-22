@@ -1,0 +1,171 @@
+
+write loading hurricane
+
+;load texture fi06_01a.3df file fi06_01a.3df
+;load texture fi06_02a.3df file fi06_02a.3df
+;load texture fi06_03a.3df file fi06_03a.3df
+;load texture fi06_04a.3df file fi06_04a.3df
+;load texture fi06_05a.3df file fi06_05a.3df
+load texture fi06_06a.3df file fi06_06a.3df
+;load texture fi06_07a.3df file fi06_07a.3df
+;load texture fi06_08a.3df file fi06_08a.3df
+;load texture fi06_09a.3df file fi06_09a.3df
+;load texture fi06_10a.3df file fi06_10a.3df
+;load texture fi06_11a.3df file fi06_11a.3df
+;load texture fi06_12a.3df file fi06_12a.3df
+;load texture fi06_13a.3df file fi06_13a.3df
+;load texture fi06_14a.3df file fi06_14a.3df
+;load texture fi06_15a.3df file fi06_15a.3df
+;load texture fi06_16a.3df file fi06_16a.3df
+;load texture fi06_17a.3df file fi06_17a.3df
+;load texture fi06_18a.3df file fi06_18a.3df
+load texture fi06_01a.3df file fi06_01a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress )
+load texture fi06_02a.3df file fi06_02a.jpg format (map_width  64 map_height  64 texfmt_gr rgb565 flags compress )
+load texture fi06_03a.3df file fi06_03a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+load texture fi06_04a.3df file fi06_04a.jpg format (map_width  16 map_height  32 texfmt_gr rgb565 flags compress )
+load texture fi06_05a.3df file fi06_05a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_06a.3df file fi06_06a.jpg format (map_width  32 map_height  64 texfmt_gr rgb565 flags compress )
+load texture fi06_07a.3df file fi06_07a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+load texture fi06_08a.3df file fi06_08a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress )
+load texture fi06_09a.3df file fi06_09a.jpg format (map_width  64 map_height 128 texfmt_gr rgb565 flags compress )
+load texture fi06_10a.3df file fi06_10a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress )
+load texture fi06_11a.3df file fi06_11a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress )
+load texture fi06_12a.3df file fi06_12a.jpg format (map_width  16 map_height  16 texfmt_gr rgb565 flags compress )
+load texture fi06_13a.3df file fi06_13a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress )
+load texture fi06_14a.3df file fi06_14a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+load texture fi06_15a.3df file fi06_15a.jpg format (map_width  16 map_height  32 texfmt_gr rgb565 flags compress )
+load texture fi06_16a.3df file fi06_16a.jpg format (map_width  16 map_height  16 texfmt_gr rgb565 flags compress )
+load texture fi06_17a.3df file fi06_17a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress )
+load texture fi06_18a.3df file fi06_18a.tga format (map_width 128 map_height 128 texfmt_gr argb4444 flags compress )
+;load texture fi06_20a.3df file fi06_20a.jpg format (map_width  64 map_height  64 texfmt_gr rgb565 flags compress )
+load texture mon_f6       file mon_f6.3df
+
+aux_enable_object_overloading 1
+load object (hurricane)   file fi06_00a.od2 type ship_2 flags (v_anims p_wedges w_normals w_lighted)
+aux_enable_object_overloading 0
+
+; solar panels
+shader.set class hurricane shader (iter_texrgba iter_alphablend flag_nobackcull flag_draw_last flag_back_first) texture fi06_18a.3df
+
+; front up-down double-faces
+shader.set class hurricane shader (iter_texrgb flag_nobackcull) faceid (374-377)
+; front left-right double-faces
+shader.set class hurricane shader (iter_texrgb flag_nobackcull) faceid (346-353)
+
+; back up-down double-faces
+shader.set class hurricane shader (iter_texrgb flag_nobackcull) faceid (311 314-316)
+; back left-right double-faces
+shader.set class hurricane shader (iter_texrgb flag_nobackcull) faceid (273 278-280)
+
+; should be before shipdesc commands
+shipclass class (hurricane)
+shipclass class (hurricane) texture mon_f6
+
+shipdesc class (hurricane) caption hurricane
+shipdesc class (hurricane) clear text
+shipdesc class (hurricane) text (beware of the hurricane. )
+shipdesc class (hurricane) text (it allows you to blast your enemies away with a twist. )
+shipdesc class (hurricane) text (its unique rotating solar panel is used to automatically refill the energy banks )
+shipdesc class (hurricane) text (of the ship. the hurricane was primarily used as a long-range scout ship, and has the option )
+shipdesc class (hurricane) text (of being equipped with a special cloaking device, although the use of such a device is highly illegal. )
+shipdesc class (hurricane) text (speed is mediocre at least, but this ship can take quite some damage without too much trouble. )
+
+propc (hurricane).maxdamage      50
+propc (hurricane).energy        400
+propc (hurricane).maxenergy     850
+propc (hurricane).weapons       257
+propc (hurricane).maxspeed    60000
+propc (hurricane).dumb            0
+propc (hurricane).maxdumb         4
+propc (hurricane).guide           0
+propc (hurricane).maxguide        5
+propc (hurricane).swarm           0
+propc (hurricane).maxswarm        2
+propc (hurricane).mines           0
+propc (hurricane).maxmines       10
+
+propc (hurricane).spread.x1      11.0
+propc (hurricane).spread.x4     -11.0
+propc (hurricane).spread.y        0.0
+propc (hurricane).spread.z        0.0
+
+propc (hurricane).helix.x         0.0
+propc (hurricane).helix.y         0.0
+propc (hurricane).helix.z       -20.0
+
+propc (hurricane).laser1.x1      -1.0
+propc (hurricane).laser1.x2      -1.0
+propc (hurricane).laser1.x3       1.0
+propc (hurricane).laser1.x4       1.0
+propc (hurricane).laser1.y1       3.0
+propc (hurricane).laser1.y2       3.0
+propc (hurricane).laser1.y3       3.0
+propc (hurricane).laser1.y4       3.0
+propc (hurricane).laser1.z1      25.0
+propc (hurricane).laser1.z2      25.0
+propc (hurricane).laser1.z3      25.0
+propc (hurricane).laser1.z4      25.0
+
+propc (hurricane).laser2.x1      -1.0
+propc (hurricane).laser2.x2      -1.0
+propc (hurricane).laser2.x3       1.0
+propc (hurricane).laser2.x4       1.0
+propc (hurricane).laser2.y1       3.0
+propc (hurricane).laser2.y2       3.0
+propc (hurricane).laser2.y3       3.0
+propc (hurricane).laser2.y4       3.0
+propc (hurricane).laser2.z1      25.0
+propc (hurricane).laser2.z2      25.0
+propc (hurricane).laser2.z3      25.0
+propc (hurricane).laser2.z4      25.0
+
+propc (hurricane).laser3.x1      -1.0
+propc (hurricane).laser3.x2      -1.0
+propc (hurricane).laser3.x3       1.0
+propc (hurricane).laser3.x4       1.0
+propc (hurricane).laser3.y1       3.0
+propc (hurricane).laser3.y2       3.0
+propc (hurricane).laser3.y3       3.0
+propc (hurricane).laser3.y4       3.0
+propc (hurricane).laser3.z1      25.0
+propc (hurricane).laser3.z2      25.0
+propc (hurricane).laser3.z3      25.0
+propc (hurricane).laser3.z4      25.0
+
+propc (hurricane).missile1.x1    11.0
+propc (hurricane).missile1.x2    11.0
+propc (hurricane).missile1.x3   -11.0
+propc (hurricane).missile1.x4   -11.0
+propc (hurricane).missile1.y1     0.0
+propc (hurricane).missile1.y2     0.0
+propc (hurricane).missile1.y3     0.0
+propc (hurricane).missile1.y4     0.0
+propc (hurricane).missile1.z1     0.0
+propc (hurricane).missile1.z2     0.0
+propc (hurricane).missile1.z3     0.0
+propc (hurricane).missile1.z4     0.0
+
+propc (hurricane).missile2.x1    11.0
+propc (hurricane).missile2.x2    11.0
+propc (hurricane).missile2.x3   -11.0
+propc (hurricane).missile2.x4   -11.0
+propc (hurricane).missile2.y1     0.0
+propc (hurricane).missile2.y2     0.0
+propc (hurricane).missile2.y3     0.0
+propc (hurricane).missile2.y4     0.0
+propc (hurricane).missile2.z1     0.0
+propc (hurricane).missile2.z2     0.0
+propc (hurricane).missile2.z3     0.0
+propc (hurricane).missile2.z4     0.0
+
+propc (hurricane).mine1.x         0.0
+propc (hurricane).mine1.y         0.0
+;propc (hurricane).mine1.z       -35.0
+
+propc (hurricane).beam.x1         6.0
+propc (hurricane).beam.x4        -6.0
+propc (hurricane).beam.y         -1.0
+propc (hurricane).beam.z         10.0
+
+;eof
+

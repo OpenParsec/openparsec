@@ -1,0 +1,48 @@
+/*
+ * PARSEC HEADER: net_conf.h
+ */
+
+#ifndef _NET_CONF_H_
+#define _NET_CONF_H_
+
+#ifdef PARSEC_SERVER
+
+	// flags
+	#define INTERPOLATE_PLAYER_ACTIONS
+	#define SEND_KILL_MESSAGES
+	//#define NO_PROJECTILE_KILL_MESSAGES
+	//#define DONT_SEND_EXTRA_CREATES
+	#define ENABLE_PACKET_RECORDING
+	#define ENABLE_PACKET_SWAPPING
+	//#define ENABLE_PACKETDROP_TESTING
+	//#define ENCRYPT_PACKETS
+
+	#ifdef DONT_SEND_EXTRA_CREATES
+		#define DSEXC(x)	x
+	#else
+		#define DSEXC(x)
+	#endif
+
+#else // !PARSEC_SERVER
+
+	// flags
+	#define INTERPOLATE_PLAYER_ACTIONS
+	#define SEND_KILL_MESSAGES
+	#define NO_PROJECTILE_KILL_MESSAGES
+	//#define DONT_SEND_EXTRA_CREATES
+	#define ENABLE_PACKET_RECORDING
+	#define ENABLE_PACKET_SWAPPING
+	#define ENABLE_PACKETDROP_TESTING
+	//#define ENCRYPT_PACKETS
+
+	#ifdef DONT_SEND_EXTRA_CREATES
+		#define DSEXC(x)	x
+	#else
+		#define DSEXC(x)
+	#endif
+
+#endif // !PARSEC_SERVER
+
+#endif // _NET_CONF_H_
+
+

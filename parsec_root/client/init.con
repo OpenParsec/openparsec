@@ -1,0 +1,25 @@
+
+;---------------------
+; parsec init script
+;---------------------
+
+; exec rc script
+parsecrc
+
+; misc config
+;aux_allow_cache_texture_evict 0
+;aux_enable_console_message_log 0
+aux_draw_cockpit_crosshair 2
+
+; exec user script
+user
+
+; load the starmap loader con
+strmpldr
+
+; enable console
+enable
+
+; display build info
+build x
+

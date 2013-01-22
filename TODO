@@ -1,0 +1,28 @@
+Below is a VERY short list of things that I brainstormed 
+up that need to be done.  Please add to this list if there 
+is something you think needs to be done before a beta 
+release with Game Server Code can go out.
+
+NETWORK CODE
+	- Implement the rest of the weapons and such
+	  for the RE interface in the game server code
+	- Figure out a way to implement the swarm 
+	  missile code, I can see no way to do it using
+	  the current missile code.  I could be wrong.
+	- Investigate problems with extra collision detection
+	  It doesn't always notify the client of a detection,
+	  and from testing with engery boosters, doesn't always
+	  boost the energy correctly.
+	- Test all implementations for bugs.
+	- Set up ignore code for unknown RE's to the server ??????
+AUDIO CODE
+  - a problem exists with clicking in the background
+    player, low priority, but needs fixing.
+    
+GENERAL CODE
+	- Implement a "easy to use" client side game server
+	  connect interface.  I think this one might already
+	  be there, just not implemented.
+	- Clean up UI and remove(hide) unused buttons from the menus
+	  until they are implemented.
+	

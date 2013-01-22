@@ -1,0 +1,18 @@
+
+write loading missiles
+
+.aux37 1
+
+load texture r99011.3df       file r99011.3df
+load texture r99012.3df       file r99012.3df
+load object  (miss_dumb)      file rockt01.od2
+
+load texture r99013.3df       file r99013.3df
+load object  (miss_guide)     file rockt02.od2
+
+.aux37 0
+
+load texture glow06           file glow06.3df
+
+;eof
+

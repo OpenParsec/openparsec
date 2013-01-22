@@ -1,0 +1,790 @@
+
+------------------------------------------------------------------------------
+PARSEC DEVELOPER TUTORIAL V1.0
+------------------------------------------------------------------------------
+mailto:parsec@parsec.org                               http://www.parsec.org/
+------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------
+1. INTRODUCTION
+------------------------------------------------------------------------------
+
+This document is supposed to give you a quick start with the Parsec source 
+code. Of course this can only be an incomplete guide, a full documentation
+has yet to be written, please keep this in mind while reading this tutorial.
+
+We'll cover some of the more easy modifications of Parsec, such as
+changing/adding new graphics, 3D objects, samples and console commands.
+
+Some of these modifications can be done without changing source code, and
+some require you to change the source code and recompile the Parsec
+executable.
+
+Conventions used in this document:
+
+ * Commands that have to be issued on the command-line, are written like
+   this:
+  
+     > program -option1 -option2
+
+ * Commands that have to be issued on Parsec's console, are written like
+   this:
+
+     ::command option1 option2
+
+ NOTE: Parsec's command console can be opened using the tilde key (~).
+
+
+------------------------------------------------------------------------------
+2. EXTRACTING THE DATA PACKAGES
+------------------------------------------------------------------------------
+
+All the data files used by Parsec are stored in the package files called
+pscdata0.dat, pscdata2.dat and pscdata3.dat (pscdata1.dat only contains the
+splashscreen image). 
+To change/view the data files, you need to extract the package files. This
+can be achieved using the packaging tools that are built right into the
+Parsec executable.
+
+Start Parsec with the following command line option to extract all the
+data files from a package (pscdata2.dat in this example):
+
+  > parsec -getpack --pack pscdata2.dat --list pscdata2.lst
+
+To view the contents of a package file use.
+
+  > parsec -getpack --pack pscdata2.dat --view
+
+To extract a single file from the package use:
+
+  > parsec -getpack --pack pscdata2.dat --file <filename>
+
+If you want to rebuild the package file with new data files, you need
+to edit the .lst file and rebuild the package using:
+
+  > parsec -makepack --pack pscdata2.dat --list pscdata2.lst
+
+NOTE:
+Be careful not to put .mp3 files into pscdata0.dat, as they will be
+converted to .wav files at startup, increasing the size of pscdata0.dat
+significantly!
+
+
+------------------------------------------------------------------------------
+3. ADDING/CHANGING GRAPHICS
+------------------------------------------------------------------------------
+
+This section explains how to change/add graphics in Parsec. 
+Nearly all graphics in Parsec are textures, drawn on triangles or polygons
+using the rendering or drawing subsystems, even the 2D graphics found in
+the menu or the spacecraft viewer.
+All textures are loaded by the 'load' console command, so to change
+Parsec's graphics, all you need to do is write a little console script
+issuing multiple 'load' commands.
+For testing purposes, you can issue the 'load' command directly on the
+console. This will cause your new texture to show up immediately.
+Textures in Parsec usually come in one of the following three image file
+formats:
+
+ (*) .3df (Glide texture format by 3dfx)
+ (*) .tga (Targa)
+ (*) .jpg (JPEG)
+ 
+3DF files can contain pre-calculated mipmaps and textures in various formats
+(both with and without alpha channel), but are limited to 16 bit per pixel
+color depth.
+TGA files can contain 32 bit per pixel data (that is 24 bits for color and
+an 8 bit alpha channel), but usually only offer a cheap RLE compression.
+JPG files are usually very small, so they're are very well suited for high
+resolution textures, in full 24 bit color. However, they don't support an
+alpha channel.
+
+So before you can add your new textures to the game, you need to convert them
+into one of the supported texture file formats. Your image editor of choice
+will most likely be able to save JPG and TGA.
+For creating .3df files, there are tools available for various platforms.
+We recommend Texus by 3dfx (part of the Glide SDK, source code is included,
+which can be compiled on nearly every platform), 
+or AsinDes (for Windows only). 
+
+Here's a step-by-step guide for creating a new texture as a .3df file:
+(if you choose to use .jpg or .tga files, you can skip points (2) and (3))
+
+ (1) Draw a texture in your graphics program of choice, e.g.
+     Photoshop or Gimp. Ensure that the dimensions of your texture are
+     powers of 2, and not larger than 256. Valid texture sizes are 128x64,
+     256x256, 256x128, 64x32, 64x64 and so on.
+	 If your texture size does not conform to this standard, it will not
+	 show up if the Glide rendering subsystem is used, or performance on
+	 OpenGL cards might suffer.
+
+ (2) Save your texture in a format that your .3df converter is able to
+     read. We recommend .tga. Be sure to include an alpha channel if your 
+     texture is supposed to have transparent areas.
+
+ (3) Convert the texture to a -3df file.
+     Using the command-line version of Texus, this might look like this:
+
+       > texus -mn -R 128 128 -t argb4444 -o texture.3df texture.tga
+     
+     This converts a 128x128 .tga image into a .3df texture including the
+     alpha channel without generating mipmaps. This is a suitable way to
+     convert textures for use in the menu or the cockpit. 
+
+     If you want to convert textures for use on a 3D object, you should
+     include mipmaps by removing the -mn option.
+
+     If your texture has many similiar colors (e.g. lots of brown, or lots
+     of grey), you might get better results by using the ap88 color format
+     instead of argb4444. If your texture does not have an alpha channel,
+     you should use the rgb565 command with the -t parameter.
+    
+ (4) Copy the texture in the same directory that the Parsec executable
+     resides in.
+
+ (5) Start up Parsec and enter the console by pressing the tilde key. 
+
+ (6) Type the command:
+
+       ::listdata textures
+
+ (8) Browse through the texture list, until you've found the texture you
+     want to replace. Unless you know the filename of the texture you want to 
+     replace, this might require some trial and error.
+     You can also locate the correct texture by looking in one of the .con
+     files that are used to load the textures, for example _cockpit.con.
+     Remember the name of the texture, which is printed in parantheses.
+
+ (9) Ensure that the AUX_ENABLE_TEXTURE_OVERLOADING flag is set, by typing
+
+       ::AUX_ENABLE_TEXTURE_OVERLOADING 1
+
+     on the console.
+
+ (10) Replace the texture by overloading it with the newly created one,
+      using the load command:
+
+        ::load texture (texturename) file texture.3df
+
+      where texturename is the name you remembered from the texture list
+      in step (8).
+      The parantheses are only required if the texture name contains
+      space characters.
+
+Please note that the new texture doesn't necessarily need to have the same
+width/height as the original texture. If your new texture has a different
+size, it will be scaled automatically.
+
+Some textures you might want to try to change are:
+
+(scv00.3df)  - the spacecraft viewer background (256x256 tiles
+(scv01.3df)    starting at the top left corner)
+(scv02.3df)
+(scv10.3df)
+(scv11.3df)
+(scv12.3df)
+
+(loganiXX)   - the logo animation in the bottom right corner of the menu
+               (30 frames)
+
+(sg_int.3df) - the water-like surface inside a stargate
+
+(corner1)    - the little decorations at the corners of translucent panels
+(corner2)
+(corner3)
+(corner4)
+
+(helix001)   - the helix cannon particle texture
+
+Get the correct dimensions of those textures from the texture list, and 
+create new ones with the same size.
+
+You can use texus or some other .3df convertor to convert the .3df
+textures back to the graphics format of your choice to edit them in your
+favourite graphics program.
+
+If you want to keep your new graphics, you need to make sure they are
+loaded when Parsec starts up. To do this, you should write a .con console
+script containing the 'load' commands and add the name of the script to
+the sys_dat.con file. This is necessary to ensure that the texture data is
+correctly converted when switching video subsystems.
+
+It's important that you're familiar with the methods used to create and load
+textures in Parsec, because this is part of creating new ship models.
+
+
+------------------------------------------------------------------------------
+4. ADDING/CHANGING A 3D OBJECT
+------------------------------------------------------------------------------
+
+To modify 3D objects in Parsec, you take a simliar route as with changing
+textures, so you also need to be familiar with that technique. Be sure
+to read the previous section, and make sure you understood everything
+there, because you'll need it when dealing with objects.
+
+Parsec uses its own flexible 3D object file format, called ODT, or the
+newer revision OD2. In general, you'll only need to deal with .od2 files.
+These files are usually created by our own tool called "makeodt".
+Please consult the document on makeodt, to learn how to use it.
+Makeodt is able to import VRML files (.wrl extension), and convert these
+along with all the necessary texture information into .od2 files. It does
+NOT read VRML2 (VRML97) files!
+
+Once you have an .od2 file you can load this just like a texture, using
+the load command.
+
+load object (firebird)    file fighter1.od2
+
+Here's a step-by-step guide for creating a new ship for Parsec:
+
+ (1) Use a good 3D modelling program (e.g. 3D Studio Max) to create your
+     model. Paint some textures for the model, and use UV mapping to map
+     them onto your ship.
+
+ (2) Save your model as a VRML file (.wrl), and your textures as Targa
+     files (.tga). Use the procedures described in the previous chapter to 
+     convert the textures to .3df or alternatively .jpg files.
+
+ (3) Use makeodt to convert your ship into a .od2 file.
+
+ (5) Take a look at mon_f1.3df and recreate a similiar texture showing
+     your ship, using your 3D rendering program. This texture will be
+     displayed in the cockpit monitors on the top of the screen.
+
+ (6) Make a copy of _f1_2.con (from pscdata2.dat) and edit it. You need to 
+     change the load texture commands to load the textures of your ship,
+     replace every occurence of firebird with your new ship's name, change
+     the ship description and adapt the weapon outlet positions to suit your
+	 model.
+
+ (7) Load your edited .con file and you should be able to select your new
+     ship in the spacecraft viewer.
+
+If you followed these steps, your ship will be fully functional, but it
+won't have any propulsion effects yet. Take a look at the more modern scripts,
+e.g. _f8_2.con, to find out how to define the particle position for the
+propulsion effects (commands are called "classpart" and "classiter").
+
+If you just want to convert a simple object for a weapon effect or similar,
+you can skip steps (5) and (6), as these are specific to ships.
+
+Please consult the makeodt documentation for a more thorough discussion of
+console script commands for loading objects, specifying shaders, etc.
+
+
+------------------------------------------------------------------------------
+5. ADDING/CHANGING A SAMPLE
+------------------------------------------------------------------------------
+
+Replacing one of Parsec's soundeffects is just as simple as changing a
+texture, maybe even simpler.
+Using the listdata command you can get a list of all currently loaded
+samples.
+
+::listdata samples
+
+Pick one that you want to replace, and create a .wav file for it,
+using your favourite sample editor. 
+Now open _sound.con and change the line corresponding to the sample that
+you want to replace. You can also specify a new volume.
+Reload _sound.con on the console or restart Parsec to test the new sample.
+
+
+------------------------------------------------------------------------------
+6. ADDING A CONSOLE COMMAND
+------------------------------------------------------------------------------
+
+Parsec's console contains a large number of available commands, most of which
+are defined within the console modules (source files named con_*).
+Console commands that are specific to a part of the game are usually defined
+within the modules responsible for the implementation of that part (e.g.
+commands related to the network code are implemented in the net_* source files
+directly). These commands (usually called user commands) are registered from
+the REGISTER_MODULE function, which is called automatically upon program
+startup.
+
+The registration of a user command might look like this:
+
+// module registration function -----------------------------------------------
+//
+REGISTER_MODULE( STARMAP )
+{
+	user_command_s regcom;
+	memset( &regcom, 0, sizeof( user_command_s ) );
+
+	// register "starmap" command
+	regcom.command	 = "starmap";
+	regcom.numparams = 0;
+	regcom.execute	 = Cmd_STARMAP;
+	regcom.statedump = NULL;
+	CON_RegisterUserCommand( &regcom );
+}
+
+The user_command_s structure contains necessary parameters that describe the
+user command, and a function pointer to the actual implementation of the
+command.
+A string containing the parameters of the command will be passed to the
+implementation function.
+Here's an example of a the above "starmap" command, which is very simple, as
+it doesn't require any parameters. It just calls the internal function 
+MAP_ActivateStarmap() to activate the starmap.
+
+// console command to activate/deactivate the starmap -------------------------
+//
+PRIVATE
+int Cmd_STARMAP( char *paramstr )
+{
+	ASSERT( paramstr != NULL );
+	HANDLE_COMMAND_DOMAIN_SEP( paramstr );
+
+	MAP_ActivateStarmap();
+
+	return TRUE;
+}
+
+For more complex console commands, it's necessary to parse the parameter
+string.
+There are helper functions available which make this task a lot easier (and
+less error prone) if the parameters have a key/value pair structure.
+
+You start by defining a table of the keys that you want to be able to parse:
+
+// key table for net.master command -------------------------------------------
+//
+key_value_s net_master_key_value[] = {
+
+	{ "num",	NULL,	KEYVALFLAG_NONE			},
+	{ "addr",	NULL,	KEYVALFLAG_NONE			},
+
+	{ NULL,		NULL,	KEYVALFLAG_NONE			},
+};
+
+Possible KEYVALFLAG values are:
+KEYVALFLAG_NONE         -> no specific options for this key
+KEYVALFLAG_DISALLOW     -> if this key exists, an error will be returned
+KEYVALFLAG_IGNORE       -> ignore this key and its value.
+KEYVALFLAG_MANDATORY    -> if this key is missing, an error will be returned
+KEYVALFLAG_PARENTHESIZE -> the value of this key might be enclosed by (), which
+                           is used for value strings that contain whitespace.
+
+Of course these flags can be combined if necessary, e.g:
+KEYVALFLAG_MANDATORY | KEYVALFLAG_PARENTHESIZE
+to specify a key that is both mandatory and uses a string value that
+contains a space character, for example.
+
+enum {
+
+	KEY_NET_MASTER_NUM,
+	KEY_MET_MASTER_ADDR,
+};
+
+The enum declarations are used to allow easier access to the entries of the
+key table.
+
+In your command implementation function, you then call:
+
+	// scan out all values to keys
+	if ( !ScanKeyValuePairs( net_master_key_value, paramstr ) ) {
+		return TRUE;
+	}
+
+This will automatically parse the parameter string into key/value pairs.
+If the parameter string does not conform to the constraints specified in 
+the key table (e.g. mandatory keys are missing), FALSE will be returned,
+and an error will be output on the console automatically.
+
+If the parsing was sucessful, the key table will be populated with the
+values for each key, in the value field of the key_value_s structure.
+If the value field is NULL, this means that the key was optional and
+has not been found. So make sure the check against NULL, before using
+the value.
+
+Additional helper functions are available to convert the value field
+(which is still a string) to its integer or float representation:
+
+	// get masterserver number
+	int num = 0;
+	if ( ScanKeyValueInt( &net_master_key_value[ KEY_NET_MASTER_NUM ], &num ) < 0 ) {
+		CON_AddLine( invalid_arg );
+		return TRUE;
+	}
+
+This will retrieve the value string for the "num" key, as defined in the
+key table, and convert the string to an integer, which will be stored in
+the num variable.
+Other functions that can be used here include:
+ScanKeyValueIntList(), ScanKeyValueFloat(), ScanKeyValueFloatList(), etc.
+
+If your command parameter parsing becomes more complex, it is highly
+recommended that you include a syntax definition in Backus-Naur Form as a
+comment in the source code.
+You can see examples of this with nearly every console command implementation
+in Parsec. You can also find a list of all syntax definitions at the end of
+this document.
+
+------------------------------------------------------------------------------
+APPENDIX A: CONSOLE COMMAND SYNTAX DEFINITIONS 
+------------------------------------------------------------------------------
+
+In this section you can find syntax definitions of some of the common
+Parsec console commands in Backus-Naur Form (BNF).
+Please note that this list does not include the vast amount of integer
+commands. These don't require a special syntax, and can be shown by using
+the 'listintcommands' command.
+Parameters in brackets are optional, the | character is used to denote a
+logical or condition.
+
+
+ bkgn_add_command		::= 'bkgn.add' <itemspec>
+ itemspec				::= <samplespec> | <trackspec> |
+ samplespec				::= 'sample' <paranthesized name of sample>
+ trackspec				::= 'track' <trackno>
+ streamspec				::= 'stream' <filename>
+ silencespec			::= 'silence' <seconds>
+
+
+ bkgn_remove_command	::= 'bkgn.remove' <itemspec>
+ itemspec				::= <idspec> | <samplespec> | <trackspec>
+ idspec					::= 'id' <id of item>
+ samplespec				::= 'sample' <paranthesized name of sample>
+ trackspec				::= 'track' <trackno>
+
+
+ bkgn_list_command 		::= 'bkgn.list'
+
+
+ bkgn_group_command		::= 'bkgn.group' <itemspec>
+ itemspec				::= 'item' <id of item>
+
+
+ aud_volume_command		::= 'aud.volume' [<volume>]
+
+
+ aud_samplevolume_command	::= 'aud.samplevolume' <samplename> [<volume>]
+
+
+ aud_playsample_command	::= 'aud.playsample' <samplespec>
+ samplespec             ::= <samplename> | <sampleid>
+ samplename				::= 'name' <name of sample>
+ sampleid				::= 'id' <id of sample>
+
+
+ play_command ::= 'play' <demo_name>
+ demo_name    ::= "valid script name"
+
+
+ level_load_command	::= 'level.load' levelname_spec
+ levelname_spec	    ::= <string>
+
+
+ level_save_command	::= 'level.save' levelname_spec
+ levelname_spec	    ::= <string>
+
+
+ level_info_command	::= 'level.info' 
+
+
+ swaying_command	::= 'gfx.swaying' [<period_spec>] [<ampl_spec>] [<phase_spec>]
+ period_spec		::= '(' <int> <int> ')'
+ ampl_spec			::= '(' <int> <int> ')'
+ phase_spec			::= <int>
+
+
+ crosstarget_command ::= 'crosstarget'
+
+
+ scale_command ::= 'cockpit.scale' [<factor>]
+
+
+ weaponreg_command	::= 'weaponreg' <slot_spec> [<icon_avail_spec>]
+ slot_spec			::= 'slot' <slotnum>
+ icon_avail_spec	::= 'icon_avail' <texturename> | <texture_list>
+ icon_unavail_spec	::= 'icon_unavail' <texturename>
+ picture_spec		::= 'pic' <texturename> | <texture_list>
+ texture_list		::= '(' <texturename>+ ')'
+
+
+ quicksay_command	::= 'quicksay'
+
+
+ range_command ::= 'radar.range' [<range>]
+
+
+ shipdesc_command	::= 'shipdesc' <class_spec> [<text_spec>]
+ class_spec			::= 'class' <classname> | 'id' <classid>
+ text_spec			::= 'text' <textline>
+ caption_spec		::= 'caption' <captiontext>
+ clear_spec			::= 'clear' ['caption'|'text']
+
+
+ emp_conf_command	::= 'emp.conf' [<lifetime_spec>] [<maxwidth_spec>]
+ lifetime_spec		::= 'lifetime' <int>
+ maxwidth_spec		::= 'maxwidth' <float>
+ lambda_spec		::= 'lambda' <float>
+ fadeout_spec		::= 'fadeout' <int>
+ waves_spec			::= 'waves' <int>
+ delay_spec			::= 'delay' <int>
+ energy_spec		::= 'energy' <int>
+
+
+ emp_conf_command	::= 'empup1.conf' [<lifetime_spec>] [<maxwidth_spec>]
+ lifetime_spec		::= 'lifetime' <int>
+ maxwidth_spec		::= 'maxwidth' <float>
+ lambda_spec		::= 'lambda' <float>
+ fadeout_spec		::= 'fadeout' <int>
+ waves_spec			::= 'waves' <int>
+ delay_spec			::= 'delay' <int>
+ energy_spec		::= 'energy' <int>
+
+
+ emp_conf_command	::= 'empup2.conf' [<lifetime_spec>] [<maxwidth_spec>]
+ lifetime_spec		::= 'lifetime' <int>
+ maxwidth_spec		::= 'maxwidth' <float>
+ lambda_spec		::= 'lambda' <float>
+ fadeout_spec		::= 'fadeout' <int>
+ waves_spec			::= 'waves' <int>
+ delay_spec			::= 'delay' <int>
+ energy_spec		::= 'energy' <int>
+ emp_command		::= 'emp'
+
+ shockwave_command	::= 'shockwave' [<lifetime_spec>] [<maxwidth_spec>]
+ lifetime_spec		::= 'lifetime' <int>
+ maxwidth_spec		::= 'maxwidth' <float>
+ lambda_spec		::= 'lambda' <float>
+ fadeout_spec		::= 'fadeout' <int>
+
+
+ inp_weaponsel_command ::= 'inp.weaponsel' <number>
+
+
+ inp_cycleguns_command ::= 'inp.cycleguns'
+
+
+ inp_cyclemissiles_command ::= 'inp.cyclemissiles'
+
+
+ inp_cycletargets_command ::= 'inp.cycletargets'
+
+
+ inp_zerospeed_command ::= 'inp.cycletargets'
+
+
+ inp_targetspeed_command ::= 'inp.targetspeed'
+
+
+ inp_cyclepanel_command ::= 'inp.cyclepanel' <number>
+
+
+ clientrate_command ::= 'net.clientrate' [<frequency>]
+
+
+ serverrate_command ::= 'net.serverrate' [<frequency>]
+
+
+ jump_command		::= 'jump' <server>
+ server				::= valid hostname or IP address of gameserver
+
+
+ net_master_command	::= 'net.master' <num_spec> [<addr_spec>]
+ num_spec			::= 'num' <int>
+ addr_spec			::= 'addr' valid hostname or IP address of masterserver
+
+
+ serverlist_request_command	::= 'serverlist.request' [<max_ping>] [<min_players>]
+ max_ping					::= 'ping' <int>
+ min_players				::= 'players' <int>
+
+
+ serverlist_show_command	::= 'serverlist.show' 
+
+
+ srvcmd_command	::= 'srvcmd' <command_spec>
+ command_spec	::= <valid server control command>
+
+
+ colanim_command ::= 'colanim' <name> <coltab0> [<coltab1>] [<mode-spec>]
+ name            ::= "may be parenthesized to include whitespace"
+ coltab0         ::= 'src'  <coltab-src> 'len'  <coltab-len>
+ coltab1         ::= 'src2' <coltab-src> 'len2' <coltab-len>
+ coltab_src      ::= '(' <tab-spec> | <wave-spec> ')'
+ coltab_len      ::= <int>
+ mode_spec       ::= 'mode' 'add' | 'mul'
+ tab_spec        ::= 'tab' <col-list> [<comp>] [<mask>] [<t-equi> | <t-list>]
+ col_list        ::= '(' <int>+ ')'
+ comp            ::= 'comp' '1' | '3' | '4'
+ t_equi          ::= 't' <int>
+ t_list          ::= 'tl' '(' <int>+ ')'
+ wave_spec       ::= 'wave' <wave-name> [<t-equi>] [<max>] [<min>] [<mask>]
+ wave_name       ::= 'tri' | 'saw' | 'ramp' | 'sine'
+ max             ::= 'max' <int>
+ min             ::= 'min' <int>
+ mask            ::= 'mask' ['r'] ['g'] ['b'] ['a']
+
+
+ net_config ::= 'net.subsys' [[<protocol>] <packet_api>]
+ protocol   ::= 'peer-to-peer' | 'slot-server' | 'game-server'
+ packet_api ::= 'ipx' | 'udp'
+
+
+ audio_config ::= 'aud.conf' [conf_spec] [conf_spec] 
+ conf_spec    ::= 'off' | 'music' | 'sfx'
+
+
+ input_config ::= 'inp.conf' [conf_spec] [conf_spec] 
+ conf_spec    ::= 'off' | 'joystick' | 'mouse'
+
+
+ classiter_command ::= 'classiter' <class_spec> ( [<command>] [<trafo>] ) |
+ class_spec		   ::= 'class' <classname> | 'id' <classid>
+ command		   ::= 'cmd' 'reset'
+ trafo			   ::= 'trafo' '(' <vertex_spec> [<float>] ')'
+ apex_info		   ::= 'apex' '(' <float> [<float> [<float>]] ')'
+ prim_type		   ::= 'prim' 'tri' | 'quad' | 'pent'
+ vertex_list	   ::= 'vtxs' '(' <vertex_spec>+ ')'
+ vertex_spec	   ::= <float> <float> <float>
+
+
+ classpart_command ::= 'classpart' <class_spec> ( [<command>] [<trafo>] ) |
+ class_spec		   ::= 'class' <classname> | 'id' <classid>
+ command		   ::= 'cmd' 'reset'
+ trafo			   ::= 'trafo' '(' <vertex_spec> [<float>] ')'
+ pdef			   ::= 'pdef' <pdef_name>
+ position		   ::= 'pos' '(' <vertex_spec> ')'
+ size			   ::= 'size' <float>
+ render_mode	   ::= 'render' 'poslight' | 'thrust' | 'missile'
+ vertex_spec	   ::= <float> <float> <float>
+
+
+ faceinfo_command ::= 'faceinfo' <class-spec> <face-spec>
+ class_spec       ::= <class-name> | <class-id>
+ class_name       ::= 'class' <name>
+ class_id         ::= 'classid' <int>
+ face_spec        ::= <face-id-spec> | <attrib-spec>
+ face_id_spec     ::= 'faceid' <face-id>
+ attrib_spec      ::= <shader-spec> | <tex-spec>
+ shader_spec      ::= 'shader' <shader-iter> | <shader-name>
+ shader_iter      ::= '(' 'iter_xx'* 'flag_xx'* ')'
+ shader_name      ::= "valid name of shader"
+ tex_spec         ::= 'texture' <texture-name>
+
+
+ key_command ::= 'key' ( <key_spec> <command> | <func_spec> <mkc_code> )
+ key_spec    ::= 'akc_*'
+ command     ::= "arbitrary string, may contain whitespace"
+ func_spec   ::= 'func_*' | 'func_1_*' | 'func_2_*'
+ mkc_code    ::= 'mkc_*' | '0x' <hex-digit> <hex-digit> | <nil>
+ hex-digit   ::= [0-9a-f]
+ nil         ::= "if no mkc_code is supplied mapping will be deassigned."
+
+
+ bind_command ::= 'bind' ( <key_spec> <command> | <func_spec> <mkc_code> )
+ key_spec     ::= 'akc_*'
+ command      ::= "arbitrary string, may contain whitespace"
+ func_spec    ::= 'func_*' | 'func_1_*' | 'func_2_*'
+ mkc_code     ::= 'mkc_*' | '0x' <hex-digit> <hex-digit> | <nil>
+ hex-digit    ::= [0-9a-f]
+ nil          ::= "if no mkc_code is supplied mapping will be deassigned."
+
+
+ load_command ::= 'load' <data_type> <name> [<key> <value>]*
+ data_type    ::= 'object' | 'texture' | 'texfont' | 'bitmap' | 'sample'
+ name         ::= "may be parenthesized () to include whitespace"
+ key          ::= "valid keys depend on data type"
+
+
+ defshader_command ::= 'shader.def' <shader-name> [<shader-spec>] [<color>] [<anims>]
+ shader_name       ::= "may be parenthesized to include whitespace"
+ shader_spec       ::= 'shader' <shader-iter> | <shader-name>
+ shader_iter       ::= '(' 'iter_xx'* 'flag_xx'* ')'
+ shader_name       ::= "valid name of shader"
+ color             ::= 'color' '(' <int> <int> <int> [<int>] ')'
+ anims             ::= [<texanim>] [<colanim> [<colanim-mode>]]
+ texanim           ::= 'texanim' "valid name of texanim"
+ colanim           ::= 'colanim' "valid name of colanim"
+ colanim_mode      ::= 'colmode' 'add' | 'mul' | 'nobase'
+
+
+ setshader_command ::= 'shader.set' <class-spec> <shader-spec> [<face-spec>]
+ class_spec        ::= <class-name> | <class-id> [<lod-spec>]
+ class_name        ::= 'class' <name>
+ class_id          ::= 'id' <int>
+ lod_spec          ::= 'lod' <int>
+ shader_spec       ::= 'shader' <shader-iter> | <shader-name>
+ shader_iter       ::= '(' 'iter_xx'* 'flag_xx'* ')'
+ shader_name       ::= "valid name of shader"
+ face_spec		   ::= <tex-spec> | <face-id-spec>
+ tex_spec          ::= 'texture' <texture-name>
+ face_id_spec      ::= 'faceid' <face-id> | <face-id-list>
+ face_id_list      ::= '(' <face-id>+ ')'
+
+
+ texanim_command ::= 'texanim' <name>
+ name            ::= "may be parenthesized to include whitespace"
+
+
+ summon_command	::= 'summon' <object_spec> [<init_spec>] [<multi_spec>]
+ object_spec	::= <classname_spec> | <classid_spec> | <sfx_spec> | <vtype_spec>
+ classname_spec	::= 'class' <classname>
+ classid_spec	::= 'id' <classid>
+ sfx_spec		::= 'sfx' <sfxname>
+ vtype_spec     ::= 'vtype' <typename>
+ init_spec		::= [<origin_spec> [<space_spec>]] [<speed_spec>] [<frame_spec>]
+ origin_spec	::= 'origin' '(' <float> <float> <float> ')'
+ space_spec		::= 'space' 'vv' | 'vw' | 'wv' | 'ww'
+ speed_spec		::= 'speed' <int>
+ frame_spec     ::= 'frame' '(' <float> <float> <float> <float> <float> <float> <float> <float> <float> ')'
+ multi_spec		::= [<count_spec> [<repl_spec>] [<space_spec>]]
+ repl_spec		::= <offset_spec> | <scatter_spec>
+ count_spec 	::= 'count' <int>
+ offset_spec	::=	'offs' '(' <float> <float> <float> ')'
+ scatter_spec	::=	'scatter' '(' <float> <float> <float> ')'
+ classname		::= "may be parenthesized () to include whitespace"
+ classid		::= <int>
+ sfxname		::= 'energyfield'
+
+
+ do_creg_command	::= 'do_creg' [<int_list>]
+ int_list			::= <int> [<int_list>]
+
+
+ shipclass_command	  ::= 'shipclass' <class_spec> [<monitor_texture_spec>]
+ class_spec			  ::= 'class' <classname> | 'id' <classid>
+ monitor_texture_spec ::= 'texture' <texturename>
+
+
+ extraclass_command	::= 'extraclass' <class_spec>
+ class_spec			::= 'class' <classname> | 'id' <classid>
+
+
+ decoy_command	::= 'decoy'
+
+
+ cloak_command	::= 'cloak'
+
+
+ pdef_command ::= 'pdef' <name> <texanispec> [<xfoanispec>]
+ name         ::= "may be parenthesized () to include whitespace"
+ texanispec   ::= <basename> <tablen> [<basedig>] [<textab>] [<textabctrl>]
+ basename     ::= 'base' <name>
+ tablen       ::= 'len' <int>
+ basedig      ::= 'dig' '1' | '2' | '3' | '4'
+ textab		  ::= 'tab' '(' <texframespec> <textimespec> ')'
+ texframespec ::= ( ['base' <int>] ['stride' <int>] ) | ['frm' '(' <intlist> ')']
+ textimespec  ::= ['t' <int>] | ['tl' '(' <intlist> ')']
+ textabctrl	  ::= ['bgn' <int>] ['rep' <int>] ['end' <int>]
+ xfoanispec   ::= 'xfolen' <int> ['xfotab' <xfotab>] [<xfotabctrl>]
+ xfotab		  ::= '('  ')'
+ xfotabctrl	  ::= ['xfobgn' <int>] ['xforep' <int>] ['xfoend' <int>]
+ intlist	  ::= [<intlist>] <int>
+
+
+ pattach_command	::= 'pattach' <pdefname> <shipspec> <origin> [<ref_z>] [<type>]
+ shipspec			::= 'ship' 'local' | 'target'
+ origin				::= 'origin' '(' <float> <float> <float> ')'
+ ref_z				::= 'size' <float>
+ type				::= 'normal' | 'flare' | 'light'
+
+
+ inp_weaponsel_command ::= 'inp.weaponsel' <number>
+

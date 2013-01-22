@@ -1,0 +1,93 @@
+
+write loading panorama
+
+;load texture sky1_up  file sky1_up.3df
+;load texture sky1_rt  file sky1_rt.3df
+;load texture sky1_lf  file sky1_lf.3df
+;load texture sky1_fr  file sky1_fr.3df
+;load texture sky1_dn  file sky1_dn.3df
+;load texture sky1_bk  file sky1_bk.3df
+
+;load texture sky2_up  file sky2_up.3df
+;load texture sky2_rt  file sky2_rt.3df
+;load texture sky2_lf  file sky2_lf.3df
+;load texture sky2_fr  file sky2_fr.3df
+;load texture sky2_dn  file sky2_dn.3df
+;load texture sky2_bk  file sky2_bk.3df
+
+load texture sky3_up  file sky3_up.3df
+load texture sky3_rt  file sky3_rt.3df
+load texture sky3_lf  file sky3_lf.3df
+load texture sky3_fr  file sky3_fr.3df
+load texture sky3_dn  file sky3_dn.3df
+load texture sky3_bk  file sky3_bk.3df
+
+load texture sky4_up  file sky4_up.3df
+load texture sky4_rt  file sky4_rt.3df
+load texture sky4_lf  file sky4_lf.3df
+load texture sky4_fr  file sky4_fr.3df
+load texture sky4_dn  file sky4_dn.3df
+load texture sky4_bk  file sky4_bk.3df
+
+load texture sky5_up  file sky5_up.3df
+load texture sky5_rt  file sky5_rt.3df
+load texture sky5_lf  file sky5_lf.3df
+load texture sky5_fr  file sky5_fr.3df
+load texture sky5_dn  file sky5_dn.3df
+load texture sky5_bk  file sky5_bk.3df
+
+load texture sky6_up  file sky6_up.3df
+load texture sky6_rt  file sky6_rt.3df
+load texture sky6_lf  file sky6_lf.3df
+load texture sky6_fr  file sky6_fr.3df
+load texture sky6_dn  file sky6_dn.3df
+load texture sky6_bk  file sky6_bk.3df
+
+;load texture sky7_up  file sky5_up.3df
+;load texture sky7_rt  file sky5_rt.3df
+;load texture sky7_lf  file sky5_lf.3df
+;load texture sky7_fr  file sky5_fr.3df
+;load texture sky7_dn  file sky5_dn.3df
+;load texture sky7_bk  file sky5_bk.3df
+
+load texture stars1   file stars1.3df
+;load texture sunbrit  file p_3.3df
+load texture sunbrt2  file sn01_01a.3df
+load texture sunbrt3  file p_3.3df
+;load texture planet1 file p_c.3df
+;load texture planet1 file erde.3df
+;load texture planet1  file planet3.3df
+load texture planet2 file pl03_01a.3df
+load texture planet3 file pl02_01a.3df
+
+shader.def pan_sun shader (iter_texonly iter_specularadd)
+shader.def pan_planet shader (iter_texonly iter_alphablend)
+
+;load object panorama1    type extra_1 file env2.bin    flags nodefaults
+;load object panorama1_01 type extra_1 file env2_01.odt flags nodefaults
+load object panorama1_02 type extra_1 file env2_02.odt flags nodefaults
+load object panorama1_03 type extra_1 file env2_03.odt flags nodefaults
+load object panorama1_04 type extra_1 file env2_04.odt flags nodefaults
+load object panorama1_05 type extra_1 file env2_05.odt flags nodefaults
+;load object panorama1_06 type extra_1 file env2_06.odt flags nodefaults
+load object panorama2    type extra_1 file env2s.bin   flags nodefaults shader (iter_constrgbatexa iter_alphablend)
+load object panorama2_hi type extra_1 file env2sh.odt  flags nodefaults shader (iter_constrgbatexa iter_alphablend)
+;load object panorama3    type extra_1 file env2d.bin   flags nodefaults shader (iter_texonly iter_specularadd)
+load object panorama3_02 type extra_1 file env2d_02.odt flags nodefaults shader pan_planet
+load object panorama3_03 type extra_1 file env2d_03.odt flags nodefaults shader pan_planet
+load object panorama3_04 type extra_1 file env2d_04.odt flags nodefaults shader pan_planet
+load object panorama3_05 type extra_1 file env2d_05.odt flags nodefaults shader pan_planet
+
+shader.set class panorama3_02 shader pan_sun texture sunbrt2
+shader.set class panorama3_03 shader pan_sun texture sunbrt3
+shader.set class panorama3_04 shader pan_sun texture sunbrt2
+shader.set class panorama3_05 shader pan_sun texture sunbrt3
+
+.aux28 1
+.aux43 1
+.aux44 0
+.aux45 0
+.aux46 0
+
+;eof
+

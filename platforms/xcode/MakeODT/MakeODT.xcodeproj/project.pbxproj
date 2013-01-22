@@ -1,0 +1,909 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA5D3B911672A81500011ABD /* AodFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B371672A81500011ABD /* AodFormat.cpp */; };
+		FA5D3B921672A81500011ABD /* AodInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B391672A81500011ABD /* AodInput.cpp */; };
+		FA5D3B931672A81500011ABD /* AodOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B3B1672A81500011ABD /* AodOutput.cpp */; };
+		FA5D3B941672A81500011ABD /* BoundingBox.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B3D1672A81500011ABD /* BoundingBox.cpp */; };
+		FA5D3B951672A81500011ABD /* BRep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B3F1672A81500011ABD /* BRep.cpp */; };
+		FA5D3B961672A81500011ABD /* BspFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B411672A81500011ABD /* BspFormat.cpp */; };
+		FA5D3B971672A81500011ABD /* BspInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B431672A81500011ABD /* BspInput.cpp */; };
+		FA5D3B981672A81500011ABD /* BSPNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B4A1672A81500011ABD /* BSPNode.cpp */; };
+		FA5D3B991672A81500011ABD /* BspObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B4C1672A81500011ABD /* BspObject.cpp */; };
+		FA5D3B9A1672A81500011ABD /* BspObjectList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B4E1672A81500011ABD /* BspObjectList.cpp */; };
+		FA5D3B9B1672A81500011ABD /* BspOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B501672A81500011ABD /* BspOutput.cpp */; };
+		FA5D3B9C1672A81500011ABD /* BspTool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B521672A81500011ABD /* BspTool.cpp */; };
+		FA5D3B9D1672A81500011ABD /* BSPTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B541672A81500011ABD /* BSPTree.cpp */; };
+		FA5D3B9E1672A81500011ABD /* EpsAreas.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B581672A81500011ABD /* EpsAreas.cpp */; };
+		FA5D3B9F1672A81500011ABD /* Face.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B591672A81500011ABD /* Face.cpp */; };
+		FA5D3BA01672A81500011ABD /* InputData3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B5B1672A81500011ABD /* InputData3D.cpp */; };
+		FA5D3BA11672A81500011ABD /* IOData3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B5D1672A81500011ABD /* IOData3D.cpp */; };
+		FA5D3BA21672A81500011ABD /* LineSeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B5F1672A81500011ABD /* LineSeg.cpp */; };
+		FA5D3BA41672A81500011ABD /* Mapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B631672A81500011ABD /* Mapping.cpp */; };
+		FA5D3BA51672A81500011ABD /* ObjectAodFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B661672A81500011ABD /* ObjectAodFormat.cpp */; };
+		FA5D3BA61672A81500011ABD /* ObjectBinFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B681672A81500011ABD /* ObjectBinFormat.cpp */; };
+		FA5D3BA71672A81500011ABD /* ObjectBspFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B6A1672A81500011ABD /* ObjectBspFormat.cpp */; };
+		FA5D3BA81672A81500011ABD /* ObjectBSPNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B6C1672A81500011ABD /* ObjectBSPNode.cpp */; };
+		FA5D3BA91672A81500011ABD /* OutputData3D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B6F1672A81500011ABD /* OutputData3D.cpp */; };
+		FA5D3BAA1672A81500011ABD /* Polygon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B721672A81500011ABD /* Polygon.cpp */; };
+		FA5D3BAB1672A81500011ABD /* PolygonList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B741672A81500011ABD /* PolygonList.cpp */; };
+		FA5D3BAC1672A81500011ABD /* SingleFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B761672A81500011ABD /* SingleFormat.cpp */; };
+		FA5D3BAD1672A81500011ABD /* SingleInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B781672A81500011ABD /* SingleInput.cpp */; };
+		FA5D3BAE1672A81500011ABD /* SingleOutput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B7A1672A81500011ABD /* SingleOutput.cpp */; };
+		FA5D3BAF1672A81500011ABD /* SystemIO.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B7C1672A81500011ABD /* SystemIO.cpp */; };
+		FA5D3BB01672A81500011ABD /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B7E1672A81500011ABD /* Texture.cpp */; };
+		FA5D3BB11672A81500011ABD /* Transform2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B801672A81500011ABD /* Transform2.cpp */; };
+		FA5D3BB21672A81500011ABD /* Transform3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B821672A81500011ABD /* Transform3.cpp */; };
+		FA5D3BB31672A81500011ABD /* TriMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B841672A81500011ABD /* TriMapping.cpp */; };
+		FA5D3BB41672A81500011ABD /* Vertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B891672A81500011ABD /* Vertex.cpp */; };
+		FA5D3BB51672A81500011ABD /* VertexChunk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B8D1672A81500011ABD /* VertexChunk.cpp */; };
+		FA5D3BB61672A81500011ABD /* VrmlFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3B8F1672A81500011ABD /* VrmlFile.cpp */; };
+		FA5D3BC11672A84300011ABD /* getopt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BB91672A84300011ABD /* getopt.cpp */; };
+		FA5D3BC31672A84300011ABD /* makeodt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BBC1672A84300011ABD /* makeodt.cpp */; };
+		FA5D3C561672A86300011ABD /* QvChildList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BC71672A86300011ABD /* QvChildList.cpp */; };
+		FA5D3C571672A86300011ABD /* QvCone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BC91672A86300011ABD /* QvCone.cpp */; };
+		FA5D3C581672A86300011ABD /* QvCoordinate3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BCB1672A86300011ABD /* QvCoordinate3.cpp */; };
+		FA5D3C591672A86300011ABD /* QvCube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BCD1672A86300011ABD /* QvCube.cpp */; };
+		FA5D3C5A1672A86300011ABD /* QvCylinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BCF1672A86300011ABD /* QvCylinder.cpp */; };
+		FA5D3C5B1672A86300011ABD /* QvDb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BD11672A86300011ABD /* QvDb.cpp */; };
+		FA5D3C5C1672A86300011ABD /* QvDebugError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BD31672A86300011ABD /* QvDebugError.cpp */; };
+		FA5D3C5D1672A86300011ABD /* QvDict.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BD51672A86300011ABD /* QvDict.cpp */; };
+		FA5D3C5E1672A86300011ABD /* QvDirectionalLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BD71672A86300011ABD /* QvDirectionalLight.cpp */; };
+		FA5D3C5F1672A86300011ABD /* QvElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BD91672A86300011ABD /* QvElement.cpp */; };
+		FA5D3C601672A86300011ABD /* QvField.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BDB1672A86300011ABD /* QvField.cpp */; };
+		FA5D3C611672A86300011ABD /* QvFieldData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BDD1672A86300011ABD /* QvFieldData.cpp */; };
+		FA5D3C621672A86300011ABD /* QvGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BE01672A86300011ABD /* QvGroup.cpp */; };
+		FA5D3C631672A86300011ABD /* QvIndexedFaceSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BE21672A86300011ABD /* QvIndexedFaceSet.cpp */; };
+		FA5D3C641672A86300011ABD /* QvIndexedLineSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BE41672A86300011ABD /* QvIndexedLineSet.cpp */; };
+		FA5D3C651672A86300011ABD /* QvInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BE61672A86300011ABD /* QvInfo.cpp */; };
+		FA5D3C661672A86300011ABD /* QvInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BE81672A86300011ABD /* QvInput.cpp */; };
+		FA5D3C671672A86300011ABD /* QvLevelOfDetail.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BEA1672A86300011ABD /* QvLevelOfDetail.cpp */; };
+		FA5D3C681672A86300011ABD /* QvLists.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BEE1672A86300011ABD /* QvLists.cpp */; };
+		FA5D3C691672A86300011ABD /* QvMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BF01672A86300011ABD /* QvMaterial.cpp */; };
+		FA5D3C6A1672A86300011ABD /* QvMaterialBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BF21672A86300011ABD /* QvMaterialBinding.cpp */; };
+		FA5D3C6B1672A86300011ABD /* QvMatrixTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BF41672A86300011ABD /* QvMatrixTransform.cpp */; };
+		FA5D3C6C1672A86300011ABD /* QvMFColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BF61672A86300011ABD /* QvMFColor.cpp */; };
+		FA5D3C6D1672A86300011ABD /* QvMFFloat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BF81672A86300011ABD /* QvMFFloat.cpp */; };
+		FA5D3C6E1672A86300011ABD /* QvMFLong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BFA1672A86300011ABD /* QvMFLong.cpp */; };
+		FA5D3C6F1672A86300011ABD /* QvMFVec2f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BFC1672A86300011ABD /* QvMFVec2f.cpp */; };
+		FA5D3C701672A86300011ABD /* QvMFVec3f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3BFE1672A86300011ABD /* QvMFVec3f.cpp */; };
+		FA5D3C711672A86300011ABD /* QvName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C001672A86300011ABD /* QvName.cpp */; };
+		FA5D3C721672A86300011ABD /* QvNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C011672A86300011ABD /* QvNode.cpp */; };
+		FA5D3C731672A86300011ABD /* QvNormal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C041672A86300011ABD /* QvNormal.cpp */; };
+		FA5D3C741672A86300011ABD /* QvNormalBinding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C061672A86300011ABD /* QvNormalBinding.cpp */; };
+		FA5D3C751672A86300011ABD /* QvOrthographicCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C081672A86300011ABD /* QvOrthographicCamera.cpp */; };
+		FA5D3C761672A86300011ABD /* QvPerspectiveCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C0A1672A86300011ABD /* QvPerspectiveCamera.cpp */; };
+		FA5D3C771672A86300011ABD /* QvPList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C0C1672A86300011ABD /* QvPList.cpp */; };
+		FA5D3C781672A86300011ABD /* QvPointLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C0E1672A86300011ABD /* QvPointLight.cpp */; };
+		FA5D3C791672A86300011ABD /* QvPointSet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C101672A86300011ABD /* QvPointSet.cpp */; };
+		FA5D3C7A1672A86300011ABD /* QvReadError.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C121672A86300011ABD /* QvReadError.cpp */; };
+		FA5D3C7B1672A86300011ABD /* QvRotation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C141672A86300011ABD /* QvRotation.cpp */; };
+		FA5D3C7C1672A86300011ABD /* QvScale.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C161672A86300011ABD /* QvScale.cpp */; };
+		FA5D3C7D1672A86300011ABD /* QvSeparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C181672A86300011ABD /* QvSeparator.cpp */; };
+		FA5D3C7E1672A86300011ABD /* QvSFBitMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C1A1672A86300011ABD /* QvSFBitMask.cpp */; };
+		FA5D3C7F1672A86300011ABD /* QvSFBool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C1C1672A86300011ABD /* QvSFBool.cpp */; };
+		FA5D3C801672A86300011ABD /* QvSFColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C1E1672A86300011ABD /* QvSFColor.cpp */; };
+		FA5D3C811672A86300011ABD /* QvSFEnum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C201672A86300011ABD /* QvSFEnum.cpp */; };
+		FA5D3C821672A86300011ABD /* QvSFFloat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C221672A86300011ABD /* QvSFFloat.cpp */; };
+		FA5D3C831672A86300011ABD /* QvSFImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C241672A86300011ABD /* QvSFImage.cpp */; };
+		FA5D3C841672A86300011ABD /* QvSFLong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C261672A86300011ABD /* QvSFLong.cpp */; };
+		FA5D3C851672A86300011ABD /* QvSFMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C281672A86300011ABD /* QvSFMatrix.cpp */; };
+		FA5D3C861672A86300011ABD /* QvSFRotation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C2A1672A86300011ABD /* QvSFRotation.cpp */; };
+		FA5D3C871672A86300011ABD /* QvSFString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C2C1672A86300011ABD /* QvSFString.cpp */; };
+		FA5D3C881672A86300011ABD /* QvSFVec2f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C2E1672A86300011ABD /* QvSFVec2f.cpp */; };
+		FA5D3C891672A86300011ABD /* QvSFVec3f.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C301672A86300011ABD /* QvSFVec3f.cpp */; };
+		FA5D3C8A1672A86300011ABD /* QvShapeHints.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C321672A86300011ABD /* QvShapeHints.cpp */; };
+		FA5D3C8B1672A86300011ABD /* QvSphere.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C341672A86300011ABD /* QvSphere.cpp */; };
+		FA5D3C8C1672A86300011ABD /* QvSpotlight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C361672A86300011ABD /* QvSpotlight.cpp */; };
+		FA5D3C8D1672A86300011ABD /* QvState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C381672A86300011ABD /* QvState.cpp */; };
+		FA5D3C8E1672A86300011ABD /* QvString.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C3A1672A86300011ABD /* QvString.cpp */; };
+		FA5D3C8F1672A86300011ABD /* QvSwitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C3E1672A86300011ABD /* QvSwitch.cpp */; };
+		FA5D3C901672A86300011ABD /* QvTexture2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C401672A86300011ABD /* QvTexture2.cpp */; };
+		FA5D3C911672A86300011ABD /* QvTexture2Transform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C421672A86300011ABD /* QvTexture2Transform.cpp */; };
+		FA5D3C921672A86300011ABD /* QvTextureCoordinate2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C441672A86300011ABD /* QvTextureCoordinate2.cpp */; };
+		FA5D3C931672A86300011ABD /* QvTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C461672A86300011ABD /* QvTransform.cpp */; };
+		FA5D3C941672A86300011ABD /* QvTransformSeparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C481672A86300011ABD /* QvTransformSeparator.cpp */; };
+		FA5D3C951672A86300011ABD /* QvTranslation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C4A1672A86300011ABD /* QvTranslation.cpp */; };
+		FA5D3C961672A86300011ABD /* QvTraverse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C4C1672A86300011ABD /* QvTraverse.cpp */; };
+		FA5D3C981672A86300011ABD /* QvUnknownNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C4E1672A86300011ABD /* QvUnknownNode.cpp */; };
+		FA5D3C991672A86300011ABD /* QvWWWAnchor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C501672A86300011ABD /* QvWWWAnchor.cpp */; };
+		FA5D3C9A1672A86300011ABD /* QvWWWInline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA5D3C521672A86300011ABD /* QvWWWInline.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FA5D3B091672A65A00011ABD /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FA5D3B0B1672A65A00011ABD /* MakeODT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = MakeODT; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA5D3B371672A81500011ABD /* AodFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AodFormat.cpp; sourceTree = "<group>"; };
+		FA5D3B381672A81500011ABD /* AodFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AodFormat.h; sourceTree = "<group>"; };
+		FA5D3B391672A81500011ABD /* AodInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AodInput.cpp; sourceTree = "<group>"; };
+		FA5D3B3A1672A81500011ABD /* AodInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AodInput.h; sourceTree = "<group>"; };
+		FA5D3B3B1672A81500011ABD /* AodOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AodOutput.cpp; sourceTree = "<group>"; };
+		FA5D3B3C1672A81500011ABD /* AodOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AodOutput.h; sourceTree = "<group>"; };
+		FA5D3B3D1672A81500011ABD /* BoundingBox.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BoundingBox.cpp; sourceTree = "<group>"; };
+		FA5D3B3E1672A81500011ABD /* BoundingBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoundingBox.h; sourceTree = "<group>"; };
+		FA5D3B3F1672A81500011ABD /* BRep.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BRep.cpp; sourceTree = "<group>"; };
+		FA5D3B401672A81500011ABD /* BRep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRep.h; sourceTree = "<group>"; };
+		FA5D3B411672A81500011ABD /* BspFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BspFormat.cpp; sourceTree = "<group>"; };
+		FA5D3B421672A81500011ABD /* BspFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspFormat.h; sourceTree = "<group>"; };
+		FA5D3B431672A81500011ABD /* BspInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BspInput.cpp; sourceTree = "<group>"; };
+		FA5D3B441672A81500011ABD /* BspInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspInput.h; sourceTree = "<group>"; };
+		FA5D3B491672A81500011ABD /* BspLibDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspLibDefs.h; sourceTree = "<group>"; };
+		FA5D3B4A1672A81500011ABD /* BSPNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BSPNode.cpp; sourceTree = "<group>"; };
+		FA5D3B4B1672A81500011ABD /* BSPNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSPNode.h; sourceTree = "<group>"; };
+		FA5D3B4C1672A81500011ABD /* BspObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BspObject.cpp; sourceTree = "<group>"; };
+		FA5D3B4D1672A81500011ABD /* BspObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspObject.h; sourceTree = "<group>"; };
+		FA5D3B4E1672A81500011ABD /* BspObjectList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BspObjectList.cpp; sourceTree = "<group>"; };
+		FA5D3B4F1672A81500011ABD /* BspObjectList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspObjectList.h; sourceTree = "<group>"; };
+		FA5D3B501672A81500011ABD /* BspOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BspOutput.cpp; sourceTree = "<group>"; };
+		FA5D3B511672A81500011ABD /* BspOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspOutput.h; sourceTree = "<group>"; };
+		FA5D3B521672A81500011ABD /* BspTool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BspTool.cpp; sourceTree = "<group>"; };
+		FA5D3B531672A81500011ABD /* BspTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BspTool.h; sourceTree = "<group>"; };
+		FA5D3B541672A81500011ABD /* BSPTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BSPTree.cpp; sourceTree = "<group>"; };
+		FA5D3B551672A81500011ABD /* BSPTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSPTree.h; sourceTree = "<group>"; };
+		FA5D3B561672A81500011ABD /* Chunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chunk.h; sourceTree = "<group>"; };
+		FA5D3B581672A81500011ABD /* EpsAreas.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EpsAreas.cpp; sourceTree = "<group>"; };
+		FA5D3B591672A81500011ABD /* Face.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Face.cpp; sourceTree = "<group>"; };
+		FA5D3B5A1672A81500011ABD /* Face.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Face.h; sourceTree = "<group>"; };
+		FA5D3B5B1672A81500011ABD /* InputData3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputData3D.cpp; sourceTree = "<group>"; };
+		FA5D3B5C1672A81500011ABD /* InputData3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputData3D.h; sourceTree = "<group>"; };
+		FA5D3B5D1672A81500011ABD /* IOData3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IOData3D.cpp; sourceTree = "<group>"; };
+		FA5D3B5E1672A81500011ABD /* IOData3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IOData3D.h; sourceTree = "<group>"; };
+		FA5D3B5F1672A81500011ABD /* LineSeg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LineSeg.cpp; sourceTree = "<group>"; };
+		FA5D3B601672A81500011ABD /* LineSeg2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSeg2.h; sourceTree = "<group>"; };
+		FA5D3B611672A81500011ABD /* LineSeg3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineSeg3.h; sourceTree = "<group>"; };
+		FA5D3B631672A81500011ABD /* Mapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mapping.cpp; sourceTree = "<group>"; };
+		FA5D3B641672A81500011ABD /* Mapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mapping.h; sourceTree = "<group>"; };
+		FA5D3B651672A81500011ABD /* Material.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Material.h; sourceTree = "<group>"; };
+		FA5D3B661672A81500011ABD /* ObjectAodFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectAodFormat.cpp; sourceTree = "<group>"; };
+		FA5D3B671672A81500011ABD /* ObjectAodFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectAodFormat.h; sourceTree = "<group>"; };
+		FA5D3B681672A81500011ABD /* ObjectBinFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBinFormat.cpp; sourceTree = "<group>"; };
+		FA5D3B691672A81500011ABD /* ObjectBinFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBinFormat.h; sourceTree = "<group>"; };
+		FA5D3B6A1672A81500011ABD /* ObjectBspFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBspFormat.cpp; sourceTree = "<group>"; };
+		FA5D3B6B1672A81500011ABD /* ObjectBspFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBspFormat.h; sourceTree = "<group>"; };
+		FA5D3B6C1672A81500011ABD /* ObjectBSPNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ObjectBSPNode.cpp; sourceTree = "<group>"; };
+		FA5D3B6D1672A81500011ABD /* ObjectBSPNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBSPNode.h; sourceTree = "<group>"; };
+		FA5D3B6E1672A81500011ABD /* ObjectBSPTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectBSPTree.h; sourceTree = "<group>"; };
+		FA5D3B6F1672A81500011ABD /* OutputData3D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutputData3D.cpp; sourceTree = "<group>"; };
+		FA5D3B701672A81500011ABD /* OutputData3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OutputData3D.h; sourceTree = "<group>"; };
+		FA5D3B711672A81500011ABD /* Plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Plane.h; sourceTree = "<group>"; };
+		FA5D3B721672A81500011ABD /* Polygon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Polygon.cpp; sourceTree = "<group>"; };
+		FA5D3B731672A81500011ABD /* Polygon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polygon.h; sourceTree = "<group>"; };
+		FA5D3B741672A81500011ABD /* PolygonList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolygonList.cpp; sourceTree = "<group>"; };
+		FA5D3B751672A81500011ABD /* PolygonList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PolygonList.h; sourceTree = "<group>"; };
+		FA5D3B761672A81500011ABD /* SingleFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleFormat.cpp; sourceTree = "<group>"; };
+		FA5D3B771672A81500011ABD /* SingleFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleFormat.h; sourceTree = "<group>"; };
+		FA5D3B781672A81500011ABD /* SingleInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleInput.cpp; sourceTree = "<group>"; };
+		FA5D3B791672A81500011ABD /* SingleInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleInput.h; sourceTree = "<group>"; };
+		FA5D3B7A1672A81500011ABD /* SingleOutput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SingleOutput.cpp; sourceTree = "<group>"; };
+		FA5D3B7B1672A81500011ABD /* SingleOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleOutput.h; sourceTree = "<group>"; };
+		FA5D3B7C1672A81500011ABD /* SystemIO.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SystemIO.cpp; sourceTree = "<group>"; };
+		FA5D3B7D1672A81500011ABD /* SystemIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SystemIO.h; sourceTree = "<group>"; };
+		FA5D3B7E1672A81500011ABD /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		FA5D3B7F1672A81500011ABD /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Texture.h; sourceTree = "<group>"; };
+		FA5D3B801672A81500011ABD /* Transform2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform2.cpp; sourceTree = "<group>"; };
+		FA5D3B811672A81500011ABD /* Transform2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform2.h; sourceTree = "<group>"; };
+		FA5D3B821672A81500011ABD /* Transform3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Transform3.cpp; sourceTree = "<group>"; };
+		FA5D3B831672A81500011ABD /* Transform3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Transform3.h; sourceTree = "<group>"; };
+		FA5D3B841672A81500011ABD /* TriMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TriMapping.cpp; sourceTree = "<group>"; };
+		FA5D3B851672A81500011ABD /* TriMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TriMapping.h; sourceTree = "<group>"; };
+		FA5D3B861672A81500011ABD /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		FA5D3B871672A81500011ABD /* Vector2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector2.h; sourceTree = "<group>"; };
+		FA5D3B881672A81500011ABD /* Vector3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector3.h; sourceTree = "<group>"; };
+		FA5D3B891672A81500011ABD /* Vertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Vertex.cpp; sourceTree = "<group>"; };
+		FA5D3B8A1672A81500011ABD /* Vertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex.h; sourceTree = "<group>"; };
+		FA5D3B8B1672A81500011ABD /* Vertex2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex2.h; sourceTree = "<group>"; };
+		FA5D3B8C1672A81500011ABD /* Vertex3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vertex3.h; sourceTree = "<group>"; };
+		FA5D3B8D1672A81500011ABD /* VertexChunk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VertexChunk.cpp; sourceTree = "<group>"; };
+		FA5D3B8E1672A81500011ABD /* VertexChunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VertexChunk.h; sourceTree = "<group>"; };
+		FA5D3B8F1672A81500011ABD /* VrmlFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VrmlFile.cpp; sourceTree = "<group>"; };
+		FA5D3B901672A81500011ABD /* VrmlFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VrmlFile.h; sourceTree = "<group>"; };
+		FA5D3BB91672A84300011ABD /* getopt.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = getopt.cpp; sourceTree = "<group>"; };
+		FA5D3BBA1672A84300011ABD /* getopt.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = getopt.h; sourceTree = "<group>"; };
+		FA5D3BBC1672A84300011ABD /* makeodt.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = makeodt.cpp; sourceTree = "<group>"; };
+		FA5D3BBD1672A84300011ABD /* makeodt.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = makeodt.h; sourceTree = "<group>"; };
+		FA5D3BC61672A86300011ABD /* QvBasic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvBasic.h; sourceTree = "<group>"; };
+		FA5D3BC71672A86300011ABD /* QvChildList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvChildList.cpp; sourceTree = "<group>"; };
+		FA5D3BC81672A86300011ABD /* QvChildList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvChildList.h; sourceTree = "<group>"; };
+		FA5D3BC91672A86300011ABD /* QvCone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvCone.cpp; sourceTree = "<group>"; };
+		FA5D3BCA1672A86300011ABD /* QvCone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvCone.h; sourceTree = "<group>"; };
+		FA5D3BCB1672A86300011ABD /* QvCoordinate3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvCoordinate3.cpp; sourceTree = "<group>"; };
+		FA5D3BCC1672A86300011ABD /* QvCoordinate3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvCoordinate3.h; sourceTree = "<group>"; };
+		FA5D3BCD1672A86300011ABD /* QvCube.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvCube.cpp; sourceTree = "<group>"; };
+		FA5D3BCE1672A86300011ABD /* QvCube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvCube.h; sourceTree = "<group>"; };
+		FA5D3BCF1672A86300011ABD /* QvCylinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvCylinder.cpp; sourceTree = "<group>"; };
+		FA5D3BD01672A86300011ABD /* QvCylinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvCylinder.h; sourceTree = "<group>"; };
+		FA5D3BD11672A86300011ABD /* QvDb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvDb.cpp; sourceTree = "<group>"; };
+		FA5D3BD21672A86300011ABD /* QvDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvDB.h; sourceTree = "<group>"; };
+		FA5D3BD31672A86300011ABD /* QvDebugError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvDebugError.cpp; sourceTree = "<group>"; };
+		FA5D3BD41672A86300011ABD /* QvDebugError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvDebugError.h; sourceTree = "<group>"; };
+		FA5D3BD51672A86300011ABD /* QvDict.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvDict.cpp; sourceTree = "<group>"; };
+		FA5D3BD61672A86300011ABD /* QvDict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvDict.h; sourceTree = "<group>"; };
+		FA5D3BD71672A86300011ABD /* QvDirectionalLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvDirectionalLight.cpp; sourceTree = "<group>"; };
+		FA5D3BD81672A86300011ABD /* QvDirectionalLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvDirectionalLight.h; sourceTree = "<group>"; };
+		FA5D3BD91672A86300011ABD /* QvElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvElement.cpp; sourceTree = "<group>"; };
+		FA5D3BDA1672A86300011ABD /* QvElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvElement.h; sourceTree = "<group>"; };
+		FA5D3BDB1672A86300011ABD /* QvField.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvField.cpp; sourceTree = "<group>"; };
+		FA5D3BDC1672A86300011ABD /* QvField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvField.h; sourceTree = "<group>"; };
+		FA5D3BDD1672A86300011ABD /* QvFieldData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvFieldData.cpp; sourceTree = "<group>"; };
+		FA5D3BDE1672A86300011ABD /* QvFieldData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvFieldData.h; sourceTree = "<group>"; };
+		FA5D3BDF1672A86300011ABD /* QvFields.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvFields.h; sourceTree = "<group>"; };
+		FA5D3BE01672A86300011ABD /* QvGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvGroup.cpp; sourceTree = "<group>"; };
+		FA5D3BE11672A86300011ABD /* QvGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvGroup.h; sourceTree = "<group>"; };
+		FA5D3BE21672A86300011ABD /* QvIndexedFaceSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvIndexedFaceSet.cpp; sourceTree = "<group>"; };
+		FA5D3BE31672A86300011ABD /* QvIndexedFaceSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvIndexedFaceSet.h; sourceTree = "<group>"; };
+		FA5D3BE41672A86300011ABD /* QvIndexedLineSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvIndexedLineSet.cpp; sourceTree = "<group>"; };
+		FA5D3BE51672A86300011ABD /* QvIndexedLineSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvIndexedLineSet.h; sourceTree = "<group>"; };
+		FA5D3BE61672A86300011ABD /* QvInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvInfo.cpp; sourceTree = "<group>"; };
+		FA5D3BE71672A86300011ABD /* QvInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvInfo.h; sourceTree = "<group>"; };
+		FA5D3BE81672A86300011ABD /* QvInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvInput.cpp; sourceTree = "<group>"; };
+		FA5D3BE91672A86300011ABD /* QvInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvInput.h; sourceTree = "<group>"; };
+		FA5D3BEA1672A86300011ABD /* QvLevelOfDetail.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvLevelOfDetail.cpp; sourceTree = "<group>"; };
+		FA5D3BEB1672A86300011ABD /* QvLevelOfDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvLevelOfDetail.h; sourceTree = "<group>"; };
+		FA5D3BEE1672A86300011ABD /* QvLists.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvLists.cpp; sourceTree = "<group>"; };
+		FA5D3BEF1672A86300011ABD /* QvLists.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvLists.h; sourceTree = "<group>"; };
+		FA5D3BF01672A86300011ABD /* QvMaterial.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMaterial.cpp; sourceTree = "<group>"; };
+		FA5D3BF11672A86300011ABD /* QvMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMaterial.h; sourceTree = "<group>"; };
+		FA5D3BF21672A86300011ABD /* QvMaterialBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMaterialBinding.cpp; sourceTree = "<group>"; };
+		FA5D3BF31672A86300011ABD /* QvMaterialBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMaterialBinding.h; sourceTree = "<group>"; };
+		FA5D3BF41672A86300011ABD /* QvMatrixTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMatrixTransform.cpp; sourceTree = "<group>"; };
+		FA5D3BF51672A86300011ABD /* QvMatrixTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMatrixTransform.h; sourceTree = "<group>"; };
+		FA5D3BF61672A86300011ABD /* QvMFColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMFColor.cpp; sourceTree = "<group>"; };
+		FA5D3BF71672A86300011ABD /* QvMFColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMFColor.h; sourceTree = "<group>"; };
+		FA5D3BF81672A86300011ABD /* QvMFFloat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMFFloat.cpp; sourceTree = "<group>"; };
+		FA5D3BF91672A86300011ABD /* QvMFFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMFFloat.h; sourceTree = "<group>"; };
+		FA5D3BFA1672A86300011ABD /* QvMFLong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMFLong.cpp; sourceTree = "<group>"; };
+		FA5D3BFB1672A86300011ABD /* QvMFLong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMFLong.h; sourceTree = "<group>"; };
+		FA5D3BFC1672A86300011ABD /* QvMFVec2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMFVec2f.cpp; sourceTree = "<group>"; };
+		FA5D3BFD1672A86300011ABD /* QvMFVec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMFVec2f.h; sourceTree = "<group>"; };
+		FA5D3BFE1672A86300011ABD /* QvMFVec3f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvMFVec3f.cpp; sourceTree = "<group>"; };
+		FA5D3BFF1672A86300011ABD /* QvMFVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvMFVec3f.h; sourceTree = "<group>"; };
+		FA5D3C001672A86300011ABD /* QvName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvName.cpp; sourceTree = "<group>"; };
+		FA5D3C011672A86300011ABD /* QvNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvNode.cpp; sourceTree = "<group>"; };
+		FA5D3C021672A86300011ABD /* QvNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvNode.h; sourceTree = "<group>"; };
+		FA5D3C031672A86300011ABD /* QvNodes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvNodes.h; sourceTree = "<group>"; };
+		FA5D3C041672A86300011ABD /* QvNormal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvNormal.cpp; sourceTree = "<group>"; };
+		FA5D3C051672A86300011ABD /* QvNormal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvNormal.h; sourceTree = "<group>"; };
+		FA5D3C061672A86300011ABD /* QvNormalBinding.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvNormalBinding.cpp; sourceTree = "<group>"; };
+		FA5D3C071672A86300011ABD /* QvNormalBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvNormalBinding.h; sourceTree = "<group>"; };
+		FA5D3C081672A86300011ABD /* QvOrthographicCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvOrthographicCamera.cpp; sourceTree = "<group>"; };
+		FA5D3C091672A86300011ABD /* QvOrthographicCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvOrthographicCamera.h; sourceTree = "<group>"; };
+		FA5D3C0A1672A86300011ABD /* QvPerspectiveCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvPerspectiveCamera.cpp; sourceTree = "<group>"; };
+		FA5D3C0B1672A86300011ABD /* QvPerspectiveCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvPerspectiveCamera.h; sourceTree = "<group>"; };
+		FA5D3C0C1672A86300011ABD /* QvPList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvPList.cpp; sourceTree = "<group>"; };
+		FA5D3C0D1672A86300011ABD /* QvPList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvPList.h; sourceTree = "<group>"; };
+		FA5D3C0E1672A86300011ABD /* QvPointLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvPointLight.cpp; sourceTree = "<group>"; };
+		FA5D3C0F1672A86300011ABD /* QvPointLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvPointLight.h; sourceTree = "<group>"; };
+		FA5D3C101672A86300011ABD /* QvPointSet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvPointSet.cpp; sourceTree = "<group>"; };
+		FA5D3C111672A86300011ABD /* QvPointSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvPointSet.h; sourceTree = "<group>"; };
+		FA5D3C121672A86300011ABD /* QvReadError.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvReadError.cpp; sourceTree = "<group>"; };
+		FA5D3C131672A86300011ABD /* QvReadError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvReadError.h; sourceTree = "<group>"; };
+		FA5D3C141672A86300011ABD /* QvRotation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvRotation.cpp; sourceTree = "<group>"; };
+		FA5D3C151672A86300011ABD /* QvRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvRotation.h; sourceTree = "<group>"; };
+		FA5D3C161672A86300011ABD /* QvScale.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvScale.cpp; sourceTree = "<group>"; };
+		FA5D3C171672A86300011ABD /* QvScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvScale.h; sourceTree = "<group>"; };
+		FA5D3C181672A86300011ABD /* QvSeparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSeparator.cpp; sourceTree = "<group>"; };
+		FA5D3C191672A86300011ABD /* QvSeparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSeparator.h; sourceTree = "<group>"; };
+		FA5D3C1A1672A86300011ABD /* QvSFBitMask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFBitMask.cpp; sourceTree = "<group>"; };
+		FA5D3C1B1672A86300011ABD /* QvSFBitMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFBitMask.h; sourceTree = "<group>"; };
+		FA5D3C1C1672A86300011ABD /* QvSFBool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFBool.cpp; sourceTree = "<group>"; };
+		FA5D3C1D1672A86300011ABD /* QvSFBool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFBool.h; sourceTree = "<group>"; };
+		FA5D3C1E1672A86300011ABD /* QvSFColor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFColor.cpp; sourceTree = "<group>"; };
+		FA5D3C1F1672A86300011ABD /* QvSFColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFColor.h; sourceTree = "<group>"; };
+		FA5D3C201672A86300011ABD /* QvSFEnum.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFEnum.cpp; sourceTree = "<group>"; };
+		FA5D3C211672A86300011ABD /* QvSFEnum.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFEnum.h; sourceTree = "<group>"; };
+		FA5D3C221672A86300011ABD /* QvSFFloat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFFloat.cpp; sourceTree = "<group>"; };
+		FA5D3C231672A86300011ABD /* QvSFFloat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFFloat.h; sourceTree = "<group>"; };
+		FA5D3C241672A86300011ABD /* QvSFImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFImage.cpp; sourceTree = "<group>"; };
+		FA5D3C251672A86300011ABD /* QvSFImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFImage.h; sourceTree = "<group>"; };
+		FA5D3C261672A86300011ABD /* QvSFLong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFLong.cpp; sourceTree = "<group>"; };
+		FA5D3C271672A86300011ABD /* QvSFLong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFLong.h; sourceTree = "<group>"; };
+		FA5D3C281672A86300011ABD /* QvSFMatrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFMatrix.cpp; sourceTree = "<group>"; };
+		FA5D3C291672A86300011ABD /* QvSFMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFMatrix.h; sourceTree = "<group>"; };
+		FA5D3C2A1672A86300011ABD /* QvSFRotation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFRotation.cpp; sourceTree = "<group>"; };
+		FA5D3C2B1672A86300011ABD /* QvSFRotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFRotation.h; sourceTree = "<group>"; };
+		FA5D3C2C1672A86300011ABD /* QvSFString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFString.cpp; sourceTree = "<group>"; };
+		FA5D3C2D1672A86300011ABD /* QvSFString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFString.h; sourceTree = "<group>"; };
+		FA5D3C2E1672A86300011ABD /* QvSFVec2f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFVec2f.cpp; sourceTree = "<group>"; };
+		FA5D3C2F1672A86300011ABD /* QvSFVec2f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFVec2f.h; sourceTree = "<group>"; };
+		FA5D3C301672A86300011ABD /* QvSFVec3f.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSFVec3f.cpp; sourceTree = "<group>"; };
+		FA5D3C311672A86300011ABD /* QvSFVec3f.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSFVec3f.h; sourceTree = "<group>"; };
+		FA5D3C321672A86300011ABD /* QvShapeHints.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvShapeHints.cpp; sourceTree = "<group>"; };
+		FA5D3C331672A86300011ABD /* QvShapeHints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvShapeHints.h; sourceTree = "<group>"; };
+		FA5D3C341672A86300011ABD /* QvSphere.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSphere.cpp; sourceTree = "<group>"; };
+		FA5D3C351672A86300011ABD /* QvSphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSphere.h; sourceTree = "<group>"; };
+		FA5D3C361672A86300011ABD /* QvSpotlight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSpotlight.cpp; sourceTree = "<group>"; };
+		FA5D3C371672A86300011ABD /* QvSpotLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSpotLight.h; sourceTree = "<group>"; };
+		FA5D3C381672A86300011ABD /* QvState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvState.cpp; sourceTree = "<group>"; };
+		FA5D3C391672A86300011ABD /* QvState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvState.h; sourceTree = "<group>"; };
+		FA5D3C3A1672A86300011ABD /* QvString.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvString.cpp; sourceTree = "<group>"; };
+		FA5D3C3B1672A86300011ABD /* QvString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvString.h; sourceTree = "<group>"; };
+		FA5D3C3C1672A86300011ABD /* QvSubField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSubField.h; sourceTree = "<group>"; };
+		FA5D3C3D1672A86300011ABD /* QvSubNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSubNode.h; sourceTree = "<group>"; };
+		FA5D3C3E1672A86300011ABD /* QvSwitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvSwitch.cpp; sourceTree = "<group>"; };
+		FA5D3C3F1672A86300011ABD /* QvSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvSwitch.h; sourceTree = "<group>"; };
+		FA5D3C401672A86300011ABD /* QvTexture2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTexture2.cpp; sourceTree = "<group>"; };
+		FA5D3C411672A86300011ABD /* QvTexture2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvTexture2.h; sourceTree = "<group>"; };
+		FA5D3C421672A86300011ABD /* QvTexture2Transform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTexture2Transform.cpp; sourceTree = "<group>"; };
+		FA5D3C431672A86300011ABD /* QvTexture2Transform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvTexture2Transform.h; sourceTree = "<group>"; };
+		FA5D3C441672A86300011ABD /* QvTextureCoordinate2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTextureCoordinate2.cpp; sourceTree = "<group>"; };
+		FA5D3C451672A86300011ABD /* QvTextureCoordinate2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvTextureCoordinate2.h; sourceTree = "<group>"; };
+		FA5D3C461672A86300011ABD /* QvTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTransform.cpp; sourceTree = "<group>"; };
+		FA5D3C471672A86300011ABD /* QvTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvTransform.h; sourceTree = "<group>"; };
+		FA5D3C481672A86300011ABD /* QvTransformSeparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTransformSeparator.cpp; sourceTree = "<group>"; };
+		FA5D3C491672A86300011ABD /* QvTransformSeparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvTransformSeparator.h; sourceTree = "<group>"; };
+		FA5D3C4A1672A86300011ABD /* QvTranslation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTranslation.cpp; sourceTree = "<group>"; };
+		FA5D3C4B1672A86300011ABD /* QvTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvTranslation.h; sourceTree = "<group>"; };
+		FA5D3C4C1672A86300011ABD /* QvTraverse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvTraverse.cpp; sourceTree = "<group>"; };
+		FA5D3C4E1672A86300011ABD /* QvUnknownNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvUnknownNode.cpp; sourceTree = "<group>"; };
+		FA5D3C4F1672A86300011ABD /* QvUnknownNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvUnknownNode.h; sourceTree = "<group>"; };
+		FA5D3C501672A86300011ABD /* QvWWWAnchor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvWWWAnchor.cpp; sourceTree = "<group>"; };
+		FA5D3C511672A86300011ABD /* QvWWWAnchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvWWWAnchor.h; sourceTree = "<group>"; };
+		FA5D3C521672A86300011ABD /* QvWWWInline.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QvWWWInline.cpp; sourceTree = "<group>"; };
+		FA5D3C531672A86300011ABD /* QvWWWInline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QvWWWInline.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA5D3B081672A65A00011ABD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA5D3B001672A65A00011ABD = {
+			isa = PBXGroup;
+			children = (
+				FA5D3B0E1672A65A00011ABD /* Source */,
+				FA5D3B0C1672A65A00011ABD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA5D3B0C1672A65A00011ABD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D3B0B1672A65A00011ABD /* MakeODT */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA5D3B0E1672A65A00011ABD /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D3BB71672A84300011ABD /* makeodt */,
+				FA5D3B361672A81500011ABD /* BspLib */,
+				FA5D3BC41672A86300011ABD /* QvLib */,
+			);
+			name = Source;
+			path = ../../../tool_src;
+			sourceTree = "<group>";
+		};
+		FA5D3B361672A81500011ABD /* BspLib */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D3B371672A81500011ABD /* AodFormat.cpp */,
+				FA5D3B381672A81500011ABD /* AodFormat.h */,
+				FA5D3B391672A81500011ABD /* AodInput.cpp */,
+				FA5D3B3A1672A81500011ABD /* AodInput.h */,
+				FA5D3B3B1672A81500011ABD /* AodOutput.cpp */,
+				FA5D3B3C1672A81500011ABD /* AodOutput.h */,
+				FA5D3B3D1672A81500011ABD /* BoundingBox.cpp */,
+				FA5D3B3E1672A81500011ABD /* BoundingBox.h */,
+				FA5D3B3F1672A81500011ABD /* BRep.cpp */,
+				FA5D3B401672A81500011ABD /* BRep.h */,
+				FA5D3B411672A81500011ABD /* BspFormat.cpp */,
+				FA5D3B421672A81500011ABD /* BspFormat.h */,
+				FA5D3B431672A81500011ABD /* BspInput.cpp */,
+				FA5D3B441672A81500011ABD /* BspInput.h */,
+				FA5D3B491672A81500011ABD /* BspLibDefs.h */,
+				FA5D3B4A1672A81500011ABD /* BSPNode.cpp */,
+				FA5D3B4B1672A81500011ABD /* BSPNode.h */,
+				FA5D3B4C1672A81500011ABD /* BspObject.cpp */,
+				FA5D3B4D1672A81500011ABD /* BspObject.h */,
+				FA5D3B4E1672A81500011ABD /* BspObjectList.cpp */,
+				FA5D3B4F1672A81500011ABD /* BspObjectList.h */,
+				FA5D3B501672A81500011ABD /* BspOutput.cpp */,
+				FA5D3B511672A81500011ABD /* BspOutput.h */,
+				FA5D3B521672A81500011ABD /* BspTool.cpp */,
+				FA5D3B531672A81500011ABD /* BspTool.h */,
+				FA5D3B541672A81500011ABD /* BSPTree.cpp */,
+				FA5D3B551672A81500011ABD /* BSPTree.h */,
+				FA5D3B561672A81500011ABD /* Chunk.h */,
+				FA5D3B581672A81500011ABD /* EpsAreas.cpp */,
+				FA5D3B591672A81500011ABD /* Face.cpp */,
+				FA5D3B5A1672A81500011ABD /* Face.h */,
+				FA5D3B5B1672A81500011ABD /* InputData3D.cpp */,
+				FA5D3B5C1672A81500011ABD /* InputData3D.h */,
+				FA5D3B5D1672A81500011ABD /* IOData3D.cpp */,
+				FA5D3B5E1672A81500011ABD /* IOData3D.h */,
+				FA5D3B5F1672A81500011ABD /* LineSeg.cpp */,
+				FA5D3B601672A81500011ABD /* LineSeg2.h */,
+				FA5D3B611672A81500011ABD /* LineSeg3.h */,
+				FA5D3B631672A81500011ABD /* Mapping.cpp */,
+				FA5D3B641672A81500011ABD /* Mapping.h */,
+				FA5D3B651672A81500011ABD /* Material.h */,
+				FA5D3B661672A81500011ABD /* ObjectAodFormat.cpp */,
+				FA5D3B671672A81500011ABD /* ObjectAodFormat.h */,
+				FA5D3B681672A81500011ABD /* ObjectBinFormat.cpp */,
+				FA5D3B691672A81500011ABD /* ObjectBinFormat.h */,
+				FA5D3B6A1672A81500011ABD /* ObjectBspFormat.cpp */,
+				FA5D3B6B1672A81500011ABD /* ObjectBspFormat.h */,
+				FA5D3B6C1672A81500011ABD /* ObjectBSPNode.cpp */,
+				FA5D3B6D1672A81500011ABD /* ObjectBSPNode.h */,
+				FA5D3B6E1672A81500011ABD /* ObjectBSPTree.h */,
+				FA5D3B6F1672A81500011ABD /* OutputData3D.cpp */,
+				FA5D3B701672A81500011ABD /* OutputData3D.h */,
+				FA5D3B711672A81500011ABD /* Plane.h */,
+				FA5D3B721672A81500011ABD /* Polygon.cpp */,
+				FA5D3B731672A81500011ABD /* Polygon.h */,
+				FA5D3B741672A81500011ABD /* PolygonList.cpp */,
+				FA5D3B751672A81500011ABD /* PolygonList.h */,
+				FA5D3B761672A81500011ABD /* SingleFormat.cpp */,
+				FA5D3B771672A81500011ABD /* SingleFormat.h */,
+				FA5D3B781672A81500011ABD /* SingleInput.cpp */,
+				FA5D3B791672A81500011ABD /* SingleInput.h */,
+				FA5D3B7A1672A81500011ABD /* SingleOutput.cpp */,
+				FA5D3B7B1672A81500011ABD /* SingleOutput.h */,
+				FA5D3B7C1672A81500011ABD /* SystemIO.cpp */,
+				FA5D3B7D1672A81500011ABD /* SystemIO.h */,
+				FA5D3B7E1672A81500011ABD /* Texture.cpp */,
+				FA5D3B7F1672A81500011ABD /* Texture.h */,
+				FA5D3B801672A81500011ABD /* Transform2.cpp */,
+				FA5D3B811672A81500011ABD /* Transform2.h */,
+				FA5D3B821672A81500011ABD /* Transform3.cpp */,
+				FA5D3B831672A81500011ABD /* Transform3.h */,
+				FA5D3B841672A81500011ABD /* TriMapping.cpp */,
+				FA5D3B851672A81500011ABD /* TriMapping.h */,
+				FA5D3B861672A81500011ABD /* Vector.h */,
+				FA5D3B871672A81500011ABD /* Vector2.h */,
+				FA5D3B881672A81500011ABD /* Vector3.h */,
+				FA5D3B891672A81500011ABD /* Vertex.cpp */,
+				FA5D3B8A1672A81500011ABD /* Vertex.h */,
+				FA5D3B8B1672A81500011ABD /* Vertex2.h */,
+				FA5D3B8C1672A81500011ABD /* Vertex3.h */,
+				FA5D3B8D1672A81500011ABD /* VertexChunk.cpp */,
+				FA5D3B8E1672A81500011ABD /* VertexChunk.h */,
+				FA5D3B8F1672A81500011ABD /* VrmlFile.cpp */,
+				FA5D3B901672A81500011ABD /* VrmlFile.h */,
+			);
+			path = BspLib;
+			sourceTree = "<group>";
+		};
+		FA5D3BB71672A84300011ABD /* makeodt */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D3BB91672A84300011ABD /* getopt.cpp */,
+				FA5D3BBA1672A84300011ABD /* getopt.h */,
+				FA5D3BBC1672A84300011ABD /* makeodt.cpp */,
+				FA5D3BBD1672A84300011ABD /* makeodt.h */,
+			);
+			path = makeodt;
+			sourceTree = "<group>";
+		};
+		FA5D3BC41672A86300011ABD /* QvLib */ = {
+			isa = PBXGroup;
+			children = (
+				FA5D3BC61672A86300011ABD /* QvBasic.h */,
+				FA5D3BC71672A86300011ABD /* QvChildList.cpp */,
+				FA5D3BC81672A86300011ABD /* QvChildList.h */,
+				FA5D3BC91672A86300011ABD /* QvCone.cpp */,
+				FA5D3BCA1672A86300011ABD /* QvCone.h */,
+				FA5D3BCB1672A86300011ABD /* QvCoordinate3.cpp */,
+				FA5D3BCC1672A86300011ABD /* QvCoordinate3.h */,
+				FA5D3BCD1672A86300011ABD /* QvCube.cpp */,
+				FA5D3BCE1672A86300011ABD /* QvCube.h */,
+				FA5D3BCF1672A86300011ABD /* QvCylinder.cpp */,
+				FA5D3BD01672A86300011ABD /* QvCylinder.h */,
+				FA5D3BD11672A86300011ABD /* QvDb.cpp */,
+				FA5D3BD21672A86300011ABD /* QvDB.h */,
+				FA5D3BD31672A86300011ABD /* QvDebugError.cpp */,
+				FA5D3BD41672A86300011ABD /* QvDebugError.h */,
+				FA5D3BD51672A86300011ABD /* QvDict.cpp */,
+				FA5D3BD61672A86300011ABD /* QvDict.h */,
+				FA5D3BD71672A86300011ABD /* QvDirectionalLight.cpp */,
+				FA5D3BD81672A86300011ABD /* QvDirectionalLight.h */,
+				FA5D3BD91672A86300011ABD /* QvElement.cpp */,
+				FA5D3BDA1672A86300011ABD /* QvElement.h */,
+				FA5D3BDB1672A86300011ABD /* QvField.cpp */,
+				FA5D3BDC1672A86300011ABD /* QvField.h */,
+				FA5D3BDD1672A86300011ABD /* QvFieldData.cpp */,
+				FA5D3BDE1672A86300011ABD /* QvFieldData.h */,
+				FA5D3BDF1672A86300011ABD /* QvFields.h */,
+				FA5D3BE01672A86300011ABD /* QvGroup.cpp */,
+				FA5D3BE11672A86300011ABD /* QvGroup.h */,
+				FA5D3BE21672A86300011ABD /* QvIndexedFaceSet.cpp */,
+				FA5D3BE31672A86300011ABD /* QvIndexedFaceSet.h */,
+				FA5D3BE41672A86300011ABD /* QvIndexedLineSet.cpp */,
+				FA5D3BE51672A86300011ABD /* QvIndexedLineSet.h */,
+				FA5D3BE61672A86300011ABD /* QvInfo.cpp */,
+				FA5D3BE71672A86300011ABD /* QvInfo.h */,
+				FA5D3BE81672A86300011ABD /* QvInput.cpp */,
+				FA5D3BE91672A86300011ABD /* QvInput.h */,
+				FA5D3BEA1672A86300011ABD /* QvLevelOfDetail.cpp */,
+				FA5D3BEB1672A86300011ABD /* QvLevelOfDetail.h */,
+				FA5D3BEE1672A86300011ABD /* QvLists.cpp */,
+				FA5D3BEF1672A86300011ABD /* QvLists.h */,
+				FA5D3BF01672A86300011ABD /* QvMaterial.cpp */,
+				FA5D3BF11672A86300011ABD /* QvMaterial.h */,
+				FA5D3BF21672A86300011ABD /* QvMaterialBinding.cpp */,
+				FA5D3BF31672A86300011ABD /* QvMaterialBinding.h */,
+				FA5D3BF41672A86300011ABD /* QvMatrixTransform.cpp */,
+				FA5D3BF51672A86300011ABD /* QvMatrixTransform.h */,
+				FA5D3BF61672A86300011ABD /* QvMFColor.cpp */,
+				FA5D3BF71672A86300011ABD /* QvMFColor.h */,
+				FA5D3BF81672A86300011ABD /* QvMFFloat.cpp */,
+				FA5D3BF91672A86300011ABD /* QvMFFloat.h */,
+				FA5D3BFA1672A86300011ABD /* QvMFLong.cpp */,
+				FA5D3BFB1672A86300011ABD /* QvMFLong.h */,
+				FA5D3BFC1672A86300011ABD /* QvMFVec2f.cpp */,
+				FA5D3BFD1672A86300011ABD /* QvMFVec2f.h */,
+				FA5D3BFE1672A86300011ABD /* QvMFVec3f.cpp */,
+				FA5D3BFF1672A86300011ABD /* QvMFVec3f.h */,
+				FA5D3C001672A86300011ABD /* QvName.cpp */,
+				FA5D3C011672A86300011ABD /* QvNode.cpp */,
+				FA5D3C021672A86300011ABD /* QvNode.h */,
+				FA5D3C031672A86300011ABD /* QvNodes.h */,
+				FA5D3C041672A86300011ABD /* QvNormal.cpp */,
+				FA5D3C051672A86300011ABD /* QvNormal.h */,
+				FA5D3C061672A86300011ABD /* QvNormalBinding.cpp */,
+				FA5D3C071672A86300011ABD /* QvNormalBinding.h */,
+				FA5D3C081672A86300011ABD /* QvOrthographicCamera.cpp */,
+				FA5D3C091672A86300011ABD /* QvOrthographicCamera.h */,
+				FA5D3C0A1672A86300011ABD /* QvPerspectiveCamera.cpp */,
+				FA5D3C0B1672A86300011ABD /* QvPerspectiveCamera.h */,
+				FA5D3C0C1672A86300011ABD /* QvPList.cpp */,
+				FA5D3C0D1672A86300011ABD /* QvPList.h */,
+				FA5D3C0E1672A86300011ABD /* QvPointLight.cpp */,
+				FA5D3C0F1672A86300011ABD /* QvPointLight.h */,
+				FA5D3C101672A86300011ABD /* QvPointSet.cpp */,
+				FA5D3C111672A86300011ABD /* QvPointSet.h */,
+				FA5D3C121672A86300011ABD /* QvReadError.cpp */,
+				FA5D3C131672A86300011ABD /* QvReadError.h */,
+				FA5D3C141672A86300011ABD /* QvRotation.cpp */,
+				FA5D3C151672A86300011ABD /* QvRotation.h */,
+				FA5D3C161672A86300011ABD /* QvScale.cpp */,
+				FA5D3C171672A86300011ABD /* QvScale.h */,
+				FA5D3C181672A86300011ABD /* QvSeparator.cpp */,
+				FA5D3C191672A86300011ABD /* QvSeparator.h */,
+				FA5D3C1A1672A86300011ABD /* QvSFBitMask.cpp */,
+				FA5D3C1B1672A86300011ABD /* QvSFBitMask.h */,
+				FA5D3C1C1672A86300011ABD /* QvSFBool.cpp */,
+				FA5D3C1D1672A86300011ABD /* QvSFBool.h */,
+				FA5D3C1E1672A86300011ABD /* QvSFColor.cpp */,
+				FA5D3C1F1672A86300011ABD /* QvSFColor.h */,
+				FA5D3C201672A86300011ABD /* QvSFEnum.cpp */,
+				FA5D3C211672A86300011ABD /* QvSFEnum.h */,
+				FA5D3C221672A86300011ABD /* QvSFFloat.cpp */,
+				FA5D3C231672A86300011ABD /* QvSFFloat.h */,
+				FA5D3C241672A86300011ABD /* QvSFImage.cpp */,
+				FA5D3C251672A86300011ABD /* QvSFImage.h */,
+				FA5D3C261672A86300011ABD /* QvSFLong.cpp */,
+				FA5D3C271672A86300011ABD /* QvSFLong.h */,
+				FA5D3C281672A86300011ABD /* QvSFMatrix.cpp */,
+				FA5D3C291672A86300011ABD /* QvSFMatrix.h */,
+				FA5D3C2A1672A86300011ABD /* QvSFRotation.cpp */,
+				FA5D3C2B1672A86300011ABD /* QvSFRotation.h */,
+				FA5D3C2C1672A86300011ABD /* QvSFString.cpp */,
+				FA5D3C2D1672A86300011ABD /* QvSFString.h */,
+				FA5D3C2E1672A86300011ABD /* QvSFVec2f.cpp */,
+				FA5D3C2F1672A86300011ABD /* QvSFVec2f.h */,
+				FA5D3C301672A86300011ABD /* QvSFVec3f.cpp */,
+				FA5D3C311672A86300011ABD /* QvSFVec3f.h */,
+				FA5D3C321672A86300011ABD /* QvShapeHints.cpp */,
+				FA5D3C331672A86300011ABD /* QvShapeHints.h */,
+				FA5D3C341672A86300011ABD /* QvSphere.cpp */,
+				FA5D3C351672A86300011ABD /* QvSphere.h */,
+				FA5D3C361672A86300011ABD /* QvSpotlight.cpp */,
+				FA5D3C371672A86300011ABD /* QvSpotLight.h */,
+				FA5D3C381672A86300011ABD /* QvState.cpp */,
+				FA5D3C391672A86300011ABD /* QvState.h */,
+				FA5D3C3A1672A86300011ABD /* QvString.cpp */,
+				FA5D3C3B1672A86300011ABD /* QvString.h */,
+				FA5D3C3C1672A86300011ABD /* QvSubField.h */,
+				FA5D3C3D1672A86300011ABD /* QvSubNode.h */,
+				FA5D3C3E1672A86300011ABD /* QvSwitch.cpp */,
+				FA5D3C3F1672A86300011ABD /* QvSwitch.h */,
+				FA5D3C401672A86300011ABD /* QvTexture2.cpp */,
+				FA5D3C411672A86300011ABD /* QvTexture2.h */,
+				FA5D3C421672A86300011ABD /* QvTexture2Transform.cpp */,
+				FA5D3C431672A86300011ABD /* QvTexture2Transform.h */,
+				FA5D3C441672A86300011ABD /* QvTextureCoordinate2.cpp */,
+				FA5D3C451672A86300011ABD /* QvTextureCoordinate2.h */,
+				FA5D3C461672A86300011ABD /* QvTransform.cpp */,
+				FA5D3C471672A86300011ABD /* QvTransform.h */,
+				FA5D3C481672A86300011ABD /* QvTransformSeparator.cpp */,
+				FA5D3C491672A86300011ABD /* QvTransformSeparator.h */,
+				FA5D3C4A1672A86300011ABD /* QvTranslation.cpp */,
+				FA5D3C4B1672A86300011ABD /* QvTranslation.h */,
+				FA5D3C4C1672A86300011ABD /* QvTraverse.cpp */,
+				FA5D3C4E1672A86300011ABD /* QvUnknownNode.cpp */,
+				FA5D3C4F1672A86300011ABD /* QvUnknownNode.h */,
+				FA5D3C501672A86300011ABD /* QvWWWAnchor.cpp */,
+				FA5D3C511672A86300011ABD /* QvWWWAnchor.h */,
+				FA5D3C521672A86300011ABD /* QvWWWInline.cpp */,
+				FA5D3C531672A86300011ABD /* QvWWWInline.h */,
+			);
+			path = QvLib;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA5D3B0A1672A65A00011ABD /* MakeODT */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA5D3B151672A65A00011ABD /* Build configuration list for PBXNativeTarget "MakeODT" */;
+			buildPhases = (
+				FA5D3B071672A65A00011ABD /* Sources */,
+				FA5D3B081672A65A00011ABD /* Frameworks */,
+				FA5D3B091672A65A00011ABD /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MakeODT;
+			productName = MakeODT;
+			productReference = FA5D3B0B1672A65A00011ABD /* MakeODT */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA5D3B021672A65A00011ABD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = OpenParsec;
+			};
+			buildConfigurationList = FA5D3B051672A65A00011ABD /* Build configuration list for PBXProject "MakeODT" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FA5D3B001672A65A00011ABD;
+			productRefGroup = FA5D3B0C1672A65A00011ABD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA5D3B0A1672A65A00011ABD /* MakeODT */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA5D3B071672A65A00011ABD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA5D3B911672A81500011ABD /* AodFormat.cpp in Sources */,
+				FA5D3B921672A81500011ABD /* AodInput.cpp in Sources */,
+				FA5D3B931672A81500011ABD /* AodOutput.cpp in Sources */,
+				FA5D3B941672A81500011ABD /* BoundingBox.cpp in Sources */,
+				FA5D3B951672A81500011ABD /* BRep.cpp in Sources */,
+				FA5D3B961672A81500011ABD /* BspFormat.cpp in Sources */,
+				FA5D3B971672A81500011ABD /* BspInput.cpp in Sources */,
+				FA5D3B981672A81500011ABD /* BSPNode.cpp in Sources */,
+				FA5D3B991672A81500011ABD /* BspObject.cpp in Sources */,
+				FA5D3B9A1672A81500011ABD /* BspObjectList.cpp in Sources */,
+				FA5D3B9B1672A81500011ABD /* BspOutput.cpp in Sources */,
+				FA5D3B9C1672A81500011ABD /* BspTool.cpp in Sources */,
+				FA5D3B9D1672A81500011ABD /* BSPTree.cpp in Sources */,
+				FA5D3B9E1672A81500011ABD /* EpsAreas.cpp in Sources */,
+				FA5D3B9F1672A81500011ABD /* Face.cpp in Sources */,
+				FA5D3BA01672A81500011ABD /* InputData3D.cpp in Sources */,
+				FA5D3BA11672A81500011ABD /* IOData3D.cpp in Sources */,
+				FA5D3BA21672A81500011ABD /* LineSeg.cpp in Sources */,
+				FA5D3BA41672A81500011ABD /* Mapping.cpp in Sources */,
+				FA5D3BA51672A81500011ABD /* ObjectAodFormat.cpp in Sources */,
+				FA5D3BA61672A81500011ABD /* ObjectBinFormat.cpp in Sources */,
+				FA5D3BA71672A81500011ABD /* ObjectBspFormat.cpp in Sources */,
+				FA5D3BA81672A81500011ABD /* ObjectBSPNode.cpp in Sources */,
+				FA5D3BA91672A81500011ABD /* OutputData3D.cpp in Sources */,
+				FA5D3BAA1672A81500011ABD /* Polygon.cpp in Sources */,
+				FA5D3BAB1672A81500011ABD /* PolygonList.cpp in Sources */,
+				FA5D3BAC1672A81500011ABD /* SingleFormat.cpp in Sources */,
+				FA5D3BAD1672A81500011ABD /* SingleInput.cpp in Sources */,
+				FA5D3BAE1672A81500011ABD /* SingleOutput.cpp in Sources */,
+				FA5D3BAF1672A81500011ABD /* SystemIO.cpp in Sources */,
+				FA5D3BB01672A81500011ABD /* Texture.cpp in Sources */,
+				FA5D3BB11672A81500011ABD /* Transform2.cpp in Sources */,
+				FA5D3BB21672A81500011ABD /* Transform3.cpp in Sources */,
+				FA5D3BB31672A81500011ABD /* TriMapping.cpp in Sources */,
+				FA5D3BB41672A81500011ABD /* Vertex.cpp in Sources */,
+				FA5D3BB51672A81500011ABD /* VertexChunk.cpp in Sources */,
+				FA5D3BB61672A81500011ABD /* VrmlFile.cpp in Sources */,
+				FA5D3BC11672A84300011ABD /* getopt.cpp in Sources */,
+				FA5D3BC31672A84300011ABD /* makeodt.cpp in Sources */,
+				FA5D3C561672A86300011ABD /* QvChildList.cpp in Sources */,
+				FA5D3C571672A86300011ABD /* QvCone.cpp in Sources */,
+				FA5D3C581672A86300011ABD /* QvCoordinate3.cpp in Sources */,
+				FA5D3C591672A86300011ABD /* QvCube.cpp in Sources */,
+				FA5D3C5A1672A86300011ABD /* QvCylinder.cpp in Sources */,
+				FA5D3C5B1672A86300011ABD /* QvDb.cpp in Sources */,
+				FA5D3C5C1672A86300011ABD /* QvDebugError.cpp in Sources */,
+				FA5D3C5D1672A86300011ABD /* QvDict.cpp in Sources */,
+				FA5D3C5E1672A86300011ABD /* QvDirectionalLight.cpp in Sources */,
+				FA5D3C5F1672A86300011ABD /* QvElement.cpp in Sources */,
+				FA5D3C601672A86300011ABD /* QvField.cpp in Sources */,
+				FA5D3C611672A86300011ABD /* QvFieldData.cpp in Sources */,
+				FA5D3C621672A86300011ABD /* QvGroup.cpp in Sources */,
+				FA5D3C631672A86300011ABD /* QvIndexedFaceSet.cpp in Sources */,
+				FA5D3C641672A86300011ABD /* QvIndexedLineSet.cpp in Sources */,
+				FA5D3C651672A86300011ABD /* QvInfo.cpp in Sources */,
+				FA5D3C661672A86300011ABD /* QvInput.cpp in Sources */,
+				FA5D3C671672A86300011ABD /* QvLevelOfDetail.cpp in Sources */,
+				FA5D3C681672A86300011ABD /* QvLists.cpp in Sources */,
+				FA5D3C691672A86300011ABD /* QvMaterial.cpp in Sources */,
+				FA5D3C6A1672A86300011ABD /* QvMaterialBinding.cpp in Sources */,
+				FA5D3C6B1672A86300011ABD /* QvMatrixTransform.cpp in Sources */,
+				FA5D3C6C1672A86300011ABD /* QvMFColor.cpp in Sources */,
+				FA5D3C6D1672A86300011ABD /* QvMFFloat.cpp in Sources */,
+				FA5D3C6E1672A86300011ABD /* QvMFLong.cpp in Sources */,
+				FA5D3C6F1672A86300011ABD /* QvMFVec2f.cpp in Sources */,
+				FA5D3C701672A86300011ABD /* QvMFVec3f.cpp in Sources */,
+				FA5D3C711672A86300011ABD /* QvName.cpp in Sources */,
+				FA5D3C721672A86300011ABD /* QvNode.cpp in Sources */,
+				FA5D3C731672A86300011ABD /* QvNormal.cpp in Sources */,
+				FA5D3C741672A86300011ABD /* QvNormalBinding.cpp in Sources */,
+				FA5D3C751672A86300011ABD /* QvOrthographicCamera.cpp in Sources */,
+				FA5D3C761672A86300011ABD /* QvPerspectiveCamera.cpp in Sources */,
+				FA5D3C771672A86300011ABD /* QvPList.cpp in Sources */,
+				FA5D3C781672A86300011ABD /* QvPointLight.cpp in Sources */,
+				FA5D3C791672A86300011ABD /* QvPointSet.cpp in Sources */,
+				FA5D3C7A1672A86300011ABD /* QvReadError.cpp in Sources */,
+				FA5D3C7B1672A86300011ABD /* QvRotation.cpp in Sources */,
+				FA5D3C7C1672A86300011ABD /* QvScale.cpp in Sources */,
+				FA5D3C7D1672A86300011ABD /* QvSeparator.cpp in Sources */,
+				FA5D3C7E1672A86300011ABD /* QvSFBitMask.cpp in Sources */,
+				FA5D3C7F1672A86300011ABD /* QvSFBool.cpp in Sources */,
+				FA5D3C801672A86300011ABD /* QvSFColor.cpp in Sources */,
+				FA5D3C811672A86300011ABD /* QvSFEnum.cpp in Sources */,
+				FA5D3C821672A86300011ABD /* QvSFFloat.cpp in Sources */,
+				FA5D3C831672A86300011ABD /* QvSFImage.cpp in Sources */,
+				FA5D3C841672A86300011ABD /* QvSFLong.cpp in Sources */,
+				FA5D3C851672A86300011ABD /* QvSFMatrix.cpp in Sources */,
+				FA5D3C861672A86300011ABD /* QvSFRotation.cpp in Sources */,
+				FA5D3C871672A86300011ABD /* QvSFString.cpp in Sources */,
+				FA5D3C881672A86300011ABD /* QvSFVec2f.cpp in Sources */,
+				FA5D3C891672A86300011ABD /* QvSFVec3f.cpp in Sources */,
+				FA5D3C8A1672A86300011ABD /* QvShapeHints.cpp in Sources */,
+				FA5D3C8B1672A86300011ABD /* QvSphere.cpp in Sources */,
+				FA5D3C8C1672A86300011ABD /* QvSpotlight.cpp in Sources */,
+				FA5D3C8D1672A86300011ABD /* QvState.cpp in Sources */,
+				FA5D3C8E1672A86300011ABD /* QvString.cpp in Sources */,
+				FA5D3C8F1672A86300011ABD /* QvSwitch.cpp in Sources */,
+				FA5D3C901672A86300011ABD /* QvTexture2.cpp in Sources */,
+				FA5D3C911672A86300011ABD /* QvTexture2Transform.cpp in Sources */,
+				FA5D3C921672A86300011ABD /* QvTextureCoordinate2.cpp in Sources */,
+				FA5D3C931672A86300011ABD /* QvTransform.cpp in Sources */,
+				FA5D3C941672A86300011ABD /* QvTransformSeparator.cpp in Sources */,
+				FA5D3C951672A86300011ABD /* QvTranslation.cpp in Sources */,
+				FA5D3C961672A86300011ABD /* QvTraverse.cpp in Sources */,
+				FA5D3C981672A86300011ABD /* QvUnknownNode.cpp in Sources */,
+				FA5D3C991672A86300011ABD /* QvWWWAnchor.cpp in Sources */,
+				FA5D3C9A1672A86300011ABD /* QvWWWInline.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FA5D3B131672A65A00011ABD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../tool_src/QvLib\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VALID_ARCHS = i386;
+			};
+			name = Debug;
+		};
+		FA5D3B141672A65A00011ABD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../tool_src/QvLib\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				SDKROOT = macosx;
+				VALID_ARCHS = i386;
+			};
+			name = Release;
+		};
+		FA5D3B161672A65A00011ABD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = i386;
+			};
+			name = Debug;
+		};
+		FA5D3B171672A65A00011ABD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALID_ARCHS = i386;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA5D3B051672A65A00011ABD /* Build configuration list for PBXProject "MakeODT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA5D3B131672A65A00011ABD /* Debug */,
+				FA5D3B141672A65A00011ABD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA5D3B151672A65A00011ABD /* Build configuration list for PBXNativeTarget "MakeODT" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA5D3B161672A65A00011ABD /* Debug */,
+				FA5D3B171672A65A00011ABD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA5D3B021672A65A00011ABD /* Project object */;
+}

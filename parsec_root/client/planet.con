@@ -1,0 +1,6 @@
+write loading planet test object
+
+load texture planet2.tga file planet2.tga
+
+load object planet2 file planet2.od2 type planet
+summon class planet2 origin (0 0 0)

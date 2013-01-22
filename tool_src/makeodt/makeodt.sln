@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BspLib", "..\BspLib\BspLib.vcproj", "{F043C82B-28EC-4BA9-8C68-33708D9E3702}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7B6BE4D0-375E-4615-BBC6-426AD251B41C} = {7B6BE4D0-375E-4615-BBC6-426AD251B41C}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QvLib", "..\QvLib\QvLib.vcproj", "{7B6BE4D0-375E-4615-BBC6-426AD251B41C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "makeodt", "makeodt.vcproj", "{17796602-07C1-47DB-8D8E-C6E0125B2AD7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F043C82B-28EC-4BA9-8C68-33708D9E3702} = {F043C82B-28EC-4BA9-8C68-33708D9E3702}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 3
+		SccProjectUniqueName0 = ..\\BspLib\\BspLib.vcproj
+		SccProjectName0 = \u0022$/ParsecTools/BspLib\u0022,\u0020KUFAAAAA
+		SccLocalPath0 = ..\\BspLib
+		SccProvider0 = MSSCCI:Perforce\u0020SCM
+		SccProjectUniqueName1 = ..\\QvLib\\QvLib.vcproj
+		SccProjectName1 = \u0022$/ParsecTools/QvLib\u0022
+		SccLocalPath1 = ..\\QvLib
+		SccProvider1 = MSSCCI:Perforce\u0020SCM
+		SccProjectUniqueName2 = makeodt.vcproj
+		SccProjectName2 = \u0022$/ParsecTools/makeodt\u0022,\u0020BUGAAAAA
+		SccLocalPath2 = .
+		SccProvider2 = MSSCCI:Perforce\u0020SCM
+	EndGlobalSection
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{F043C82B-28EC-4BA9-8C68-33708D9E3702}.Debug.ActiveCfg = Debug|Win32
+		{F043C82B-28EC-4BA9-8C68-33708D9E3702}.Debug.Build.0 = Debug|Win32
+		{F043C82B-28EC-4BA9-8C68-33708D9E3702}.Release.ActiveCfg = Release|Win32
+		{F043C82B-28EC-4BA9-8C68-33708D9E3702}.Release.Build.0 = Release|Win32
+		{7B6BE4D0-375E-4615-BBC6-426AD251B41C}.Debug.ActiveCfg = Debug|Win32
+		{7B6BE4D0-375E-4615-BBC6-426AD251B41C}.Debug.Build.0 = Debug|Win32
+		{7B6BE4D0-375E-4615-BBC6-426AD251B41C}.Release.ActiveCfg = Release|Win32
+		{7B6BE4D0-375E-4615-BBC6-426AD251B41C}.Release.Build.0 = Release|Win32
+		{17796602-07C1-47DB-8D8E-C6E0125B2AD7}.Debug.ActiveCfg = Debug|Win32
+		{17796602-07C1-47DB-8D8E-C6E0125B2AD7}.Debug.Build.0 = Debug|Win32
+		{17796602-07C1-47DB-8D8E-C6E0125B2AD7}.Release.ActiveCfg = Release|Win32
+		{17796602-07C1-47DB-8D8E-C6E0125B2AD7}.Release.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+load texture (infobar11) file infobar11.tga
+load texture (infobar12) file infobar12.tga
+load texture (infobar21) file infobar21.tga
+load texture (infobar22) file infobar22.tga
+load texture (hilite) file hilite.jpg
+load texture (navbar11) file navbar11.tga
+load texture (navbar12) file navbar12.tga
+load texture (navbar21) file navbar21.tga
+load texture (navbar22) file navbar22.tga
+load texture (symbol) file symbol.tga

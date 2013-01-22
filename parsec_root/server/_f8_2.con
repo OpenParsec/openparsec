@@ -1,0 +1,234 @@
+
+write loading silverhawk
+
+;load texture fi08_01a.3df  file fi08_01a.3df
+;load texture fi08_02a.3df  file fi08_02a.3df
+;load texture fi08_03a.3df  file fi08_03a.3df
+;load texture fi08_04a.3df  file fi08_04a.3df
+
+;load texture fi08_01a.3df  file fi08_01a.tga format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi08_02a.3df  file fi08_02a.tga format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi08_03a.3df  file fi08_03a.tga format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+;load texture fi08_04a.3df  file fi08_04a.tga format (map_width 256 map_height  64 texfmt_gr rgb565 flags compress)
+load texture fi08_01a.3df  file fi08_01a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+load texture fi08_02a.3df  file fi08_02a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+load texture fi08_03a.3df  file fi08_03a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+load texture fi08_04a.3df  file fi08_04a.jpg format (map_width 256 map_height  64 texfmt_gr rgb565 flags compress)
+load texture mon_f8     file mon_f8.3df
+
+aux_enable_object_overloading 1
+load object (silverhawk) type ship_1 file fi08_00a.od2 normth 0.8
+aux_enable_object_overloading 0
+
+; should be before shipdesc commands
+shipclass class (silverhawk) texture mon_f8
+shipclass class (silverhawk)
+
+shipdesc class (silverhawk) caption silverhawk
+shipdesc class (silverhawk) clear text
+shipdesc class (silverhawk) text (the first silverhawk has only been spotted in the parsec universe very recently. )
+shipdesc class (silverhawk) text (the rumor mill asserts that it must have been in secret development for quite some time. however, its manufacturer and detailed specs are unknown. )
+shipdesc class (silverhawk) text (due to its five propulsion drives it is rumored to be even a bit faster than the firebird, )
+shipdesc class (silverhawk) text (but no unbiased information is available at this time. in any case, this rumor and its looks have rapidly led to it becoming the most desired spacecraft for daring pilots and cut-throats. )
+shipdesc class (silverhawk) text (it is also rumored to feature something called a gpu, a general plasma unit. what this actually refers to is still up to wild speculation, though.)
+
+
+propc (silverhawk).maxdamage      50
+propc (silverhawk).energy        400
+propc (silverhawk).maxenergy     850
+propc (silverhawk).weapons       257
+propc (silverhawk).maxspeed    68000
+propc (silverhawk).dumb            0
+propc (silverhawk).maxdumb         3
+propc (silverhawk).guide           0
+propc (silverhawk).maxguide        5
+propc (silverhawk).mines           0
+propc (silverhawk).maxmines       10
+
+propc (silverhawk).laser1.x1      -0.4
+propc (silverhawk).laser1.x2      -0.05
+propc (silverhawk).laser1.x3       0.75
+propc (silverhawk).laser1.x4       1.1
+propc (silverhawk).laser1.y1       3.0
+propc (silverhawk).laser1.y2       3.0
+propc (silverhawk).laser1.y3       3.0
+propc (silverhawk).laser1.y4       3.0
+propc (silverhawk).laser1.z1      50.0
+propc (silverhawk).laser1.z2      50.0
+propc (silverhawk).laser1.z3      50.0
+propc (silverhawk).laser1.z4      50.0
+
+propc (silverhawk).missile1.x1    -8.0
+propc (silverhawk).missile1.x2     8.0
+propc (silverhawk).missile1.x3    16.0
+propc (silverhawk).missile1.x4   -16.0
+propc (silverhawk).missile1.y1     0.0
+propc (silverhawk).missile1.y2     0.0
+propc (silverhawk).missile1.y3     0.0
+propc (silverhawk).missile1.y4     0.0
+propc (silverhawk).missile1.z1   -10.0
+propc (silverhawk).missile1.z2   -10.0
+propc (silverhawk).missile1.z3   -10.0
+propc (silverhawk).missile1.z4   -10.0
+
+propc (silverhawk).missile2.x1    -8.0
+propc (silverhawk).missile2.x2     8.0
+propc (silverhawk).missile2.x3    16.0
+propc (silverhawk).missile2.x4   -16.0
+propc (silverhawk).missile2.y1     0.0
+propc (silverhawk).missile2.y2     0.0
+propc (silverhawk).missile2.y3     0.0
+propc (silverhawk).missile2.y4     0.0
+propc (silverhawk).missile2.z1   -10.0
+propc (silverhawk).missile2.z2   -10.0
+propc (silverhawk).missile2.z3   -10.0
+propc (silverhawk).missile2.z4   -10.0
+
+propc (silverhawk).beam.x1        -5.0
+propc (silverhawk).beam.x4         5.0
+propc (silverhawk).beam.y          3.0
+propc (silverhawk).beam.z          5.0
+
+propc (silverhawk).helix.x         0.0
+propc (silverhawk).helix.y         1.6
+propc (silverhawk).helix.z        -7.0
+
+propc (silverhawk).mine1.x         0.0
+propc (silverhawk).mine1.y         0.0
+;propc (silverhawk).mine1.z       -35.0
+
+;propc (silverhawk).spread.x1       0.0
+;propc (silverhawk).spread.y        0.0
+;propc (silverhawk).spread.z        0.0
+
+
+classpart class (silverhawk) cmd reset trafo (0 0 0)
+
+classpart class (silverhawk) pdef (thrust1) pos (   6.9  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   7.3 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   7.9 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   8.5 -2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   9.1 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   9.4 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   9.8  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   9.4 +1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   9.1 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   8.5 +2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   7.9 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   7.3 +1.5 -20.4 ) size 14.8 render thrust
+
+classpart class (silverhawk) pdef (thrust1) pos (  -6.9  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -7.3 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -7.9 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -8.5 -2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -9.1 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -9.4 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -9.8  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -9.4 +1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -9.1 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -8.5 +2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -7.9 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -7.3 +1.5 -20.4 ) size 14.8 render thrust
+
+classpart class (silverhawk) pdef (thrust1) pos (  14.1  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  14.7 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  15.4 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  16.0 -2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  16.6 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  17.1 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  17.7  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  17.1 +1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  16.6 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  16.0 +2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  15.4 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  14.7 +1.5 -20.4 ) size 14.8 render thrust
+
+classpart class (silverhawk) pdef (thrust1) pos ( -14.1  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -14.7 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -15.4 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -16.0 -2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -16.6 -2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -17.1 -1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -17.7  0.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -17.1 +1.5 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -16.6 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -16.0 +2.3 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -15.4 +2.0 -20.4 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos ( -14.7 +1.5 -20.4 ) size 14.8 render thrust
+
+classpart class (silverhawk) pdef (thrust1) pos (   0.0  3.0 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   1.0  3.6 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   2.1  4.2 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   1.0  4.8 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (   0.0  5.5 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -1.0  4.8 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -2.1  4.2 -11.6 ) size 14.8 render thrust
+classpart class (silverhawk) pdef (thrust1) pos (  -1.0  3.6 -11.6 ) size 14.8 render thrust
+
+
+classiter class (silverhawk) cmd reset trafo (0 0 0)
+
+classiter class (silverhawk) apex (0) prim tri vtxs (  6.9  0.0 -20.4    8.5 0.0 -20.4    7.3 -1.5 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  7.3 -1.5 -20.4    8.5 0.0 -20.4    7.9 -2.0 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  7.9 -2.0 -20.4    8.5 0.0 -20.4    8.5 -2.3 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  8.5 -2.3 -20.4    8.5 0.0 -20.4    9.1 -2.0 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  9.1 -2.0 -20.4    8.5 0.0 -20.4    9.4 -1.5 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  9.4 -1.5 -20.4    8.5 0.0 -20.4    9.8  0.0 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  9.8  0.0 -20.4    8.5 0.0 -20.4    9.4  1.5 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  9.4  1.5 -20.4    8.5 0.0 -20.4    9.1  2.0 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  9.1  2.0 -20.4    8.5 0.0 -20.4    8.5  2.3 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  8.5  2.3 -20.4    8.5 0.0 -20.4    7.9  2.0 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  7.9  2.0 -20.4    8.5 0.0 -20.4    7.3  1.5 -20.4 )
+classiter class (silverhawk) apex (0) prim tri vtxs (  7.3  1.5 -20.4    8.5 0.0 -20.4    6.9  0.0 -20.4 )
+
+classiter class (silverhawk) apex (1) prim tri vtxs ( -6.9  0.0 -20.4   -8.5 0.0 -20.4   -7.3 -1.5 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -7.3 -1.5 -20.4   -8.5 0.0 -20.4   -7.9 -2.0 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -7.9 -2.0 -20.4   -8.5 0.0 -20.4   -8.5 -2.3 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -8.5 -2.3 -20.4   -8.5 0.0 -20.4   -9.1 -2.0 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -9.1 -2.0 -20.4   -8.5 0.0 -20.4   -9.4 -1.5 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -9.4 -1.5 -20.4   -8.5 0.0 -20.4   -9.8  0.0 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -9.8  0.0 -20.4   -8.5 0.0 -20.4   -9.4  1.5 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -9.4  1.5 -20.4   -8.5 0.0 -20.4   -9.1  2.0 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -9.1  2.0 -20.4   -8.5 0.0 -20.4   -8.5  2.3 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -8.5  2.3 -20.4   -8.5 0.0 -20.4   -7.9  2.0 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -7.9  2.0 -20.4   -8.5 0.0 -20.4   -7.3  1.5 -20.4 )
+classiter class (silverhawk) apex (1) prim tri vtxs ( -7.3  1.5 -20.4   -8.5 0.0 -20.4   -6.9  0.0 -20.4 )
+
+classiter class (silverhawk) apex (2) prim tri vtxs ( 14.1  0.0 -20.4   16.0 0.0 -20.4   14.7 -1.5 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 14.7 -1.5 -20.4   16.0 0.0 -20.4   15.4 -2.0 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 15.4 -2.0 -20.4   16.0 0.0 -20.4   16.0 -2.3 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 16.0 -2.3 -20.4   16.0 0.0 -20.4   16.6 -2.0 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 16.6 -2.0 -20.4   16.0 0.0 -20.4   17.1 -1.5 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 17.1 -1.5 -20.4   16.0 0.0 -20.4   17.7  0.0 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 17.7  0.0 -20.4   16.0 0.0 -20.4   17.1  1.5 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 17.1  1.5 -20.4   16.0 0.0 -20.4   16.6  2.0 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 16.6  2.0 -20.4   16.0 0.0 -20.4   16.0  2.3 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 16.0  2.3 -20.4   16.0 0.0 -20.4   15.4  2.0 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 15.4  2.0 -20.4   16.0 0.0 -20.4   14.7  1.5 -20.4 )
+classiter class (silverhawk) apex (2) prim tri vtxs ( 14.7  1.5 -20.4   16.0 0.0 -20.4   14.1  0.0 -20.4 )
+
+classiter class (silverhawk) apex (3) prim tri vtxs (-14.1  0.0 -20.4  -16.0 0.0 -20.4  -14.7 -1.5 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-14.7 -1.5 -20.4  -16.0 0.0 -20.4  -15.4 -2.0 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-15.4 -2.0 -20.4  -16.0 0.0 -20.4  -16.0 -2.3 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-16.0 -2.3 -20.4  -16.0 0.0 -20.4  -16.6 -2.0 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-16.6 -2.0 -20.4  -16.0 0.0 -20.4  -17.1 -1.5 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-17.1 -1.5 -20.4  -16.0 0.0 -20.4  -17.7  0.0 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-17.7  0.0 -20.4  -16.0 0.0 -20.4  -17.1  1.5 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-17.1  1.5 -20.4  -16.0 0.0 -20.4  -16.6  2.0 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-16.6  2.0 -20.4  -16.0 0.0 -20.4  -16.0  2.3 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-16.0  2.3 -20.4  -16.0 0.0 -20.4  -15.4  2.0 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-15.4  2.0 -20.4  -16.0 0.0 -20.4  -14.7  1.5 -20.4 )
+classiter class (silverhawk) apex (3) prim tri vtxs (-14.7  1.5 -20.4  -16.0 0.0 -20.4  -14.1  0.0 -20.4 )
+
+classiter class (silverhawk) apex (4) prim tri vtxs (  0.0  3.0 -11.6    0.0 4.2 -11.6   1.0   3.6 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs (  1.0  3.6 -11.6    0.0 4.2 -11.6   2.1   4.2 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs (  2.1  4.2 -11.6    0.0 4.2 -11.6   1.0   4.8 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs (  1.0  4.8 -11.6    0.0 4.2 -11.6   0.0   5.5 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs (  0.0  5.5 -11.6    0.0 4.2 -11.6  -1.0   4.8 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs ( -1.0  4.8 -11.6    0.0 4.2 -11.6  -2.1   4.2 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs ( -2.1  4.2 -11.6    0.0 4.2 -11.6  -1.0   3.6 -11.6 )
+classiter class (silverhawk) apex (4) prim tri vtxs ( -1.0  3.6 -11.6    0.0 4.2 -11.6   0.0   3.0 -11.6 )
+
+
+;eof
+

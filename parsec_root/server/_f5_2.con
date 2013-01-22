@@ -1,0 +1,130 @@
+
+write loading claymore
+
+load texture fi5_top2.3df file fi5_top2.3df
+load texture fi5_bot.3df  file fi5_bot.3df
+load texture fi5_blue.3df file fi5_blue.3df
+load texture fi5_caps.3df file fi5_caps.3df
+load texture mon_f5       file mon_f5.3df
+
+;load object (claymore)    file (fi05a00a.od2 fi05_00a.od2) normth 0.2 lodmag (350) lodmin (400) type ship_2
+aux_enable_object_overloading 1
+load object (claymore)    file (fi05_00a.od2) normth 0.2 type ship_2
+aux_enable_object_overloading 0
+
+;shader.set class claymore lod -1 shader iter_texonly texture fi5_blue.3df
+shader.set class claymore shader iter_texonly texture fi5_blue.3df
+
+; should be before shipdesc commands
+shipclass class (claymore)
+shipclass class (claymore) texture mon_f5
+
+shipdesc class (claymore) caption claymore
+shipdesc class (claymore) clear text
+shipdesc class (claymore) text (the claymore is a very versatile ship. )
+shipdesc class (claymore) text (incredibly low weight, streamlined hull, and two powerful thrust engines make it suitable for a wide range of pilots. )
+shipdesc class (claymore) text (except for those that like to have that extra missile loaded in case of emergency. )
+shipdesc class (claymore) text (there's not much space in a claymore, but it is extra thin. )
+shipdesc class (claymore) text (the first draft of this ship had extra wing extensions on the left and right, which were removed at a later design stage. )
+shipdesc class (claymore) text (the reasons for this decision are unknown, but it is rumored that some prototypes that were built had proven to be extremely unstable. )
+
+
+propc (claymore).maxdamage      50
+propc (claymore).energy        400
+propc (claymore).maxenergy     850
+propc (claymore).weapons       257
+propc (claymore).maxspeed    60000
+propc (claymore).dumb            0
+propc (claymore).maxdumb         4
+propc (claymore).guide           0
+propc (claymore).maxguide        5
+propc (claymore).swarm           0
+propc (claymore).maxswarm        2
+propc (claymore).mines           0
+propc (claymore).maxmines       10
+
+propc (claymore).spread.x1      11.0
+propc (claymore).spread.x4     -11.0
+propc (claymore).spread.y        0.0
+propc (claymore).spread.z        0.0
+
+propc (claymore).helix.x         0.0
+propc (claymore).helix.y         0.0
+propc (claymore).helix.z       -20.0
+
+propc (claymore).laser1.x1      -11.0
+propc (claymore).laser1.x2      -11.2
+propc (claymore).laser1.x3       11.2
+propc (claymore).laser1.x4       11.0
+propc (claymore).laser1.y1        5.0
+propc (claymore).laser1.y2        5.0
+propc (claymore).laser1.y3        5.0
+propc (claymore).laser1.y4        5.0
+propc (claymore).laser1.z1       30.0
+propc (claymore).laser1.z2       30.0
+propc (claymore).laser1.z3       30.0
+propc (claymore).laser1.z4       30.0
+
+propc (claymore).laser2.x1      -11.0
+propc (claymore).laser2.x2      -11.2
+propc (claymore).laser2.x3       11.2
+propc (claymore).laser2.x4       11.0
+propc (claymore).laser2.y1        5.0
+propc (claymore).laser2.y2        5.0
+propc (claymore).laser2.y3        5.0
+propc (claymore).laser2.y4        5.0
+propc (claymore).laser2.z1       30.0
+propc (claymore).laser2.z2       30.0
+propc (claymore).laser2.z3       30.0
+propc (claymore).laser2.z4       30.0
+
+propc (claymore).laser3.x1      -11.0
+propc (claymore).laser3.x2      -11.2
+propc (claymore).laser3.x3       11.2
+propc (claymore).laser3.x4       11.0
+propc (claymore).laser3.y1        5.0
+propc (claymore).laser3.y2        5.0
+propc (claymore).laser3.y3        5.0
+propc (claymore).laser3.y4        5.0
+propc (claymore).laser3.z1       30.0
+propc (claymore).laser3.z2       30.0
+propc (claymore).laser3.z3       30.0
+propc (claymore).laser3.z4       30.0
+
+propc (claymore).missile1.x1    11.0
+propc (claymore).missile1.x2    11.0
+propc (claymore).missile1.x3   -11.0
+propc (claymore).missile1.x4   -11.0
+propc (claymore).missile1.y1     0.0
+propc (claymore).missile1.y2     0.0
+propc (claymore).missile1.y3     0.0
+propc (claymore).missile1.y4     0.0
+propc (claymore).missile1.z1     0.0
+propc (claymore).missile1.z2     0.0
+propc (claymore).missile1.z3     0.0
+propc (claymore).missile1.z4     0.0
+
+propc (claymore).missile2.x1    11.0
+propc (claymore).missile2.x2    11.0
+propc (claymore).missile2.x3   -11.0
+propc (claymore).missile2.x4   -11.0
+propc (claymore).missile2.y1     0.0
+propc (claymore).missile2.y2     0.0
+propc (claymore).missile2.y3     0.0
+propc (claymore).missile2.y4     0.0
+propc (claymore).missile2.z1     0.0
+propc (claymore).missile2.z2     0.0
+propc (claymore).missile2.z3     0.0
+propc (claymore).missile2.z4     0.0
+
+propc (claymore).mine1.x         0.0
+propc (claymore).mine1.y         0.0
+;propc (claymore).mine1.z       -35.0
+
+propc (claymore).beam.x1        11.0
+propc (claymore).beam.x4       -11.0
+propc (claymore).beam.y          0.0
+propc (claymore).beam.z         10.0
+
+;eof
+
