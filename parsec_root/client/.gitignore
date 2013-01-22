@@ -1,1 +1,4 @@
-data/*
+data/
+parsec
+parsecrc.con
+parsec.log
