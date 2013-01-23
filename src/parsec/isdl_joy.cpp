@@ -64,17 +64,16 @@
 
 // maximum number of joystick devices we support ------------------------------
 //
-#define				MAX_JOYSTICK_DEVICES 	4
+#define				MAX_JOYSTICK_DEVICES	4
 
 
 // joystick device name -------------------------------------------------------
 //
-//#define 			JOY_DEVICENAME_STRING	"/dev/js%d"
+//#define			JOY_DEVICENAME_STRING	"/dev/js%d"
 
 
 // external variables ---------------------------------------------------------
 //
-//extern int			isdl_bDisableJoystick;	// set to disable joystick
 extern int			isdl_bHasThrottle;		// indicates, the joystick has a throttle
 extern int			isdl_bHasRudder;			// indicates, the joystick has a rudder
 extern joystate_s	JoyState;				// generic joystick data
@@ -87,31 +86,15 @@ static char joystick_disabled[]		= "Joystick code is disabled.\n";
 
 // module local variables -----------------------------------------------------
 //
-//int					il_fd = -1;				// handle to an open joystick
-SDL_Joystick* 		isdl_joyHandle;			// handle to the open joystick
+SDL_Joystick*		isdl_joyHandle;				// handle to the open joystick
 byte				isdl_NumAxes;				// number of axes for this joystick
 byte				isdl_NumButtons;			// number of buttons for this joystick
-//int					il_version;
-//char				il_JoyName[ NAME_LENGTH ] = "Unknown";
 
-int					isdl_nJoystickFound  	= 0;	// number of joysticks found
+int					isdl_nJoystickFound = 0;	// number of joysticks found
 
-//int					il_InitJoyDone		= FALSE;// indicates whether Joystick was initialized
-
-//dword				il_joyRange_X;			// joystick range X  axis
-//dword				il_joyRange_Y;			// joystick range Y  axis
-//dword				il_joyRange_Z;			// joystick range Z  axis
-//dword				il_joyRange_R;			// joystick range R  axis
-
-//dword				il_joyDeadZone_Min_X;   // joystick dead Zone min X
-//dword				il_joyDeadZone_Max_X;   // joystick dead Zone max X
-//dword				il_joyDeadZone_Min_Y;	// joystick dead Zone min Y
-//dword				il_joyDeadZone_Max_Y;	// joystick dead Zone max Y
-//dword				il_joyDeadZone_Min_Z;	// joystick dead Zone min Z
-//dword				il_joyDeadZone_Max_Z;	// joystick dead Zone max Z
-//dword				il_joyDeadZone_Min_R;	// joystick dead Zone min R
-//dword				il_joyDeadZone_Max_R;	// joystick dead Zone max R
-
+// Joystick deadzones, in terms of SDL joystick range (-32768..32768)
+static int          isdl_joyDeadZone_Min[4] = { -5, -5, -5, -5 };
+static int          isdl_joyDeadZone_Max[4] = {  5,  5,  5,  5 };
 
 
 // initialize joystick device -------------------------------------------------
@@ -123,15 +106,15 @@ void ISDL_JoyInitHandler()
     MSGOUT("isdl_joy: Found %d joysticks.\n", isdl_nJoystickFound);
     if(isdl_nJoystickFound > 0)
     {
-    	//TODO: Implement support for more than one stick when we have more flexible input layer stuff
-    	MSGOUT("isdl_joy: ... but we don't care, because Parsec only has one JoyState\n");
-    	isdl_joyHandle = SDL_JoystickOpen(0);
-    	isdl_NumAxes = SDL_JoystickNumAxes(isdl_joyHandle);
-    	isdl_NumButtons = SDL_JoystickNumButtons(isdl_joyHandle);
-    	isdl_NumButtons = isdl_NumButtons > 32 ? 32 : isdl_NumButtons;
-    	MSGOUT("isdl_joy: Joystick%d has %d axes and %d buttons\n", 0, isdl_NumAxes, isdl_NumButtons);
-    	QueryJoystick = TRUE;
-    	JoystickDisabled = FALSE;
+		//TODO: Implement support for more than one stick when we have more flexible input layer stuff
+		MSGOUT("isdl_joy: ... but we don't care, because Parsec only has one JoyState\n");
+		isdl_joyHandle = SDL_JoystickOpen(0);
+		isdl_NumAxes = SDL_JoystickNumAxes(isdl_joyHandle);
+		isdl_NumButtons = SDL_JoystickNumButtons(isdl_joyHandle);
+		isdl_NumButtons = isdl_NumButtons > 32 ? 32 : isdl_NumButtons;
+		MSGOUT("isdl_joy: Joystick%d has %d axes and %d buttons\n", 0, isdl_NumAxes, isdl_NumButtons);
+		QueryJoystick = TRUE;
+		JoystickDisabled = FALSE;
     }
 }
 
@@ -157,7 +140,7 @@ int ILm_JoyInit()
 	} else {
 		// query number of axes, buttons, driver version and joystick name
 		ioctl( il_fd, JSIOCGVERSION,			&il_version);
-		ioctl( il_fd, JSIOCGAXES, 				&isdl_NumAxes);
+		ioctl( il_fd, JSIOCGAXES,				&isdl_NumAxes);
 		ioctl( il_fd, JSIOCGBUTTONS,			&isdl_NumButtons);
 		ioctl( il_fd, JSIOCGNAME( NAME_LENGTH ),il_JoyName);
 
@@ -349,6 +332,18 @@ void ILm_JoyAxisR( Sint16 value )
 	}
  } */
 
+// apply deadzones ------------------------------------------------------------
+//
+PRIVATE 
+int ISDL_ApplyDZ(int value, int axis)
+{
+	if ( value > isdl_joyDeadZone_Min[axis] && 
+		 value < isdl_joyDeadZone_Max[axis] )
+		return 0;
+	else
+		return value;
+}
+
 
 // read current joystick state ( positions and buttons ) ----------------------
 //
@@ -364,24 +359,25 @@ void ISDL_JoyCollect()
 	{
 		if(isdl_swap_axes01)
 		{
-			JoyState.X = SDL_JoystickGetAxis(isdl_joyHandle, 1) / JOY_Y_DIV;
-			JoyState.Y = SDL_JoystickGetAxis(isdl_joyHandle, 0) / JOY_X_DIV;
+			JoyState.X = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 1), 1) / JOY_Y_DIV;
+			JoyState.Y = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 0), 0) / JOY_X_DIV;
 		}
 		else
 		{
-			JoyState.X = SDL_JoystickGetAxis(isdl_joyHandle, 0) / JOY_X_DIV;
-			JoyState.Y = SDL_JoystickGetAxis(isdl_joyHandle, 1) / JOY_Y_DIV;
+			JoyState.X = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 0), 0) / JOY_X_DIV;
+			JoyState.Y = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 1), 1) / JOY_Y_DIV;
 		}
 	}
 	if (isdl_NumAxes >= 3)
 	{
 		if(isdl_swap_axes23)
 		{
-			JoyState.Rz = SDL_JoystickGetAxis(isdl_joyHandle, 2) / JOY_RUDDER_DIV;
+			JoyState.Rz = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 2), 2) / JOY_RUDDER_DIV;
 			isdl_bHasRudder = TRUE;
 		}
 		else
 		{
+			// Do not apply deadzones to throttle
 			JoyState.Z = SDL_JoystickGetAxis(isdl_joyHandle, 2) / JOY_THROTTLE_DIV + JOY_THROTTLE_OFF;
 			isdl_bHasThrottle = TRUE;
 		}
@@ -390,12 +386,13 @@ void ISDL_JoyCollect()
 	{
 		if(isdl_swap_axes23)
 		{
+			// Do not apply deadzones to throttle
 			JoyState.Z = SDL_JoystickGetAxis(isdl_joyHandle, 3) / JOY_THROTTLE_DIV + JOY_THROTTLE_OFF;
 			isdl_bHasThrottle = TRUE;
 		}
 		else
 		{
-			JoyState.Rz = SDL_JoystickGetAxis(isdl_joyHandle, 3) / JOY_RUDDER_DIV;
+			JoyState.Rz = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 3), 3) / JOY_RUDDER_DIV;
 			isdl_bHasRudder = TRUE;
 		}
 	}
@@ -414,8 +411,6 @@ void ISDL_JoyCollect()
             {
                 if (kap[aid].code == ((dword)button | (dword)AKC_JOY_FLAG))
                 {
-                	printf("TESTING: aid = %d code = %d button = %d looking for %d\n", 
-                		   aid, kap[aid].code, button, (dword)button | (dword)AKC_JOY_FLAG);
                     kap[aid].state = (JoyState.Buttons[button] ? TRUE : FALSE);
                 }
             }
@@ -512,7 +507,7 @@ int ILm_ReadJoystickData()
 			}
 
 //			MSGOUT( "Event: type %d, time %d, number %d, value %d\n",
-//				    js.type, js.time, js.number, js.value);
+//					js.type, js.time, js.number, js.value);
 	}
 
 #ifdef JOY_AKC_SUPPORT
@@ -554,6 +549,15 @@ int_command_s il_joy_int_commands[] = {
 
 	{ 0x00,	"isdl.swap_joyaxes_01", 0, 1, &isdl_swap_axes01,	NULL, NULL },
 	{ 0x00,	"isdl.swap_joyaxes_23", 0, 1, &isdl_swap_axes23,	NULL, NULL },
+	{ 0x00, "isdl.deadzone_min_axis_0", -32768, 0, &isdl_joyDeadZone_Min[0], NULL, NULL },
+	{ 0x00, "isdl.deadzone_min_axis_1", -32768, 0, &isdl_joyDeadZone_Min[1], NULL, NULL },
+	{ 0x00, "isdl.deadzone_min_axis_2", -32768, 0, &isdl_joyDeadZone_Min[2], NULL, NULL },
+	{ 0x00, "isdl.deadzone_min_axis_3", -32768, 0, &isdl_joyDeadZone_Min[3], NULL, NULL },
+	{ 0x00, "isdl.deadzone_max_axis_0", 0,  32768, &isdl_joyDeadZone_Max[0], NULL, NULL },
+	{ 0x00, "isdl.deadzone_max_axis_1", 0,  32768, &isdl_joyDeadZone_Max[1], NULL, NULL },
+	{ 0x00, "isdl.deadzone_max_axis_2", 0,  32768, &isdl_joyDeadZone_Max[2], NULL, NULL },
+	{ 0x00, "isdl.deadzone_max_axis_3", 0,  32768, &isdl_joyDeadZone_Max[3], NULL, NULL },
+
 };
 
 #define NUM_IL_JOY_INT_COMMANDS CALC_NUM_ARRAY_ENTRIES( il_joy_int_commands )
