@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+# VIM temporary files 
+*~
+*.sw?
+
