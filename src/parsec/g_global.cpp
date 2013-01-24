@@ -68,7 +68,7 @@ int 	Op_FixFrameRate 	= 1;
 int 	Op_SoundEffects 	= 0;
 int		Op_Music			= 0;
 int 	Op_Joystick 		= 0;
-int 	Op_Mouse			= 0;
+int 	Op_Mouse			= 1;
 
 // help active? ----------------------------------------------------------
 int 	HelpActive			= 0;

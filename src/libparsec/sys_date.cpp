@@ -53,9 +53,9 @@
 // determine build
 
 #ifdef DEBUG
-	#define BUILD_TEXT "parsec" SYSTEM_TEXT "build " CLIENT_BUILD_NUMBER " debug build"
+	#define BUILD_TEXT "parsec" SYSTEM_TEXT "debug build " CLIENT_BUILD_NUMBER
 #else
-	#define BUILD_TEXT "parsec" SYSTEM_TEXT "build " CLIENT_BUILD_NUMBER " release build"
+	#define BUILD_TEXT "parsec" SYSTEM_TEXT "release build " CLIENT_BUILD_NUMBER
 #endif
 
 
@@ -76,13 +76,13 @@
 #elif defined( SYSTEM_COMPILER_GCC )
 	#define BUILD_COMPILER		"compiler: gnu c++ " BUILD_VER(__GNUC__.__GNUC_MINOR__.__GNUC_PATCHLEVEL__)
 #else
-	#error "unknown compiler!"
+	#error "unsupported compiler!"
 #endif
 
 
 // determine binding
 
-#define BUILD_BINDING		"subsystem binding: static"
+#define BUILD_BINDING			"subsystem binding: static"
 
 
 // determine endianness

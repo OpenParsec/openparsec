@@ -124,7 +124,7 @@ colrgba_s	IndexToRGBATab[ VGA_PAL_NUMCOLORS ];
 // global color definitions ---------------------------------------------------
 //
 colrgba_s PanelBackColor		= {  15,  37,  67, 160 };
-colrgba_s PanelTextColor		= { 120, 255, 255, 100 };
+colrgba_s PanelTextColor		= { 120, 255, 255, 120 };
 colrgba_s FlareBaseColor		= { 255, 255, 255, 102 };
 
 colrgba_s LightColorAmbient		= { 255, 255, 255, 255 };

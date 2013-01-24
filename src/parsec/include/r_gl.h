@@ -15,13 +15,13 @@
 // define basic vertex types --------------------------------------------------
 
 struct GLVertex2 {
-	
+
 	GLfloat	x;		// viewspace x
 	GLfloat	y;		// viewspace y
-	
+
 	GLfloat	s;		// texture s
 	GLfloat	t;		// texture t
-	
+
 	GLubyte	r;		// red component
 	GLubyte	g;		// green component
 	GLubyte	b;		// blue component
