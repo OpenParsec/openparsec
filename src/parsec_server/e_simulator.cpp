@@ -89,11 +89,11 @@
 #ifdef _SLERP_DEBUGGING
 
 //FIXME: not needed anymore ?
-/*#ifdef SYSTEM_WIN32
+/*#ifdef SYSTEM_WIN32_UNUSED
 	#include "windows.h"
 	#include "mmsystem.h"
 	#pragma comment( lib, "winmm.lib" )
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_WIN32_UNUSED
 */
 
 #endif // _SLERP_DEBUGGING

@@ -570,7 +570,7 @@ void SDL_RCSetup()
 	if (GLEW_VERSION_1_4 || GLEW_SGIS_generate_mipmap)
 		glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
 	
-	// same with texture compression, although it lessens the performance benefits
+	// same with texture compression
 	if (GLEW_VERSION_1_3 || GLEW_ARB_texture_compression)
 		glHint(GL_TEXTURE_COMPRESSION_HINT, GL_NICEST);
 

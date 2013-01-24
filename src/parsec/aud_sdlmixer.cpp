@@ -456,7 +456,12 @@ int AUDs_StopAudioStream()
 		Mix_FreeMusic(music);
 		music = NULL;
 	}
-	
+
+	if (tmp_music_buffer != NULL) {
+		FREEMEM(tmp_music_buffer);
+		tmp_music_buffer = NULL;
+	}
+
     return 1;
 }
 
@@ -618,6 +623,11 @@ void AUDs_MusicFinished()
 		if (music != NULL) {
 			Mix_FreeMusic(music);
 			music = NULL;
+		}
+
+		if (tmp_music_buffer != NULL) {
+			FREEMEM(tmp_music_buffer);
+			tmp_music_buffer = NULL;
 		}
 		
 		// signal the BackGround Player we're ready for the next song.

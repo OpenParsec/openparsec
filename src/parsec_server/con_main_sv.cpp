@@ -83,9 +83,9 @@
 
 // CURSES library -------------------------------------------------------------
 #ifdef USE_CURSES
-	#ifdef SYSTEM_WIN32
+	#ifdef SYSTEM_WIN32_UNUSED
 		#pragma comment( lib, "curses.lib" )
-	#endif // SYSTEM_WIN32
+	#endif // SYSTEM_WIN32_UNUSED
 #endif // USE_CURSES
 
 // flags

@@ -6,9 +6,9 @@
 /* Sick of this junk, hard coding some stuff because there's no reason for the mass
    system dependent code anymore */
 
-#undef SYSTEM_WINDOWS
-#undef SYSTEM_LINUX
-#undef SYSTEM_MACOSX
+#undef SYSTEM_WIN32_UNUSED
+#undef SYSTEM_LINUX_UNUSED
+#undef SYSTEM_MACOSX_UNUSED
 
 #define SYSTEM_SDL
 
@@ -52,22 +52,22 @@
 // building IDE
 /*
 #if defined ( __WIN32__ ) || defined (WIN32) || defined( __linux__) || defined(__CYGWIN__) || defined(__APPLE__)
-//	#define SYSTEM_WINDOWS
-//	#undef SYSTEM_LINUX
-//	#undef SYSTEM_MACOSX
+//	#define SYSTEM_WIN32_UNUSED
+//	#undef SYSTEM_LINUX_UNUSED
+//	#undef SYSTEM_MACOSX_UNUSED
 //	#define CPU_VENDOR_OS "i386-pc-win32"
 //#elif defined( __linux__ )
-	#undef SYSTEM_WINDOWS
-	#define SYSTEM_LINUX
-	#undef SYSTEM_MACOSX
+	#undef SYSTEM_WIN32_UNUSED
+	#define SYSTEM_LINUX_UNUSED
+	#undef SYSTEM_MACOSX_UNUSED
 #ifndef __CYGWIN__
 	#define __CYGWIN__ // temporary, for SDL testing.
 #endif
 	#define CPU_VENDOR_OS "i386-pc-linux-gnu"
 #elif defined( __APPLE__ )
-	#undef SYSTEM_WINDOWS
-	#define SYSTEM_LINUX
-    #undef SYSTEM_MACOSX
+	#undef SYSTEM_WIN32_UNUSED
+	#define SYSTEM_LINUX_UNUSED
+    #undef SYSTEM_MACOSX_UNUSED
 	#define CPU_VENDOR_OS "i386-pc-linux-gnu"
 #endif
 

@@ -27,11 +27,11 @@
 
 /*
 // additional directories for console scripts
-#if defined( SYSTEM_WIN32 )
+#if defined( SYSTEM_WIN32_UNUSED )
 	#define REFCON_COMMANDS_DIR		"refs\\"
 	#define STDCON_COMMANDS_DIR		"cons\\"
 	#define RECORD_COMMANDS_DIR		"recs\\"
-#elif defined( SYSTEM_LINUX ) || defined( SYSTEM_MACOSX )*/
+#elif defined( SYSTEM_LINUX_UNUSED ) || defined( SYSTEM_MACOSX_UNUSED )*/
 	#define REFCON_COMMANDS_DIR		"refs/"
 	#define STDCON_COMMANDS_DIR		"cons/"
 	#define RECORD_COMMANDS_DIR		"recs/"

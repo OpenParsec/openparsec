@@ -16,7 +16,7 @@
 void SysAssertCallback( const char *file, unsigned line )
 {
 
-#if defined( SYSTEM_MACOSX )
+#if defined( SYSTEM_MACOSX_UNUSED )
 
 	#ifdef PARSEC_CLIENT
 		static char str[ 256 ];
@@ -26,7 +26,7 @@ void SysAssertCallback( const char *file, unsigned line )
 		SX_ReportErrorString( str );
 	#endif // PARSEC_CLIENT
 
-#elif defined( SYSTEM_WIN32 ) && defined( PARSEC_CLIENT )
+#elif defined( SYSTEM_WIN32_UNUSED ) && defined( PARSEC_CLIENT )
 
 	const char *msg = ( *file == '"' ) ? "%s, line %u" : "file %s, line %u";
 

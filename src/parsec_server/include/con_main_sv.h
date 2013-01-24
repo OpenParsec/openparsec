@@ -151,7 +151,7 @@ void	CON_KillCurses();
 
 #ifdef USE_CURSES
 
-	#ifdef SYSTEM_WIN32
+	#ifdef SYSTEM_WIN32_UNUSED
 		#include "libpdcurses/curses.h"
 	#else 
 		#include <curses.h>
