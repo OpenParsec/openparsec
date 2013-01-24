@@ -22,7 +22,7 @@
  */ 
 #include "config.h"
 
-#ifndef _WIN32 // TODO: better system definitions
+#ifndef SYSTEM_TARGET_WINDOWS
 
 // C library includes
 #include <stdio.h>
@@ -264,4 +264,4 @@ REGISTER_MODULE( SL_TIMER )
 
 #endif
 
-#endif
+#endif // !SYSTEM_TARGET_WINDOWS

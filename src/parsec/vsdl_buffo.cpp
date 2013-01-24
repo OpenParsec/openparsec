@@ -22,7 +22,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */ 
 #include "config.h"
-#ifdef SYSTEM_SDL
 
 // C library
 #include <stdio.h>
@@ -173,5 +172,3 @@ char *VIDs_ScreenshotBuffer( int create, int *size )
 	return buffer;
 }
 
-
-#endif

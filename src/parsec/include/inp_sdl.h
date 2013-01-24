@@ -20,10 +20,10 @@
 //	void	INPs_UserProcessAuxInput();
 
 
-#if defined(_WIN32) || defined(__APPLE__)
-	#include <SDL.h>
-#else
+#ifdef SYSTEM_TARGET_LINUX
 	#include <SDL/SDL.h>
+#else
+	#include <SDL.h>
 #endif
 
 #endif //_INP_SDL_H_

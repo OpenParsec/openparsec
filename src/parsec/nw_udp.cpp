@@ -25,7 +25,7 @@
 // compilation flags/debug support
 #include "config.h"
 
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 
 // C library
 #include <errno.h>
@@ -269,4 +269,4 @@ void UDPs_KillOSNetAPI()
 }
 
 
-#endif // _WIN32
+#endif // SYSTEM_TARGET_WINDOWS

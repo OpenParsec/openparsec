@@ -8,13 +8,14 @@
 #ifndef KEYS_SDL_H_
 #define KEYS_SDL_H_
 
-#if defined(_WIN32) || defined(__APPLE__)
-	#include <SDL.h>
+#ifdef SYSTEM_TARGET_LINUX
+#include <SDL/SDL.h>
 #else
-	#include <SDL/SDL.h>
+#include <SDL.h>
 #endif
+
 // ----------------------------------------------------------------------------
-//  INTEL PC KEYBOARD CODES                                                   -
+//  SDL KEYBOARD KEYS                                                         -
 // ----------------------------------------------------------------------------
 
 

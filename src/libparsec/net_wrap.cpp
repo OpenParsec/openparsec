@@ -44,7 +44,7 @@
 // local module header
 #include "net_wrap.h"
 
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 
 int inet_aton(const char *cp, struct in_addr *ap)
 {
@@ -128,5 +128,5 @@ const char* hstrerror(int err)
 	return("unknown error");
 }
 
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_TARGET_WINDOWS
 

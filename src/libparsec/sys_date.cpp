@@ -39,12 +39,12 @@
 
 // determine target system
 
-#if defined( SYSTEM_WIN32 )
-	#define SYSTEM_TEXT			"/win32 "
-#elif defined( SYSTEM_LINUX )
+#if defined( SYSTEM_TARGET_WINDOWS )
+	#define SYSTEM_TEXT			"/windows "
+#elif defined( SYSTEM_TARGET_LINUX )
 	#define SYSTEM_TEXT			"/linux "
-#elif defined( SYSTEM_MACOSX )
-	#define SYSTEM_TEXT			"/macosx "
+#elif defined( SYSTEM_TARGET_OSX )
+	#define SYSTEM_TEXT			"/osx "
 #else
 	#define SYSTEM_TEXT			"/unknown "
 #endif

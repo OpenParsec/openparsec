@@ -23,8 +23,6 @@
  */ 
 #include "config.h"
 
-#ifdef SYSTEM_SDL
-
 // C library
 #include <stdio.h>
 #include <stdlib.h>
@@ -236,5 +234,3 @@ int VIDs_SetGammaCorrection( float gamma )
 	return TRUE;
 }
 
-
-#endif

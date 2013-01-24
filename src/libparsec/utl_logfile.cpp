@@ -32,18 +32,18 @@
 #include "debug.h"
 
 // C library 
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 #  include <time.h>
 #else
 #  include <sys/time.h>
 #endif
 
 // platform specific includes
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 	#include "windows.h"
 	#include "mmsystem.h"
 	#pragma comment( lib, "winmm.lib" )
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_TARGET_WINDOWS
 
 
 // general definitions
@@ -124,7 +124,7 @@ void UTL_LogFile::_AddEntry( const char* szEntry, size_t len2 )
 
 	// prepend the current date/time
 	
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 
 	//FIXME: recheck whether SYSs_GetCurTimeString() works properly
 	//fprintf( fp, "%s: ", SYSs_GetCurTimeString() );

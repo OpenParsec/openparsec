@@ -5,7 +5,7 @@
 #ifndef _NET_UNP_H_
 #define _NET_UNP_H_
 
-#if defined( _WIN32 )
+#if defined( SYSTEM_TARGET_WINDOWS )
 	#include <winsock2.h>
 	#include <ws2tcpip.h>
 	#include <io.h>
@@ -67,7 +67,7 @@
 
 
 // windows uses closesocket, osx/linux use close
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 #define CLOSESOCKET closesocket
 #else
 #define CLOSESOCKET close
@@ -76,7 +76,7 @@
 
 // define some macros to make error handling more readable --------------------
 //
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 	#define ERRNO				wsaerr
 	#define FETCH_ERRNO()		int wsaerr = WSAGetLastError()
 	#define ERRNO_EWOULDBLOCK	( wsaerr == WSAEWOULDBLOCK  )

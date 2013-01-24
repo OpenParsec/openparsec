@@ -80,11 +80,11 @@
 
 #ifdef _SLERP_DEBUGGING
 
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 	#include "windows.h"
 	#include "mmsystem.h"
 	#pragma comment( lib, "winmm.lib" )
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_TARGET_WINDOWS
 
 #endif // _SLERP_DEBUGGINGs
 

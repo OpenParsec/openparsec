@@ -1662,10 +1662,10 @@
 		FAFEF87B163BE1CF0056CECD /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				FAD2E084168BC22400E3EE7B /* libraries */,
-				FA371572164DD36700230CE8 /* parsec_server */,
 				FAFEF87C163BE1CF0056CECD /* libparsec */,
+				FAD2E084168BC22400E3EE7B /* libraries */,
 				FAFEF8F8163BE1CF0056CECD /* parsec */,
+				FA371572164DD36700230CE8 /* parsec_server */,
 			);
 			name = Source;
 			path = ../../src;

@@ -76,15 +76,13 @@
 #include "sys_file.h"
 #include "vid_init.h"
 
-#ifdef SYSTEM_SDL
-	#if defined(_WIN32) || defined(__APPLE__)
-		#include <SDL.h>
-	#else
-		#include <SDL/SDL.h>
-	#endif
+#ifdef SYSTEM_TARGET_LINUX
+	#include <SDL/SDL.h>
+#else
+	#include <SDL.h>
 #endif
 
-#ifdef __APPLE__
+#ifdef SYSTEM_TARGET_OSX
 	#include <CoreFoundation/CoreFoundation.h>
 #endif
 
@@ -134,7 +132,7 @@ static char joystick_disabled[]		= "Joystick code is disabled.\n";
 static char exiting_game[]			= "Exiting Parsec...\n";
 
 
-#ifndef _WIN32
+#ifndef SYSTEM_TARGET_WINDOWS
 // emulate missing or differently named c library functions -------------------
 //
 int stricmp( const char *s1, const char *s2 )
@@ -170,7 +168,7 @@ char *strupr( char *str )
 #endif
 
 
-#ifdef __APPLE__
+#ifdef SYSTEM_TARGET_OSX
 
 static char macresourcespath[1024];
 
@@ -359,7 +357,7 @@ int main( int argc, char **argv )
 	dmalloc_debug_setup(getenv("DMALLOC_OPTIONS"));
 #endif
 	
-#ifdef __APPLE__
+#ifdef SYSTEM_TARGET_OSX
 	chdir(SLm_GetMacResourcesPath());
 #endif
 

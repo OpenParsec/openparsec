@@ -20,7 +20,7 @@
  */ 
 #include "config.h"
 
-#ifdef _WIN32
+#ifdef SYSTEM_TARGET_WINDOWS
 
 // C library includes
 #include <stdio.h>
@@ -227,5 +227,6 @@ REGISTER_MODULE( SW_TIMER )
 	SYSs_InitFrameTimer();
 }
 
-#endif
-#endif
+#endif // PARSEC_SERVER
+
+#endif // SYSTEM_TARGET_WINDOWS

@@ -58,7 +58,7 @@
 	#include "sys_err_sv.h"
 #endif // !PARSEC_CLIENT
 
-#ifndef _WIN32
+#ifndef SYSTEM_TARGET_WINDOWS
 	// implemented in SL_MAIN.C
 	int stricmp( const char *s1, const char *s2 );
 	int strnicmp( const char *s1, const char *s2, int len );

@@ -12,6 +12,32 @@
 
 #define SYSTEM_SDL
 
+
+// New defines for different systems
+
+#if defined(_WIN32)
+#	define SYSTEM_TARGET_WINDOWS
+#elif defined(__APPLE__) // TODO: check for iOS using TargetConditionals.h
+#	define SYSTEM_TARGET_OSX
+#elif defined(linux) || defined(__linux)
+#	define SYSTEM_TARGET_LINUX
+#endif
+
+
+// compiler specification (parsec constants) ----------------------------------
+//
+#if defined(_MSC_VER)
+#	define SYSTEM_COMPILER_MSVC
+#elif defined(__clang__)
+#	define SYSTEM_COMPILER_CLANG
+#elif defined(__GNUC__)
+#	if defined(__llvm__)
+#		define SYSTEM_COMPILER_LLVM_GCC
+#	else
+#		define SYSTEM_COMPILER_GCC
+#	endif
+#endif
+
 #include "platform_sdl.h"
 
 //PARSEC_SERVER Needs this:
@@ -45,17 +71,6 @@
 	#define CPU_VENDOR_OS "i386-pc-linux-gnu"
 #endif
 
-
-
-#ifdef SYSTEM_LINUX
-#include "platform_lnx.h"
-#elif defined ( SYSTEM_WINDOWS )
-#include "platform_w32.h"
-#elif defined ( SYSTEM_MACOSX )
-#include "platform_mac.h"
-#else
-#error "Unkown System Type Specified.
-#endif
 	*/
 
 #endif //_PLATFORM_H

@@ -5,13 +5,11 @@
 #ifndef _VSDL_OGL_H_
 #define _VSDL_OGL_H_
 
-#if defined(_WIN32) || defined(__APPLE__)
-	#include <SDL.h>
+#ifdef SYSTEM_TARGET_LINUX
+#include <SDL/SDL.h>
 #else
-	#include <SDL/SDL.h>
+#include <SDL.h>
 #endif
-
-#include "platform.h"
 
 
 #if SDL_VERSION_ATLEAST(2, 0, 0)

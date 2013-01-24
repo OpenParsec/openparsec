@@ -23,7 +23,8 @@
 // compilation flags/debug support
 #include "config.h"
 
-#if defined( SYSTEM_SDL ) && ! defined ( DISABLE_JOYSTICK_CODE )  // TODO: Disabled for now.
+#if !defined ( DISABLE_JOYSTICK_CODE )  // TODO: Disabled for now.
+
 // C library
 #include <stddef.h>
 #include <stdio.h>
@@ -572,4 +573,5 @@ REGISTER_MODULE( IL_JOY )
 		CON_RegisterIntCommand( &il_joy_int_commands[ curcmd ] );
 	}
 }
+
 #endif

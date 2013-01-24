@@ -27,17 +27,10 @@
 
 
 // additional directories for console scripts
-#if defined( SYSTEM_WIN32 )
-	#define REFCON_COMMANDS_DIR		"refs\\"
-	#define STDCON_COMMANDS_DIR		"cons\\"
-	#define RECORD_COMMANDS_DIR		"recs\\"
-#elif defined( SYSTEM_LINUX ) || defined( SYSTEM_MACOSX) || defined (SYSTEM_SDL)
-	#define REFCON_COMMANDS_DIR		"refs/"
-	#define STDCON_COMMANDS_DIR		"cons/"
-	#define RECORD_COMMANDS_DIR		"recs/"
-#else
-	#error "system not defined!"
-#endif
+#define REFCON_COMMANDS_DIR		"refs/"
+#define STDCON_COMMANDS_DIR		"cons/"
+#define RECORD_COMMANDS_DIR		"recs/"
+
 
 // file extension of console scripts
 #define CON_FILE_EXTENSION			".con"

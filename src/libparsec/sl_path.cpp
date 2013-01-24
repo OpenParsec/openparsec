@@ -22,7 +22,7 @@
  */ 
 #include "config.h"
 
-#ifndef _WIN32
+#ifndef SYSTEM_TARGET_WINDOWS
 
 // C library
 #include <ctype.h>
@@ -286,5 +286,5 @@ int SYSs_AcquireDemoPath( char *path, char *prefix )
 	return 0;
 }
 
-#endif
+#endif // !SYSTEM_TARGET_WINDOWS
 

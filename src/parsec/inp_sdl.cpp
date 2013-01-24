@@ -23,8 +23,6 @@
 // compilation flags/debug support
 #include "config.h"
 
-#ifdef SYSTEM_SDL
-
 // C library
 #include <signal.h>
 #include <stddef.h>
@@ -935,6 +933,3 @@ void INPs_Collect()
 #endif
 
 }
-
-
-#endif

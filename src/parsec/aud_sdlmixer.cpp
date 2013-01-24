@@ -52,12 +52,12 @@
 #include "sys_file.h"
 #include "sys_path.h"
 
-#if defined(_WIN32) || defined(__APPLE__)
-	#include <SDL.h>
-	#include <SDL_mixer.h>
-#else
+#ifdef SYSTEM_TARGET_LINUX
 	#include <SDL/SDL.h>
 	#include <SDL/SDL_mixer.h>
+#else
+	#include <SDL.h>
+	#include <SDL_mixer.h>
 #endif
 // flags
 

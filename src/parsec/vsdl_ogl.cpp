@@ -23,8 +23,6 @@
  */ 
 #include "config.h"
 
-#ifdef SYSTEM_SDL
-
 // C library
 #include <stdio.h>
 #include <stdlib.h>
@@ -843,4 +841,3 @@ REGISTER_MODULE( VSDL_OGL )
 		CON_RegisterIntCommand( &gl_int_commands[ curcmd ] );
 	}
 }
-#endif

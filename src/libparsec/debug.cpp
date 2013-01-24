@@ -475,7 +475,7 @@ void _SysAssert( const char *file, unsigned line )
 	if ( !inSysAssert ) {
 		inSysAssert = TRUE;
 
-#if defined ( _WIN32 ) && !defined ( __MINGW32__ )
+#if defined ( SYSTEM_TARGET_WINDOWS ) && !defined ( __MINGW32__ )
 		__debugbreak();
 #endif // SYSTEM_WIN32
 

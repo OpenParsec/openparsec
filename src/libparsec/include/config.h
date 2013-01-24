@@ -83,11 +83,10 @@
 
 
 // automatic host cpu selection if not already set ----------------------------
+// TODO: fixme?
 //
 #if !( defined( SYSTEM_CPU_INTEL ) || defined( SYSTEM_CPU_POWERPC ) )
-	#if defined( SYSTEM_WIN32 ) || defined( SYSTEM_LINUX ) || defined(SYSTEM_SDL)
-		#define SYSTEM_CPU_INTEL
-	#endif
+	#define SYSTEM_CPU_INTEL
 #endif
 
 

@@ -22,7 +22,6 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */ 
 #include "config.h"
-#ifdef SYSTEM_SDL
 
 // C library
 #include <stdio.h>
@@ -231,6 +230,3 @@ void VIDs_InitFrameBufferAPI()
 	// execute script if available
 	SDL_ExecSubsysScript();
 }
-
-
-#endif
