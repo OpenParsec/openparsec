@@ -210,7 +210,7 @@ public:
 	// create actual swarm object
 	GenObject* OBJ_CreateSwarm( ShipObject *pShip, int nClientID, dword targetid );
 
-	GenObject* G_Main::OBJ_CreateEmp( ShipObject *pShip, int nClientID, byte Upgradelevel );
+	GenObject* OBJ_CreateEmp( ShipObject *pShip, int nClientID, byte Upgradelevel );
 
 	// check availability of specified device
 	int OBJ_DeviceAvailable( ShipObject* pShip, int mask );
@@ -265,7 +265,7 @@ public:
     void LaunchSwarm(int nClientID, dword targetid);
 
     // EMP
-    void CreateEMP(int nClientID, byte UpgradeLevel)
+    void CreateEMP(int nClientID, byte UpgradeLevel);
 
 };
 

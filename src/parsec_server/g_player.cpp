@@ -717,7 +717,7 @@ void G_Player::_OBJ_LaunchSwarm( dword targetid )
 }
 
 void G_Player::FireEMP(byte Upgradelevel) {
-	ASSERT( m_pSimPlayerInfo != NULL );
+	/*ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
 	ASSERT( pShip != NULL );
 
@@ -732,7 +732,7 @@ void G_Player::FireEMP(byte Upgradelevel) {
 			CreateEmp( shippo, curdelay, 0, curupgrade );
 			curdelay += emp_delay[ curupgrade ];
 		}
-	}
+	}*/
 }
 
 
