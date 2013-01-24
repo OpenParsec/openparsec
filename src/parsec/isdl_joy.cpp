@@ -547,16 +547,16 @@ int ILm_ReadJoystickData()
 //
 int_command_s il_joy_int_commands[] = {
 
-	{ 0x00,	"isdl.swap_joyaxes_01", 0, 1, &isdl_swap_axes01,	NULL, NULL },
-	{ 0x00,	"isdl.swap_joyaxes_23", 0, 1, &isdl_swap_axes23,	NULL, NULL },
-	{ 0x00, "isdl.deadzone_min_axis_0", -32768, 0, &isdl_joyDeadZone_Min[0], NULL, NULL },
-	{ 0x00, "isdl.deadzone_min_axis_1", -32768, 0, &isdl_joyDeadZone_Min[1], NULL, NULL },
-	{ 0x00, "isdl.deadzone_min_axis_2", -32768, 0, &isdl_joyDeadZone_Min[2], NULL, NULL },
-	{ 0x00, "isdl.deadzone_min_axis_3", -32768, 0, &isdl_joyDeadZone_Min[3], NULL, NULL },
-	{ 0x00, "isdl.deadzone_max_axis_0", 0,  32768, &isdl_joyDeadZone_Max[0], NULL, NULL },
-	{ 0x00, "isdl.deadzone_max_axis_1", 0,  32768, &isdl_joyDeadZone_Max[1], NULL, NULL },
-	{ 0x00, "isdl.deadzone_max_axis_2", 0,  32768, &isdl_joyDeadZone_Max[2], NULL, NULL },
-	{ 0x00, "isdl.deadzone_max_axis_3", 0,  32768, &isdl_joyDeadZone_Max[3], NULL, NULL },
+	{ 0x01,	"isdl.swap_joyaxes_01"    ,      0, 1, &isdl_swap_axes01,	     NULL, NULL },
+	{ 0x01,	"isdl.swap_joyaxes_23"    ,      0, 1, &isdl_swap_axes23,	     NULL, NULL },
+	{ 0x01, "isdl.deadzone_min_axis_0", -32768, 0, &isdl_joyDeadZone_Min[0], NULL, NULL },
+	{ 0x01, "isdl.deadzone_min_axis_1", -32768, 0, &isdl_joyDeadZone_Min[1], NULL, NULL },
+	{ 0x01, "isdl.deadzone_min_axis_2", -32768, 0, &isdl_joyDeadZone_Min[2], NULL, NULL },
+	{ 0x01, "isdl.deadzone_min_axis_3", -32768, 0, &isdl_joyDeadZone_Min[3], NULL, NULL },
+	{ 0x01, "isdl.deadzone_max_axis_0", 0,  32767, &isdl_joyDeadZone_Max[0], NULL, NULL },
+	{ 0x01, "isdl.deadzone_max_axis_1", 0,  32767, &isdl_joyDeadZone_Max[1], NULL, NULL },
+	{ 0x01, "isdl.deadzone_max_axis_2", 0,  32767, &isdl_joyDeadZone_Max[2], NULL, NULL },
+	{ 0x01, "isdl.deadzone_max_axis_3", 0,  32767, &isdl_joyDeadZone_Max[3], NULL, NULL },
 
 };
 
