@@ -1331,7 +1331,7 @@ void FetchHistoryEntry( int entryid )
 
 // check input for console window ---------------------------------------------
 //
-void CON_HandleInput(keypress_s &kinfo)
+void CON_HandleInput(const keypress_s &kinfo)
 {
 	if (!kinfo.pressed)
 		return;

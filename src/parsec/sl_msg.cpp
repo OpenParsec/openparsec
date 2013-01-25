@@ -96,15 +96,8 @@ void SLm_WriteLogFileMessage( const char *msg )
 
 // defined in IL_XLIB.C and IL_SVLIB.C ----------------------------------------
 //
-/* XXX: Remove
-#if defined(SYSTEM_LINUX_UNUSED) && ! defined(SYSTEM_CYGWIN)
-extern void IL_SplashTextLine( char *line );
-extern void IL_LogWinTextLine( char *line );
-#endif
-#if defined(SYSTEM_LINUX_UNUSED) && defined(SYSTEM_CYGWIN)*/
 extern void ISDL_SplashTextLine( char *line );
 extern void ISDL_LogWinTextLine( char *line );
-//#endif
 
 
 // general message output function --------------------------------------------

@@ -20,12 +20,6 @@
 //	void	INPs_UserProcessAuxInput();
 
 
-#ifdef SYSTEM_TARGET_LINUX
-	#include <SDL/SDL.h>
-#else
-	#include <SDL.h>
-#endif
-
 #endif //_INP_SDL_H_
 
 

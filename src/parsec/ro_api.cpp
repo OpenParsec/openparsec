@@ -54,16 +54,16 @@ struct openglstate_s {
 
 	// glEnable state
 	bool
-	texturing,			// GL_TEXTURE_2D
-	alphatest,			// GL_ALPHA_TEST
-	blending,			// GL_BLEND
-	depthtest,			// GL_DEPTH_TEST
-	linesmooth,			// GL_LINE_SMOOTH
-	pointsmooth;		// GL_POINT_SMOOTH
+	texturing,						// GL_TEXTURE_2D
+	alphatest,						// GL_ALPHA_TEST
+	blending,						// GL_BLEND
+	depthtest,						// GL_DEPTH_TEST
+	linesmooth,						// GL_LINE_SMOOTH
+	pointsmooth;					// GL_POINT_SMOOTH
 
 	// depth buffer config
-	GLenum		depthfunc;				// glDepthFunc()
-	GLboolean	depthmask;				// glDepthMask()
+	GLenum		depthfunc;			// glDepthFunc()
+	GLboolean	depthmask;			// glDepthMask()
 
 	// depth range [glDepthRange()]
 	GLclampd	depthrange_zNear;
