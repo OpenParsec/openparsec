@@ -545,7 +545,7 @@ void FlushConsoleBuffer()
 	dword *pos;
 
 	while ( *( pos = &KeybBuffer->Data + KeybBuffer->ReadPos ) ) {
-		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) & KEYB_BUFF_SIZ_M;
+		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) % KEYB_BUFF_SIZ;
 		*pos = 0;
 	}
 }
@@ -1436,7 +1436,7 @@ bool_t CheckConsoleInput()
 		}
 
 		// advance one position in circular keybuffer
-		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) & KEYB_BUFF_SIZ_M;
+		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) % KEYB_BUFF_SIZ;
 		*pos = 0;
 
 		console_input_done = true;
@@ -1476,7 +1476,7 @@ int QuicksayConsole()
 			SetQuicksayConsole( FALSE );
 		}
 
-		readpos = ( readpos + 1 ) & KEYB_BUFF_SIZ_M;
+		readpos = ( readpos + 1 ) % KEYB_BUFF_SIZ;
 	}
 
 	// use standard input handling

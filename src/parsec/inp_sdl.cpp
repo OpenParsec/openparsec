@@ -52,8 +52,8 @@
 #include "isdl_keydf.h"
 
 // proprietary headers
+#include "con_main.h"
 #include "con_aux.h"
-#include "con_vald.h"
 #include "isdl_joy.h"
 #include "isdl_supp.h"
 
@@ -84,9 +84,8 @@ keyfunc_s*			DepressedKeys	= &_depressedkeys;
 keyfunc_s*			KeyAssignments	= _keyassignments;
 keyaddctrl_s*		KeyAdditional	= NULL;
 keybflags_s*		KeybFlags		= &_keybflags;
-keybbuffer_s*		KeybBuffer		= NULL;
 
-#define SIZEOF_KeybBuffer		( sizeof( keybbuffer_s ) + sizeof( dword ) * KEYB_BUFF_SIZ )
+#define SIZEOF_KeybBuffer		( sizeof( keybbuffer_s ) )
 #define SIZEOF_KeyAdditional	( sizeof( keyaddctrl_s ) + sizeof( keyaddition_s ) * KEY_ADDITIONS_MAX )
 
 
@@ -462,10 +461,13 @@ void ISDLm_SetKeyRepeat(bool enable)
 // keyboard handler invoked by event processing loop --------------------------
 //
 PRIVATE
-void ISDLm_KeyboardHandler(const SDL_Event & event)
+void ISDLm_KeyboardHandler(const SDL_Event &event)
 {
-	int state = (event.type == SDL_KEYDOWN);
-	int scode = event.key.keysym.sym;
+	keypress_s kinfo;
+
+	kinfo.pressed = event.type == SDL_KEYDOWN; // true if pressed, false if released
+	kinfo.key = event.key.keysym.sym;
+	kinfo.unicode = event.key.keysym.unicode; // FIXME for SDL 2
 	
 	
 #if SDL_VERSION_ATLEAST(2,0,0)
@@ -481,9 +483,9 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 
 
 	// console enabling/disabling
-	if ( scode == MKC_CAPSLOCK ) {
+	if ( kinfo.key == MKC_TILDE ) {
 
-		if ( !state ) {
+		if ( !kinfo.pressed ) {
 
 			// maintain debounce
 			KeybFlags->ConTogReleased = -1;
@@ -497,56 +499,18 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 	}
 
 	// console keyboard buffer handling
-	if ( state && ( scode != MKC_TILDE ) ) {
+	if ( kinfo.pressed && ( kinfo.key != MKC_TILDE ) ) {
 
 		if ( KeybFlags->ConActive && KeybFlags->ConEnabled ) {
 
-			if (scode == SDLK_LSHIFT || scode == SDLK_RSHIFT) {
+			if (kinfo.key == MKC_LSHIFT || kinfo.key == MKC_RSHIFT) {
 				return;
 			}
 
 			// set shift flag
 			//scode |= KeybFlags->ShiftOn;
-
-			// calc store pos in ring buffer
-			dword *bufdst = &KeybBuffer->Data + KeybBuffer->WritePos;
-
-			// advance pos in ring buffer
-			dword nxtpos = ( KeybBuffer->WritePos + 1 ) & KEYB_BUFF_SIZ_M;
-			dword *bufnxt = &KeybBuffer->Data + nxtpos;
-
-
-			// store key code into available buffer pos
-			if ( *bufnxt == 0 ) {
-				/*switch (event.key.keysym.sym){
-					case SDLK_RETURN:
-						*bufdst = CKC_ENTER;
-						break;
-					case SDLK_BACKSPACE:
-						*bufdst = CKC_BACKSPACE;
-						break;
-					default:
-						*bufdst = event.key.keysym.sym;
-						break;
-				}*/
-				
-				
-				// store both the SDL key and the unicode character in the ringbuffer
-				
-#if SDL_VERSION_ATLEAST(2,0,0)
-				// FIXME: unicode key input is handled differently in SDL 2
-				dword unicode = scode;
-				printf("key: 0x%x\n", scode);
-#else
-				word unicode = event.key.keysym.unicode;
-#endif
-				
-				dword key = scode & 0xFFFF;
-				key = (key << 16) | (unicode & 0xFFFF);
-				
-				*bufdst = key;
-				KeybBuffer->WritePos = nxtpos;
-			}
+			
+			CON_HandleInput(kinfo);
 
 			// console grabs all input
 			return;
@@ -559,8 +523,8 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 	dword *tabd =  (dword *) DepressedKeys;
 
 	for( int fid = NUM_GAMEFUNC_KEYS - 1; fid >= 0; fid-- ) {
-		if ( ( tab1[ fid ] == scode ) || ( tab2[ fid ] == scode ) ) {
-			tabd[ fid ] = state;
+		if ( ( tab1[ fid ] == kinfo.key ) || ( tab2[ fid ] == kinfo.key ) ) {
+			tabd[ fid ] = kinfo.pressed;
 		}
 	}
 
@@ -569,7 +533,7 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 	dword shiftb = ( ( KeybFlags->ShiftOn & ~KeybFlags->ExtOn ) != 0 ) ?
 					AKC_SHIFT_FLAG : 0;
 	*/
-	dword akcode = (dword)scode;
+	dword akcode = (dword) kinfo.key;
 
 	// additional key mappings
 	keyaddition_s *kap = &KeyAdditional->table;
@@ -578,7 +542,7 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 
 	for ( int aid = KeyAdditional->size - 1; aid >= 0; aid-- ) {
 		if ( kap[ aid ].code == akcode ) {
-			kap[ aid ].state = state;
+			kap[ aid ].state = kinfo.pressed;
 		}
 	}
 
@@ -625,13 +589,11 @@ void INPs_KeybInitHandler()
 
 	// alloc key tables
 	KeyAdditional	= (keyaddctrl_s *) ALLOCMEM( SIZEOF_KeyAdditional );
-	KeybBuffer		= (keybbuffer_s *) ALLOCMEM( SIZEOF_KeybBuffer );
 
 	// init all structs
 	memset( DepressedKeys,	0, sizeof( keyfunc_s ) );
 	memset( KeyAdditional,	0, SIZEOF_KeyAdditional );
 	memset( KeybFlags,		0, sizeof( keybflags_s ) );
-	memset( KeybBuffer,		0, SIZEOF_KeybBuffer );
 
 	KeybFlags->ConTogReleased = (byte)-1;
 /*
@@ -657,11 +619,6 @@ void INPs_KeybKillHandler()
 	if ( KeyAdditional != NULL ) {
 		FREEMEM( KeyAdditional );
 		KeyAdditional = NULL;
-	}
-
-	if ( KeybBuffer != NULL ) {
-		FREEMEM( KeybBuffer );
-		KeybBuffer = NULL;
 	}
 }
 

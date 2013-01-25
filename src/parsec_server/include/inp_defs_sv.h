@@ -19,7 +19,6 @@ struct keybbuffer_s {
 };
 
 #define KEYB_BUFF_SIZ				16
-#define KEYB_BUFF_SIZ_M 			( KEYB_BUFF_SIZ - 1 )
 
 
 // global pointer to the keyboard buffer ( for console input ) ----------------

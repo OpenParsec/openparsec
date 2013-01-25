@@ -6,6 +6,9 @@
 #define _CON_MAIN_H_
 
 
+#include "inp_defs.h"
+
+
 // if this is defined command parsing will be a lot slower
 //#define NO_UNNECESSARY_COMMAND_DOMAINS
 
@@ -131,6 +134,8 @@ void	CON_DelLine();
 char*	CON_GetLine();
 void	CON_ListCtdPrompt();
 void	CON_ListEndPrompt();
+
+void	CON_HandleInput(keypress_s &kinfo);
 
 int		QuicksayConsole();
 void	SetQuicksayConsole( int enable );

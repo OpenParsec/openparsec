@@ -100,17 +100,13 @@ struct keybflags_s {
 // in the meantime!)
 
 
-// header of keyboard buffer
-struct keybbuffer_s {
-
-	dword	ReadPos;
-	dword	WritePos;
-	dword	Data;
+// Information for a single keypress ------------------------------------------
+//
+struct keypress_s {
+	dword key;
+	dword unicode;
+	bool pressed;
 };
-
-//CAVEAT: MUST BE CONSISTENT WITH DEFINITION IN ID_KEYB.INC!!
-#define KEYB_BUFF_SIZ				16
-#define KEYB_BUFF_SIZ_M 			( KEYB_BUFF_SIZ - 1 )
 
 
 // generic joystick data structure --------------------------------------------
@@ -143,7 +139,6 @@ extern keyfunc_s *		DepressedKeys;
 extern keyfunc_s *		KeyAssignments;
 extern keyaddctrl_s *	KeyAdditional;
 extern keybflags_s *	KeybFlags;
-extern keybbuffer_s *	KeybBuffer;
 
 
 // joystick resolution --------------------------------------------------------
