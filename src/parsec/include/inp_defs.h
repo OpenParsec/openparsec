@@ -101,15 +101,6 @@ struct keybflags_s {
 // in the meantime!)
 
 
-// Information for a single keypress ------------------------------------------
-//
-struct keypress_s {
-	dword key;
-	dword unicode;
-	bool pressed;
-};
-
-
 // generic joystick data structure --------------------------------------------
 //
 struct joystate_s {

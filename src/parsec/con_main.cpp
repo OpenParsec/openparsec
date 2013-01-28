@@ -1336,6 +1336,10 @@ void CON_HandleTextInput(const char character)
 	if (await_keypress && com_cont_func)
 		return;
 
+	// don't write console open/close key
+	if (character == '`' || character == '~')
+		return;
+
 	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
 
 	// typeable characters

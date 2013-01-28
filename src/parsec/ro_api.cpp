@@ -74,8 +74,8 @@ struct openglstate_s {
 	GLenum		blendfunc_dfactor;
 
 	// alpha test function [glAlphaFunc()]
-	GLenum		alphafunc_func;
-	GLclampf	alphafunc_ref;
+	GLenum		alphatest_func;
+	GLclampf	alphatest_ref;
 
 	// point size [glPointSize()]
 	GLfloat		pointsize;
@@ -114,6 +114,54 @@ openglstate_s DefaultOpenGLState = {
 };
 
 openglstate_s OpenGLState = DefaultOpenGLState;
+
+
+// Initialize tracked state values based on current GL state ------------------
+//
+void RO_InitializeState()
+{
+	openglstate_s &state = OpenGLState;
+
+	// glEnable state
+	state.texturing = glIsEnabled(GL_TEXTURE_2D) == GL_TRUE;
+	state.alphatest = glIsEnabled(GL_ALPHA_TEST) == GL_TRUE;
+	state.blending = glIsEnabled(GL_BLEND) == GL_TRUE;
+	state.depthtest = glIsEnabled(GL_DEPTH_TEST) == GL_TRUE;
+	state.linesmooth = glIsEnabled(GL_LINE_SMOOTH) == GL_TRUE;
+	state.pointsmooth = glIsEnabled(GL_POINT_SMOOTH) == GL_TRUE;
+
+	// depth buffer
+	glGetIntegerv(GL_DEPTH_FUNC, (GLint *) &state.depthfunc);
+	glGetBooleanv(GL_DEPTH_WRITEMASK, &state.depthmask);
+
+	// depth range
+	GLfloat depthrange[] = {0.0f, 1.0f};
+	glGetFloatv(GL_DEPTH_RANGE, depthrange);
+	state.depthrange_zNear = depthrange[0];
+	state.depthrange_zFar = depthrange[1];
+
+	// blending
+	glGetIntegerv(GL_BLEND_SRC_RGB, (GLint *) &state.blendfunc_sfactor);
+	glGetIntegerv(GL_BLEND_DST_RGB, (GLint *) &state.blendfunc_dfactor);
+
+	// alpha testing
+	glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *) &state.alphatest_func);
+	glGetFloatv(GL_ALPHA_TEST_REF, &state.alphatest_ref);
+
+	// point size
+	glGetFloatv(GL_POINT_SIZE, &state.pointsize);
+
+	// vertex array crap
+	state.clientstate_user = VTXPTRS_NONE;
+	state.clientstate_base = NULL;
+
+	// disable all vertex array attributes
+	state.clientstate_bits = 0;
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_COLOR_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableClientState(GL_NORMAL_ARRAY);
+}
 
 
 // set GL server-side capabilities --------------------------------------------
@@ -219,11 +267,11 @@ void RO_BlendFunc( GLenum sfactor, GLenum dfactor )
 //
 void RO_AlphaFunc( GLenum func, GLclampf ref )
 {
-	if ( func != OpenGLState.alphafunc_func || ref != OpenGLState.alphafunc_ref )
+	if ( func != OpenGLState.alphatest_func || ref != OpenGLState.alphatest_ref )
 		glAlphaFunc( func, ref );
 	
-	OpenGLState.alphafunc_func = func;
-	OpenGLState.alphafunc_ref  = ref;
+	OpenGLState.alphatest_func = func;
+	OpenGLState.alphatest_ref  = ref;
 }
 
 

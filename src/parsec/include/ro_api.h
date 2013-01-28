@@ -44,6 +44,8 @@ enum {
 
 // external functions
 
+void	RO_InitializeState();
+
 void	RO_SetCapability(GLenum cap, bool enable);
 
 int		RO_DepthCmpEnabled();
