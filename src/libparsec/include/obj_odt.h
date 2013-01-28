@@ -27,7 +27,7 @@ enum {
 	OBJLOAD_VTXANIMS			= 0x0080,	// VtxAnimStates
 
 	OBJLOAD_POLYCORNERCOLORS	= 0x0100,	// reserve corner colors in polys
-	OBJLOAD_POLYWEDGEINDEXES	= 0x0200,	// reserve wedge indexes in polys
+	OBJLOAD_POLYWEDGEINDEXES	= 0x0200	// reserve wedge indexes in polys
 };
 
 

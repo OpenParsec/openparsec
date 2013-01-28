@@ -54,7 +54,7 @@ enum {
 	SOUNDPARAMS_LOOP			= 0x0002,	// loop whole wave, only selection or extended loop
 	SOUNDPARAMS_LOOP_COUNT		= 0x0010,	// loop the sound numLoops times
 	SOUNDPARAMS_VOLUME			= 0x0100,	// set the specified volume
-	SOUNDPARAMS_STREAMWAVE		= 0x0200,	// play streamed wave
+	SOUNDPARAMS_STREAMWAVE		= 0x0200	// play streamed wave
 };
 
 
@@ -99,7 +99,7 @@ enum {
 	JIM_COMMENT_ENERGY,			// 4
 	JIM_COMMENT_BORED,			// 5
 
-	JIM_COMMENT_NUM_COMMENTS,
+	JIM_COMMENT_NUM_COMMENTS
 };
 
 
@@ -108,7 +108,7 @@ enum {
 enum {
 
 	THRUST_TYPE_NORMAL,			// 0
-	THRUST_TYPE_SLIDE,			// 1
+	THRUST_TYPE_SLIDE			// 1
 };
 
 

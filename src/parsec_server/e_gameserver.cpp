@@ -762,7 +762,7 @@ key_value_s masterserver_key_value[] = {
 enum {
 
 	KEY_MASTERSERVER_NAME,
-	KEY_MASTERSERVER_INTERVAL,
+	KEY_MASTERSERVER_INTERVAL
 };
 
 // min/max interval for heartbeats to the masterserve -------------------------
@@ -832,7 +832,7 @@ enum {
 
 	KEY_SERVER_NAME,
 	KEY_SERVER_MAXPLAYERS,
-	KEY_SERVER_SIMFREQ,
+	KEY_SERVER_SIMFREQ
 };
 
 // min/max interval simulation frequency --------------------------------------
@@ -912,7 +912,7 @@ enum {
 
 	KEY_SERVERLINK_SERVERID,
 	KEY_SERVERLINK_POS,
-	KEY_SERVERLINK_DIR,
+	KEY_SERVERLINK_DIR
 };
 
 

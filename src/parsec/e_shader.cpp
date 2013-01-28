@@ -198,7 +198,7 @@ enum {
 	SFERRMSG_INVALIDLOD			= 0x0010,
 	SFERRMSG_INVALIDLODFACEID	= 0x0020,
 	SFERRMSG_NOAUXLODANIMAPPEND	= 0x0040,
-	SFERRMSG_ALL				= 0xffff,
+	SFERRMSG_ALL				= 0xffff
 };
 
 static int setfaceshader_error_msgs = SFERRMSG_NONE;

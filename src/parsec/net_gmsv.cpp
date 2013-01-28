@@ -841,7 +841,7 @@ key_value_s net_master_key_value[] = {
 enum {
 
 	KEY_NET_MASTER_NUM,
-	KEY_MET_MASTER_ADDR,
+	KEY_MET_MASTER_ADDR
 };
 
 

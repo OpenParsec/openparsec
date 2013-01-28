@@ -35,7 +35,7 @@ enum callbacktype_t {
 
 	CBFLAG_REMOVE				= 0x0000,   // flag to remove the callback info from the list after calling
 	CBFLAG_PERSISTENT			= 0x0100,	// callback info stays in list until removed
-	CBFLAG_MASK					= 0x0f00,	//
+	CBFLAG_MASK					= 0x0f00	//
 };
 
 

@@ -22,7 +22,7 @@
 //
 enum {
 
-	CUSTOM_NOTIFY_GENOBJECT_DELETE = 0,	// GenObject will be deleted
+	CUSTOM_NOTIFY_GENOBJECT_DELETE = 0	// GenObject will be deleted
 };
 
 

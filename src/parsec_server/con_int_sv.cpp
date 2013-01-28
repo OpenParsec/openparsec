@@ -129,22 +129,22 @@ void SetMSInt##f() \
 { \
 }
 
-DEF_MYSHIP_INT( Weapons );
-DEF_MYSHIP_INT( Specials );
-DEF_MYSHIP_INT( CurDamage );
-DEF_MYSHIP_INT( CurEnergy );
-DEF_MYSHIP_INT( CurSpeed );
-DEF_MYSHIP_INT( NumMissls );
-DEF_MYSHIP_INT( NumHomMissls );
-DEF_MYSHIP_INT( NumPartMissls );
-DEF_MYSHIP_INT( NumMines );
-DEF_MYSHIP_INT( MaxDamage );
-DEF_MYSHIP_INT( MaxEnergy );
-DEF_MYSHIP_INT( MaxSpeed );
-DEF_MYSHIP_INT( MaxNumMissls );
-DEF_MYSHIP_INT( MaxNumHomMissls );
-DEF_MYSHIP_INT( MaxNumPartMissls );
-DEF_MYSHIP_INT( MaxNumMines );
+DEF_MYSHIP_INT( Weapons )
+DEF_MYSHIP_INT( Specials )
+DEF_MYSHIP_INT( CurDamage )
+DEF_MYSHIP_INT( CurEnergy )
+DEF_MYSHIP_INT( CurSpeed )
+DEF_MYSHIP_INT( NumMissls )
+DEF_MYSHIP_INT( NumHomMissls )
+DEF_MYSHIP_INT( NumPartMissls )
+DEF_MYSHIP_INT( NumMines )
+DEF_MYSHIP_INT( MaxDamage )
+DEF_MYSHIP_INT( MaxEnergy )
+DEF_MYSHIP_INT( MaxSpeed )
+DEF_MYSHIP_INT( MaxNumMissls )
+DEF_MYSHIP_INT( MaxNumHomMissls )
+DEF_MYSHIP_INT( MaxNumPartMissls )
+DEF_MYSHIP_INT( MaxNumMines )
 
 
 //FIXME: get rid of these proxy stuff
@@ -204,35 +204,35 @@ void Set##name##Int##f() \
 	The##name->f = name##_proxy.f; \
 }
 
-DEF_PROXY_INT( GameExtraManager, MaxExtraArea );
-DEF_PROXY_INT( GameExtraManager, MinExtraDist );
-DEF_PROXY_INT( Game, EnergyExtraBoost );
-DEF_PROXY_INT( Game, RepairExtraBoost );
-DEF_PROXY_INT( Game, DumbPackNumMissls );
-DEF_PROXY_INT( Game, HomPackNumMissls );
-DEF_PROXY_INT( Game, SwarmPackNumMissls );
-DEF_PROXY_INT( Game, ProxPackNumMines );
-DEF_PROXY_INT( Game, m_NebulaID);
-DEF_PROXY_INT( GameExtraManager, ExtraProbability );
-DEF_PROXY_INT( GameExtraManager, ProbHelixCannon );
-DEF_PROXY_INT( GameExtraManager, ProbLightningDevice );
-DEF_PROXY_INT( GameExtraManager, ProbPhotonCannon );
-DEF_PROXY_INT( GameExtraManager, ProbProximityMine );
-DEF_PROXY_INT( GameExtraManager, ProbRepairExtra );
-DEF_PROXY_INT( GameExtraManager, ProbAfterburner );
-DEF_PROXY_INT( GameExtraManager, ProbHoloDecoy );
-DEF_PROXY_INT( GameExtraManager, ProbInvisibility );
-DEF_PROXY_INT( GameExtraManager, ProbInvulnerability );
-DEF_PROXY_INT( GameExtraManager, ProbEnergyField );
-DEF_PROXY_INT( GameExtraManager, ProbLaserUpgrade );
-DEF_PROXY_INT( GameExtraManager, ProbLaserUpgrade1 );
-DEF_PROXY_INT( GameExtraManager, ProbLaserUpgrade2 );
-DEF_PROXY_INT( GameExtraManager, ProbMissilePack );
-DEF_PROXY_INT( GameExtraManager, ProbDumbMissPack );
-DEF_PROXY_INT( GameExtraManager, ProbHomMissPack );
-DEF_PROXY_INT( GameExtraManager, ProbSwarmMissPack );
-DEF_PROXY_INT( GameExtraManager, ProbEmpUpgrade1 );
-DEF_PROXY_INT( GameExtraManager, ProbEmpUpgrade2 );
+DEF_PROXY_INT( GameExtraManager, MaxExtraArea )
+DEF_PROXY_INT( GameExtraManager, MinExtraDist )
+DEF_PROXY_INT( Game, EnergyExtraBoost )
+DEF_PROXY_INT( Game, RepairExtraBoost )
+DEF_PROXY_INT( Game, DumbPackNumMissls )
+DEF_PROXY_INT( Game, HomPackNumMissls )
+DEF_PROXY_INT( Game, SwarmPackNumMissls )
+DEF_PROXY_INT( Game, ProxPackNumMines )
+DEF_PROXY_INT( Game, m_NebulaID)
+DEF_PROXY_INT( GameExtraManager, ExtraProbability )
+DEF_PROXY_INT( GameExtraManager, ProbHelixCannon )
+DEF_PROXY_INT( GameExtraManager, ProbLightningDevice )
+DEF_PROXY_INT( GameExtraManager, ProbPhotonCannon )
+DEF_PROXY_INT( GameExtraManager, ProbProximityMine )
+DEF_PROXY_INT( GameExtraManager, ProbRepairExtra )
+DEF_PROXY_INT( GameExtraManager, ProbAfterburner )
+DEF_PROXY_INT( GameExtraManager, ProbHoloDecoy )
+DEF_PROXY_INT( GameExtraManager, ProbInvisibility )
+DEF_PROXY_INT( GameExtraManager, ProbInvulnerability )
+DEF_PROXY_INT( GameExtraManager, ProbEnergyField )
+DEF_PROXY_INT( GameExtraManager, ProbLaserUpgrade )
+DEF_PROXY_INT( GameExtraManager, ProbLaserUpgrade1 )
+DEF_PROXY_INT( GameExtraManager, ProbLaserUpgrade2 )
+DEF_PROXY_INT( GameExtraManager, ProbMissilePack )
+DEF_PROXY_INT( GameExtraManager, ProbDumbMissPack )
+DEF_PROXY_INT( GameExtraManager, ProbHomMissPack )
+DEF_PROXY_INT( GameExtraManager, ProbSwarmMissPack )
+DEF_PROXY_INT( GameExtraManager, ProbEmpUpgrade1 )
+DEF_PROXY_INT( GameExtraManager, ProbEmpUpgrade2 )
 
 /*
 // perform remote event syncing for certain int vars --------------------------

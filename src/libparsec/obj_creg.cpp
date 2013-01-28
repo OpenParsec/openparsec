@@ -116,7 +116,7 @@ key_value_s do_creg_key_value[] = {
 
 enum {
 
-	KEY_DO_CREG_INTLIST,
+	KEY_DO_CREG_INTLIST
 };
 
 
@@ -213,7 +213,7 @@ enum {
 
 	KEY_SHIPCLASS_CLASS,
 	KEY_SHIPCLASS_ID,
-	KEY_SHIPCLASS_TEXTURE,
+	KEY_SHIPCLASS_TEXTURE
 };
 
 
@@ -364,7 +364,7 @@ key_value_s extraclass_key_value[] = {
 enum {
 
 	KEY_EXTRACLASS_CLASS,
-	KEY_EXTRACLASS_ID,
+	KEY_EXTRACLASS_ID
 };
 
 

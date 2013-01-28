@@ -100,7 +100,7 @@ enum {
 	GL_FLAG_SWAPCTRL_GLFINISH	= 2,	// glFinish() prior to SwapBuffers()
 
 	GL_FLAG_BPPCTRL_OFF			= 0,	// never switch colordepth
-	GL_FLAG_BPPCTRL_ON			= 1,	// colordepth switching allowed
+	GL_FLAG_BPPCTRL_ON			= 1		// colordepth switching allowed
 };
 
 
@@ -109,8 +109,6 @@ enum {
 int	gl_flag_swapctrl	= GL_FLAG_SWAPCTRL_NONE;
 int gl_flag_bppctrl		= GL_FLAG_BPPCTRL_ON;
 
-
-//static Ptr 				oldscreenstate;
 
 int						oldpixdepth		= 0;
 

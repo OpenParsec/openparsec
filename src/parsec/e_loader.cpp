@@ -151,7 +151,7 @@ enum {
 	_charsets,
 	_samples,
 	_songs,
-	_comment,
+	_comment
 
 } section = _nil;
 

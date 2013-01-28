@@ -67,7 +67,7 @@ enum {
 	CORNER_LEFT_TOP,
 	CORNER_RIGHT_TOP,
 	CORNER_LEFT_BOTTOM,
-	CORNER_RIGHT_BOTTOM,
+	CORNER_RIGHT_BOTTOM
 };
 
 const char *corner_texnames[ 4 ] = {

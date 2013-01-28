@@ -67,7 +67,7 @@ key_value_s package_key_value[] = {
 enum {
 
 	KEY_PACKAGE_REGISTER,
-	KEY_PACKAGE_MOD,
+	KEY_PACKAGE_MOD
 };
 
 

@@ -65,7 +65,7 @@ enum ODT_shadingtype_t {
 	ODT_ipol2tex_shad,		// second order interpolated texture mapping (quad)
 	ODT_persptex_shad,		// perspective correct texmapping w/o interpolation
 	ODT_material_shad,		// shade using material specification
-	ODT_texmat_shad,		// composite texture and material specification
+	ODT_texmat_shad		// composite texture and material specification
 };
 
 
@@ -190,7 +190,7 @@ enum OD2_shadingtype_t {
 
 	OD2_shadmask_base	= 0x00ff,	// mask for basic shading type
 	OD2_shadmask_color	= 0x1000,	// mask to denote faces with attached color
-	OD2_shadmask_texmap	= 0x2000,	// mask to denote texture mapped faces
+	OD2_shadmask_texmap	= 0x2000	// mask to denote texture mapped faces
 };
 
 
