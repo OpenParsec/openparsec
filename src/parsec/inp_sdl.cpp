@@ -382,17 +382,36 @@ void ISDLm_SetKeyRepeat(bool enable)
 }
 
 
-// keyboard handler invoked by event processing loop --------------------------
+PRIVATE
+void ISDLm_ProcessTextInput(const char *text)
+{
+	if (text[0] > 31 && text[0] < 127) { // only handle ASCII for now
+		CON_HandleTextInput(text[0]);
+	}
+}
+
+
+// text input handler for SDL 2 -----------------------------------------------
+//
+PRIVATE
+void ISDLm_TextInputHandler(const SDL_Event &event)
+{
+#if SDL_VERSION_ATLEAST(2,0,0)
+	if (event.type != SDL_TEXTINPUT)
+		return;
+
+	ISDLm_ProcessTextInput(event.text.text);
+#endif
+}
+
+
+// key press handler invoked by event processing loop -------------------------
 //
 PRIVATE
 void ISDLm_KeyboardHandler(const SDL_Event &event)
 {
-	keypress_s kinfo;
-
-	kinfo.pressed = event.type == SDL_KEYDOWN; // true if pressed, false if released
-	kinfo.key = event.key.keysym.sym;
-	kinfo.unicode = event.key.keysym.unicode; // FIXME for SDL 2
-
+	bool pressed = event.type == SDL_KEYDOWN;
+	dword key = event.key.keysym.sym;
 
 #if SDL_VERSION_ATLEAST(2,0,0)
 	// only process a key repeat event if we're in the console or quicksay console
@@ -405,36 +424,21 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 		ISDLm_SetKeyRepeat(KeybFlags->ConActive && KeybFlags->ConEnabled);
 #endif
 
-
-	// console enabling/disabling
-	if ( kinfo.key == MKC_TILDE ) {
-
-		if ( !kinfo.pressed ) {
-
-			// maintain debounce
-			KeybFlags->ConTogReleased = -1;
-
-		} else if ( KeybFlags->ConEnabled && KeybFlags->ConTogReleased ) {
-
-			// toggle console
-			KeybFlags->ConTogReleased = 0;
-			KeybFlags->ConActive      = ~KeybFlags->ConActive;
-		}
-	}
-
 	// console keyboard buffer handling
-	if ( kinfo.pressed && ( kinfo.key != MKC_TILDE ) ) {
+	if ( pressed && ( key != MKC_TILDE ) ) {
 
 		if ( KeybFlags->ConActive && KeybFlags->ConEnabled ) {
 
-			if (kinfo.key == MKC_LSHIFT || kinfo.key == MKC_RSHIFT) {
+			if (key == MKC_LSHIFT || key == MKC_RSHIFT) {
 				return;
 			}
 
-			// set shift flag
-			//scode |= KeybFlags->ShiftOn;
+			CON_HandleKeyPress(key);
 
-			CON_HandleInput(kinfo);
+#if !SDL_VERSION_ATLEAST(2,0,0)
+			const char text[] = {(char) event.key.keysym.unicode, '\0'};
+			ISDLm_ProcessTextInput(text);
+#endif
 
 			// console grabs all input
 			return;
@@ -447,8 +451,8 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 	dword *tabd =  (dword *) DepressedKeys;
 
 	for( int fid = NUM_GAMEFUNC_KEYS - 1; fid >= 0; fid-- ) {
-		if ( ( tab1[ fid ] == kinfo.key ) || ( tab2[ fid ] == kinfo.key ) ) {
-			tabd[ fid ] = kinfo.pressed;
+		if ( ( tab1[ fid ] == key ) || ( tab2[ fid ] == key ) ) {
+			tabd[ fid ] = pressed;
 		}
 	}
 
@@ -464,8 +468,8 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 	ASSERT( KeyAdditional->size <= KEY_ADDITIONS_MAX );
 
 	for ( int aid = KeyAdditional->size - 1; aid >= 0; aid-- ) {
-		if ( kap[ aid ].code == kinfo.key ) {
-			kap[ aid ].state = kinfo.pressed;
+		if ( kap[ aid ].code == key ) {
+			kap[ aid ].state = pressed;
 		}
 	}
 }
@@ -716,6 +720,11 @@ void ISDLm_ProcessEvents()
 			case SDL_MOUSEBUTTONUP:
 				ISDLm_MouseEventHandler(event);
 				break;
+#if SDL_VERSION_ATLEAST(2,0,0)
+			case SDL_TEXTINPUT:
+				ISDLm_TextInputHandler(event);
+				break;
+#endif
 			case SDL_QUIT:
 				// clean up and quit ASAP
 				ExitGameLoop = 3;

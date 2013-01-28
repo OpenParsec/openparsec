@@ -55,6 +55,11 @@ enum {
 #define BUTTON_FADE_QUANTUM		10
 
 
+// number of items comprising every menu --------------------------------------
+//
+#define NUM_MENU_ITEMS		5
+
+
 // external functions
 
 void	MenuButtonsEnterSubmenu();
