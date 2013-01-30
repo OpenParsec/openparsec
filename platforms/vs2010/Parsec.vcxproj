@@ -17,6 +17,7 @@
     <ClCompile Include="..\..\src\libparsec\debug.cpp" />
     <ClCompile Include="..\..\src\libparsec\e_modulemanager.cpp" />
     <ClCompile Include="..\..\src\libparsec\e_relist.cpp" />
+    <ClCompile Include="..\..\src\libparsec\g_emp.cpp" />
     <ClCompile Include="..\..\src\libparsec\g_extra.cpp" />
     <ClCompile Include="..\..\src\libparsec\net_pckt_gmsv.cpp" />
     <ClCompile Include="..\..\src\libparsec\net_stream.cpp" />
@@ -42,6 +43,9 @@
     <ClCompile Include="..\..\src\libparsec\utl_logfile.cpp" />
     <ClCompile Include="..\..\src\libparsec\utl_math.cpp" />
     <ClCompile Include="..\..\src\libparsec\utl_math2.cpp" />
+    <ClCompile Include="..\..\src\libraries\glew\glew.c" />
+    <ClCompile Include="..\..\src\libraries\stb_image\stb_image.cpp" />
+    <ClCompile Include="..\..\src\libraries\stb_image\stb_image_write.c" />
     <ClCompile Include="..\..\src\parsec\aud_bkgn.cpp" />
     <ClCompile Include="..\..\src\parsec\aud_comm.cpp" />
     <ClCompile Include="..\..\src\parsec\aud_game.cpp" />
@@ -67,7 +71,6 @@
     <ClCompile Include="..\..\src\parsec\con_shad.cpp" />
     <ClCompile Include="..\..\src\parsec\con_std.cpp" />
     <ClCompile Include="..\..\src\parsec\con_tani.cpp" />
-    <ClCompile Include="..\..\src\parsec\do_blit.cpp" />
     <ClCompile Include="..\..\src\parsec\do_bmap.cpp" />
     <ClCompile Include="..\..\src\parsec\do_font.cpp" />
     <ClCompile Include="..\..\src\parsec\do_iter.cpp" />
@@ -92,12 +95,10 @@
     <ClCompile Include="..\..\src\parsec\e_supp.cpp" />
     <ClCompile Include="..\..\src\parsec\e_texani.cpp" />
     <ClCompile Include="..\..\src\parsec\e_vtxani.cpp" />
-    <ClCompile Include="..\..\src\parsec\glew.c" />
     <ClCompile Include="..\..\src\parsec\g_boot.cpp" />
     <ClCompile Include="..\..\src\parsec\g_bot_cl.cpp" />
     <ClCompile Include="..\..\src\parsec\g_camera.cpp" />
     <ClCompile Include="..\..\src\parsec\g_cloud.cpp" />
-    <ClCompile Include="..\..\src\parsec\g_emp.cpp" />
     <ClCompile Include="..\..\src\parsec\g_explod.cpp" />
     <ClCompile Include="..\..\src\parsec\g_gameloop.cpp" />
     <ClCompile Include="..\..\src\parsec\g_global.cpp" />
@@ -126,7 +127,6 @@
     <ClCompile Include="..\..\src\parsec\img_jpg.cpp" />
     <ClCompile Include="..\..\src\parsec\img_load.cpp" />
     <ClCompile Include="..\..\src\parsec\img_supp.cpp" />
-    <ClCompile Include="..\..\src\parsec\img_tex.cpp" />
     <ClCompile Include="..\..\src\parsec\img_tga.cpp" />
     <ClCompile Include="..\..\src\parsec\inp_comm.cpp" />
     <ClCompile Include="..\..\src\parsec\inp_glob.cpp" />
@@ -230,6 +230,7 @@
     <ClInclude Include="..\..\src\libparsec\include\gd_type.h" />
     <ClInclude Include="..\..\src\libparsec\include\general.h" />
     <ClInclude Include="..\..\src\libparsec\include\globals.h" />
+    <ClInclude Include="..\..\src\libparsec\include\g_emp.h" />
     <ClInclude Include="..\..\src\libparsec\include\g_extra.h" />
     <ClInclude Include="..\..\src\libparsec\include\g_shipobject.h" />
     <ClInclude Include="..\..\src\libparsec\include\g_stgate.h" />
@@ -295,6 +296,11 @@
     <ClInclude Include="..\..\src\libparsec\include\utl_math.h" />
     <ClInclude Include="..\..\src\libparsec\include\utl_math2.h" />
     <ClInclude Include="..\..\src\libparsec\include\utl_model.h" />
+    <ClInclude Include="..\..\src\libraries\glew\glew.h" />
+    <ClInclude Include="..\..\src\libraries\glew\glxew.h" />
+    <ClInclude Include="..\..\src\libraries\glew\wglew.h" />
+    <ClInclude Include="..\..\src\libraries\stb_image\stb_image.h" />
+    <ClInclude Include="..\..\src\libraries\stb_image\stb_image_write.h" />
     <ClInclude Include="..\..\src\parsec\include\al_cd.h" />
     <ClInclude Include="..\..\src\parsec\include\al_cdnul.h" />
     <ClInclude Include="..\..\src\parsec\include\al_gsi.h" />
@@ -628,7 +634,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\src\parsec\include;..\..\src\libparsec\include;include;include\SDL;include\SDL_mixer;include\libjpeg</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\parsec\include;..\..\src\libparsec\include;include;include\SDL;include\SDL_mixer;include\libjpeg;..\..\src\libraries</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SYSTEM_ENABLE_SDL;PARSEC_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>

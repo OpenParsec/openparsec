@@ -19,6 +19,15 @@
     <Filter Include="tools\BspLib">
       <UniqueIdentifier>{9fa990ec-3e43-4f9b-bc47-463c7abdfb62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libraries">
+      <UniqueIdentifier>{dee7b813-3e8e-49d5-a0dc-fab055895730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\stb_image">
+      <UniqueIdentifier>{fa41731f-1bc7-438e-a1a0-d904fd109a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\glew">
+      <UniqueIdentifier>{2ed69592-eb78-48c8-9ed3-cc7907d4bb93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libparsec\con_arg.cpp">
@@ -192,9 +201,6 @@
     <ClCompile Include="..\..\src\parsec\d_misc.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\parsec\do_blit.cpp">
-      <Filter>parsec</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\parsec\do_bmap.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
@@ -273,9 +279,6 @@
     <ClCompile Include="..\..\src\parsec\g_cloud.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\parsec\g_emp.cpp">
-      <Filter>parsec</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\parsec\g_explod.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
@@ -318,9 +321,6 @@
     <ClCompile Include="..\..\src\parsec\g_wfx.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\parsec\glew.c">
-      <Filter>parsec</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\parsec\h_cockpt.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
@@ -361,9 +361,6 @@
       <Filter>parsec</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\parsec\img_supp.cpp">
-      <Filter>parsec</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\parsec\img_tex.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\parsec\img_tga.cpp">
@@ -596,6 +593,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libparsec\sw_timer.cpp">
       <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\g_emp.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\glew\glew.c">
+      <Filter>libraries\glew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\stb_image\stb_image.cpp">
+      <Filter>libraries\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\stb_image\stb_image_write.c">
+      <Filter>libraries\stb_image</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1711,6 +1720,24 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libparsec\include\sw_timer.h">
       <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\g_emp.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\glew\glew.h">
+      <Filter>libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\glew\glxew.h">
+      <Filter>libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\glew\wglew.h">
+      <Filter>libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\stb_image\stb_image.h">
+      <Filter>libraries\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\stb_image\stb_image_write.h">
+      <Filter>libraries\stb_image</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

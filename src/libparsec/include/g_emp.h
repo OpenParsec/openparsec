@@ -228,6 +228,7 @@ static int          emp_energy[ EMP_UPGRADES ]		= {
 #include "sys_util_sv.h"
 #endif
 
+void	CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel, int nClientID=0 );
 // external functions
 #ifndef PARSEC_SERVER
 void	WFX_EmpBlast( ShipObject *shippo );
@@ -238,7 +239,7 @@ void    WFX_DeactivateEmp( ShipObject *shippo );
 void    WFX_RemoteActivateEmp( int playerid );
 void    WFX_RemoteDeactivateEmp( int playerid );
 #else
-void	CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel, int nClientID=0 );
+
 int 	EmpShipCollision( Emp *emp, ShipObject* shippo );
 int 	EmpAnimate( CustomObject *base );
 #endif
