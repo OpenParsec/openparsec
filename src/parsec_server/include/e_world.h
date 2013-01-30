@@ -78,6 +78,21 @@ struct swarm_state_s {
 	GenObject				dummyobj; 	// just for sound position tracking
 };
 
+// photon properties
+#define MIN_PHOTON_ENERGY                    10
+#define PHOTON_ENERGY_CONSUMPTION           0x6000  // 0x10000 = 1.0
+
+#define PHOTON_ROT_PITCH					0x0015  //0x01a0
+#define PHOTON_ROT_YAW						-0x0022 //-0x02a0
+#define PHOTON_ROT_ROLL						0x000d  //0x0100
+
+#define PHOTON_SPHERE_PARTICLES				256
+#define PHOTON_COLOR						123
+#define PHOTON_REF_Z						75.0
+#define PHOTON_CONTRACTION_TIME				50
+#define PHOTON_CONTRACTION_SPEED			FIXED_TO_GEOMV( 0xA000 )
+#define PHOTON_MAX_LOADING_TIME				1800
+#define PHOTON_NUMLOADS						32
 
 // helper macros --------------------------------------------------------------
 //
@@ -161,6 +176,7 @@ protected:
     void DisableParticle( pcluster_s *cluster, int pid );
     void PRT_DeleteCluster (pcluster_s* cluster);
     void PRT_RemoveClusterFromAttachedList (objectbase_pcluster_s* cluster);
+    
     
 	// standard ctor
 	E_World();
@@ -251,13 +267,17 @@ public:
     void PRT_AttachClusterToObject( GenObject* genobjpo, objectbase_pcluster_s* cluster );
     int  PRT_DeleteAttachedClustersOfType( const GenObject * genobjpo, int animtype );
     void PRT_DeleteCluster_NoListRemoval( pcluster_s* cluster );
-
+    
     // allocate new particle cluster and insert into list -------------------------
     //
-    pcluster_s * PRT_NewCluster (dword type, int numelements, size_t auxstorage);
+    pcluster_s* PRT_NewCluster (dword type, int numelements, size_t auxstorage);
 
-    particle_s * PRT_CreateLinearParticle (particle_s&	particle);
+    particle_s* PRT_CreateLinearParticle (particle_s&	particle);
     sphereobj_pcluster_s* PRT_CreateParticleSphereObject (Vertex3& origin,geomv_t radius,int animtype,int clustersiz,int lifetime,pdrwinfo_s* pdinfo,int owner);
+    
+    pdef_s* PRT_AcquireParticleDefinitionById(int pdefid );
+    pdef_s* PRT_AcquireParticleDefinition(const char* pdefname,int* retpdefid);
+    objectbase_pcluster_s* PRT_ObjectHasAttachedClustersOfType( GenObject* genobjpo, int animtype );
     
     //Particle Animation call
     void PAN_AnimateParticles();
@@ -265,6 +285,10 @@ public:
     
     //Lightning particles
     lightning_pcluster_s* CreateLightningParticles( ShipObject *shippo, int owner );
+    
+    //Photon
+    photon_sphere_pcluster_s* CreatePhotonSphere( ShipObject *shippo );
+    void CalcPhotonSphereAnimation( photon_sphere_pcluster_s *cluster );
 };
 
 #endif // _E_WORLD_H_

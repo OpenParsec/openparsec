@@ -61,15 +61,16 @@ struct keyaddition_s {
 	int	  state;			// 0: released  1: depressed
 };
 
-// header of table containing additional key mappings
-struct keyaddctrl_s {
-
-	int				size;	// number of key entries in table
-	keyaddition_s	table;	// first entry
-};
 
 //CAVEAT: MUST BE CONSISTENT WITH DEFINITION IN ID_KEYB.INC!!
 #define KEY_ADDITIONS_MAX 128
+
+// header of table containing additional key mappings
+struct keyaddctrl_s {
+
+	int				size;						// number of key entries in table
+	keyaddition_s	table[KEY_ADDITIONS_MAX];	// first entry
+};
 
 
 // various keyboard state flags
@@ -98,19 +99,6 @@ struct keybflags_s {
 // therefore, ConActive stores the current state of console
 // keyboard routing (also if the console is disabled
 // in the meantime!)
-
-
-// header of keyboard buffer
-struct keybbuffer_s {
-
-	dword	ReadPos;
-	dword	WritePos;
-	dword	Data;
-};
-
-//CAVEAT: MUST BE CONSISTENT WITH DEFINITION IN ID_KEYB.INC!!
-#define KEYB_BUFF_SIZ				16
-#define KEYB_BUFF_SIZ_M 			( KEYB_BUFF_SIZ - 1 )
 
 
 // generic joystick data structure --------------------------------------------
@@ -143,7 +131,6 @@ extern keyfunc_s *		DepressedKeys;
 extern keyfunc_s *		KeyAssignments;
 extern keyaddctrl_s *	KeyAdditional;
 extern keybflags_s *	KeybFlags;
-extern keybbuffer_s *	KeybBuffer;
 
 
 // joystick resolution --------------------------------------------------------
@@ -196,7 +183,6 @@ enum {
 // generic mouse data structure -----------------------------------------------
 //
 struct mousestate_s {
-
 	float		xpos;							// normalized [ 0.0, 1.0 ]
 	float		ypos;							// normalized [ 0.0, 1.0 ]
 	byte		drawcursor;						// custom cursor drawing
@@ -222,44 +208,6 @@ inline void SELECT_KEYS_RESET()
 	DepressedKeys->key_ShootWeapon	 = 0;
 	DepressedKeys->key_LaunchMissile = 0;
 }
-
-
-// wait for <space>/<enter>/<esc> while bios keyboard-handler inactive --------
-//
-inline void WaitForKeypress()
-{
-	while ( !DepressedKeys->key_Select		  &&
-			!DepressedKeys->key_ShootWeapon	  &&
-			!DepressedKeys->key_LaunchMissile &&
-			!DepressedKeys->key_Escape ) NULL;
-
-	DepressedKeys->key_Select		 = 0;
-	DepressedKeys->key_ShootWeapon	 = 0;
-	DepressedKeys->key_LaunchMissile = 0;
-	DepressedKeys->key_Escape		 = 0;
-}
-
-
-// wait for new <space>/<enter>/<esc> while bios keyboard-handler inactive ----
-//
-inline void WaitForNewKeypress()
-{
-	DepressedKeys->key_Select		 = 0;
-	DepressedKeys->key_ShootWeapon	 = 0;
-	DepressedKeys->key_LaunchMissile = 0;
-	DepressedKeys->key_Escape		 = 0;
-
-	while ( !DepressedKeys->key_Select		  &&
-			!DepressedKeys->key_ShootWeapon	  &&
-			!DepressedKeys->key_LaunchMissile &&
-			!DepressedKeys->key_Escape ) NULL;
-
-	DepressedKeys->key_Select		 = 0;
-	DepressedKeys->key_ShootWeapon	 = 0;
-	DepressedKeys->key_LaunchMissile = 0;
-	DepressedKeys->key_Escape		 = 0;
-}
-
 
 
 // include system-specific subsystem prototypes -------------------------------

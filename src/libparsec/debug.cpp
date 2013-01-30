@@ -459,7 +459,7 @@ REGISTER_MODULE( DEBUG )
 
 // check assertion, abort if assertion failed ---------------------------------
 //
-#ifdef SYSTEM_LINUX
+#ifdef SYSTEM_LINUX_UNUSED
 	#define SYSABORT()		exit( EXIT_FAILURE )	// abort() crashes
 #else
 	#define SYSABORT()		abort()
@@ -477,7 +477,7 @@ void _SysAssert( const char *file, unsigned line )
 
 #if defined ( SYSTEM_TARGET_WINDOWS ) && !defined ( __MINGW32__ )
 		__debugbreak();
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_WIN32_UNUSED
 
 		SYSs_CriticalCleanUp();
 

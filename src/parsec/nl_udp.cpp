@@ -132,7 +132,7 @@ int UDPs_GetLocalIP()
 
 		// advance to next structure in buffer
 		
-#ifdef SYSTEM_MACOSX		
+#ifdef SYSTEM_MACOSX_UNUSED		
 		int len = max( sizeof(struct sockaddr), ifr->ifr_addr.sa_len );
 #else
 		int len = sizeof(struct sockaddr);

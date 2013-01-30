@@ -32,7 +32,7 @@
 #include "debug.h"
 
 // C library 
-#ifdef SYSTEM_WIN32
+#ifdef SYSTEM_WIN32_UNUSED
 #  include <time.h>
 #else
 #  include <sys/time.h>
@@ -64,9 +64,9 @@
 
 
 //FIXME: Win32 specific
-#ifdef SYSTEM_WIN32
+#ifdef SYSTEM_WIN32_UNUSED
 	#include "windows.h"
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_WIN32_UNUSED
 
 // flags ----------------------------------------------------------------------
 //
@@ -266,7 +266,7 @@ const char* SYSs_GetCurTimeString()
 {
 	static char szBuffer[ 128 ] = "";
 
-#ifdef SYSTEM_WIN32
+#ifdef SYSTEM_WIN32_UNUSED
 
 
 	// get the current timeval ( usec resolution )
@@ -287,7 +287,7 @@ const char* SYSs_GetCurTimeString()
 		tv_diff.tv_sec,
 		tv_diff.tv_usec );
 
-#endif // SYSTEM_WIN32
+#endif // SYSTEM_WIN32_UNUSED
 
 	return szBuffer;
 }
@@ -311,7 +311,7 @@ int SYS_WriteLogFileMessage( const char *format, ... )
 
 		// prepend the current date/time
 		
-#ifdef SYSTEM_WIN32
+#ifdef SYSTEM_WIN32_UNUSED
 
 		//FIXME: recheck whether SYSs_GetCurTimeString() works properly
 		//fprintf( fp, "%s: ", SYSs_GetCurTimeString() );

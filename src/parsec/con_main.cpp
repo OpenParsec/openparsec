@@ -450,12 +450,7 @@ void KillConsole()
 //
 void FlushConsoleBuffer()
 {
-	dword *pos;
-
-	while ( *( pos = &KeybBuffer->Data + KeybBuffer->ReadPos ) ) {
-		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) & KEYB_BUFF_SIZ_M;
-		*pos = 0;
-	}
+	// Not needed
 }
 
 
@@ -893,7 +888,7 @@ enum {
 
 	KEY_COMPILE_TITLE,
 	KEY_COMPILE_DESC,
-	KEY_COMPILE_AUTHOR,
+	KEY_COMPILE_AUTHOR
 };
 
 
@@ -1334,246 +1329,249 @@ void FetchHistoryEntry( int entryid )
 }
 
 
-// check input for console window ---------------------------------------------
+// handle text input in console window (ASCII only for now) -------------------
 //
-PRIVATE
-void CheckConsoleInput()
+void CON_HandleTextInput(const char character)
 {
-	// scan keyboardbuffer and process key-presses sequentially
-	dword *pos;
-	while ( *( pos = &KeybBuffer->Data + KeybBuffer->ReadPos ) ) {
-		// both the unicode character and the input key are stored in the ringbuffer
-		word unicode = (*pos) & 0xFFFF;
-		dword key = (*pos) >> 16;
+	if (await_keypress && com_cont_func)
+		return;
 
-		int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
+	// don't write console open/close key
+	if (character == '`' || character == '~')
+		return;
 
-		if ( await_keypress && com_cont_func ) {
+	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
 
-			// <space> or <enter> continues listing
-			if ( ( key == CKC_SPACE ) || ( key == CKC_ENTER ) ) {
-
-				EraseConLine( con_bottom );
-				strcpy( con_lines[ con_bottom ], con_prompt );
-				// ensure wait prompt gets overwritten
-			    con_bottom  = last_con_bottom;
-			    con_content = last_con_content;
-				cursor_x    = 0;
-				com_cont_func();
-
-			// <escape> returns to command prompt immediately
-			} else if ( key == CKC_ESCAPE ) {
-
-				await_keypress = FALSE;
-				com_cont_func  = NULL;
-				if ( con_in_talk_mode ) {
-					// restore talkmode prompt
-					CreateSeparatorLine( con_bottom );
-					CON_AddLineFeed();
-					con_talk_line = con_bottom;
-				} else {
-					// restore standard prompt
-					EraseConLine( con_bottom );
-					strcpy( con_lines[ con_bottom ], con_prompt );
-				}
-				cursor_x = 0;
+	// typeable characters
+	if ( ( character & CON_ASCII_MASK ) && (character <= CON_ASCII_MASK) && (cursor_x < edit_max_x ) ) {
+		if ( insert_mode && ( cursor_x < curlinelen ) ) {
+			if ( curlinelen < edit_max_x ) {
+				strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x );
+				strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1, paste_str );
+				con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
 			}
-
-		} else if ( key == CKC_ESCAPE ||
-					key == CKC_CURSORUP ||
-					key == CKC_CURSORDOWN ||
-					key == CKC_CURSORLEFT ||
-					key == CKC_CURSORRIGHT ||
-					key == CKC_HOME ||
-					key == CKC_END ||
-					key == CKC_PAGEUP ||
-					key == CKC_PAGEDOWN ||
-					key == CKC_INSERT ||
-					key == CKC_DELETE ||
-					key == CKC_TAB ||
-					key == CKC_ENTER ||
-					key == CKC_BACKSPACE ) {
-
-			// control keys (CKC_xx)
-			switch ( key ) {
-
-			// <escape>: erase entire command line
-			case CKC_ESCAPE:
-				EraseConLine( con_bottom );
-				strcpy( con_lines[ con_bottom ], con_prompt );
-				history_scan  = history_add;
-				cursor_x      = 0;
-				con_back_view = 0;
-				return;
-				break;
-
-			// <cursor-up>: scroll one line up in history buffer
-			case CKC_CURSORUP:
-				if ( !con_logged_in )
-					break;
-				if ( *( history_list[ ( history_scan - 1 ) & NUM_HISTORY_LINES_MASK ] ) != 0 ) {
-					history_scan = ( history_scan - 1 ) & NUM_HISTORY_LINES_MASK;
-					FetchHistoryEntry( history_scan );
-				}
-				break;
-
-			// <cursor-down>: scroll one line down in history buffer
-			case CKC_CURSORDOWN:
-				if ( !con_logged_in )
-					break;
-				if ( *( history_list[ ( history_scan + 1 ) & NUM_HISTORY_LINES_MASK ] ) != 0 ) {
-					history_scan = ( history_scan + 1 ) & NUM_HISTORY_LINES_MASK;
-					FetchHistoryEntry( history_scan );
-				}
-				break;
-
-			// <cursor-left>: set cursor one position left
-			case CKC_CURSORLEFT:
-				if ( cursor_x > 0 )
-					cursor_x--;
-				break;
-
-			// <cursor-right>: set cursor one position right
-			case CKC_CURSORRIGHT:
-				if ( cursor_x < curlinelen )
-					cursor_x++;
-				break;
-/*
-			// <shift + cursor-up>: view one line backward
-			case CKC_CURSORUP_SHIFTED:
-				if ( !con_logged_in || con_in_talk_mode )
-					break;
-				if ( con_back_view < CONSOLE_MAX_BACK_LINES )
-					con_back_view++;
-				break;
-
-			// <shift + cursor-down>: view one line forward
-			case CKC_CURSORDOWN_SHIFTED:
-				if ( !con_logged_in || con_in_talk_mode )
-					break;
-				if ( con_back_view > 0 )
-					con_back_view--;
-				break;
-
-			// <shift + cursor-left>: set cursor one word to the left
-			case CKC_CURSORLEFT_SHIFTED:
-				while ( ( cursor_x > 0 ) &&
-						!isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x - 1 ] ) )
-					cursor_x--;
-				while ( ( cursor_x > 0 ) &&
-						isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x - 1 ] ) )
-					cursor_x--;
-				break;
-
-			// <shift + cursor-right>: set cursor one word to the right
-			case CKC_CURSORRIGHT_SHIFTED:
-				while ( ( cursor_x < curlinelen ) &&
-						isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x ] ) )
-					cursor_x++;
-				while ( ( cursor_x < curlinelen ) &&
-						!isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x ] ) )
-					cursor_x++;
-				break;
-*/
-			// <home>: set cursor to first column
-			case CKC_HOME:
-				cursor_x = 0;
-				break;
-
-			// <end>: set cursor behind last column
-			case CKC_END:
-				cursor_x = curlinelen;
-				break;
-
-			// <page-up>: view one page backward
-			case CKC_PAGEUP:
-				if ( !con_logged_in || con_in_talk_mode )
-					break;
-				if ( cur_vis_conlines <= 0 )
-					break;
-				if ( con_back_view < CONSOLE_MAX_BACK_LINES )
-					con_back_view += cur_vis_conlines;
-				if ( con_back_view > CONSOLE_MAX_BACK_LINES )
-					con_back_view = CONSOLE_MAX_BACK_LINES;
-				break;
-
-			// <page-down>: view one page forward
-			case CKC_PAGEDOWN:
-				if ( !con_logged_in || con_in_talk_mode )
-					break;
-				if ( cur_vis_conlines <= 0 )
-					break;
-				if ( con_back_view > 0 )
-					con_back_view -= cur_vis_conlines;
-				if ( con_back_view < 0 )
-					con_back_view = 0;
-				break;
-
-			// <insert>: toggle insert mode
-			case CKC_INSERT:
-				insert_mode = !insert_mode;
-				break;
-
-			// <del>: delete and shift left
-			case CKC_DELETE:
-				if ( cursor_x < curlinelen ) {
-					strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1 );
-					strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x, paste_str );
-				}
-				break;
-
-			// <tab>: find completion for current input
-			case CKC_TAB:
-				if ( !con_logged_in )
-					break;
-				CompleteCommand();
-				break;
-
-			// <enter>: execute current line
-			case CKC_ENTER:
-				EnterConsoleCommand();
-				break;
-
-			// <backspace>: step left and shift righthand side left
-			case CKC_BACKSPACE:
-				if ( cursor_x > 0 ) {
-					if ( cursor_x == curlinelen ) {
-						cursor_x--;
-						con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x ] = 0;
-					} else {
-						cursor_x--;
-						strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1 );
-						strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x, paste_str );
-					}
-				}
-				break;
-			}
-
 		} else {
-			// typeable characters
-			if ( ( unicode & CON_ASCII_MASK ) && (unicode <= CON_ASCII_MASK) && (cursor_x < edit_max_x ) ) {
-				if ( insert_mode && ( cursor_x < curlinelen ) ) {
-					if ( curlinelen < edit_max_x ) {
-						strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x );
-						strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1, paste_str );
-						con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte)unicode;
-					}
-				} else {
-					con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte)unicode;
-				}
-			}
+			con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
 		}
-
-		// advance one position in circular keybuffer
-		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) & KEYB_BUFF_SIZ_M;
-		*pos = 0;
 	}
 }
 
 
-// type for writestring function pointer --------------------------------------
+// handle keypresses in console window ----------------------------------------
 //
-typedef void (*WSFP)( ... );
+void CON_HandleKeyPress(dword key)
+{
+	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
+
+	if ( await_keypress && com_cont_func ) {
+
+		// <space> or <enter> continues listing
+		if ( ( key == CKC_SPACE ) || ( key == CKC_ENTER ) ) {
+
+			EraseConLine( con_bottom );
+			strcpy( con_lines[ con_bottom ], con_prompt );
+			// ensure wait prompt gets overwritten
+			con_bottom  = last_con_bottom;
+			con_content = last_con_content;
+			cursor_x    = 0;
+			com_cont_func();
+
+		// <escape> returns to command prompt immediately
+		} else if ( key == CKC_ESCAPE ) {
+
+			await_keypress = FALSE;
+			com_cont_func  = NULL;
+			if ( con_in_talk_mode ) {
+				// restore talkmode prompt
+				CreateSeparatorLine( con_bottom );
+				CON_AddLineFeed();
+				con_talk_line = con_bottom;
+			} else {
+				// restore standard prompt
+				EraseConLine( con_bottom );
+				strcpy( con_lines[ con_bottom ], con_prompt );
+			}
+			cursor_x = 0;
+		}
+
+	} else if ( key == CKC_ESCAPE ||
+				key == CKC_CURSORUP ||
+				key == CKC_CURSORDOWN ||
+				key == CKC_CURSORLEFT ||
+				key == CKC_CURSORRIGHT ||
+				key == CKC_HOME ||
+				key == CKC_END ||
+				key == CKC_PAGEUP ||
+				key == CKC_PAGEDOWN ||
+				key == CKC_INSERT ||
+				key == CKC_DELETE ||
+				key == CKC_TAB ||
+				key == CKC_ENTER ||
+				key == CKC_BACKSPACE ) {
+
+		// control keys (CKC_xx)
+		switch ( key ) {
+
+		// <escape>: erase entire command line
+		case CKC_ESCAPE:
+			EraseConLine( con_bottom );
+			strcpy( con_lines[ con_bottom ], con_prompt );
+			history_scan  = history_add;
+			cursor_x      = 0;
+			con_back_view = 0;
+			return;
+			break;
+
+		// <cursor-up>: scroll one line up in history buffer
+		case CKC_CURSORUP:
+			if ( !con_logged_in )
+				break;
+			if ( *( history_list[ ( history_scan - 1 ) & NUM_HISTORY_LINES_MASK ] ) != 0 ) {
+				history_scan = ( history_scan - 1 ) & NUM_HISTORY_LINES_MASK;
+				FetchHistoryEntry( history_scan );
+			}
+			break;
+
+		// <cursor-down>: scroll one line down in history buffer
+		case CKC_CURSORDOWN:
+			if ( !con_logged_in )
+				break;
+			if ( *( history_list[ ( history_scan + 1 ) & NUM_HISTORY_LINES_MASK ] ) != 0 ) {
+				history_scan = ( history_scan + 1 ) & NUM_HISTORY_LINES_MASK;
+				FetchHistoryEntry( history_scan );
+			}
+			break;
+
+		// <cursor-left>: set cursor one position left
+		case CKC_CURSORLEFT:
+			if ( cursor_x > 0 )
+				cursor_x--;
+			break;
+
+		// <cursor-right>: set cursor one position right
+		case CKC_CURSORRIGHT:
+			if ( cursor_x < curlinelen )
+				cursor_x++;
+			break;
+/*
+		// <shift + cursor-up>: view one line backward
+		case CKC_CURSORUP_SHIFTED:
+			if ( !con_logged_in || con_in_talk_mode )
+				break;
+			if ( con_back_view < CONSOLE_MAX_BACK_LINES )
+				con_back_view++;
+			break;
+
+		// <shift + cursor-down>: view one line forward
+		case CKC_CURSORDOWN_SHIFTED:
+			if ( !con_logged_in || con_in_talk_mode )
+				break;
+			if ( con_back_view > 0 )
+				con_back_view--;
+			break;
+
+		// <shift + cursor-left>: set cursor one word to the left
+		case CKC_CURSORLEFT_SHIFTED:
+			while ( ( cursor_x > 0 ) &&
+					!isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x - 1 ] ) )
+				cursor_x--;
+			while ( ( cursor_x > 0 ) &&
+					isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x - 1 ] ) )
+				cursor_x--;
+			break;
+
+		// <shift + cursor-right>: set cursor one word to the right
+		case CKC_CURSORRIGHT_SHIFTED:
+			while ( ( cursor_x < curlinelen ) &&
+					isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x ] ) )
+				cursor_x++;
+			while ( ( cursor_x < curlinelen ) &&
+					!isalnum( con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x ] ) )
+				cursor_x++;
+			break;
+*/
+		// <home>: set cursor to first column
+		case CKC_HOME:
+			cursor_x = 0;
+			break;
+
+		// <end>: set cursor behind last column
+		case CKC_END:
+			cursor_x = curlinelen;
+			break;
+
+		// <page-up>: view one page backward
+		case CKC_PAGEUP:
+			if ( !con_logged_in )
+				break;
+			if ( cur_vis_conlines <= 0 )
+				break;
+			if ( con_back_view < CONSOLE_MAX_BACK_LINES )
+				con_back_view += cur_vis_conlines;
+			if ( con_back_view > CONSOLE_MAX_BACK_LINES )
+				con_back_view = CONSOLE_MAX_BACK_LINES;
+			break;
+
+		// <page-down>: view one page forward
+		case CKC_PAGEDOWN:
+			if ( !con_logged_in )
+				break;
+			if ( cur_vis_conlines <= 0 )
+				break;
+			if ( con_back_view > 0 )
+				con_back_view -= cur_vis_conlines;
+			if ( con_back_view < 0 )
+				con_back_view = 0;
+			break;
+
+		// <insert>: toggle insert mode
+		case CKC_INSERT:
+			insert_mode = !insert_mode;
+			break;
+
+		// <del>: delete and shift left
+		case CKC_DELETE:
+			if ( cursor_x < curlinelen ) {
+				strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1 );
+				strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x, paste_str );
+			}
+			break;
+
+		// <tab>: find completion for current input
+		case CKC_TAB:
+			if ( !con_logged_in )
+				break;
+			CompleteCommand();
+			break;
+
+		// <enter>: execute current line
+		case CKC_ENTER:
+			EnterConsoleCommand();
+			break;
+
+		// <backspace>: step left and shift righthand side left
+		case CKC_BACKSPACE:
+			if ( cursor_x > 0 ) {
+				if ( cursor_x == curlinelen ) {
+					cursor_x--;
+					con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x ] = 0;
+				} else {
+					cursor_x--;
+					strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1 );
+					strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x, paste_str );
+				}
+			}
+			break;
+		}
+	}
+
+	if (key == CKC_ENTER || key == CKC_ESCAPE) {
+		// hide QuickSay console if the main console isn't open
+		if (KeybFlags->ConEnabled && KeybFlags->ConActive && cur_vis_conlines <= 0)
+			SetQuicksayConsole(FALSE);
+	}
+}
+
 
 //NOTE:
 // this declaration is in global scope because of the extern "C".
@@ -1596,7 +1594,7 @@ void SetQuicksayConsole( int enable )
 }
 
 
-// process quicksay console input and draw it ---------------------------------
+// draw quicksay console ------------------------------------------------------
 //
 int QuicksayConsole()
 {
@@ -1605,26 +1603,6 @@ int QuicksayConsole()
 		return FALSE;
 	}
 
-	dword *pos;
-	dword readpos = KeybBuffer->ReadPos;
-
-	// scan console input buffer for ESCAPE or ENTER which
-	// should turn off quicksay mode again
-	while ( *( pos = &KeybBuffer->Data + readpos ) ) {
-		// both the unicode character and the input key are stored in the ringbuffer
-		dword unicode = (*pos) & 0xFFFF;
-		dword key = (*pos) >> 16;
-		
-		if ( key == CKC_ESCAPE || key == CKC_ENTER ) {
-			SetQuicksayConsole( FALSE );
-		}
-
-		readpos = ( readpos + 1 ) & KEYB_BUFF_SIZ_M;
-	}
-
-	// use standard input handling
-	CheckConsoleInput();
-
 	// ensure proper edit line viewing window
 	if ( cursor_x < edit_ofs_x ) {
 		edit_ofs_x = cursor_x;
@@ -1632,17 +1610,11 @@ int QuicksayConsole()
 		edit_ofs_x = cursor_x - ConsoleEnterLength;
 	}
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
 	D_SetWStrContext( CharsetInfo[ HUD_CHARSETNO ].charsetpointer,
 					  CharsetInfo[ HUD_CHARSETNO ].geompointer,
 					  NULL,
 					  CharsetInfo[ HUD_CHARSETNO ].width,
 					  CharsetInfo[ HUD_CHARSETNO ].height );
-
-	// write text translucent only for color depths below 32 bit per pixel
-	WSFP wsfp = translucent ? (WSFP) &D_WriteTrString : (WSFP) &D_WriteString;
 
 	// determine chars to draw
 	if ( edit_ofs_x == 0 ) {
@@ -1664,7 +1636,7 @@ int QuicksayConsole()
 	D_DrawTrRect( xpos - 3, ypos - 2, barwidth, barheight, TRTAB_PANELBACK );
 
 	// draw line contents
-	wsfp( draw_line, xpos, ypos, TRTAB_PANELTEXT );
+	D_WriteTrString( draw_line, xpos, ypos, TRTAB_PANELTEXT );
 
 	// maintain blinking of cursor if not done by main console
 	if ( ConsoleSliding == 0 ) {
@@ -1679,7 +1651,7 @@ int QuicksayConsole()
 		xpos += console_frameofs_x;
 
 		char *cursorstr = insert_mode ? insert_cursor : overwrite_cursor;
-		wsfp( cursorstr, xpos, ypos, TRTAB_PANELTEXT );
+		D_WriteTrString( cursorstr, xpos, ypos, TRTAB_PANELTEXT );
 	}
 
 	// allow caller to check for disabling
@@ -1735,12 +1707,10 @@ void DrawConsole( int numlines )
 					  CharsetInfo[ HUD_CHARSETNO ].width,
 					  CharsetInfo[ HUD_CHARSETNO ].height );
 
-	// write text translucent only for color depths below 32 bit per pixel
-	WSFP wsfp = translucent ? (WSFP) &D_WriteTrString : (WSFP) &D_WriteString;
 
 	// display caption if console wide enough
 	if ( (dword)ConsoleEnterLength >= strlen( console_caption ) - PROMPT_SIZE - 1 ) {
-		wsfp( console_caption,
+		D_WriteTrString( console_caption,
 			  ConsoleTextX * chrwidth + console_frameofs_x,
 			  ConsoleTextY * linedist + console_frameofs_y,
 			  TRTAB_PANELTEXT );
@@ -1788,7 +1758,7 @@ void DrawConsole( int numlines )
 		memcpy( draw_line, con_lines[ lineno ], ConsoleEnterLength + PROMPT_SIZE );
 		draw_line[ ConsoleEnterLength + PROMPT_SIZE ] = 0;
 
-		wsfp( draw_line, drawx, drawy, TRTAB_PANELTEXT );
+		D_WriteTrString( draw_line, drawx, drawy, TRTAB_PANELTEXT );
 
 		drawy += linedist;
 		lineno = ( lineno + 1 ) & NUM_CONSOLE_LINES_MASK;
@@ -1818,7 +1788,7 @@ void DrawConsole( int numlines )
 
 #endif // FORCE_CONSOLE_LOGIN
 
-	wsfp( draw_line, drawx, drawy, TRTAB_PANELTEXT );
+	D_WriteTrString( draw_line, drawx, drawy, TRTAB_PANELTEXT );
 
 	// cursor only if no back-viewing
 	if ( con_back_view == 0 ) {
@@ -1837,7 +1807,7 @@ void DrawConsole( int numlines )
 			drawx = console_frameofs_x + drawx * chrwidth;
 			drawy = console_frameofs_y + drawy * linedist;
 
-			wsfp( cursorstr, drawx, drawy, TRTAB_PANELTEXT );
+			D_WriteTrString( cursorstr, drawx, drawy, TRTAB_PANELTEXT );
 		}
 	}
 }
@@ -1853,9 +1823,6 @@ void ConsoleMain( int numlines )
 	// set number of currently visible console lines
 	// (negative values allowed!)
 	cur_vis_conlines = numlines - CONSOLE_CAPTION_HEIGHT;
-
-	// process console keyboard input
-	CheckConsoleInput();
 
 	// draw console
 	DrawConsole( numlines );
@@ -1939,7 +1906,7 @@ void ConsoleControl()
 			concurheight = ConsoleSliding >> CONSOLE_SLIDE_SPEED;
 		}
 
-		// process console input and draw console
+		// draw console
 		ConsoleMain( concurheight );
 	}
 }

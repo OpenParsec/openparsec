@@ -662,14 +662,14 @@ void G_Main::MaintainDurationWeapons( int playerid )
 	if ( pShip->WeaponsActive & WPMASK_CANNON_LIGHTNING ) {
 		m_Players[playerid].WFX_MaintainLightning( pShip );
 	}
-    /*
+    
 	// maintain photon
 	photon_sphere_pcluster_s* cluster = (photon_sphere_pcluster_s *)
-    PRT_ObjectHasAttachedClustersOfType( shippo, SAT_PHOTON );
+    TheWorld->PRT_ObjectHasAttachedClustersOfType( pShip, SAT_PHOTON );
 	if ( cluster != NULL ) {
-		WFX_CalcPhotonSphereAnimation( cluster );
+		TheWorld->CalcPhotonSphereAnimation( cluster );
 	}
-    
+    /*
 	// maintain emp
 	if ( shippo->WeaponsActive & WPMASK_DEVICE_EMP ) {
 		WFX_CreateEmpWaves( shippo );

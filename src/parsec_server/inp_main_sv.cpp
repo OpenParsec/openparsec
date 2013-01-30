@@ -79,7 +79,7 @@ void _INP_HandleBufferedKey( int key, int nRepcount )
 	
 	for ( int nCount = 0; nCount < nRepcount; nCount++ ) {
 		dword wpos = KeybBuffer->WritePos + 1;
-		wpos = wpos & (KEYB_BUFF_SIZ_M);
+		wpos = wpos % (KEYB_BUFF_SIZ);
 		
 		pos = &KeybBuffer->Data + wpos;
 		

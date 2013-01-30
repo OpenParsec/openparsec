@@ -83,9 +83,9 @@
 
 // CURSES library -------------------------------------------------------------
 #ifdef USE_CURSES
-	#ifdef SYSTEM_WIN32
+	#ifdef SYSTEM_WIN32_UNUSED
 		#pragma comment( lib, "curses.lib" )
-	#endif // SYSTEM_WIN32
+	#endif // SYSTEM_WIN32_UNUSED
 #endif // USE_CURSES
 
 // flags
@@ -545,7 +545,7 @@ void FlushConsoleBuffer()
 	dword *pos;
 
 	while ( *( pos = &KeybBuffer->Data + KeybBuffer->ReadPos ) ) {
-		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) & KEYB_BUFF_SIZ_M;
+		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) % KEYB_BUFF_SIZ;
 		*pos = 0;
 	}
 }
@@ -767,7 +767,7 @@ enum {
 
 	KEY_COMPILE_TITLE,
 	KEY_COMPILE_DESC,
-	KEY_COMPILE_AUTHOR,
+	KEY_COMPILE_AUTHOR
 };
 
 
@@ -1436,7 +1436,7 @@ bool_t CheckConsoleInput()
 		}
 
 		// advance one position in circular keybuffer
-		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) & KEYB_BUFF_SIZ_M;
+		KeybBuffer->ReadPos = ( KeybBuffer->ReadPos + 1 ) % KEYB_BUFF_SIZ;
 		*pos = 0;
 
 		console_input_done = true;
@@ -1476,7 +1476,7 @@ int QuicksayConsole()
 			SetQuicksayConsole( FALSE );
 		}
 
-		readpos = ( readpos + 1 ) & KEYB_BUFF_SIZ_M;
+		readpos = ( readpos + 1 ) % KEYB_BUFF_SIZ;
 	}
 
 	// use standard input handling

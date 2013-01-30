@@ -1122,24 +1122,26 @@ void REC_RecordKeys()
 		// also be recorded here, because this keydown event
 		// will be translated by G_MAIN::SpecialKeyFunctions().
 
+		size_t msize = sizeof(DepressedKeys->key_Escape);
+
 		// activate/deactive object camera
 		if ( DepressedKeys->key_ToggleObjCamera ) {
-			SaveKeyPress( offsetof( keyfunc_s, key_ToggleObjCamera ) );
+			SaveKeyPress( offsetof( keyfunc_s, key_ToggleObjCamera ) / msize );
 		}
 
 		// cycle weapons
 		if ( DepressedKeys->key_NextWeapon ) {
-			SaveKeyPress( offsetof( keyfunc_s, key_NextWeapon ) );
+			SaveKeyPress( offsetof( keyfunc_s, key_NextWeapon ) / msize );
 		}
 
 		// cycle missiles
 		if ( DepressedKeys->key_NextMissile ) {
-			SaveKeyPress( offsetof( keyfunc_s, key_NextMissile ) );
+			SaveKeyPress( offsetof( keyfunc_s, key_NextMissile ) / msize );
 		}
 
 		// cycle targets
 		if ( DepressedKeys->key_NextTarget ) {
-			SaveKeyPress( offsetof( keyfunc_s, key_NextTarget ) );
+			SaveKeyPress( offsetof( keyfunc_s, key_NextTarget ) / msize );
 		}
 
 		//NOTE:
@@ -1151,19 +1153,19 @@ void REC_RecordKeys()
 
 static int acc_active = FALSE;
 			if ( DepressedKeys->key_Accelerate ) {
-				SaveKeyPress( offsetof( keyfunc_s, key_Accelerate ) );
+				SaveKeyPress( offsetof( keyfunc_s, key_Accelerate ) / msize );
 				acc_active = TRUE;
 			} else if ( acc_active ) {
-				SaveKeyRelease( offsetof( keyfunc_s, key_Accelerate ) );
+				SaveKeyRelease( offsetof( keyfunc_s, key_Accelerate ) / msize );
 				acc_active = FALSE;
 			}
 
 static int dec_active = FALSE;
 			if ( DepressedKeys->key_Decelerate ) {
-				SaveKeyPress( offsetof( keyfunc_s, key_Decelerate ) );
+				SaveKeyPress( offsetof( keyfunc_s, key_Decelerate ) / msize );
 				dec_active = TRUE;
 			} else if ( dec_active ) {
-				SaveKeyRelease( offsetof( keyfunc_s, key_Decelerate ) );
+				SaveKeyRelease( offsetof( keyfunc_s, key_Decelerate ) / msize );
 				dec_active = FALSE;
 			}
 		}

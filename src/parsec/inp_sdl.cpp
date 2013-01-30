@@ -23,6 +23,12 @@
 // compilation flags/debug support
 #include "config.h"
 
+#ifdef SYSTEM_TARGET_LINUX
+	#include <SDL/SDL.h>
+#else
+	#include <SDL.h>
+#endif
+
 // C library
 #include <signal.h>
 #include <stddef.h>
@@ -52,8 +58,8 @@
 #include "isdl_keydf.h"
 
 // proprietary headers
+#include "con_main.h"
 #include "con_aux.h"
-#include "con_vald.h"
 #include "isdl_joy.h"
 #include "isdl_supp.h"
 
@@ -84,10 +90,6 @@ keyfunc_s*			DepressedKeys	= &_depressedkeys;
 keyfunc_s*			KeyAssignments	= _keyassignments;
 keyaddctrl_s*		KeyAdditional	= NULL;
 keybflags_s*		KeybFlags		= &_keybflags;
-keybbuffer_s*		KeybBuffer		= NULL;
-
-#define SIZEOF_KeybBuffer		( sizeof( keybbuffer_s ) + sizeof( dword ) * KEYB_BUFF_SIZ )
-#define SIZEOF_KeyAdditional	( sizeof( keyaddctrl_s ) + sizeof( keyaddition_s ) * KEY_ADDITIONS_MAX )
 
 
 // globals ------------------------------------------------------------------
@@ -108,78 +110,6 @@ static int sdl_general_init_done	= FALSE;
 static int sdl_keyb_init_done		= FALSE;
 static int sdl_keyb_grab_active	= FALSE;
 
-
-// disabling signal handler code because it's not cross-platform and probably not necessary
-/*
-// table of signals to catch --------------------------------------------------
-//
-static int sighandlers_num[] = {
-
-	SIGHUP,		SIGINT,
-	SIGQUIT,	SIGILL,
-	SIGTRAP,	SIGIOT,
-	SIGBUS,		SIGFPE,
-	SIGSEGV,	SIGPIPE,
-	SIGALRM,	SIGTERM,
-	SIGXCPU,	SIGXFSZ,
-	SIGVTALRM,	SIGPROF,
-#if !defined(__APPLE__)
-	SIGPWR,
-#endif
-	SIGABRT,
-};
-
-#define NUM_SIGHANDLERS		CALC_NUM_ARRAY_ENTRIES( sighandlers_num )
-
-
-// table of previously installed signal handlers ------------------------------
-//
-static struct sigaction sighandlers_old[ NUM_SIGHANDLERS ];
-
-
-// signal handler to restore state on critical signal -------------------------
-//
-PRIVATE
-void signal_handler( int signum )
-{
-	// ctrl-c emulates escape function
-	if ( signum == SIGINT ) {
-	    DepressedKeys->key_Escape = 1;
-	    return;
-	}
-
-	// kill input handlers
-	INPs_MouseKillHandler();
-	INPs_KeybKillHandler();
-	INPs_KillGeneral();
-
-	// look up other signals; restore previous handler and
-	// raise signal again if the signal is caught
-	for ( unsigned int sid = 0; sid < NUM_SIGHANDLERS; sid++ ) {
-		if ( sighandlers_num[ sid ] == signum ) {
-			sigaction( signum, &sighandlers_old[ sid ], NULL );
-			raise( signum );
-			return;
-		}
-	}
-}
-
-
-// install critical signal handlers -------------------------------------------
-//
-PRIVATE
-void ISDLm_InstallSignalHandlers()
-{
-	// install signal handler for all catched signals
-	// and save old handlers for chaining later on
-	struct sigaction sa;
-	memset( &sa, 0, sizeof( sa ) );
-	for ( unsigned int sid = 0; sid < NUM_SIGHANDLERS; sid++ ) {
-		sa.sa_handler = signal_handler;
-		sigaction( sighandlers_num[ sid ], &sa, &sighandlers_old[ sid ] );
-	}
-}
-*/
 
 // determine bit shift from bit mask ------------------------------------------
 //
@@ -420,13 +350,6 @@ void INPs_KillGeneral()
 }
 
 
-// key press/release flag values ----------------------------------------------
-//
-#define KEY_EVENTPRESS		1
-#define KEY_EVENTRELEASE	0
-
-
-
 // check whether key repeat is enabled ----------------------------------------
 //
 PRIVATE
@@ -459,15 +382,37 @@ void ISDLm_SetKeyRepeat(bool enable)
 }
 
 
-// keyboard handler invoked by event processing loop --------------------------
+PRIVATE
+void ISDLm_ProcessTextInput(const char *text)
+{
+	if (text[0] > 31 && text[0] < 127) { // only handle ASCII for now
+		CON_HandleTextInput(text[0]);
+	}
+}
+
+
+// text input handler for SDL 2 -----------------------------------------------
 //
 PRIVATE
-void ISDLm_KeyboardHandler(const SDL_Event & event)
+void ISDLm_TextInputHandler(const SDL_Event &event)
 {
-	int state = (event.type == SDL_KEYDOWN);
-	int scode = event.key.keysym.sym;
-	
-	
+#if SDL_VERSION_ATLEAST(2,0,0)
+	if (event.type != SDL_TEXTINPUT)
+		return;
+
+	ISDLm_ProcessTextInput(event.text.text);
+#endif
+}
+
+
+// key press handler invoked by event processing loop -------------------------
+//
+PRIVATE
+void ISDLm_KeyboardHandler(const SDL_Event &event)
+{
+	bool pressed = event.type == SDL_KEYDOWN;
+	dword key = event.key.keysym.sym;
+
 #if SDL_VERSION_ATLEAST(2,0,0)
 	// only process a key repeat event if we're in the console or quicksay console
 	if (event.key.repeat && !(KeybFlags->ConActive && KeybFlags->ConEnabled))
@@ -479,74 +424,21 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 		ISDLm_SetKeyRepeat(KeybFlags->ConActive && KeybFlags->ConEnabled);
 #endif
 
-
-	// console enabling/disabling
-	if ( scode == MKC_CAPSLOCK ) {
-
-		if ( !state ) {
-
-			// maintain debounce
-			KeybFlags->ConTogReleased = -1;
-
-		} else if ( KeybFlags->ConEnabled && KeybFlags->ConTogReleased ) {
-
-			// toggle console
-			KeybFlags->ConTogReleased = 0;
-			KeybFlags->ConActive      = ~KeybFlags->ConActive;
-		}
-	}
-
 	// console keyboard buffer handling
-	if ( state && ( scode != MKC_TILDE ) ) {
+	if ( pressed && ( key != MKC_TILDE ) ) {
 
 		if ( KeybFlags->ConActive && KeybFlags->ConEnabled ) {
 
-			if (scode == SDLK_LSHIFT || scode == SDLK_RSHIFT) {
+			if (key == MKC_LSHIFT || key == MKC_RSHIFT) {
 				return;
 			}
 
-			// set shift flag
-			//scode |= KeybFlags->ShiftOn;
+			CON_HandleKeyPress(key);
 
-			// calc store pos in ring buffer
-			dword *bufdst = &KeybBuffer->Data + KeybBuffer->WritePos;
-
-			// advance pos in ring buffer
-			dword nxtpos = ( KeybBuffer->WritePos + 1 ) & KEYB_BUFF_SIZ_M;
-			dword *bufnxt = &KeybBuffer->Data + nxtpos;
-
-
-			// store key code into available buffer pos
-			if ( *bufnxt == 0 ) {
-				/*switch (event.key.keysym.sym){
-					case SDLK_RETURN:
-						*bufdst = CKC_ENTER;
-						break;
-					case SDLK_BACKSPACE:
-						*bufdst = CKC_BACKSPACE;
-						break;
-					default:
-						*bufdst = event.key.keysym.sym;
-						break;
-				}*/
-				
-				
-				// store both the SDL key and the unicode character in the ringbuffer
-				
-#if SDL_VERSION_ATLEAST(2,0,0)
-				// FIXME: unicode key input is handled differently in SDL 2
-				dword unicode = scode;
-				printf("key: 0x%x\n", scode);
-#else
-				word unicode = event.key.keysym.unicode;
+#if !SDL_VERSION_ATLEAST(2,0,0)
+			const char text[] = {(char) event.key.keysym.unicode, '\0'};
+			ISDLm_ProcessTextInput(text);
 #endif
-				
-				dword key = scode & 0xFFFF;
-				key = (key << 16) | (unicode & 0xFFFF);
-				
-				*bufdst = key;
-				KeybBuffer->WritePos = nxtpos;
-			}
 
 			// console grabs all input
 			return;
@@ -559,8 +451,8 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 	dword *tabd =  (dword *) DepressedKeys;
 
 	for( int fid = NUM_GAMEFUNC_KEYS - 1; fid >= 0; fid-- ) {
-		if ( ( tab1[ fid ] == scode ) || ( tab2[ fid ] == scode ) ) {
-			tabd[ fid ] = state;
+		if ( ( tab1[ fid ] == key ) || ( tab2[ fid ] == key ) ) {
+			tabd[ fid ] = pressed;
 		}
 	}
 
@@ -569,40 +461,17 @@ void ISDLm_KeyboardHandler(const SDL_Event & event)
 	dword shiftb = ( ( KeybFlags->ShiftOn & ~KeybFlags->ExtOn ) != 0 ) ?
 					AKC_SHIFT_FLAG : 0;
 	*/
-	dword akcode = (dword)scode;
 
 	// additional key mappings
-	keyaddition_s *kap = &KeyAdditional->table;
+	keyaddition_s *kap = KeyAdditional->table;
 	ASSERT( KeyAdditional->size >= 0 );
 	ASSERT( KeyAdditional->size <= KEY_ADDITIONS_MAX );
 
 	for ( int aid = KeyAdditional->size - 1; aid >= 0; aid-- ) {
-		if ( kap[ aid ].code == akcode ) {
-			kap[ aid ].state = state;
+		if ( kap[ aid ].code == key ) {
+			kap[ aid ].state = pressed;
 		}
 	}
-
-//	printf("\nISDLm_KeyboardHandler(): Press Scancode: 0x%x; SDLsym: %i\n", event.key.keysym.scancode, event.key.keysym.sym);
-
-/*
-	switch (event.type) {
-		case SDL_KEYDOWN:
-
-			for(int i=0; i< NUM_GAMEFUNC_KEYS; i++){
-				if((event.key.keysym.scancode == KeyAssignments_b[i]) || (event.key.keysym.scancode == KeyAssignments2_b[i])){
-					DepressedKeys_b[i] = 1;
-				}
-			}
-			break;
-		case SDL_KEYUP:
-			//printf("\nISDLm_KeyboardHandler(): Release Scancode: 0x%x; SDLsym: %i\n", event.key.keysym.scancode, event.key.keysym.sym);
-			for(int i=0; i< NUM_GAMEFUNC_KEYS; i++){
-				if((event.key.keysym.scancode == KeyAssignments_b[i]) || (event.key.keysym.scancode == KeyAssignments2_b[i])){
-					DepressedKeys_b[i] = 0;
-				}
-			}
-			break;
-	}*/
 }
 
 
@@ -624,14 +493,12 @@ void INPs_KeybInitHandler()
 	}
 
 	// alloc key tables
-	KeyAdditional	= (keyaddctrl_s *) ALLOCMEM( SIZEOF_KeyAdditional );
-	KeybBuffer		= (keybbuffer_s *) ALLOCMEM( SIZEOF_KeybBuffer );
+	KeyAdditional	= (keyaddctrl_s *) ALLOCMEM( sizeof( keyaddctrl_s ) );
 
 	// init all structs
 	memset( DepressedKeys,	0, sizeof( keyfunc_s ) );
-	memset( KeyAdditional,	0, SIZEOF_KeyAdditional );
+	memset( KeyAdditional,	0, sizeof( keyaddctrl_s ) );
 	memset( KeybFlags,		0, sizeof( keybflags_s ) );
-	memset( KeybBuffer,		0, SIZEOF_KeybBuffer );
 
 	KeybFlags->ConTogReleased = (byte)-1;
 /*
@@ -657,11 +524,6 @@ void INPs_KeybKillHandler()
 	if ( KeyAdditional != NULL ) {
 		FREEMEM( KeyAdditional );
 		KeyAdditional = NULL;
-	}
-
-	if ( KeybBuffer != NULL ) {
-		FREEMEM( KeybBuffer );
-		KeybBuffer = NULL;
 	}
 }
 
@@ -692,26 +554,42 @@ void INPs_MouseKillHandler()
 
 // mouse variables ------------------------------------------------------------
 //
-static int			last_frame_called = VISFRAME_NEVER;
-static mousestate_s	last_mouse_state;
-static unsigned int	mouse_buttons;
-
-
-// mouse button handler invoked by event processing loop ----------------------
-//
-PRIVATE
-void ILm_MouseButtonHandler()
-{
-	// not used
-}
+static mousestate_s	cur_mouse_state;
 
 
 // mouse motion handler invoked by event processing loop ----------------------
 //
 PRIVATE
-void ILm_MouseMotionHandler()
+void ISDLm_MouseEventHandler(const SDL_Event &event)
 {
-	// not used
+	if (event.type == SDL_MOUSEMOTION) {
+		cur_mouse_state.xpos = (float) event.motion.x / Screen_Width;
+		cur_mouse_state.ypos = (float) event.motion.y / Screen_Height;
+	}
+
+	if (event.type == SDL_MOUSEBUTTONDOWN || event.type == SDL_MOUSEBUTTONUP) {
+		int button = NUM_MOUSE_BUTTONS;
+		
+		switch (event.button.button) {
+			case SDL_BUTTON_LEFT:
+				button = MOUSE_BUTTON_LEFT;
+				break;
+			case SDL_BUTTON_MIDDLE:
+				button = MOUSE_BUTTON_MIDDLE;
+				break;
+			case SDL_BUTTON_RIGHT:
+				button = MOUSE_BUTTON_RIGHT;
+				break;
+		}
+
+		if (button == NUM_MOUSE_BUTTONS)
+			return; // we don't care about any other buttons
+		
+		if (event.button.state == SDL_PRESSED)
+			cur_mouse_state.buttons[button] = MOUSE_BUTTON_PRESSED;
+		else
+			cur_mouse_state.buttons[button] = MOUSE_BUTTON_RELEASED;
+	}
 }
 
 
@@ -735,92 +613,24 @@ int INPs_MouseSetState( mousestate_s *state )
 }
 
 
-// get normalized mouse coordinates and button state --------------------------
-//
-PRIVATE
-int ISDLm_GetMouseState( mousestate_s *state )
-{
-	ASSERT( state != NULL );
-
-
-	int mposx = 0;
-	int mposy = 0;
-	int mouse_buttons = 0;
-
-	// query current mouse state (position and buttons)
-	mouse_buttons = SDL_GetMouseState(&mposx, &mposy);
-
-	// detect whether pointer not in window
-	if ( mposx < 0 )
-		return FALSE;
-	if ( mposy < 0 )
-		return FALSE;
-	if ( mposx > Screen_Width )
-		return FALSE;
-	if ( mposy > Screen_Height )
-		return FALSE;
-/*
-	state->xpos = mposx;
-	state->ypos = mposy;
-
-	*/
-
-	state->xpos = (float) mposx / Screen_Width;
-	state->ypos = (float) mposy / Screen_Height;
-
-
-	// retrieve and set mouse button states
-	int lbstate = ( ( mouse_buttons & SDL_BUTTON(1) ) != 0 );
-	int mbstate = ( ( mouse_buttons & SDL_BUTTON(2) ) != 0 );
-	int rbstate = ( ( mouse_buttons & SDL_BUTTON(3) ) != 0 );
-
-	state->buttons[ MOUSE_BUTTON_LEFT ]   = lbstate ?
-		MOUSE_BUTTON_PRESSED : MOUSE_BUTTON_RELEASED;
-	state->buttons[ MOUSE_BUTTON_MIDDLE ] = mbstate ?
-		MOUSE_BUTTON_PRESSED : MOUSE_BUTTON_RELEASED;
-	state->buttons[ MOUSE_BUTTON_RIGHT ]  = rbstate ?
-		MOUSE_BUTTON_PRESSED : MOUSE_BUTTON_RELEASED;
-
-	return TRUE;
-}
-
-
 // get mouse coordinates independent of current screen resolution -------------
 //
 int INPs_MouseGetState( mousestate_s *state )
 {
 	ASSERT( state != NULL );
 
-	// make idempotent for each frame
-	if ( (dword)last_frame_called == CurVisibleFrame ) {
-		*state = last_mouse_state;
-		return TRUE;
-	}
-	last_frame_called = CurVisibleFrame;
-
-	// retrieve normalized mouse coordinates and button state
-	if ( !ISDLm_GetMouseState( state ) ) {
+	if (cur_mouse_state.xpos < 0 || cur_mouse_state.xpos > 1.0)
 		return FALSE;
-	}
+
+	if (cur_mouse_state.ypos < 0 || cur_mouse_state.ypos > 1.0)
+		return FALSE;
+
+	// copy current state
+	*state = cur_mouse_state;
 
 	// we always draw the custom cursor if the
 	// mouse is over a valid area
 	state->drawcursor = TRUE;
-/*
-	// retrieve and set mouse button states
-	int lbstate = ( ( mouse_buttons & Button1Mask ) != 0 );
-	int mbstate = ( ( mouse_buttons & Button2Mask ) != 0 );
-	int rbstate = ( ( mouse_buttons & Button3Mask ) != 0 );
-
-	state->buttons[ MOUSE_BUTTON_LEFT ]   = lbstate ?
-		MOUSE_BUTTON_PRESSED : MOUSE_BUTTON_RELEASED;
-	state->buttons[ MOUSE_BUTTON_MIDDLE ] = mbstate ?
-		MOUSE_BUTTON_PRESSED : MOUSE_BUTTON_RELEASED;
-	state->buttons[ MOUSE_BUTTON_RIGHT ]  = rbstate ?
-		MOUSE_BUTTON_PRESSED : MOUSE_BUTTON_RELEASED;
-*/
-	// remember for multiple get
-	last_mouse_state = *state;
 
 	return TRUE;
 }
@@ -830,13 +640,11 @@ int INPs_MouseGetState( mousestate_s *state )
 //
 void INPs_JoyInitHandler()
 {
-
 #ifndef DISABLE_JOYSTICK_CODE
 
 	ISDL_JoyInitHandler();
 
 #endif
-
 }
 
 
@@ -907,12 +715,20 @@ void ISDLm_ProcessEvents()
 			case SDL_KEYUP:
 				ISDLm_KeyboardHandler(event);
 				break;
+			case SDL_MOUSEMOTION:
+			case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONUP:
+				ISDLm_MouseEventHandler(event);
+				break;
+#if SDL_VERSION_ATLEAST(2,0,0)
+			case SDL_TEXTINPUT:
+				ISDLm_TextInputHandler(event);
+				break;
+#endif
 			case SDL_QUIT:
 				// clean up and quit ASAP
 				ExitGameLoop = 3;
 				break;
-//			default:
-//				printf("ISDLm_ProcessEvents(): Event type: %i\n", event.type);
 		}
 	}
 }

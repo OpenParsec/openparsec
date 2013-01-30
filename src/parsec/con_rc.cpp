@@ -312,11 +312,11 @@ void WriteRcKeybConfig( FILE *fp )
 {
 	ASSERT( fp != NULL );
 
-#if defined ( SYSTEM_MACOSX )
+#if defined ( SYSTEM_MACOSX_UNUSED )
 
 	fprintf( fp, "keybconf\n\n" );
 
-#endif // SYSTEM_MACOSX
+#endif // SYSTEM_MACOSX_UNUSED
 
 }
 

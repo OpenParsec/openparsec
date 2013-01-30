@@ -712,7 +712,7 @@ pdef_s * PRT_AcquireParticleDefinition(
 	}
 
 	return NULL;
-};
+}
 
 
 // acquire already registered particle definition via its id ------------------
@@ -730,7 +730,7 @@ pdef_s * PRT_AcquireParticleDefinitionById(
 	ASSERT( pdef != NULL );
 
 	return pdef;
-};
+}
 
 
 // init extended particle info using particle definitions ---------------------

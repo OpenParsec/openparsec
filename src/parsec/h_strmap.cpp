@@ -182,7 +182,7 @@ enum {
 	MAP_NAVBAR21,
 	MAP_NAVBAR22,
 	MAP_HILITE,
-	MAP_SYMBOL,
+	MAP_SYMBOL
 };
 
 static int starmap_bg_valid = FALSE;
@@ -219,7 +219,7 @@ enum {
 	MAPSEL_REFRESH,
 	MAPSEL_EXIT,
 	MAPSEL_INFO,
-	MAPSEL_LIST,
+	MAPSEL_LIST
 };
 
 static float sel_leftedge   	= 488.0f / 640.0f;
@@ -241,7 +241,7 @@ enum {
 	MAPNAV_PANRIGHT,
 	MAPNAV_ZOOMOUT,
 	MAPNAV_PANDOWN,
-	MAPNAV_NULL2,
+	MAPNAV_NULL2
 };
 
 static float nav_leftedge 	= 496.0f / 640.0f;

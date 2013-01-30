@@ -32,7 +32,7 @@
 	#include <sys/ioctl.h>
 #endif
 /*
-#elif defined( SYSTEM_MACOSX )
+#elif defined( SYSTEM_MACOSX_UNUSED )
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <sys/time.h>

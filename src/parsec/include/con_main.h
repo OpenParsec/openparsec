@@ -6,6 +6,9 @@
 #define _CON_MAIN_H_
 
 
+#include "inp_defs.h"
+
+
 // if this is defined command parsing will be a lot slower
 //#define NO_UNNECESSARY_COMMAND_DOMAINS
 
@@ -27,11 +30,11 @@
 
 /*
 // additional directories for console scripts
-#if defined( SYSTEM_WIN32 )
+#if defined( SYSTEM_WIN32_UNUSED )
 	#define REFCON_COMMANDS_DIR		"refs\\"
 	#define STDCON_COMMANDS_DIR		"cons\\"
 	#define RECORD_COMMANDS_DIR		"recs\\"
-#elif defined( SYSTEM_LINUX ) || defined( SYSTEM_MACOSX )*/
+#elif defined( SYSTEM_LINUX_UNUSED ) || defined( SYSTEM_MACOSX_UNUSED )*/
 	#define REFCON_COMMANDS_DIR		"refs/"
 	#define STDCON_COMMANDS_DIR		"cons/"
 	#define RECORD_COMMANDS_DIR		"recs/"
@@ -131,6 +134,9 @@ void	CON_DelLine();
 char*	CON_GetLine();
 void	CON_ListCtdPrompt();
 void	CON_ListEndPrompt();
+
+void	CON_HandleTextInput(const char character);
+void	CON_HandleKeyPress(dword key);
 
 int		QuicksayConsole();
 void	SetQuicksayConsole( int enable );

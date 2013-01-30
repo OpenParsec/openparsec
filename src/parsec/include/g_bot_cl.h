@@ -242,7 +242,7 @@ enum agentmode_t {
 	AGENTMODE_ATTACK		= 3,
 	AGENTMODE_RETREAT		= 4,
 
-	AGENTMODE_MAX			= AGENTMODE_RETREAT,
+	AGENTMODE_MAX			= AGENTMODE_RETREAT
 };
 
 // main class for handling the bot AI -----------------------------------------
