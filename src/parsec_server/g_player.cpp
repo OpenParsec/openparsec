@@ -552,38 +552,37 @@ void G_Player::_WFX_ActivatePhoton()
         //MSGOUT("G_Player::_WFX_ActivatePhoton: client %d illigally tried to fire Photon Cannon\n",m_nClientID);
         return;
 	}
-    /*
-    Uncomment this when the value exists server side
+    
     // check if enough energy to shoot photon
     if ( pShip->CurEnergy < MIN_PHOTON_ENERGY ) {
 		MSGOUT("G_Player::_WFX_ActivatePhoton: client %d low energy",m_nClientID);
 		return;
 	}
     
-    Uncomment this when particles are simulated server side
     // check if photon cannon still firing
-    if ( PRT_ObjectHasAttachedClustersOfType( shippo, SAT_PHOTON ) ) {
-        return FALSE;
+    if ( TheWorld->PRT_ObjectHasAttachedClustersOfType( pShip, SAT_PHOTON ) ) {
+        return;
     }
      
-    Not sure yet if I even need to simulate this part below
+    //Not sure yet if I even need to simulate this part below
     // create particle sphere
-    if ( !CreatePhotonSphere( shippo ) ) {
-        ShowMessage( "could not create sphere" );
-        return FALSE;
+    if ( !TheWorld->CreatePhotonSphere( pShip ) ) {
+        return;
     }
-    */
+    
     // set active flag
     pShip->WeaponsActive |= WPMASK_CANNON_PHOTON;
-    //MSGOUT("G_Player::_WFX_ActivatePhoton: client %d charging photon cannon",m_nClientID);
-    // send remote event to switch photon on
-   
+    MSGOUT("G_Player::_WFX_ActivatePhoton: client %d charging photon cannon",m_nClientID);
+    
 }
 
 // deactivate photon cannon of specified ship ----------------------------------
 //
 void G_Player::_WFX_DeactivatePhoton()
 {
+    // anim type for photon particles (no "real" sphere animtype)
+    #define SAT_PHOTON                          0x00000008
+
 	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
     ASSERT( pShip != NULL );
@@ -592,13 +591,13 @@ void G_Player::_WFX_DeactivatePhoton()
     
 	// reset activation flag
     pShip->WeaponsActive &= ~WPMASK_CANNON_PHOTON;
-    //MSGOUT("G_Player::_WFX_DectivatePhoton: client %d fired photon cannon",m_nClientID);
-    /*
+    MSGOUT("G_Player::_WFX_DectivatePhoton: client %d fired photon cannon",m_nClientID);
+    
     // start firing
-    photon_sphere_pcluster_s* cluster = (photon_sphere_pcluster_s *)
-    PRT_ObjectHasAttachedClustersOfType( shippo, SAT_PHOTON );
-    cluster->firing = TRUE;
-    */
+    photon_sphere_pcluster_s* cluster = (photon_sphere_pcluster_s *) TheWorld->PRT_ObjectHasAttachedClustersOfType( pShip, SAT_PHOTON );
+    if(cluster != NULL)
+       cluster->firing = TRUE;
+    
 }
 
 // create missile originating from specified position -------------------------
@@ -715,9 +714,9 @@ void G_Player::_OBJ_LaunchSwarm( dword targetid )
    	pShip->NumPartMissls--;
 
 }
-
+/*
 void G_Player::FireEMP(byte Upgradelevel) {
-	/*ASSERT( m_pSimPlayerInfo != NULL );
+	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
 	ASSERT( pShip != NULL );
 
@@ -732,9 +731,9 @@ void G_Player::FireEMP(byte Upgradelevel) {
 			CreateEmp( shippo, curdelay, 0, curupgrade );
 			curdelay += emp_delay[ curupgrade ];
 		}
-	}*/
+	}
 }
-
+*/
 
 
 // record a kill --------------------------------------------------------------

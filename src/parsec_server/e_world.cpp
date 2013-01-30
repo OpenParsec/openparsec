@@ -53,6 +53,8 @@
 #include "net_util.h"
 #include "e_simulator.h"
 #include "e_colldet.h"
+#include "g_player.h"
+#include "g_main_sv.h"
 
 // flags ----------------------------------------------------------------------
 //
@@ -81,6 +83,7 @@ static int particle_init_done	= FALSE;
 //
 float sphere_ref_z = 1.0f;
 float lightning_ref_z = 1.0f;
+float photon_ref_z = 1.0f;
 
 void LinearParticleCollision( linear_pcluster_s *cluster, int pid );
 // flags
@@ -102,6 +105,12 @@ int partbitmap_size_bound		= BITMAP_SIZE_BOUNDARY;
 pcluster_s *Particles			= NULL;
 pcluster_s *CurLinearCluster	= NULL;
 pcluster_s *CustomDrawCluster	= NULL;
+
+// array of registered particle definitions -----------------------------------
+//
+PUBLIC int				NumParticleDefinitions = 0;
+PUBLIC pdefref_s		ParticleDefinitions[ MAX_PARTICLE_DEFS ];
+
 
 // ----------------------------------------------------------------------------
 //
@@ -1039,7 +1048,7 @@ void E_World::AnimateClusterBehavior( pcluster_s *cluster )
             
 		case ( CT_PHOTON_SPHERE & CT_TYPEENUMERATIONMASK ):
 			// already called in G_SUPP::MaintainDurationWeapons()
-			// WFX_CalcPhotonSphereAnimation( (photon_sphere_pcluster_s *) cluster );
+			//CalcPhotonSphereAnimation( (photon_sphere_pcluster_s *) cluster );
 			break;
             
         case ( CT_PARTICLE_SPHERE & CT_TYPEENUMERATIONMASK ):
@@ -1255,7 +1264,7 @@ void E_World::PRT_DeleteCluster (pcluster_s* cluster)
 	// free storage (cluster header and particle storage)
 	FREEMEM( cluster->rep );
 	FREEMEM( cluster );
-    //MSGOUT("E_World::PRT_DeleteCluster(): Free'd particle cluster");
+    MSGOUT("E_World::PRT_DeleteCluster(): Free'd particle cluster");
 }
 
 // remove cluster from its attachment list if contained in any ----------------
@@ -2250,6 +2259,392 @@ void E_World::CalcSphereParticleExplosion( Vertex3& position, geomv_t speed )
 	position.X += GEOMV_MUL( vec.X, speed );
 	position.Y += GEOMV_MUL( vec.Y, speed );
 	position.Z += GEOMV_MUL( vec.Z, speed );
+}
+
+// acquire already registered particle definition via its id ------------------
+//
+pdef_s * E_World::PRT_AcquireParticleDefinitionById(
+                                           int			pdefid			// id of particle definition
+                                           )
+{
+	// ensure id is valid
+	if ( ( pdefid < 0 ) || ( pdefid >= NumParticleDefinitions ) )
+		return NULL;
+    
+	// fetch from table
+	pdef_s *pdef = ParticleDefinitions[ pdefid ].def;
+	ASSERT( pdef != NULL );
+    
+	return pdef;
+};
+
+// acquire already registered particle definition via its unique name ---------
+//
+pdef_s * E_World::PRT_AcquireParticleDefinition(
+                                       const char*	pdefname,		// unique name for particle definition
+                                       int*		retpdefid		// id of returned particle definition
+                                       )
+{
+	ASSERT( pdefname != NULL );
+    
+	// scan all registered particle definitions
+	for ( int curdef = 0; curdef < NumParticleDefinitions; curdef++ ) {
+		if ( strcmp( ParticleDefinitions[ curdef ].defname, pdefname ) == 0 ) {
+            
+			// return id if desired
+			if ( retpdefid != NULL )
+				*retpdefid = curdef;
+            
+			// return pointer to pdef
+			return ParticleDefinitions[ curdef ].def;
+		}
+	}
+    
+	return NULL;
+};
+
+// create particle sphere for photon cannon -----------------------------------
+//
+photon_sphere_pcluster_s * E_World::CreatePhotonSphere( ShipObject *shippo )
+{
+	ASSERT( shippo != NULL );
+	ASSERT( OBJECT_TYPE_SHIP( shippo ) );
+    
+    pextinfo_s extinfo;
+
+    /*
+	// fetch pdef
+	static int pdefid = -1;
+	pdef_s *pdef = ( pdefid != -1 ) ? PRT_AcquireParticleDefinitionById( pdefid ) : PRT_AcquireParticleDefinition( "photon1", &pdefid );
+	if ( pdef == NULL ) {
+        MSGOUT( "photon particles invalid." );
+        return NULL;
+	}
+    
+	// create extinfo
+    pextinfo_s extinfo;
+	//PRT_InitParticleExtInfo( &extinfo, pdef, NULL, NULL );
+    */
+	// determine cluster type and hints
+    dword clustertype = CT_PHOTON_SPHERE;
+	clustertype |= CT_EXTINFO_STORAGE;
+	clustertype |= CT_CLUSTER_GLOBAL_EXTINFO;
+	clustertype |= CT_HINT_PARTICLES_HAVE_EXTINFO;
+	clustertype |= CT_HINT_PARTICLES_IDENTICAL;
+    
+    // create new cluster
+    int clustersiz = PHOTON_SPHERE_PARTICLES;
+	photon_sphere_pcluster_s *cluster = (photon_sphere_pcluster_s *)
+    PRT_NewCluster( clustertype, clustersiz, 0 );
+    
+	// fill in basic fields
+	cluster->animtype				= SAT_PHOTON;
+	cluster->bdsphere				= shippo->BoundingSphere;
+	cluster->contraction_time		= PHOTON_CONTRACTION_TIME;
+	cluster->cur_contraction_time	= 0;
+	cluster->contraction_speed		= PHOTON_CONTRACTION_SPEED;
+	cluster->max_loading_time		= PHOTON_MAX_LOADING_TIME;
+	cluster->firing					= FALSE;
+	cluster->numloads				= PHOTON_NUMLOADS;
+	cluster->alive					= 0;
+	cluster->center.X				= 0;
+	cluster->center.Y				= 0;
+	cluster->center.Z				= 0;
+	cluster->pitch					= PHOTON_ROT_PITCH;
+	cluster->yaw					= PHOTON_ROT_YAW;
+	cluster->roll					= PHOTON_ROT_ROLL;
+    
+	// set particle properties
+	for ( int curp = 0; curp < clustersiz; curp++ ) {
+        
+		Vertex3 particlepos;
+        CalcSphereParticlePosition( particlepos, shippo->BoundingSphere, SAT_SPHERETYPE_NORMAL );
+        
+		// copy extinfo into cluster
+		pextinfo_s *curextinfo = (pextinfo_s *)( cluster->rep + clustersiz ) + curp;
+		memcpy( curextinfo, &extinfo, sizeof( pextinfo_s ) );
+        
+		// init particle in cluster
+        cluster->rep[ curp ].owner		= GetObjectOwner( shippo );
+        cluster->rep[ curp ].flags		= PARTICLE_ACTIVE;
+        cluster->rep[ curp ].lifetime	= INFINITE_LIFETIME;
+        cluster->rep[ curp ].extinfo	= curextinfo;
+        cluster->rep[ curp ].bitmap		= iter_texrgba | iter_specularadd;
+        cluster->rep[ curp ].color		= PHOTON_COLOR;
+        cluster->rep[ curp ].sizebound	= PRT_NO_SIZEBOUND;
+        cluster->rep[ curp ].ref_z		= photon_ref_z;
+        cluster->rep[ curp ].position	= particlepos;
+        cluster->rep[ curp ].velocity.X	= GEOMV_0;
+		cluster->rep[ curp ].velocity.Y	= GEOMV_0;
+		cluster->rep[ curp ].velocity.Z	= GEOMV_0;
+        
+        // increase number of elements
+        Particles->numel++;
+    }
+    
+	// at least one particle has to be visible
+    cluster->numel = 1;
+    
+    // attach sphere's particle cluster to object
+	PRT_AttachClusterToObject( shippo, (objectbase_pcluster_s *)cluster );
+    
+    return cluster;
+}
+
+// calc animation of photon sphere --------------------------------------------
+//
+void E_World::CalcPhotonSphereAnimation( photon_sphere_pcluster_s *cluster )
+{
+	ASSERT( cluster != NULL );
+    ASSERT( ( cluster->type & CT_TYPEMASK ) == CT_PHOTON_SPHERE );
+    
+    ShipObject *shippo = (ShipObject *) cluster->baseobject;
+        
+    float part_prf = ( cluster->max_loading_time / cluster->maxnumel );
+	Vertex3 old_center;
+	geomv_t contraction;
+    
+    if ( !cluster->firing ) {
+        
+        // determine maximum remaining loading time
+        int working_time = cluster->max_loading_time - cluster->alive;
+        
+        // determine actual loading time
+        if ( working_time > TheSimulator->GetThisFrameRefFrames() ) {
+            working_time = TheSimulator->GetThisFrameRefFrames();
+        }
+        cluster->alive += working_time;
+        
+        dword energy_consumption = shippo->CurEnergyFrac +
+        ( working_time * PHOTON_ENERGY_CONSUMPTION );
+        G_Player*  pPlayer = TheGame->GetPlayer( GetObjectOwner( shippo ) );
+        
+        // check if enough energy to build
+        if ( (dword)shippo->CurEnergy < ( MIN_PHOTON_ENERGY + energy_consumption >> 16 ) ) {
+            cluster->alive = (int)(cluster->alive -( working_time - ( shippo->CurEnergy - MIN_PHOTON_ENERGY ) /
+                                                    FIXED_TO_FLOAT( PHOTON_ENERGY_CONSUMPTION ) ));
+            shippo->CurEnergy = MIN_PHOTON_ENERGY - 1;
+            pPlayer->_WFX_DeactivatePhoton();
+        } else {
+            shippo->CurEnergyFrac = ( energy_consumption & 0xffff );
+            shippo->CurEnergy    -= ( energy_consumption >> 16 );
+        }
+        
+        // calculate number of visible particles
+        if ( ( cluster->alive < cluster->max_loading_time ) ) {
+            cluster->numel = (int)( cluster->alive / part_prf );
+            if ( cluster->numel == 0 ) {
+                // at least one particle must be visible
+                cluster->numel = 1;
+            }
+        }
+        else {
+            cluster->numel = cluster->maxnumel;
+            
+            //NOTE:
+            // CurScreenRefFrames get added some lines below anyway,
+            // so we must not add them here
+            cluster->cur_contraction_time -= working_time;
+            
+            pPlayer->_WFX_DeactivatePhoton();
+        }
+    }
+    
+    if ( cluster->firing ) {
+        
+        // increase counter
+        cluster->cur_contraction_time += TheSimulator->GetThisFrameRefFrames();
+        
+        // create linear particles
+        
+        // number of particles in full load
+        int single_load = ( cluster->maxnumel / cluster->numloads );
+        int old_numel = cluster->numel;
+        
+        // number of full loads to be created
+        int numloads = ( cluster->cur_contraction_time / cluster->contraction_time );
+        // minimize on full loads available
+        if ( numloads > ( old_numel / single_load ) ) {
+            numloads = ( old_numel / single_load );
+        }
+        
+        // set particle properties
+   
+        int color     = PHOTON_COLOR;
+        float ref_z = photon_ref_z;
+        int sizebound = PRT_NO_SIZEBOUND;
+        int lifetime  = shippo->PhotonLifeTime;
+        int playerid  = GetObjectOwner( shippo );
+        
+        pextinfo_s extinfo;
+
+        /*
+        // fetch pdef
+        static int pdefid = -1;
+        pdef_s *pdef = ( pdefid != -1 ) ?
+        PRT_AcquireParticleDefinitionById( pdefid ) :
+        PRT_AcquireParticleDefinition( "photon1", &pdefid );
+        
+        // create extinfo
+        pextinfo_s extinfo;
+       // PRT_InitParticleExtInfo( &extinfo, pdef, NULL, NULL );
+        */
+        // set speed and direction vector
+        Vector3 dirvec;
+        fixed_t speed = shippo->PhotonSpeed + shippo->CurSpeed;
+        DirVctMUL( shippo->ObjPosition, FIXED_TO_GEOMV( speed ), &dirvec );
+        
+        // radius of load
+        geomv_t radius = shippo->BoundingSphere - GEOMV_MUL( cluster->contraction_speed, cluster->contraction_time );
+        
+        fixed_t timefrm;
+        fixed_t timepos;
+        Vertex3 object_space;
+		int cur_load = 0;
+        
+        // create full loads
+        for ( cur_load = 0; cur_load < numloads; cur_load++ ) {
+			timefrm = cluster->cur_contraction_time - ( ( cur_load + 1 ) * cluster->contraction_time );
+			timepos = timefrm * shippo->PhotonSpeed;
+            
+			// create one full frame set back because the current frame will
+			// be added by the linear particle animation code in the same frame
+			timepos -= speed * TheSimulator->GetThisFrameRefFrames();
+            
+            for ( int i = 0 ; i < single_load; i++ ) {
+                CalcSphereParticlePosition( object_space, radius, SAT_SPHERETYPE_NORMAL );
+                object_space.Z += FIXED_TO_GEOMV( 0x10000 * cluster->contraction_time )
+                + FIXED_TO_GEOMV( timepos );
+                
+                Vertex3 world_space;
+                MtxVctMUL( shippo->ObjPosition, &object_space, &world_space );
+                
+                particle_s particle;
+                PRT_InitParticle( particle, color, sizebound,
+                                 ref_z, &world_space, &dirvec,
+                                 lifetime, playerid, &extinfo );
+                particle.flags |= PARTICLE_COLLISION;
+                particle.flags |= PARTICLE_IS_PHOTON;
+                PRT_CreateLinearParticle( particle );
+            }
+        }
+     
+        // check if last load should be created
+        if ( ( cluster->cur_contraction_time / cluster->contraction_time ) > ( old_numel / single_load ) ) {
+			timefrm = cluster->cur_contraction_time - ( ( cur_load + 1 ) * cluster->contraction_time );
+			timepos = timefrm * shippo->PhotonSpeed;
+            
+			// create one full frame set back because the current frame will
+			// be added by the linear particle animation code in the same frame
+			timepos -= speed * TheSimulator->GetThisFrameRefFrames();
+            
+            for ( int i = 0 ; i < ( old_numel % single_load ); i++ ) {
+                CalcSphereParticlePosition( object_space, radius, SAT_SPHERETYPE_NORMAL );
+                object_space.Z += FIXED_TO_GEOMV( 0x10000 * cluster->contraction_time )
+                + FIXED_TO_GEOMV( timepos );
+                
+                Vertex3 world_space;
+                MtxVctMUL( shippo->ObjPosition, &object_space, &world_space );
+                
+                particle_s particle;
+                PRT_InitParticle( particle, color, sizebound,
+                                 ref_z, &world_space, &dirvec,
+                                 lifetime, playerid, &extinfo );
+                particle.flags |= PARTICLE_COLLISION;
+                particle.flags |= PARTICLE_IS_PHOTON;
+                PRT_CreateLinearParticle( particle );
+            }
+            
+        }
+        
+        // calculate remaining visible sphere particles
+        cluster->numel -= ( cluster->cur_contraction_time / cluster->contraction_time ) * single_load;
+        if ( cluster->numel < 0 ) {
+            cluster->numel = 0;
+        }
+        
+        int next_numel = cluster->numel - single_load;
+        if ( next_numel < 0 ) {
+            next_numel = 0;
+        }
+        
+        if ( cluster->numel == 0 ) {
+            PRT_DeleteCluster(cluster);
+        }
+        else {
+            // contract and rotate appropriate amount of particles
+            
+            // set old and new center values
+            old_center.X = cluster->center.X;
+            old_center.Y = cluster->center.Y;
+            old_center.Z = ( cluster->cur_contraction_time / cluster->contraction_time ) ? 0 : cluster->center.Z;
+            cluster->center.Z = FIXED_TO_GEOMV( 0x10000
+                                               * ( cluster->cur_contraction_time % cluster->contraction_time ) );
+            
+            contraction = ( cluster->cur_contraction_time < cluster->contraction_time )
+            ? ( cluster->contraction_speed * TheSimulator->GetThisFrameRefFrames() )
+            : ( cluster->contraction_speed * ( cluster->cur_contraction_time % cluster->contraction_time ) );
+            
+            bams_t pitch = cluster->pitch * TheSimulator->GetThisFrameRefFrames();
+            bams_t yaw   = cluster->yaw   * TheSimulator->GetThisFrameRefFrames();
+            bams_t roll  = cluster->roll  * TheSimulator->GetThisFrameRefFrames();
+            int pid = 0;
+            for ( pid = ( cluster->numel - 1 ); pid >= next_numel; pid-- ) {
+                
+                cluster->rep[ pid ].position.X -= old_center.X;
+                cluster->rep[ pid ].position.Y -= old_center.Y;
+                cluster->rep[ pid ].position.Z -= old_center.Z;
+                
+                //FIXME ?:
+                // particles may not be contained in
+                // ship-bounding-sphere any more
+                CalcSphereParticleRotation( cluster->rep[ pid ].position,
+                                           pitch, yaw, roll );
+                CalcSphereContraction( cluster->rep[ pid ].position, contraction );
+                
+                // move particles forward
+                cluster->rep[ pid ].position.X += cluster->center.X;
+                cluster->rep[ pid ].position.Y += cluster->center.Y;
+                cluster->rep[ pid ].position.Z += cluster->center.Z;
+            }
+            for ( pid = next_numel - 1; pid >= 0; pid-- ) {
+                CalcSphereParticleRotation( cluster->rep[ pid ].position,
+                                           pitch, yaw, roll );
+            }
+            // update cluster radius ?
+            cluster->bdsphere -= contraction;
+        }
+        
+        cluster->cur_contraction_time %= cluster->contraction_time;
+    }
+    else {
+        bams_t pitch = cluster->pitch * TheSimulator->GetThisFrameRefFrames();
+        bams_t yaw   = cluster->yaw   * TheSimulator->GetThisFrameRefFrames();
+        bams_t roll  = cluster->roll  * TheSimulator->GetThisFrameRefFrames();
+        
+        for ( int pid = 0; pid < cluster->numel; pid++ ) {
+            CalcSphereParticleRotation( cluster->rep[ pid ].position,
+                                       pitch, yaw, roll );
+        }
+    }
+}
+
+// check if genobject has attached particle clusters of a certain type --------
+//
+objectbase_pcluster_s * E_World::PRT_ObjectHasAttachedClustersOfType( GenObject* genobjpo, int animtype )
+{
+	ASSERT( genobjpo != NULL );
+    
+	objectbase_pcluster_s *scan = genobjpo->AttachedPClusters;
+	for ( ; scan; scan = scan->attachlist ) {
+        
+		ASSERT( scan->type & CT_GENOBJECTRELATIVE_OBJ_MASK );
+        
+		if ( scan->animtype == animtype )
+			return scan;
+	}
+    
+	return NULL;
 }
 
 void LinearParticleCollision( linear_pcluster_s *cluster, int pid ) {

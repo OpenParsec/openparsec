@@ -1008,13 +1008,67 @@ void G_CollDet::LinearParticleCollision( linear_pcluster_s *cluster, int pid )
                     OBJ_ShipHelixDamage( walkships, owner );
                     break;
                  case PARTICLE_IS_PHOTON :
-                    //OBJ_ShipPhotonDamage( walkships, owner );
+                    OBJ_ShipPhotonDamage( walkships, owner );
                     break;
                  default:
                     break;
               }
        }
 }
+
+// inflict damage upon ship hit by photon weapon ------------------------------
+//
+void G_CollDet::OBJ_ShipPhotonDamage( ShipObject *shippo, int owner )
+{
+	ASSERT( shippo != NULL );
+    
+	//NOTE:
+	// this function is used by
+	// PART_ANI::LinearParticleCollision().
+    
+#define PHOTON_HITPOINTS_PER_PARTICLE 3
+    
+	// no damage at all if megashield active
+	if ( shippo->MegaShieldAbsorption > 0 )
+		return;
+    if (shippo->ExplosionCount == 0 ) {
+        
+		shippo->CurDamage += PHOTON_HITPOINTS_PER_PARTICLE;
+		if ( shippo->CurDamage > shippo->MaxDamage ) {
+            // needed for explosions caused by particles
+            shippo->DelayExplosion = 1;
+            
+            int nClientID_Attacker = owner;
+            int nClientID_Downed   = GetOwnerFromHostOjbNumber( shippo->HostObjNumber );
+            
+            // create the extras this client left
+            TheGameExtraManager->OBJ_CreateShipExtras( shippo );
+            
+            E_SimPlayerInfo* pSimPlayerInfo = TheSimulator->GetSimPlayerInfo( nClientID_Downed );
+            
+            // maintain stats
+            TheGame->RecordKill ( nClientID_Attacker );
+            TheGame->RecordDeath( nClientID_Downed, nClientID_Attacker );
+            
+            // fill rudimentary RE
+            RE_PlayerStatus ps;
+            memset( &ps, 0, sizeof ( RE_PlayerStatus ) );
+            ps.player_status	= PLAYER_CONNECTED;
+            ps.senderid         = nClientID_Downed;
+            ps.params[ 0 ]		= SHIP_DOWNED;
+            pSimPlayerInfo->PerformUnjoin( &ps );
+            
+            // ignore joins from client, until he himself sent an unjoin
+            //FIXME: redesign this !!
+            pSimPlayerInfo->IgnoreJoinUntilUnjoinFromClient();
+            
+            // force a client resync of the downed client
+            TheSimulator->GetSimClientState( nClientID_Downed )->SetClientResync();
+            MSGOUT( "%s was mowed down by %s's Photon Cannon", TheConnManager->GetClientName( nClientID_Downed ),TheConnManager->GetClientName( nClientID_Attacker ) );
+        }
+	}
+}
+
 
 // check if ship entered energy field -----------------------------------------
 //

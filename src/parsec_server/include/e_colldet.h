@@ -41,7 +41,7 @@ protected:
     void _CollisionResponse_MineShip( Mine1Obj *curmine );
     void OBJ_ShipHelixDamage( ShipObject *shippo, int owner );
     void OBJ_ShipLightningDamage( ShipObject *shippo, int owner );
-
+    void OBJ_ShipPhotonDamage( ShipObject *shippo, int owner );
     
 	G_CollDet()	{}
 	~G_CollDet()	{}
