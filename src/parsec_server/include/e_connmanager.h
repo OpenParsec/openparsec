@@ -163,18 +163,18 @@ public:
 		CONN_CLIENT_BANNED       = 2,
 		CONN_SERVER_FULL		 = 3,
 		CONN_NAME_TAKEN			 = 4,
-		CONN_OK					 = 5,
+		CONN_OK					 = 5
 	};
 
 	enum DisconnResults {
 		DISC_NOT_CONNECTED		 = 0,
-		DISC_OK					 = 1,
+		DISC_OK					 = 1
 	};
 
 	enum NameChangeResults {
 		NAMECHANGE_NOT_CONNECTED = 0,
 		NAMECHANGE_ALREADY_TAKEN = 1,
-		NAMECHANGE_OK            = 2,
+		NAMECHANGE_OK            = 2
 	};
 	
 	// check whether the client connection is valid

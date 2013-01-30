@@ -61,10 +61,6 @@
 #include "vid_init.h"
 
 
-// flags
-//#define WAIT_AFTER_NETREJECTION
-
-
 // maximum id of universe to try if entry has been refused --------------------
 //
 #define MAX_UNIVERSE				2
@@ -204,12 +200,6 @@ int NET_AutomaticConnect()
 	// no free slot found in any universe?
 	if ( MyUniverse > MAX_UNIVERSE ) {
 
-#ifdef WAIT_AFTER_NETREJECTION
-
-		if ( TextModeActive ) {
-			WaitForKeypress();
-		}
-#endif
 		if ( TextModeActive ) {
 			VID_InitMode();
 		}

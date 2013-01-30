@@ -78,7 +78,7 @@ enum {
 	EXTRAINDX_INVULNERABILITY,		// extra classindex 14: invulnerability
 	EXTRAINDX_MINE,					// extra classindex 15: invulnerability
 	EXTRAINDX_EMPUPGRADE1,			// extra classindex 16: emp upgrade 1
-	EXTRAINDX_EMPUPGRADE2,			// extra classindex 17: emp upgrade 2
+	EXTRAINDX_EMPUPGRADE2			// extra classindex 17: emp upgrade 2
 };
 
 
@@ -97,7 +97,7 @@ enum {
 	LASER_UPGRADE_1_DEVICE,			// 8
 	LASER_UPGRADE_2_DEVICE,			// 9
 	EMP_UPGRADE_1_DEVICE,			// 10
-	EMP_UPGRADE_2_DEVICE,			// 11
+	EMP_UPGRADE_2_DEVICE			// 11
 };
 
 

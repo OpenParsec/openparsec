@@ -51,7 +51,7 @@ enum {
 
 	TEXINFOFLAG_NONE			= 0x00000000,
 	TEXINFOFLAG_USERPALETTE		= 0x00000001,	// don't touch texture palette
-	TEXINFOFLAG_PACKWASDISABLED	= 0x00000100,	// data was not read from pack
+	TEXINFOFLAG_PACKWASDISABLED	= 0x00000100	// data was not read from pack
 };
 
 

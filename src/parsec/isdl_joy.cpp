@@ -236,7 +236,7 @@ void ILm_HandleAssignableButtonKeys( dword joy_button_changed )
 #ifdef JOY_AKC_SUPPORT
 
 	// additional key mappings table
-	keyaddition_s *kap = &KeyAdditional->table;
+	keyaddition_s *kap = KeyAdditional->table;
 	ASSERT( KeyAdditional->size >= 0 );
 	ASSERT( KeyAdditional->size <= KEY_ADDITIONS_MAX );
 
@@ -399,19 +399,16 @@ void ISDL_JoyCollect()
 	}
 
 	// Read buttons
-	keyaddition_s *kap = &KeyAdditional->table;
+	keyaddition_s *kap = KeyAdditional->table;
 	ASSERT( KeyAdditional->size >= 0 );
 	ASSERT( KeyAdditional->size <= KEY_ADDITIONS_MAX );
-	for (int button = 0; button < isdl_NumButtons; button++)
-	{
+	for (int button = 0; button < isdl_NumButtons; button++) {
 		JoyState.Buttons[button] = SDL_JoystickGetButton(isdl_joyHandle, button);
+		
 #ifdef JOY_AKC_SUPPORT
-        if ( _OldJoyState.Buttons[button] != JoyState.Buttons[button])
-        {
-            for (int aid = 1; aid < KeyAdditional->size; aid++)
-            {
-                if (kap[aid].code == ((dword)button | (dword)AKC_JOY_FLAG))
-                {
+        if ( _OldJoyState.Buttons[button] != JoyState.Buttons[button]) {
+            for (int aid = 1; aid < KeyAdditional->size; aid++) {
+                if (kap[aid].code == ((dword)button | (dword)AKC_JOY_FLAG)) {
                     kap[aid].state = (JoyState.Buttons[button] ? TRUE : FALSE);
                 }
             }

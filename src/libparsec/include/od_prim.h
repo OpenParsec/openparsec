@@ -228,7 +228,7 @@ enum {
 	ITERVTXFLAG_LAYERS_SLM	= 0x00000001,	// sublayers in last IterLayer - 1
 	ITERVTXFLAG_LAYERS_MASK	= 0x0000000f,
 
-	ITERVTXFLAG_RESTART		= 0x00000100,	// restart strip (line/triangle)
+	ITERVTXFLAG_RESTART		= 0x00000100	// restart strip (line/triangle)
 };
 
 
@@ -345,7 +345,7 @@ enum itertype_t {
 	iter_premulblend		= 0x0400, // blend with premultiplied alpha
 	iter_additiveblend		= 0x0500, // additively blend with destination
 	iter_compose_mask		= 0xff00,
-	iter_compose_shift		= 8,
+	iter_compose_shift		= 8
 };
 
 
@@ -379,7 +379,7 @@ enum raststate_t {
 
 	rast_default		= 0x0000,	// nozbuffer/texwrap/chromakeyoff
 	rast_nomask			= 0x0000,	// don't mask anything
-	rast_maskall		= 0xffff,	// mask everything
+	rast_maskall		= 0xffff	// mask everything
 };
 
 
@@ -391,7 +391,7 @@ enum texcombstate_t {
 	texcomb_trifilter  	= 0x0001,	// trilinearly filtered mip mapping
 	texcomb_modulate   	= 0x0002,	// modulate texture with another texture
 	texcomb_specularadd	= 0x0003,	// add texture to another texture
-	texcomb_detail		= 0x0004,	// blend textures of two detail levels
+	texcomb_detail		= 0x0004	// blend textures of two detail levels
 };
 
 
@@ -419,7 +419,7 @@ enum {
 	ITERFLAG_LS_ANTIALIASED	= 0x1000,	// line style: antialiased
 	ITERFLAG_LS_THICK		= 0x2000,	// line style: thick
 	ITERFLAG_LS_STIPPLED	= 0x4000,	// line style: stippled
-	ITERFLAG_LS_CLOSE_STRIP	= 0x8000,	// line style: line-loop
+	ITERFLAG_LS_CLOSE_STRIP	= 0x8000	// line style: line-loop
 };
 
 
@@ -610,7 +610,7 @@ enum {
 
 	ITERARRAY_USE_COLOR			= 0x0001,
 	ITERARRAY_USE_TEXTURE		= 0x0002,
-	ITERARRAY_GLOBAL_TEXTURE	= 0x0100,
+	ITERARRAY_GLOBAL_TEXTURE	= 0x0100
 };
 
 

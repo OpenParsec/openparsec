@@ -2021,7 +2021,7 @@ void AcSimulateKeyPress()
 			((dword*)key_replay_map)[ keynum ] = 1;
 
 			// explicitly check for object camera toggling
-			if ( offsetof( keyfunc_s, key_ToggleObjCamera ) == keynum ) {
+			if ( offsetof( keyfunc_s, key_ToggleObjCamera ) / sizeof( DepressedKeys->key_Escape ) == keynum ) {
 				ReplayObjCamActive = !ReplayObjCamActive;
 			}
 

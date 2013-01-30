@@ -76,7 +76,7 @@ static char invalid_spacing[]		= "invalid font spacing.";
 enum {
 
 	IMAGE_INVERT_PIXELS	= 0x00000001,
-	IMAGE_COMPRESS_DATA	= 0x00000002,
+	IMAGE_COMPRESS_DATA	= 0x00000002
 };
 
 static flag_map_s loaderparams_flag_map[] = {
@@ -115,7 +115,7 @@ enum {
 	KEY_PARA_RETILE_WIDTH,
 	KEY_PARA_RETILE_HEIGHT,
 	KEY_PARA_SPACING,
-	KEY_PARA_FLAGS,
+	KEY_PARA_FLAGS
 };
 
 

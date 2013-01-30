@@ -523,8 +523,7 @@ GenObject *FetchSpecificHostObject( dword hostobjno, GenObject *listpo )
 	//		 object.
 
 	GenObject *scan = listpo->NextObj;
-	while ( ( ( scan != NULL ) && ( scan->HostObjNumber != hostobjno ) ) ||
-			( scan == MyShip )  )
+	while ( ( ( scan != NULL ) && ( scan->HostObjNumber != hostobjno ) ) || ( scan == MyShip )  )
 		scan = scan->NextObj;
 
 	ASSERT( scan != MyShip );

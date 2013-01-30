@@ -51,6 +51,7 @@
 #include "con_aux.h"
 #include "e_supp.h"
 #include "h_cockpt.h"
+#include "m_button.h"
 
 
 
@@ -324,7 +325,7 @@ void MaintainMessages()
 
 	int ypos = 0;
 	if ( InFloatingMenu ) {
-		ypos = 330;
+		ypos = 84 * NUM_MENU_ITEMS;
 	} else {
 		ypos = ( AUX_DRAW_COCKPIT && !ObjCameraActive &&
 				 ( AUX_DRAW_COCKPIT_ICONBAR || AUX_DRAW_COCKPIT_ICONBAR_BACKGROUND ) ) ?

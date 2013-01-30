@@ -888,7 +888,7 @@ enum {
 
 	KEY_COMPILE_TITLE,
 	KEY_COMPILE_DESC,
-	KEY_COMPILE_AUTHOR,
+	KEY_COMPILE_AUTHOR
 };
 
 
@@ -1329,15 +1329,38 @@ void FetchHistoryEntry( int entryid )
 }
 
 
-// check input for console window ---------------------------------------------
+// handle text input in console window (ASCII only for now) -------------------
 //
-void CON_HandleInput(keypress_s &kinfo)
+void CON_HandleTextInput(const char character)
 {
-	if (!kinfo.pressed)
+	if (await_keypress && com_cont_func)
 		return;
 
-	dword key = kinfo.key;
+	// don't write console open/close key
+	if (character == '`' || character == '~')
+		return;
 
+	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
+
+	// typeable characters
+	if ( ( character & CON_ASCII_MASK ) && (character <= CON_ASCII_MASK) && (cursor_x < edit_max_x ) ) {
+		if ( insert_mode && ( cursor_x < curlinelen ) ) {
+			if ( curlinelen < edit_max_x ) {
+				strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x );
+				strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1, paste_str );
+				con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
+			}
+		} else {
+			con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
+		}
+	}
+}
+
+
+// handle keypresses in console window ----------------------------------------
+//
+void CON_HandleKeyPress(dword key)
+{
 	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
 
 	if ( await_keypress && com_cont_func ) {
@@ -1540,20 +1563,6 @@ void CON_HandleInput(keypress_s &kinfo)
 			}
 			break;
 		}
-
-	} else {
-		// typeable characters
-		if ( ( kinfo.unicode & CON_ASCII_MASK ) && (kinfo.unicode <= CON_ASCII_MASK) && (cursor_x < edit_max_x ) ) {
-			if ( insert_mode && ( cursor_x < curlinelen ) ) {
-				if ( curlinelen < edit_max_x ) {
-					strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x );
-					strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1, paste_str );
-					con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) kinfo.unicode;
-				}
-			} else {
-				con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) kinfo.unicode;
-			}
-		}
 	}
 
 	if (key == CKC_ENTER || key == CKC_ESCAPE) {
@@ -1563,10 +1572,6 @@ void CON_HandleInput(keypress_s &kinfo)
 	}
 }
 
-
-// type for writestring function pointer --------------------------------------
-//
-typedef void (*WSFP)( ... );
 
 //NOTE:
 // this declaration is in global scope because of the extern "C".
@@ -1605,17 +1610,11 @@ int QuicksayConsole()
 		edit_ofs_x = cursor_x - ConsoleEnterLength;
 	}
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
 	D_SetWStrContext( CharsetInfo[ HUD_CHARSETNO ].charsetpointer,
 					  CharsetInfo[ HUD_CHARSETNO ].geompointer,
 					  NULL,
 					  CharsetInfo[ HUD_CHARSETNO ].width,
 					  CharsetInfo[ HUD_CHARSETNO ].height );
-
-	// write text translucent only for color depths below 32 bit per pixel
-	WSFP wsfp = translucent ? (WSFP) &D_WriteTrString : (WSFP) &D_WriteString;
 
 	// determine chars to draw
 	if ( edit_ofs_x == 0 ) {
@@ -1637,7 +1636,7 @@ int QuicksayConsole()
 	D_DrawTrRect( xpos - 3, ypos - 2, barwidth, barheight, TRTAB_PANELBACK );
 
 	// draw line contents
-	wsfp( draw_line, xpos, ypos, TRTAB_PANELTEXT );
+	D_WriteTrString( draw_line, xpos, ypos, TRTAB_PANELTEXT );
 
 	// maintain blinking of cursor if not done by main console
 	if ( ConsoleSliding == 0 ) {
@@ -1652,7 +1651,7 @@ int QuicksayConsole()
 		xpos += console_frameofs_x;
 
 		char *cursorstr = insert_mode ? insert_cursor : overwrite_cursor;
-		wsfp( cursorstr, xpos, ypos, TRTAB_PANELTEXT );
+		D_WriteTrString( cursorstr, xpos, ypos, TRTAB_PANELTEXT );
 	}
 
 	// allow caller to check for disabling
@@ -1708,12 +1707,10 @@ void DrawConsole( int numlines )
 					  CharsetInfo[ HUD_CHARSETNO ].width,
 					  CharsetInfo[ HUD_CHARSETNO ].height );
 
-	// write text translucent only for color depths below 32 bit per pixel
-	WSFP wsfp = translucent ? (WSFP) &D_WriteTrString : (WSFP) &D_WriteString;
 
 	// display caption if console wide enough
 	if ( (dword)ConsoleEnterLength >= strlen( console_caption ) - PROMPT_SIZE - 1 ) {
-		wsfp( console_caption,
+		D_WriteTrString( console_caption,
 			  ConsoleTextX * chrwidth + console_frameofs_x,
 			  ConsoleTextY * linedist + console_frameofs_y,
 			  TRTAB_PANELTEXT );
@@ -1761,7 +1758,7 @@ void DrawConsole( int numlines )
 		memcpy( draw_line, con_lines[ lineno ], ConsoleEnterLength + PROMPT_SIZE );
 		draw_line[ ConsoleEnterLength + PROMPT_SIZE ] = 0;
 
-		wsfp( draw_line, drawx, drawy, TRTAB_PANELTEXT );
+		D_WriteTrString( draw_line, drawx, drawy, TRTAB_PANELTEXT );
 
 		drawy += linedist;
 		lineno = ( lineno + 1 ) & NUM_CONSOLE_LINES_MASK;
@@ -1791,7 +1788,7 @@ void DrawConsole( int numlines )
 
 #endif // FORCE_CONSOLE_LOGIN
 
-	wsfp( draw_line, drawx, drawy, TRTAB_PANELTEXT );
+	D_WriteTrString( draw_line, drawx, drawy, TRTAB_PANELTEXT );
 
 	// cursor only if no back-viewing
 	if ( con_back_view == 0 ) {
@@ -1810,7 +1807,7 @@ void DrawConsole( int numlines )
 			drawx = console_frameofs_x + drawx * chrwidth;
 			drawy = console_frameofs_y + drawy * linedist;
 
-			wsfp( cursorstr, drawx, drawy, TRTAB_PANELTEXT );
+			D_WriteTrString( cursorstr, drawx, drawy, TRTAB_PANELTEXT );
 		}
 	}
 }

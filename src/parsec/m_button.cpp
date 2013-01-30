@@ -66,11 +66,6 @@ struct menuitem_s {
 };
 
 
-// number of items comprising every menu --------------------------------------
-//
-#define NUM_MENU_ITEMS		5
-
-
 // menu definition ------------------------------------------------------------
 //
 #ifdef CLIENT_BUILD_SELF_RUNNING_DEMO

@@ -47,6 +47,7 @@
 
 // opengl headers
 #include "r_gl.h"
+#include "ro_api.h"
 
 // local module header
 #include "vsdl_ogl.h"
@@ -99,7 +100,7 @@ enum {
 	GL_FLAG_SWAPCTRL_GLFINISH	= 2,	// glFinish() prior to SwapBuffers()
 
 	GL_FLAG_BPPCTRL_OFF			= 0,	// never switch colordepth
-	GL_FLAG_BPPCTRL_ON			= 1,	// colordepth switching allowed
+	GL_FLAG_BPPCTRL_ON			= 1		// colordepth switching allowed
 };
 
 
@@ -108,8 +109,6 @@ enum {
 int	gl_flag_swapctrl	= GL_FLAG_SWAPCTRL_NONE;
 int gl_flag_bppctrl		= GL_FLAG_BPPCTRL_ON;
 
-
-//static Ptr 				oldscreenstate;
 
 int						oldpixdepth		= 0;
 
@@ -599,6 +598,9 @@ void SDL_RCSetup()
 	} else {
 		VidInfo_NumTextureUnits = 1;
 	}
+
+	// initialize GL state tracking
+	RO_InitializeState();
 }
 
 
@@ -682,12 +684,7 @@ int VSDL_InitOGLMode()
 	    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,  	    8);
 	    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,   	    8);
 	    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,  	    0);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,	    8);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,	8);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,	    8);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,	0);
 	    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,  	    24);
-	    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,		    32);
 
 	} else if ( sdl_win_bpp == 16 ) {
 	
@@ -695,12 +692,7 @@ int VSDL_InitOGLMode()
 	    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,  	    6);
 	    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,   	    5);
 	    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,  	    0);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,	    5);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,	6);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE,	    5);
-	    SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,	0);
 	    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,  	    16);
-	    SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,		    16);
 
 	} else {
 	
@@ -709,7 +701,7 @@ int VSDL_InitOGLMode()
 	}
 	
 	// set vertical synchronization (set further down in SDL2)
-#if !SDL_VERSION_ATLEAST(2,0,0)
+#if !(SDL_VERSION_ATLEAST(2,0,0))
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, FlipSynched ? 1 : 0);
 #endif
 	
@@ -732,35 +724,64 @@ int VSDL_InitOGLMode()
 #if SDL_VERSION_ATLEAST(2,0,0)
 
 	if (curwindow != NULL) {
-		SDL_DestroyWindow(curwindow);
-		curwindow = NULL;
-	}
-	
-	curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, sdl_win_width, sdl_win_height, mode_flags);
-	
-	if (curwindow == NULL) {
-		MSGOUT("Could not create SDL window: %s\n", SDL_GetError());
-		return FALSE;
-	}
+
+		if (fullscreen_mode) {
+			
+			SDL_DisplayMode mode;
+			
+			mode.format = SDL_PIXELFORMAT_RGB888; // is this necessary?
+			mode.refresh_rate = 0;
+			mode.w = sdl_win_width;
+			mode.h = sdl_win_height;
+
+			// set fullscreen mode
+			if (SDL_SetWindowDisplayMode(curwindow, &mode) < 0) {
+				MSGOUT("Could not set display mode: %s\n", SDL_GetError());
+				return FALSE;
+			}
+
+			// if we were previously in fullscreen then we need to force the mode to properly set,
+			// by quickly toggling fullscreen
+			if ((SDL_SetWindowFullscreen(curwindow, SDL_FALSE) < 0) || (SDL_SetWindowFullscreen(curwindow, SDL_TRUE) < 0)) {
+				MSGOUT("Could not make window fullscreen: %s\n", SDL_GetError());
+			}
+			
+		} else {
+			// windowed mode
+			SDL_SetWindowFullscreen(curwindow, SDL_FALSE);
+			SDL_SetWindowSize(curwindow, sdl_win_width, sdl_win_height);
+			SDL_SetWindowPosition(curwindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		}
 		
-	if (curcontext != NULL) {
-		if (SDL_GL_MakeCurrent(curwindow, curcontext) < 0) {
-			MSGOUT("Could not set OpenGL context to the current window: %s\n", SDL_GetError());
+	} else {
+
+		// window doesn't exist, so we have to make a new one
+		curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, sdl_win_width, sdl_win_height, mode_flags);
+
+		if (curwindow == NULL) {
+			MSGOUT("Could not create SDL window: %s\n", SDL_GetError());
 			return FALSE;
 		}
-	} else {
+	}
+
+	// TODO: check bpp and MSAA, and remake context if they've changed
+
+	if (curcontext == NULL) {
+		
 		curcontext = SDL_GL_CreateContext(curwindow);
 		if (curcontext == NULL) {
 			MSGOUT("Could not create OpenGL context: %s\n", SDL_GetError());
 			return FALSE;
 		}
+	} else {
+		SDL_GL_MakeCurrent(curwindow, curcontext);
 	}
 	
 	
 	// set vertical synchronization
 	SDL_GL_SetSwapInterval(FlipSynched ? 1 : 0);
 	
-	SDL_RaiseWindow(curwindow);
+	SDL_ShowWindow(curwindow);
 	
 #else
 	
@@ -805,7 +826,7 @@ void VSDL_ShutDownOGL()
 	
 #if SDL_VERSION_ATLEAST(2,0,0)
 	
-	if (curwindow != NULL) {
+	/*if (curwindow != NULL) {
 		SDL_DestroyWindow(curwindow);
 		curwindow = NULL;
 	}
@@ -813,7 +834,7 @@ void VSDL_ShutDownOGL()
 	if (curcontext != NULL) {
 		SDL_GL_DeleteContext(curcontext);
 		curcontext = NULL;
-	}
+	}*/
 	
 #endif
 

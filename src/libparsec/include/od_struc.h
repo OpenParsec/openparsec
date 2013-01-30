@@ -111,7 +111,7 @@ enum {
 	COLANIM_SOURCENOCOMBINE		= 0x0000,	// no source color combination
 	COLANIM_SOURCEADD			= 0x0001,	// add source colors
 	COLANIM_SOURCEMUL			= 0x0002,	// multiply source colors
-	COLANIM_SOURCE_MASK			= 0x0003,
+	COLANIM_SOURCE_MASK			= 0x0003
 };
 
 
@@ -136,7 +136,7 @@ enum {
 	FACE_ANIM_BASEIGNORE		= 0x0000,	// ignore base (face) color
 	FACE_ANIM_BASEADD			= 0x0001,	// add anim to base color
 	FACE_ANIM_BASEMUL			= 0x0002,	// multiply base color by anim
-	FACE_ANIM_BASE_MASK			= 0x0003,
+	FACE_ANIM_BASE_MASK			= 0x0003
 };
 
 
@@ -175,7 +175,7 @@ enum {
 	FACE_EXT_ANIMATECOLORS		= 0x0004,	// enable color animation
 	FACE_EXT_ONESHOT			= 0x0010,	// one-shot animation
 	FACE_EXT_ONESHOTRESTORE		= 0x0020,	// restore previous shader
-	FACE_EXT_DISABLED			= 0x8000,	// temporarily disabled
+	FACE_EXT_DISABLED			= 0x8000	// temporarily disabled
 };
 
 
@@ -209,7 +209,7 @@ enum {
 	FACE_SHADING_DRAW_LAST		= 0x0800,	// draw last (overlay)
 
 	FACE_SHADING_NOBACKCULLING	= 0x1000,	// turn off backface culling
-	FACE_SHADING_BACK_FIRST		= 0x2000,	// draw backfaces, then frontfaces
+	FACE_SHADING_BACK_FIRST		= 0x2000	// draw backfaces, then frontfaces
 };
 
 
@@ -237,7 +237,7 @@ enum {
 
 	POLYFLAG_DEFAULT		= 0x0000,	// vertex indexes only
 	POLYFLAG_CORNERCOLORS	= 0x0001,	// RGBA color array follows
-	POLYFLAG_WEDGEINDEXES	= 0x0002,	// wedge index array follows
+	POLYFLAG_WEDGEINDEXES	= 0x0002	// wedge index array follows
 };
 
 
@@ -310,7 +310,7 @@ struct CustomObject;
 //
 enum {
 
-	WEDGEFLAG_ENABLE_TEXCOORDS	= 0x0001,
+	WEDGEFLAG_ENABLE_TEXCOORDS	= 0x0001
 };
 
 

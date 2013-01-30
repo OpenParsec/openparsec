@@ -14,7 +14,7 @@ enum {
 	COMTYPE_REFERENCE,		// 2
 	COMTYPE_STANDARD,		// 3
 	COMTYPE_RECORDING,		// 4
-	COMTYPE_MODIFICATION,	// 5
+	COMTYPE_MODIFICATION	// 5
 };
 
 // maximum valid length of command (script) name (filesystem dependent)

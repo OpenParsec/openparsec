@@ -867,7 +867,7 @@ enum {
 	KEY_BKGN_ADD_SAMPLE,
 	KEY_BKGN_ADD_TRACK,
 	KEY_BKGN_ADD_STREAM,
-	KEY_BKGN_ADD_SILENCE,
+	KEY_BKGN_ADD_SILENCE
 };
 
 
@@ -966,7 +966,7 @@ enum {
 
 	KEY_BKGN_RMV_SAMPLE,
 	KEY_BKGN_RMV_TRACK,
-	KEY_BKGN_RMV_ITEM,
+	KEY_BKGN_RMV_ITEM
 };
 
 
@@ -1071,7 +1071,7 @@ static key_value_s bkgn_group_key_value[] = {
 
 enum {
 
-	KEY_BKGN_ITEM,
+	KEY_BKGN_ITEM
 };
 
 

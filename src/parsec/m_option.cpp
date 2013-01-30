@@ -119,7 +119,7 @@ enum {
 
 	OPT_SPACING_NONE   	= 0,
 	OPT_SPACING_NEWLINE	= 1,
-	OPT_SPACING_DIVIDER	= 2,
+	OPT_SPACING_DIVIDER	= 2
 };
 
 static int option_spacing[ NUM_OPTIONS ] = {

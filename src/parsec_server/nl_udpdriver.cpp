@@ -462,7 +462,7 @@ key_value_s netiface_key_value[] = {
 
 enum {
 
-	KEY_NETIFACE_INTERFACE,
+	KEY_NETIFACE_INTERFACE
 };
 
 PRIVATE

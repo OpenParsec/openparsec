@@ -85,7 +85,7 @@ key_value_s cdplay_key_value[] = {
 enum {
 
 	KEY_CDPLAY_FROM,
-	KEY_CDPLAY_TO,
+	KEY_CDPLAY_TO
 };
 
 
@@ -423,7 +423,7 @@ key_value_s sampleplay_key_value[] = {
 enum {
 
 	KEY_SAMPLEPLAY_NAME,
-	KEY_SAMPLEPLAY_ID,
+	KEY_SAMPLEPLAY_ID
 };
 
 

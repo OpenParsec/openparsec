@@ -135,7 +135,8 @@ char*	CON_GetLine();
 void	CON_ListCtdPrompt();
 void	CON_ListEndPrompt();
 
-void	CON_HandleInput(keypress_s &kinfo);
+void	CON_HandleTextInput(const char character);
+void	CON_HandleKeyPress(dword key);
 
 int		QuicksayConsole();
 void	SetQuicksayConsole( int enable );

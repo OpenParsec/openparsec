@@ -488,7 +488,7 @@ char *GetAKCDescription( int num )
 	// assignable key-code (AKC_ code).
 	// (command "listbindings".)
 
-	keyaddition_s *kap = &KeyAdditional->table + num;
+	keyaddition_s *kap = &KeyAdditional->table[num];
 
 	for ( dword i = 0; i < NUM_AKC_CODES; i++ ) {
 		if ( kap->code == (dword)key_com_names[ i ].code ) {
@@ -752,7 +752,7 @@ int CheckKeyMappingBase( char *scan, int echo )
 
 				// search for already existing entry
 				int entryindx = -1;
-				keyaddition_s *kap = &KeyAdditional->table;
+				keyaddition_s *kap = &KeyAdditional->table[0];
 				for ( i = 0; i < (unsigned int)KeyAdditional->size; i++, kap++ ) {
 					if ( kap->code == code ) {
 						entryindx = i;
@@ -915,7 +915,7 @@ void ExecBoundKeyCommands()
 	if ( !await_keypress ) {
 
 		// test all additional keys
-		keyaddition_s *kap = &KeyAdditional->table;
+		keyaddition_s *kap = &KeyAdditional->table[0];
 		for ( int aid = 0; aid < KeyAdditional->size; aid++, kap++ ) {
 
 			// execute command if key pressed

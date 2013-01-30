@@ -411,7 +411,7 @@ enum {
 	KEY_OBJ_SHADER,
 	KEY_OBJ_NORMTH,
 	KEY_OBJ_MAXFANIMS,
-	KEY_OBJ_MAXVANIMS,
+	KEY_OBJ_MAXVANIMS
 };
 
 
@@ -731,7 +731,7 @@ key_value_s texture_key_value[] = {
 enum {
 
 	KEY_TEX_FILE,		// file name
-	KEY_TEX_FORMAT,		// depends on file format (passed through to loader)
+	KEY_TEX_FORMAT		// depends on file format (passed through to loader)
 //	KEY_TEX_WIDTH,
 //	KEY_TEX_HEIGHT,
 //	KEY_TEX_LODMIN,
@@ -932,7 +932,7 @@ enum {
 	KEY_FONT_WIDTH,		// tile width
 	KEY_FONT_HEIGHT,	// tile height
 	KEY_FONT_SPACING,	// spacing to the left and right of each char
-	KEY_FONT_FLAGS,
+	KEY_FONT_FLAGS
 };
 
 
@@ -1114,7 +1114,7 @@ enum {
 
 	KEY_BITMAP_FILE,
 	KEY_BITMAP_WIDTH,
-	KEY_BITMAP_HEIGHT,
+	KEY_BITMAP_HEIGHT
 };
 
 
@@ -1357,7 +1357,7 @@ enum {
 	KEY_SAMPLE_FILE,
 	KEY_SAMPLE_VOLUME,
 	KEY_SAMPLE_STDFREQ,
-	KEY_SAMPLE_STEREO,
+	KEY_SAMPLE_STEREO
 };
 
 
