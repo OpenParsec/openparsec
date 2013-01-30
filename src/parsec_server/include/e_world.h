@@ -177,6 +177,8 @@ public:
 	// correct pointers that have moved after object was instantiated
 	void OBJ_CorrectObjectInstance( GenObject *dstobj, GenObject *srcobj );
 
+	CustomObject *CreateVirtualObject( dword objtypeid, dword dwOwner );
+
 	// create object of class at position with orientation
 	GenObject* CreateObject( int objclass, const Xmatrx startmatrx, dword dwOwner );
 

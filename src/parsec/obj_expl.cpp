@@ -343,9 +343,15 @@ void OBJ_ShipEmpDamage( ShipObject *shippo, int owner, int hitpoints )
 
 		if ( MyShip->CurDamage <= MyShip->MaxDamage ) {
 
+			/* old busted...
 			MyShip->CurDamageFrac += CurScreenRefFrames * hitpoints;
 			MyShip->CurDamage     += MyShip->CurDamageFrac >> 16;
 			MyShip->CurDamageFrac &= 0xffff;
+			*/
+
+			// new hotness
+			MyShip->CurDamage     += hitpoints;
+
 
 			if ( MyShip->CurDamage > MyShip->MaxDamage ) {
 				OBJ_CreateShipExtras( MyShip );
@@ -358,9 +364,14 @@ void OBJ_ShipEmpDamage( ShipObject *shippo, int owner, int hitpoints )
 
 	} else if ( !NetConnected && ( shippo->ExplosionCount == 0 ) ) {
 
+		/* again, old busted...
 		shippo->CurDamageFrac += CurScreenRefFrames * hitpoints;
 		shippo->CurDamage += shippo->CurDamageFrac >> 16;
 		shippo->CurDamageFrac &= 0xffff;
+		*/
+
+		// new hotness
+		shippo->CurDamage += hitpoints;
 
 		if ( shippo->CurDamage > shippo->MaxDamage ) {
 

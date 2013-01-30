@@ -463,6 +463,118 @@ void G_CollDet::_CheckShipLaserCollision()
 	}
 }
 
+// emp collision detection ----------------------------------------------------
+//
+void G_CollDet::_CheckShipEmpCollision()
+{
+	// walk the list of EMP objects
+	ASSERT( TheWorld->m_CustmObjects != NULL );
+
+	CustomObject *precnode  = TheWorld->m_CustmObjects;
+	CustomObject *walkobjs = (CustomObject *)TheWorld->m_CustmObjects->NextObj;
+
+	// walk all lasers
+	while ( walkobjs != NULL ) {
+		if ((walkobjs->ObjectType == emp_type_id[ 0 ]) ||
+			(walkobjs->ObjectType == emp_type_id[ 1 ]) ||
+			(walkobjs->ObjectType == emp_type_id[ 2 ])) {
+
+				Emp *tmpemp = (Emp *)walkobjs;
+				// got an emp object, now let's walk the ship objects
+				// and check for collisions.
+
+				for ( cur_ship = TheWorld->FetchFirstShip(); cur_ship != NULL; ) {
+					// current ship's owner
+					int cur_ship_owner = GetOwnerFromHostOjbNumber( cur_ship->HostObjNumber );
+
+					// get pointer to next ship in list, as the current might get removed upon collision
+					ShipObject* nextship = (ShipObject *) cur_ship->NextObj;
+
+					// cant collide with the owner
+					if(tmpemp->Owner != cur_ship_owner){
+						// do the actual check
+						if(EmpShipCollision(tmpemp, cur_ship)){
+							// HIT!  Record damage and send out packets.
+							_CollisionResponse_EmpShip(tmpemp);
+						}
+					}
+					cur_ship = nextship;
+				}
+		}
+
+		precnode  = walkobjs;
+		walkobjs = (CustomObject *)walkobjs->NextObj;
+	}
+
+
+}
+// ship collided with EMP ---------------------------------------------------
+//
+void G_CollDet::_CollisionResponse_EmpShip( Emp *curemp )
+{
+	ASSERT( curemp != NULL );
+	ASSERT( cur_ship != NULL );
+
+	int hitpoints = curemp->damage;
+
+	if ( ( hitpoints -= cur_ship->MegaShieldAbsorption ) < 0 ) {
+		hitpoints = 0;
+	}
+
+	// apply damage
+	if ( cur_ship->CurDamage <= cur_ship->MaxDamage ) {
+		/* old confusing shit....
+		 *
+		cur_ship->CurDamageFrac += (DEFAULT_REFFRAME_FREQUENCY/6) * hitpoints;
+		cur_ship->CurDamage += cur_ship->CurDamageFrac >> 16;
+		MSGOUT("Doing %d damage to ship", cur_ship->CurDamageFrac >> 16);
+		cur_ship->CurDamageFrac &= 0xffff;
+		*/
+
+		// new less confusing shit...
+		cur_ship->CurDamage += hitpoints;
+	}
+
+	// check whether the ship should explode
+	if ( cur_ship->CurDamage > cur_ship->MaxDamage ) {
+		int nClientID_Attacker = curemp->Owner;
+		int nClientID_Downed   = GetOwnerFromHostOjbNumber( cur_ship->HostObjNumber );
+
+		// create the extras this client left
+		TheGameExtraManager->OBJ_CreateShipExtras( cur_ship );
+
+		E_SimPlayerInfo* pSimPlayerInfo = TheSimulator->GetSimPlayerInfo( nClientID_Downed );
+
+		// maintain stats
+		TheGame->RecordKill ( nClientID_Attacker );
+		TheGame->RecordDeath( nClientID_Downed, nClientID_Attacker );
+
+		// fill rudimentary RE
+		RE_PlayerStatus ps;
+		memset( &ps, 0, sizeof ( RE_PlayerStatus ) );
+		ps.player_status	= PLAYER_CONNECTED;
+		ps.senderid         = nClientID_Downed;
+		ps.params[ 0 ]		= SHIP_DOWNED;
+		pSimPlayerInfo->PerformUnjoin( &ps );
+
+		// ignore joins from client, until he himself sent an unjoin
+		//FIXME: redesign this !!
+		pSimPlayerInfo->IgnoreJoinUntilUnjoinFromClient();
+
+		// force a client resync of the downed client
+		TheSimulator->GetSimClientState( nClientID_Downed )->SetClientResync();
+
+		//FIXME:
+		//cur_ship->pDist->UpdateMODE_REFRESH();
+
+		//FIXME: this should be called GAME_LOGOUT or so to indicate that these messages
+		//       are the most important ones for processing user stats
+		MSGOUT( "%s was shot down by %s's EMP", TheConnManager->GetClientName( nClientID_Downed ), TheConnManager->GetClientName( nClientID_Attacker ) );
+
+	}
+}
+
+
 // ship collided with Missile ---------------------------------------------------
 //
 void G_CollDet::_CollisionResponse_MissileShip( MissileObject *curmissile )
@@ -1079,6 +1191,6 @@ void G_CollDet::OBJ_CheckCollisions()
 	//CheckCustomCollisions();
 
 	// check for emp collisions
-	//_CheckShipEMPCollision();
+	_CheckShipEmpCollision();
 }
 

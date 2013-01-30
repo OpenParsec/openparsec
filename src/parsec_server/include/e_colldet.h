@@ -1,7 +1,7 @@
 /*
 * PARSEC HEADER: G_CollDet.h
 */
-
+#include "g_emp.h"
 #ifndef _G_COLLDET_H_
 #define _G_COLLDET_H_
 
@@ -33,7 +33,13 @@ protected:
 
 	// check if ship collected extra
 	void _CheckShipExtraCollision();
-    
+
+	// check if ship hit by emp
+	void _CheckShipEmpCollision();
+
+	// ship collided with EMP
+	void _CollisionResponse_EmpShip( Emp *curemp );
+
     //Ship collided with missile
     void _CheckShipMissileCollision();
     //response definitions

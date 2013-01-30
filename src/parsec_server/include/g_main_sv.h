@@ -115,6 +115,8 @@ protected:
 	// walk list of extra objects and advance them ( also handle timeout )
 	void _WalkExtraObjects();
 
+	void _WalkCustomObjects();
+
 	// walk list of laser objects and advance them ( also handle timeout )
 	void _WalkLaserObjects();
     
@@ -210,7 +212,6 @@ public:
 	// create actual swarm object
 	GenObject* OBJ_CreateSwarm( ShipObject *pShip, int nClientID, dword targetid );
 
-	GenObject* OBJ_CreateEmp( ShipObject *pShip, int nClientID, byte Upgradelevel );
 
 	// check availability of specified device
 	int OBJ_DeviceAvailable( ShipObject* pShip, int mask );

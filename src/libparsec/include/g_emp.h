@@ -6,24 +6,41 @@
 #define _S_EMP_H_
 
 
+
+
 // use emp as duration weapon
 #define EMP_FIRE_CONTINUOUSLY
 
-// external functions
-#ifndef PARSEC_SERVER
-void	WFX_EmpBlast( ShipObject *shippo );
-void	WFX_RemoteEmpBlast( ShipObject *shippo, int curupgrade );
-void	WFX_CreateEmpWaves( ShipObject *shippo );
-int     WFX_ActivateEmp( ShipObject *shippo );
-void    WFX_DeactivateEmp( ShipObject *shippo );
-void    WFX_RemoteActivateEmp( int playerid );
-void    WFX_RemoteDeactivateEmp( int playerid );
 
-#endif
+
 
 
 #define EMP_MAX_TEX_NAME 128
+// emp custom type structure --------------------------------------------------
+//
+struct Emp : CustomObject {
 
+	int			upgradelevel;
+	Xmatrx		WorldXmatrx;	// object- to worldspace matrix
+	Vertex3*	ObjVtxs;
+	Vertex3*	WorldVtxs;		// vertices in worldspace
+	TextureMap*	texmap;
+	char		texname[ EMP_MAX_TEX_NAME + 1 ];
+	dword		OwnerHostObjno;		// needed for animation calculation
+	GenObject*	ownerpo;
+	int			Owner;
+	int			vtxsnr;
+	int			lod;
+	bams_t		lat;
+	bams_t		rot;
+	long		alive;
+	int			delay;
+	int			red;
+	int			green;
+	int			blue;
+	int			alpha;
+	dword		damage;			// hitpoints fractional per refframe
+};
 
 // number of upgrade levels ---------------------------------------------------
 //
@@ -55,7 +72,7 @@ void    WFX_RemoteDeactivateEmp( int playerid );
 #define EMP_DELAY				200
 #define EMP_WAVES				1
 #define EMP_ENERGY				0
-#define EMP_DAMAGE				2000
+#define EMP_DAMAGE				3 // remember: REAL damage == this * WAVES
 
 // emp upgrade level 1 property values
 #define EMP_UP1_TEXNAME			"in01_00a.3df"
@@ -73,7 +90,7 @@ void    WFX_RemoteDeactivateEmp( int playerid );
 #define EMP_UP1_DELAY			40
 #define EMP_UP1_WAVES			6
 #define EMP_UP1_ENERGY			6
-#define EMP_UP1_DAMAGE			1000
+#define EMP_UP1_DAMAGE			2
 
 // emp upgrade level 2 property values
 #define EMP_UP2_TEXNAME			"in01_00a.3df"
@@ -91,34 +108,9 @@ void    WFX_RemoteDeactivateEmp( int playerid );
 #define EMP_UP2_DELAY			80
 #define EMP_UP2_WAVES			6
 #define EMP_UP2_ENERGY			40
-#define EMP_UP2_DAMAGE			3000
+#define EMP_UP2_DAMAGE			4
 
 
-// emp custom type structure --------------------------------------------------
-//
-struct Emp : CustomObject {
-
-	int			upgradelevel;
-	Xmatrx		WorldXmatrx;	// object- to worldspace matrix
-	Vertex3*	ObjVtxs;
-	Vertex3*	WorldVtxs;		// vertices in worldspace
-	TextureMap*	texmap;
-	char		texname[ EMP_MAX_TEX_NAME + 1 ];
-	dword		OwnerHostObjno;		// needed for animation calculation
-	GenObject*	ownerpo;
-	int			Owner;
-	int			vtxsnr;
-	int			lod;
-	bams_t		lat;
-	bams_t		rot;
-	long		alive;
-	int			delay;
-	int			red;
-	int			green;
-	int			blue;
-	int			alpha;
-	dword		damage;			// hitpoints fractional per refframe
-};
 
 #define OFS_TEXNAME			offsetof( Emp, texname )
 #define OFS_LOD				offsetof( Emp, lod )
@@ -133,7 +125,7 @@ struct Emp : CustomObject {
 
 // assigned type id for emp type ----------------------------------------------
 //
-static dword emp_type_id[ EMP_UPGRADES ];
+extern dword emp_type_id[ EMP_UPGRADES ];
 
 
 // full table for emp expansion -----------------------------------------------
@@ -211,6 +203,46 @@ static int          emp_energy[ EMP_UPGRADES ]		= {
 		tmp = 255; \
 	(t) = tmp; \
 }
+
+#ifdef PARSEC_SERVER
+
+// mathematics header
+#include "utl_math.h"
+
+// local module header
+#include "e_gameserver.h"
+
+// proprietary module headers
+#include "con_arg.h"
+#include "con_aux_sv.h"
+#include "con_com_sv.h"
+#include "con_main_sv.h"
+#include "e_colldet.h"
+#include "g_extra.h"
+
+#include "obj_clas.h"
+//#include "e_stats.h"
+#include "g_main_sv.h"
+#include "e_simulator.h"
+#include "sys_refframe_sv.h"
+#include "sys_util_sv.h"
+#endif
+
+// external functions
+#ifndef PARSEC_SERVER
+void	WFX_EmpBlast( ShipObject *shippo );
+void	WFX_RemoteEmpBlast( ShipObject *shippo, int curupgrade );
+void	WFX_CreateEmpWaves( ShipObject *shippo );
+int     WFX_ActivateEmp( ShipObject *shippo );
+void    WFX_DeactivateEmp( ShipObject *shippo );
+void    WFX_RemoteActivateEmp( int playerid );
+void    WFX_RemoteDeactivateEmp( int playerid );
+#else
+void	CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel, int nClientID=0 );
+int 	EmpShipCollision( Emp *emp, ShipObject* shippo );
+int 	EmpAnimate( CustomObject *base );
+#endif
+
 #endif // _S_EMP_H_
 
 

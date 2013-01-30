@@ -69,7 +69,7 @@
 #include "e_simnetoutput.h"
 #include "e_simulator.h"
 #include "sys_refframe_sv.h"
-
+#include "g_emp.h"
 
 #undef PShipObjects		
 #undef LaserObjects		
@@ -632,11 +632,10 @@ void G_Main::MaintainSpecialsCounters(  ) {
         			  TheSimulator->GetThisFrameRefFrames()
         			  );
            }
-
-
         }
     }
-
+	// walk custom objects and decrement any class life identifiers that need decrementing.
+	_WalkCustomObjects();
 }
 
 void G_Main::FireDurationWeapons()
@@ -855,6 +854,34 @@ void G_Main::_WalkMissileObjects()
 	}
 }
 
+// walk the list of custom objects and handle timeout for the type specified.
+void G_Main::_WalkCustomObjects()
+{
+	ASSERT( TheWorld->m_CustmObjects != NULL );
+
+	CustomObject *precnode  = TheWorld->m_CustmObjects;
+	CustomObject *walkobjs = (CustomObject *)TheWorld->m_CustmObjects->NextObj;
+
+	// walk all lasers
+	while ( walkobjs != NULL ) {
+		if ((walkobjs->ObjectType == emp_type_id[ 0 ]) ||
+			(walkobjs->ObjectType == emp_type_id[ 1 ]) ||
+			(walkobjs->ObjectType == emp_type_id[ 2 ])) {
+
+				Emp *tmpemp = (Emp *)walkobjs;
+				if(!EmpAnimate(tmpemp)) {
+					// delete the EMP object
+					MSGOUT("Deleting EMP OBJ");
+					precnode->NextObj = (GenObject *)walkobjs->NextObj;
+					TheWorld->FreeObjectMem( walkobjs );
+					walkobjs = (CustomObject *)precnode->NextObj;
+				}
+		}
+
+		precnode  = walkobjs;
+		walkobjs = (CustomObject *)walkobjs->NextObj;
+	}
+}
 // walk list of laser objects and advance them ( also handle timeout ) --------
 //
 void G_Main::_WalkLaserObjects()
@@ -1064,11 +1091,6 @@ GenObject* G_Main::OBJ_CreateSwarm( ShipObject *pShip, int nClientID, dword targ
     return dummyobj;
 }
 
-GenObject* G_Main::OBJ_CreateEmp( ShipObject *pShip, int nClientID, byte Upgradelevel ){
-
-
-
-}
 
 // ----------------------------------------------------------------------------
 // G_Input methods 
@@ -1142,7 +1164,7 @@ void G_Input::LaunchSwarm(int nClientID, dword targetid)
 void G_Input::CreateEMP(int nClientID, byte UpgradeLevel)
 {
 	G_Player* pPlayer = TheGame->GetPlayer( nClientID );
-	//pPlayer->FireEMP(UpgradeLevel);
+	pPlayer->FireEMP(UpgradeLevel);
 
 }
 

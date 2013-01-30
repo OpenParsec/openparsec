@@ -815,6 +815,7 @@ int E_Simulator::DoSim( refframe_t CurSimRefFrame )
 	// animate non-projectile objects
 	GAMECODE2( TheGame->OBJ_AnimateNonProjectiles(); );
 
+	// maintain counters for special objects on ships.
 	TheGame->MaintainSpecialsCounters();
 
 	// simulate ship movements

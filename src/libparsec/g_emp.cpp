@@ -41,11 +41,13 @@
 #include "globals.h"
 
 // subsystem headers
-#include "aud_defs.h"
+
 #include "net_defs.h"
 
+#ifndef PARSEC_SERVER
 // drawing subsystem
 #include "d_iter.h"
+#endif
 
 // mathematics header
 #include "utl_math.h"
@@ -55,9 +57,13 @@
 
 // local module header
 #include "g_emp.h"
-
-// proprietary module headers
 #include "con_arg.h"
+
+
+#ifndef PARSEC_SERVER
+// proprietary module headers
+#include "aud_defs.h"
+
 #include "con_com.h"
 #include "con_info.h"
 #include "con_main.h"
@@ -65,11 +71,21 @@
 #include "e_record.h"
 #include "e_supp.h"
 #include "h_supp.h"
-#include "obj_ctrl.h"
-#include "obj_cust.h"
 #include "obj_expl.h"
+#include "obj_ctrl.h"
 #include "obj_game.h"
+#else
+#include "con_info_sv.h"
+#include "con_main_sv.h"
+#include "con_com_sv.h"
+#endif
 
+#include "obj_cust.h"
+
+
+// assigned type id for emp type ----------------------------------------------
+//
+dword emp_type_id[ EMP_UPGRADES ];
 
 
 // generic string paste area --------------------------------------------------
@@ -155,6 +171,7 @@ proplist_s EmpUp2_PropList[] = {
 PRIVATE
 int EmpDraw( void* param )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( param != NULL );
 	Emp *emp = (Emp *) param;
 
@@ -248,15 +265,17 @@ int EmpDraw( void* param )
 
 	// restore identity transformation
 	D_LoadIterMatrix( NULL );
-
+#endif
 	return TRUE;
 }
 
-
+#ifndef PARSEC_SERVER
 // callback type and flags ----------------------------------------------------
 //
 static int callback_type = CBTYPE_DRAW_CUSTOM_ITER | CBFLAG_REMOVE;
-
+#else
+static int callback_type = 0;
+#endif
 
 
 // ----------------------------------------------------------------------------
@@ -308,6 +327,7 @@ int CheckEmpCollision( CustomObject *base )
 	ASSERT( base != NULL );
 	Emp *emp = (Emp *) base;
 
+#ifndef PARSEC_SERVER
 	// check local ship
 	if ( ( emp->Owner != OWNER_LOCAL_PLAYER ) && NetJoined &&
 			EmpShipCollision( emp, MyShip ) ) {
@@ -316,20 +336,21 @@ int CheckEmpCollision( CustomObject *base )
 		OBJ_ShipEmpDamage( MyShip, emp->Owner, emp->damage );
 	}
 
+
 	// check shiplist
 	ShipObject *walkships = FetchFirstShip();
 	for ( ; walkships; walkships = (ShipObject*) walkships->NextObj ) {
-
 		// prevent collision with owner of emp
 		if ( NetConnected && ( walkships->HostObjNumber == ShipHostObjId( emp->Owner ) ) )
 			continue;
 
 		if ( !EmpShipCollision( emp, walkships ) )
 			continue;
-
 		OBJ_EventShipImpact( walkships, TRUE );
 		OBJ_ShipEmpDamage( walkships, emp->Owner, emp->damage );
+
     }
+#endif
 	return TRUE;
 }
 
@@ -339,36 +360,55 @@ int CheckEmpCollision( CustomObject *base )
 PRIVATE
 int EmpAnimate( CustomObject *base )
 {
+
+
 	ASSERT( base != NULL );
 	Emp *emp = (Emp *) base;
-
+#ifndef PARSEC_SERVER
 	// remove emp if no texture found
 	if ( emp->texmap == NULL ) {
 		// returning FALSE deletes the object
 		return FALSE;
 	}
-
 	emp->alive += CurScreenRefFrames;
+#else
+	emp->alive += TheSimulator->GetThisFrameRefFrames();
+#endif
 
 	// check emp expired
 	if ( emp->alive >= ( emp_lifetime[ emp->upgradelevel ] + emp->delay ) ) {
 		// returning FALSE deletes the object
+		MSGOUT("alive is %d, lifetime is %d, delay is %d,  lifetime - delay is %d, delete object",
+				emp->alive,
+				emp_lifetime[emp->upgradelevel],
+				emp->delay,
+				( emp_lifetime[ emp->upgradelevel ] + emp->delay ));
 		return FALSE;
 	}
 
 	// check emp delay
 	if ( emp->alive < emp->delay ) {
+		MSGOUT("alive is %d, delay is %d, no show, return", emp->alive, emp->delay);
 		// do not show yet
 		return TRUE;
 	}
-
+#ifndef PARSEC_SERVER
 	// register the drawing callback for drawing the emp
 	CALLBACK_RegisterCallback( callback_type, EmpDraw, (void*) base );
+#endif
 
 	ASSERT( ( emp->alive - emp->delay ) < emp_lifetime[ emp->upgradelevel ] );
 
 	geomv_t sc = GEOMV_MUL( emp_max_width[ emp->upgradelevel ],
 			FLOAT_TO_GEOMV( emp_expansion_tab[ emp->upgradelevel ][ emp->alive - emp->delay ] ) );
+
+#ifdef PARSEC_SERVER
+
+	GenObject *ownerpo = TheWorld->FetchObject(emp->OwnerHostObjno);
+	if ( ownerpo != NULL ) {
+			memcpy( emp->WorldXmatrx, ownerpo->ObjPosition, sizeof( Xmatrx ) );
+	}
+#else // PARSEC_CLIENT
 
 	// FIXME: known bug!!!
 	// FetchHostObject does not fetch anything if ( OwnerHostObjno == 0 ) and in
@@ -384,7 +424,7 @@ int EmpAnimate( CustomObject *base )
 	} else {
 		// owner-ship destroyed, emp does not change position any more
 	}
-
+#endif
 	// animate emp object
 	Xmatrx curmatrx;
 	memcpy( curmatrx, emp->WorldXmatrx, sizeof( Xmatrx ) );
@@ -413,16 +453,24 @@ int EmpAnimate( CustomObject *base )
 // create single emp wave object ----------------------------------------------
 //
 PRIVATE
-void CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel )
+void CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel, int nClientID )
 {
 	ASSERT( ownerpo != NULL );
 
+#ifndef PARSEC_SERVER
 	// create emp object
 	Emp *emp = (Emp *) CreateVirtualObject( emp_type_id[ upgradelevel ] );
+#else
+	// FIXME: last arg is nClientID, need to figure out a way to pass that in or something.
+	Emp *emp = (Emp *) TheWorld->CreateVirtualObject( emp_type_id[ upgradelevel ], nClientID );
+
+#endif
+
 	ASSERT( emp != NULL );
 
 	if ( emp == NULL ) return;
 
+#ifndef PARSEC_SERVER
 	// get pointer to texture map
 	emp->texmap = FetchTextureMap( emp->texname );
 	if ( emp->texmap == NULL ) {
@@ -430,18 +478,23 @@ void CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel )
 		// emp will be deleted by animation callback
 		return;
 	}
-
+#endif
 	// needed, since FetchHostObject( emp->OwnerHostObjno ) does not return MyShip
 	emp->ownerpo	= ownerpo;
+
+#ifndef PARSEC_SERVER
 	// does GetObjectOwner return ownernumber of local ship ?
 	if ( ownerpo == MyShip ) {
 		emp->OwnerHostObjno	= ( LocalPlayerId << 16 );
 		emp->Owner = OWNER_LOCAL_PLAYER;
 	}
 	else {
+#endif
 		emp->OwnerHostObjno	= ownerpo->HostObjNumber;
 		emp->Owner = GetObjectOwner( ownerpo );
+#ifndef PARSEC_SERVER
 	}
+#endif
 	memcpy( emp->WorldXmatrx, ownerpo->ObjPosition, sizeof( Xmatrx ) );
 
 	// emp->lod = lod;
@@ -615,10 +668,12 @@ void EmpDestroy( CustomObject *base )
 	ASSERT( base != NULL );
 	Emp *emp = (Emp *) base;
 
+#ifndef PARSEC_SERVER
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
 	ASSERT( numremoved <= 1 );
+#endif
 
 	// free object structure memory
 	FREEMEM( emp->ObjVtxs );
@@ -627,6 +682,7 @@ void EmpDestroy( CustomObject *base )
 
 
 
+#ifndef PARSEC_SERVER
 // ----------------------------------------------------------------------------
 // EMP DEVICE BEHAVIOUR
 // ----------------------------------------------------------------------------
@@ -909,6 +965,7 @@ void WFX_RemoteEmpBlast( ShipObject *shippo, int curupgrade )
 	AUD_EmpBlast( shippo, curupgrade );
 }
 
+#endif
 
 
 // ----------------------------------------------------------------------------
@@ -1326,9 +1383,9 @@ int Cmd_EMP( char *argstr )
 
 	ASSERT( argstr != NULL );
 	HANDLE_COMMAND_DOMAIN( argstr );
-
+#ifndef PARSEC_SERVER
 	WFX_EmpBlast( MyShip );
-
+#endif
 	return TRUE;
 }
 

@@ -54,6 +54,9 @@
 #include "e_simulator.h"
 #include "e_colldet.h"
 
+// local module header
+#include "obj_cust.h"
+
 // flags ----------------------------------------------------------------------
 //
 //#define HACKED_SHIPOBJECT_INSTANTIATION
@@ -626,6 +629,49 @@ void E_World::_InitObjCtrl()
 	}
 }
 
+// create virtual (type-only) instance of custom object -----------------------
+//
+CustomObject *E_World::CreateVirtualObject( dword objtypeid, dword dwOwner )
+{
+	ASSERT( TYPEID_TYPE_CUSTOM( objtypeid ) );
+	if ( !TYPEID_TYPE_CUSTOM( objtypeid ) )
+		return NULL;
+
+	// create new object header
+	size_t custsize = OBJ_FetchCustomTypeSize( objtypeid );
+	CustomObject *newinstance = (CustomObject *) ALLOCMEM( custsize );
+	if ( newinstance == NULL )
+		OUTOFMEM( "no mem for custom object." );
+
+	// GenObject::NumVerts==0 ensures object
+	// will be skipped by BuildVisList()
+	memset( newinstance, 0, custsize );
+
+	// init fields that must be valid
+	newinstance->ObjectType   = objtypeid;
+	newinstance->ObjectClass  = CLASS_ID_INVALID;
+	newinstance->InstanceSize = custsize;
+
+	// would normally have been done on class loading
+	OBJ_InitCustomType( newinstance );
+
+	// set object number
+	newinstance->ObjectNumber  = NextObjNumber;
+	newinstance->HostObjNumber = CreateGlobalObjId( NextObjNumber, dwOwner );
+	NextObjNumber++;
+
+	// invoke constructor
+	if ( newinstance->callback_instant != NULL ) {
+		(*newinstance->callback_instant)( newinstance );
+	}
+
+	// append object at head of list
+	newinstance->NextObj  = CustmObjects->NextObj;
+	CustmObjects->NextObj = newinstance;
+
+	return newinstance;
+}
+
 // create object of class at position with orientation
 GenObject* E_World::CreateObject( int objclass, const Xmatrx startmatrx, dword dwOwner )
 {
@@ -637,11 +683,11 @@ GenObject* E_World::CreateObject( int objclass, const Xmatrx startmatrx, dword d
 #else // !HACKED_SHIPOBJECT_INSTANTIATION
 
 	ASSERT( objclass >= 0 );
-	ASSERT( objclass < NumObjClasses );
+	//ASSERT( objclass < NumObjClasses );
 
 	// check if class number is valid
-	if ( ( objclass < 0 ) || ( objclass >= NumObjClasses ) )
-		return NULL;
+	//if ( ( objclass < 0 ) || ( objclass >= NumObjClasses ) )
+	//	return NULL;
 
 	size_t allocinstancesize = ObjClasses[ objclass ]->InstanceSize;
 

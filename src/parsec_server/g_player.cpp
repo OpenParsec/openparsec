@@ -717,22 +717,22 @@ void G_Player::_OBJ_LaunchSwarm( dword targetid )
 }
 
 void G_Player::FireEMP(byte Upgradelevel) {
-	/*ASSERT( m_pSimPlayerInfo != NULL );
+	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
 	ASSERT( pShip != NULL );
-
-	int energy_consumption = emp_energy[ curupgrade ] * emp_waves[ curupgrade ];
+	int curdelay = 0;
+	int energy_consumption = emp_energy[ Upgradelevel ] * emp_waves[ Upgradelevel ];
 
 	// check if enough energy to shoot emp
-	if ( shippo->CurEnergy >= energy_consumption  ) {
+	if ( pShip->CurEnergy >= energy_consumption  ) {
 
-		shippo->CurEnergy -= energy_consumption;
+		pShip->CurEnergy -= energy_consumption;
 
-		for ( int i = 0; i < emp_waves[ curupgrade ]; i++ ) {
-			CreateEmp( shippo, curdelay, 0, curupgrade );
-			curdelay += emp_delay[ curupgrade ];
+		for ( int i = 0; i < emp_waves[ Upgradelevel ]; i++ ) {
+			CreateEmp( pShip, 12, emp_lifetime[Upgradelevel], Upgradelevel, m_nClientID );
+			curdelay += emp_delay[ Upgradelevel ];
 		}
-	}*/
+	}
 }
 
 
