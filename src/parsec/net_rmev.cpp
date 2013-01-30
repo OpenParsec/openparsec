@@ -1198,9 +1198,9 @@ void NET_ExecRmEvCreateEmp( RE_Header *rmev, int ownerid )
 	RE_CreateEmp *re_ce  = (RE_CreateEmp *) rmev;
 	
 	// fetch pointer to remote player's ship
-	ShipObject *shippo = NET_FetchOwnersShip( ownerid );
+	ShipObject *shippo = NET_FetchOwnersShip( re_ce->SenderId );
 	//	ASSERT( shippo != NULL );
-	ASSERT( shippo != MyShip );
+	//ASSERT( shippo != MyShip );
 	// well,this happens sometimes...
 	if ( shippo == NULL ) {
 		return;
