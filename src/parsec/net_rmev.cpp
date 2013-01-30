@@ -1194,11 +1194,14 @@ void NET_ExecRmEvCreateEmp( RE_Header *rmev, int ownerid )
 	ASSERT( rmev != NULL );
 	ASSERT( rmev->RE_Type == RE_CREATEEMP );
 	ASSERT( ( ownerid >= 0 ) && ( ownerid < MAX_NET_PROTO_PLAYERS ) );
-	
+	// get owner from RE
+	if ( NET_ProtocolGMSV() ) {
+		ownerid = GetOwnerFromHostOjbNumber( ( (RE_CreateLaser*)rmev )->HostObjId );
+	}
 	RE_CreateEmp *re_ce  = (RE_CreateEmp *) rmev;
 	
 	// fetch pointer to remote player's ship
-	ShipObject *shippo = NET_FetchOwnersShip( re_ce->SenderId );
+	ShipObject *shippo = NET_FetchOwnersShip( ownerid );
 	//	ASSERT( shippo != NULL );
 	//ASSERT( shippo != MyShip );
 	// well,this happens sometimes...
