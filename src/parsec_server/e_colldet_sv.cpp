@@ -523,16 +523,15 @@ void G_CollDet::_CollisionResponse_EmpShip( Emp *curemp )
 
 	// apply damage
 	if ( cur_ship->CurDamage <= cur_ship->MaxDamage ) {
-		/* old confusing shit....
-		 *
-		cur_ship->CurDamageFrac += (DEFAULT_REFFRAME_FREQUENCY/6) * hitpoints;
+
+		cur_ship->CurDamageFrac +=  TheSimulator->GetThisFrameRefFrames() * hitpoints;
 		cur_ship->CurDamage += cur_ship->CurDamageFrac >> 16;
 		MSGOUT("Doing %d damage to ship", cur_ship->CurDamageFrac >> 16);
 		cur_ship->CurDamageFrac &= 0xffff;
-		*/
+
 
 		// new less confusing shit...
-		cur_ship->CurDamage += hitpoints;
+		//cur_ship->CurDamage += hitpoints;
 	}
 
 	// check whether the ship should explode
