@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA17FD5216BB0C1D0003E370 /* g_emp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA17FD5116BB0C1D0003E370 /* g_emp.cpp */; };
+		FA17FD5316BB0C530003E370 /* g_emp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA17FD5116BB0C1D0003E370 /* g_emp.cpp */; };
 		FA371694164DEE4400230CE8 /* con_act_sv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA371573164DD36800230CE8 /* con_act_sv.cpp */; };
 		FA371695164DEE4400230CE8 /* con_aux_sv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA371574164DD36800230CE8 /* con_aux_sv.cpp */; };
 		FA371696164DEE4400230CE8 /* con_com_sv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA371575164DD36800230CE8 /* con_com_sv.cpp */; };
@@ -80,10 +82,10 @@
 		FAB66F33169A2232000CB9EC /* symbol.tga in Copy Client Files */ = {isa = PBXBuildFile; fileRef = FAB66F31169A2223000CB9EC /* symbol.tga */; };
 		FAB6A4B916B666CA00052EF2 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
 		FAB6A4BB16B666CF00052EF2 /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
-		FAB6A4BC16B666E800052EF2 /* SDL.framework in Copy Libraries */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
-		FAB6A4BD16B666E900052EF2 /* SDL_mixer.framework in Copy Libraries */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
 		FABCE935163C86F60030912B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABCE934163C86F50030912B /* OpenGL.framework */; };
 		FABCE937163C876A0030912B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABCE936163C876A0030912B /* Cocoa.framework */; };
+		FAC1D4CC16B71D8A00DABF17 /* SDL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
+		FAC1D4CD16B71D8C00DABF17 /* SDL_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
 		FAE294001655A28900D00541 /* sw_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE293FE1655A28700D00541 /* sw_path.cpp */; };
 		FAE294011655A28900D00541 /* sw_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE293FF1655A28800D00541 /* sw_timer.cpp */; };
 		FAE294061655A86F00D00541 /* nw_udp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE294051655A86C00D00541 /* nw_udp.cpp */; };
@@ -186,7 +188,6 @@
 		FAFEFD98163BE1D00056CECD /* g_bot_cl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9BA163BE1CF0056CECD /* g_bot_cl.cpp */; };
 		FAFEFD99163BE1D00056CECD /* g_camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9BB163BE1CF0056CECD /* g_camera.cpp */; };
 		FAFEFD9A163BE1D00056CECD /* g_cloud.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9BC163BE1CF0056CECD /* g_cloud.cpp */; };
-		FAFEFD9B163BE1D00056CECD /* g_emp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9BD163BE1CF0056CECD /* g_emp.cpp */; };
 		FAFEFD9C163BE1D00056CECD /* g_explod.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9BE163BE1CF0056CECD /* g_explod.cpp */; };
 		FAFEFD9D163BE1D00056CECD /* g_gameloop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9BF163BE1CF0056CECD /* g_gameloop.cpp */; };
 		FAFEFD9E163BE1D00056CECD /* g_global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF9C0163BE1CF0056CECD /* g_global.cpp */; };
@@ -299,8 +300,6 @@
 			dstPath = Contents/Libraries;
 			dstSubfolderSpec = 1;
 			files = (
-				FAB6A4BC16B666E800052EF2 /* SDL.framework in Copy Libraries */,
-				FAB6A4BD16B666E900052EF2 /* SDL_mixer.framework in Copy Libraries */,
 			);
 			name = "Copy Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +356,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FAC1D4CC16B71D8A00DABF17 /* SDL.framework in Copy Frameworks */,
+				FAC1D4CD16B71D8C00DABF17 /* SDL_mixer.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +365,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		FA17FD5116BB0C1D0003E370 /* g_emp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = g_emp.cpp; sourceTree = "<group>"; };
 		FA371573164DD36800230CE8 /* con_act_sv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = con_act_sv.cpp; sourceTree = "<group>"; };
 		FA371574164DD36800230CE8 /* con_aux_sv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = con_aux_sv.cpp; sourceTree = "<group>"; };
 		FA371575164DD36800230CE8 /* con_com_sv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = con_com_sv.cpp; sourceTree = "<group>"; };
@@ -868,7 +870,6 @@
 		FAFEF9BA163BE1CF0056CECD /* g_bot_cl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = g_bot_cl.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		FAFEF9BB163BE1CF0056CECD /* g_camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = g_camera.cpp; sourceTree = "<group>"; };
 		FAFEF9BC163BE1CF0056CECD /* g_cloud.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = g_cloud.cpp; sourceTree = "<group>"; };
-		FAFEF9BD163BE1CF0056CECD /* g_emp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = g_emp.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		FAFEF9BE163BE1CF0056CECD /* g_explod.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = g_explod.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		FAFEF9BF163BE1CF0056CECD /* g_gameloop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = g_gameloop.cpp; sourceTree = "<group>"; };
 		FAFEF9C0163BE1CF0056CECD /* g_global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = g_global.cpp; sourceTree = "<group>"; };
@@ -1680,6 +1681,7 @@
 				FAFEF880163BE1CF0056CECD /* debug.cpp */,
 				FAFEF881163BE1CF0056CECD /* e_modulemanager.cpp */,
 				FAFEF882163BE1CF0056CECD /* e_relist.cpp */,
+				FA17FD5116BB0C1D0003E370 /* g_emp.cpp */,
 				FAFEF883163BE1CF0056CECD /* g_extra.cpp */,
 				FAFEF884163BE1CF0056CECD /* include */,
 				FAFEF8DE163BE1CF0056CECD /* net_pckt_gmsv.cpp */,
@@ -1713,7 +1715,6 @@
 		FAFEF884163BE1CF0056CECD /* include */ = {
 			isa = PBXGroup;
 			children = (
-				FAE69E0716A7628600C1AC79 /* g_emp.h */,
 				FAFEF885163BE1CF0056CECD /* con_arg.h */,
 				FAFEF886163BE1CF0056CECD /* con_tab.h */,
 				FAFEF887163BE1CF0056CECD /* con_vald.h */,
@@ -1723,6 +1724,7 @@
 				FAFEF88D163BE1CF0056CECD /* def_prot.h */,
 				FAFEF890163BE1CF0056CECD /* e_modulemanager.h */,
 				FAFEF891163BE1CF0056CECD /* e_relist.h */,
+				FAE69E0716A7628600C1AC79 /* g_emp.h */,
 				FAFEF892163BE1CF0056CECD /* g_extra.h */,
 				FAFEF893163BE1CF0056CECD /* g_shipobject.h */,
 				FAFEF894163BE1CF0056CECD /* g_stgate.h */,
@@ -1855,7 +1857,6 @@
 				FAFEF9BA163BE1CF0056CECD /* g_bot_cl.cpp */,
 				FAFEF9BB163BE1CF0056CECD /* g_camera.cpp */,
 				FAFEF9BC163BE1CF0056CECD /* g_cloud.cpp */,
-				FAFEF9BD163BE1CF0056CECD /* g_emp.cpp */,
 				FAFEF9BE163BE1CF0056CECD /* g_explod.cpp */,
 				FAFEF9BF163BE1CF0056CECD /* g_gameloop.cpp */,
 				FAFEF9C0163BE1CF0056CECD /* g_global.cpp */,
@@ -2308,6 +2309,7 @@
 				FA3716AA164DEE4400230CE8 /* g_stgate_sv.cpp in Sources */,
 				FAE69E1616A7631200C1AC79 /* MasterServer.cpp in Sources */,
 				FAE69E1716A7631200C1AC79 /* MasterServerItem.cpp in Sources */,
+				FA17FD5316BB0C530003E370 /* g_emp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2396,7 +2398,6 @@
 				FAFEFD98163BE1D00056CECD /* g_bot_cl.cpp in Sources */,
 				FAFEFD99163BE1D00056CECD /* g_camera.cpp in Sources */,
 				FAFEFD9A163BE1D00056CECD /* g_cloud.cpp in Sources */,
-				FAFEFD9B163BE1D00056CECD /* g_emp.cpp in Sources */,
 				FAFEFD9C163BE1D00056CECD /* g_explod.cpp in Sources */,
 				FAFEFD9D163BE1D00056CECD /* g_gameloop.cpp in Sources */,
 				FAFEFD9E163BE1D00056CECD /* g_global.cpp in Sources */,
@@ -2508,6 +2509,7 @@
 				FAE69DE316A74C4100C1AC79 /* stb_image.cpp in Sources */,
 				FA84A68016A7B59F005F649F /* stb_image_write.c in Sources */,
 				FAADE10016AB271B005D7250 /* glew.c in Sources */,
+				FA17FD5216BB0C1D0003E370 /* g_emp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2536,7 +2538,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
-					"\"$(SRCROOT)/../../src/libraries\"/**",
+					"\"$(SRCROOT)/../../src/libraries\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
@@ -2553,7 +2555,7 @@
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include,
-					"\"$(SRCROOT)/../../src/libraries\"/**",
+					"\"$(SRCROOT)/../../src/libraries\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
@@ -2597,7 +2599,7 @@
 					"\"$(SRCROOT)/../src/libparsec\"",
 					"\"$(SRCROOT)/../src/parsec\"",
 				);
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
+				LD_RUNPATH_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
@@ -2638,7 +2640,8 @@
 					"\"$(SRCROOT)/../src/libparsec\"",
 					"\"$(SRCROOT)/../src/parsec\"",
 				);
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
+				LD_RUNPATH_SEARCH_PATHS = "";
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2654,7 +2657,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -2674,10 +2677,7 @@
 				);
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
-				LIBRARY_SEARCH_PATHS = (
-					/Library/Frameworks,
-					/usr/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = i386;
@@ -2691,7 +2691,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
-				CLANG_WARN_CXX0X_EXTENSIONS = YES;
+				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
@@ -2710,10 +2710,8 @@
 				);
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
-				LIBRARY_SEARCH_PATHS = (
-					/Library/Frameworks,
-					/usr/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
+				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
