@@ -595,6 +595,7 @@ int NET_RmEvCreateEmp( int upgradelevel )
 		re_createemp->RE_Type 			= RE_CREATEEMP;
 		re_createemp->RE_BlockSize		= sizeof( RE_CreateEmp );
 		re_createemp->Upgradelevel		= upgradelevel;
+		re_createemp->SenderId			= LocalPlayerId;
 
 		re_createemp++;
 		re_createemp->RE_Type 			= RE_EMPTY;
@@ -1195,10 +1196,11 @@ void NET_ExecRmEvCreateEmp( RE_Header *rmev, int ownerid )
 	ASSERT( rmev->RE_Type == RE_CREATEEMP );
 	ASSERT( ( ownerid >= 0 ) && ( ownerid < MAX_NET_PROTO_PLAYERS ) );
 	// get owner from RE
-	if ( NET_ProtocolGMSV() ) {
-		ownerid = GetOwnerFromHostOjbNumber( ( (RE_CreateLaser*)rmev )->HostObjId );
-	}
 	RE_CreateEmp *re_ce  = (RE_CreateEmp *) rmev;
+	if ( NET_ProtocolGMSV() ) {
+		ownerid = re_ce->SenderId; //GetOwnerFromHostOjbNumber( ( (RE_CreateLaser*)rmev )->HostObjId );
+	}
+
 	
 	// fetch pointer to remote player's ship
 	ShipObject *shippo = NET_FetchOwnersShip( ownerid );

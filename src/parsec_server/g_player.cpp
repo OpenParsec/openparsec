@@ -714,7 +714,7 @@ void G_Player::_OBJ_LaunchSwarm( dword targetid )
    	pShip->NumPartMissls--;
 
 }
-/*
+
 void G_Player::FireEMP(byte Upgradelevel) {
 	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
@@ -728,13 +728,11 @@ void G_Player::FireEMP(byte Upgradelevel) {
 		pShip->CurEnergy -= energy_consumption;
 
 		for ( int i = 0; i < emp_waves[ Upgradelevel ]; i++ ) {
-			CreateEmp( pShip, 12, emp_lifetime[Upgradelevel], Upgradelevel, m_nClientID );
+			CreateEmp( pShip, curdelay, 0, Upgradelevel, m_nClientID );
 			curdelay += emp_delay[ Upgradelevel ];
 		}
 	}
 }
-*/
-
 
 // record a kill --------------------------------------------------------------
 //

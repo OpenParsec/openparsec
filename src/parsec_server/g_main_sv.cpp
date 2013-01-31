@@ -875,6 +875,7 @@ void G_Main::_WalkCustomObjects()
 					precnode->NextObj = (GenObject *)walkobjs->NextObj;
 					TheWorld->FreeObjectMem( walkobjs );
 					walkobjs = (CustomObject *)precnode->NextObj;
+					continue;
 				}
 		}
 

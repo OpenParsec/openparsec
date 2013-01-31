@@ -372,7 +372,7 @@ int EmpAnimate( CustomObject *base )
 	}
 	emp->alive += CurScreenRefFrames;
 #else
-	emp->alive += TheSimulator->GetThisFrameRefFrames();
+	emp->alive += 10; // approx to the client... //TheSimulator->GetThisFrameRefFrames();
 #endif
 
 	// check emp expired
@@ -489,11 +489,12 @@ void CreateEmp( GenObject *ownerpo, int delay, int alive, int upgradelevel, int 
 		emp->Owner = OWNER_LOCAL_PLAYER;
 	}
 	else {
-#endif
 		emp->OwnerHostObjno	= ownerpo->HostObjNumber;
 		emp->Owner = GetObjectOwner( ownerpo );
-#ifndef PARSEC_SERVER
 	}
+#else
+	emp->OwnerHostObjno	= ownerpo->HostObjNumber;
+	emp->Owner = nClientID; //GetObjectOwner( ownerpo );
 #endif
 	memcpy( emp->WorldXmatrx, ownerpo->ObjPosition, sizeof( Xmatrx ) );
 
