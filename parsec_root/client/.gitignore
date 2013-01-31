@@ -2,3 +2,10 @@ data/
 parsec
 parsecrc.con
 parsec.log
+
+# Client data files
+pscdata?.dat
+
+# Screenshots!
+parsec??.png
+
