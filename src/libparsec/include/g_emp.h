@@ -72,7 +72,7 @@ struct Emp : CustomObject {
 #define EMP_DELAY				200
 #define EMP_WAVES				1
 #define EMP_ENERGY				0
-#define EMP_DAMAGE				3 // remember: REAL damage == this * WAVES
+#define EMP_DAMAGE				2000
 
 // emp upgrade level 1 property values
 #define EMP_UP1_TEXNAME			"in01_00a.3df"
@@ -90,7 +90,7 @@ struct Emp : CustomObject {
 #define EMP_UP1_DELAY			40
 #define EMP_UP1_WAVES			6
 #define EMP_UP1_ENERGY			6
-#define EMP_UP1_DAMAGE			2
+#define EMP_UP1_DAMAGE			1000
 
 // emp upgrade level 2 property values
 #define EMP_UP2_TEXNAME			"in01_00a.3df"
@@ -108,7 +108,7 @@ struct Emp : CustomObject {
 #define EMP_UP2_DELAY			80
 #define EMP_UP2_WAVES			6
 #define EMP_UP2_ENERGY			40
-#define EMP_UP2_DAMAGE			4
+#define EMP_UP2_DAMAGE			2000
 
 
 

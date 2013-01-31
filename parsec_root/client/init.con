@@ -14,9 +14,6 @@ aux_draw_cockpit_crosshair 2
 ; exec user script
 user
 
-; load the starmap loader con
-strmpldr
-
 ; enable console
 enable
 
