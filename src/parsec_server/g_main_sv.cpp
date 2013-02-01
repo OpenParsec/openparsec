@@ -626,11 +626,11 @@ void G_Main::MaintainSpecialsCounters(  ) {
            // decrement the MegaShieldAbsorption counter
            if(pShip->MegaShieldAbsorption > 0){
         	  pShip->MegaShieldAbsorption -= TheSimulator->GetThisFrameRefFrames();
-        	  MSGOUT("Client: %d, MegaShield: %d, RefFrameDec: %d",
+        	  DBGTXT(MSGOUT("Client: %d, MegaShield: %d, RefFrameDec: %d",
         			  nClientID,
         			  pShip->MegaShieldAbsorption,
         			  TheSimulator->GetThisFrameRefFrames()
-        			  );
+        			  ););
            }
         }
     }
@@ -871,7 +871,7 @@ void G_Main::_WalkCustomObjects()
 				Emp *tmpemp = (Emp *)walkobjs;
 				if(!EmpAnimate(tmpemp)) {
 					// delete the EMP object
-					MSGOUT("Deleting EMP OBJ");
+					DBGTXT(MSGOUT("Deleting EMP OBJ"););
 					precnode->NextObj = (GenObject *)walkobjs->NextObj;
 					TheWorld->FreeObjectMem( walkobjs );
 					walkobjs = (CustomObject *)precnode->NextObj;
