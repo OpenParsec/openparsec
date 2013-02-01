@@ -1,3 +1,0 @@
-# Ignore generated Premake files and folders
-Makefile
-build/
