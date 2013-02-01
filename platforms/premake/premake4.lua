@@ -7,8 +7,10 @@
 
 
 local paths = {
-	root = path.getabsolute("../../"), -- root openparsec folder
-	premakefolder = path.getabsolute(""),
+	--root = path.getabsolute("../../"), -- root openparsec folder
+	--premakefolder = path.getabsolute(""),
+	root = "../../",
+	premakefolder = "./"
 }
 
 paths.parsecroot = path.join(paths.root, "parsec_root")
@@ -67,7 +69,8 @@ project "client"
 		targetname "parsec"
 		links { "SDL", "SDL_mixer", "GL" }
 		postbuildcommands {
-			("cp parsec %q"):format(paths.parsecroot.."/client/"),
+			--("cp parsec %q"):format(paths.parsecroot.."/client/"),
+			"cp parsec ../../../../parsec_root/client/"
 		}
 
 
@@ -92,6 +95,7 @@ project "server"
 	configuration "linux"
 		links { "ncurses" }
 		postbuildcommands {
-			("cp parsec_server %q"):format(paths.parsecroot.."/server/"),
+			--("cp parsec_server %q"):format(paths.parsecroot.."/server/"),
+			"cp parsec_server ../../../../parsec_root/server/"
 		}
 
