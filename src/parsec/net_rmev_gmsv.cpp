@@ -363,7 +363,7 @@ void NET_ExecRmEvCommandInfo( RE_CommandInfo* commandinfo )
 		NET_ServerParseMessage( recvline );
 	} 
 
-	MSGOUT( "NET_ExecRmEvCommandInfo: %s", recvline );
+	DBGTXT(MSGOUT( "NET_ExecRmEvCommandInfo: %s", recvline ););
 }
 
 
