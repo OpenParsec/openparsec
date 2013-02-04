@@ -209,7 +209,7 @@ BKGN_Item_s* BKGNm_AddItem( int id, const char *filename, dword type )
 {
 	// add the background item to the end of the list
 
-  MSGOUT("Adding Item with id=%i, filename=%s, type=%d\n", id, filename, type);
+  DBGTXT(MSGOUT("Adding Item with id=%i, filename=%s, type=%d\n", id, filename, type););
 	BKGN_Item_s* item = (BKGN_Item_s*) ALLOCMEM( sizeof( BKGN_Item_s ) );
 	memset( item, 0, sizeof( BKGN_Item_s ) );
 
