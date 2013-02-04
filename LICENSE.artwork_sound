@@ -1,0 +1,41 @@
+(Taken from Parsec LAN Test Demo README file)
+
+LICENSE AND DISCLAIMER OF WARRANTY
+------------------------------------------------------------------------------
+
+The Parsec program, artwork, music, sound effects, and associated
+documentation (the "software") are the copyrighted work of Markus Hadwiger,
+Andreas Varga, Clemens Beer, Michael Woegerbauer, Alex Mastny, Stefan Poiss,
+and Karin Baier. It is protected by copyright law and international treaty
+provisions. Provided this document accompanies each copy you make of this
+software, and as long as you fully comply at all times with this agreement,
+the authors grant you the non-exclusive and limited right to copy this
+software and to distribute such copies of this software free of charge for
+non-commercial purposes.
+
+THIS SOFTWARE IS PROVIDED TO YOU "AS IS" WITHOUT WARRANTY OF ANY KIND,
+EITHER EXPRESS OR IMPLIED INCLUDING BUT NOT LIMITED TO THE APPLIED WARRANTIES
+OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE. YOU ASSUME THE
+ENTIRE RISK AS TO THE ACCURACY AND THE USE OF THE SOFTWARE AND ALL OTHER RISK
+ARISING OUT OF THE USE OR PERFORMANCE OF THIS SOFTWARE AND DOCUMENTATION. THE
+AFOREMENTIONED AUTHORS SHALL NOT BE LIABLE FOR ANY DAMAGES WHATSOEVER ARISING
+OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF THEY HAVE BEEN
+ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. TO THE MAXIMUM EXTENT PERMITTED BY
+APPLICABLE LAW, IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CONSEQUENTIAL,
+INCIDENTAL, DIRECT, INDIRECT, SPECIAL, PUNITIVE, OR OTHER DAMAGES WHATSOEVER
+(INCLUDING WITHOUT LIMITATION, DAMAGES FOR LOSS OF BUSINESS PROFITS, BUSINESS
+INTERRUPTION, LOSS OF BUSINESS INFORMATION, OR OTHER PECUNIARY LOSS) EVEN IF
+THE AUTHORS HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. BECAUSE SOME
+STATES/JURISDICTIONS DO NOT ALLOW THE EXCLUSION OR LIMITATION OF LIABILITY FOR
+CONSEQUENTIAL OR INCIDENTAL DAMAGES, THE ABOVE LIMITATION MAY NOT APPLY.
+
+The Parsec launcher for the Linux version was written by Tamer Fahmy
+<tamer@tammura.at>.
+
+This software contains the "amp MPEG audio decoder version 0.7.6",
+Copyright (c) Tomislav Uzelac 1996, 1997.
+
+The Windows version of this software uses the QMDX.DLL library by
+QSound Labs, Inc. The included QMDX.DLL may only be used for running the
+Parsec game and not for any other purpose, as specified by the QMDX End-User
+License Agreement.
