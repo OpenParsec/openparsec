@@ -53,9 +53,9 @@
 // determine build
 
 #ifdef DEBUG
-	#define BUILD_TEXT "parsec" SYSTEM_TEXT "debug build " CLIENT_BUILD_NUMBER
+	#define BUILD_TEXT "openparsec" SYSTEM_TEXT "debug build " CLIENT_BUILD_NUMBER
 #else
-	#define BUILD_TEXT "parsec" SYSTEM_TEXT "release build " CLIENT_BUILD_NUMBER
+	#define BUILD_TEXT "openparsec" SYSTEM_TEXT "release build " CLIENT_BUILD_NUMBER
 #endif
 
 
