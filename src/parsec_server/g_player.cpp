@@ -467,6 +467,20 @@ void G_Player::_WFX_DeactivateHelix()
 	}
 }
 
+// ensure that helix cannon is inactive for local ship ------------------------
+//
+void G_Player::WFX_EnsureHelixInactive( ShipObject *shippo )
+{
+	ASSERT( shippo != NULL );
+    
+	if ( shippo->WeaponsActive & WPMASK_CANNON_HELIX ) {
+		shippo->WeaponsActive &= ~WPMASK_CANNON_HELIX;
+	}
+    
+	ASSERT( ( shippo->WeaponsActive & WPMASK_CANNON_HELIX ) == 0 );
+}
+
+
 // remote player activated lightning device -----------------------------------
 //
 void G_Player::_WFX_ActivateLightning()
@@ -517,6 +531,19 @@ void G_Player::_WFX_DeactivateLightning()
         MSGOUT("G_PLAYER::_WFX_DeactivateLightning(): client %d fired",m_nClientID);
 	    //Remote event goes here
     }
+}
+
+// ensure that lightning is inactive for local ship ---------------------------
+//
+void G_Player::WFX_EnsureLightningInactive( ShipObject *shippo )
+{
+	ASSERT( shippo != NULL );
+	    
+	if ( TheWorld->PRT_DeleteAttachedClustersOfType( shippo, SAT_LIGHTNING ) != 0 ) {
+		shippo->WeaponsActive &= ~WPMASK_CANNON_LIGHTNING;
+	}
+    
+	ASSERT( ( shippo->WeaponsActive & WPMASK_CANNON_LIGHTNING ) == 0 );
 }
 
 // check whether to turn off lightning due to too little energy ---------------
@@ -598,6 +625,32 @@ void G_Player::_WFX_DeactivatePhoton()
     if(cluster != NULL)
        cluster->firing = TRUE;
     
+}
+
+// ensure that photon cannon is inactive for local ship -----------------------
+//
+void G_Player::WFX_EnsurePhotonInactive( ShipObject *shippo )
+{
+	ASSERT( shippo != NULL );
+	    
+    if ( shippo->WeaponsActive & WPMASK_CANNON_PHOTON ) {
+        shippo->WeaponsActive &= ~WPMASK_CANNON_PHOTON;
+     
+	}
+    
+    ASSERT( ( shippo->WeaponsActive & WPMASK_CANNON_PHOTON ) == 0 );
+}
+
+// ensure that no particle weapons are active for local ship ------------------
+//
+void G_Player::WFX_EnsureParticleWeaponsInactive( ShipObject *shippo )
+{
+	ASSERT( shippo != NULL );
+	    
+	// ensure lightning and helix are destroyed
+	WFX_EnsureLightningInactive( shippo );
+	WFX_EnsureHelixInactive( shippo );
+    WFX_EnsurePhotonInactive(shippo);
 }
 
 // create missile originating from specified position -------------------------
@@ -753,6 +806,7 @@ void G_Player::RecordDeath( int nClientID_Killer )
 		m_nDeaths++;
 		m_nLastUnjoinFlag	= SHIP_DOWNED;
 		m_nLastKiller		= nClientID_Killer;
+        WFX_EnsureParticleWeaponsInactive( m_pSimPlayerInfo->GetShipObject() );
 	}
 }
 

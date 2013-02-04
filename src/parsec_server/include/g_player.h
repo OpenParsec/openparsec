@@ -143,5 +143,11 @@ public:
     //Send client ammo pack sizes, system ID
     int GotSentState() { return m_StateSync; }
     void SetSentState() { m_StateSync = 1; }
+    
+    //weapons cleanup
+    void WFX_EnsurePhotonInactive( ShipObject *shippo );
+    void WFX_EnsureHelixInactive( ShipObject *shippo );
+    void WFX_EnsureLightningInactive( ShipObject *shippo );
+    void WFX_EnsureParticleWeaponsInactive( ShipObject *shippo );
 };
 
