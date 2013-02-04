@@ -55,7 +55,7 @@
 
 // define current build number ------------------------------------------------
 //
-#define CLIENT_BUILD_NUMBER	"0198"
+#define CLIENT_BUILD_NUMBER	"0200 (ver. 0.2)"
 #define SERVER_BUILD_NUMBER "0200"
 #define MASTER_BUILD_NUMBER "0200"
 

@@ -112,92 +112,17 @@ void StartupMessages()
 {
 	MSGOUT( "\n" );
 
-#if defined ( OPENSOURCE_RELEASE )
-
 	MSGOUT( " OPENPARSEC build " CLIENT_BUILD_NUMBER "." );
 	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( " mailto:parsec@parsec.org    http://www.parsec.org" );
+	MSGOUT( "            http://www.openparsec.org              " );
 	MSGOUT( "---------------------------------------------------" );
 	MSGOUT( "\n" );
 
-#else 
-	MSGOUT( " PARSEC V0.99 build " CLIENT_BUILD_NUMBER "." );
-	MSGOUT( " Copyright (c) 1996-2001 by Markus Hadwiger," );
-	MSGOUT( " Andreas Varga, Clemens Beer, Michael Woegerbauer," );
-	MSGOUT( " Alex Mastny, Stefan Poiss. All Rights Reserved." );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( " mailto:parsec@parsec.org    http://www.parsec.org" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-#endif // 
+ 
 
-#if defined( LINUXTAG99_MESSAGE )
-
-	MSGOUT( " RESTRICTED VERSION FOR LINUXTAG99, JUNE 26-27." );
-	MSGOUT( " PLEASE DO NOT SPREAD THIS VERSION!" );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( MATROXTEST_MESSAGE )
-
-	MSGOUT( " EXCLUSIVE BUILD FOR MATROX GRAPHICS INC." );
-	MSGOUT( " FOR TESTING PURPOSES ONLY." );
-	MSGOUT( " THIS BUILD MAY NOT BE DISTRIBUTED." );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( SELFRUNNING_MESSAGE )
-
-	MSGOUT( " SELF-RUNNING DEMO BUILD " CLIENT_BUILD_NUMBER "." );
-	MSGOUT( " MAY NOT BE DISTRIBUTED ON PHYSICAL MEDIA." );
-	MSGOUT( " NON-COMMERCIAL ELECTRONIC DISTRIBUTION ONLY." );
-	MSGOUT( " SEE THE ACCOMPANYING README FOR DETAILS." );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( BRAUNSCHWEIG_MESSAGE )
-
-	MSGOUT( " SELF-RUNNING DEMO BUILD " CLIENT_BUILD_NUMBER "." );
-	MSGOUT( " EXCLUSIVE BUILD FOR BRAUNSCHWEIGER LINUX-TAGE." );
-	MSGOUT( " NON-COMMERCIAL DISTRIBUTION ONLY." );
-	MSGOUT( " SEE THE ACCOMPANYING README FOR DETAILS." );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( LINUXTAG2K_MESSAGE )
-
-	MSGOUT( " RESTRICTED VERSION FOR LINUXTAG 2000, STUTTGART." );
-	MSGOUT( " PLEASE DO NOT SPREAD THIS VERSION!" );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( REDHAT7DISTRI_MESSAGE )
-
-	MSGOUT( " LAN-TEST BUILD " CLIENT_BUILD_NUMBER "." );
-	MSGOUT( " EXCLUSIVE BUILD FOR RED HAT 7." );
-	MSGOUT( " SEE THE ACCOMPANYING README FOR DETAILS." );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( LANTEST_MESSAGE )
-
-	MSGOUT( " LAN-TEST BUILD " CLIENT_BUILD_NUMBER "." );
-	MSGOUT( " NON-COMMERCIAL DISTRIBUTION ONLY." );
-	MSGOUT( " SEE THE ACCOMPANYING README FOR DETAILS." );
-	MSGOUT( "\n" );
-	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "\n" );
-
-#elif defined( PRERELEASE_MESSAGE )
+#if defined( PRERELEASE_MESSAGE )
 
 	MSGOUT( " UNTESTED VERSION CURRENTLY UNDER DEVELOPMENT." );
-	MSGOUT( " PLEASE DO NOT SPREAD THIS VERSION!" );
 	MSGOUT( "\n" );
 	MSGOUT( "---------------------------------------------------" );
 	MSGOUT( "\n" );
