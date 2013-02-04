@@ -758,6 +758,14 @@ void DetermineStargateDormantState( Stargate *stargate )
 PRIVATE
 void DrawStargateText( char *text, boundrect_s *boundrect, int top )
 {
+	// look for OpenParsec approved name
+	char *tmpdomain = strstr(text, ".openparsec.com\0");
+	if(tmpdomain != NULL) {
+		// if it does not equal null, we found one, so truncate it and add a *
+		tmpdomain[0]='*';
+		tmpdomain[1]='\0';
+	}
+
 	int width  = strlen( text ) * CharsetInfo[ HUD_CHARSETNO ].width;
 	int height = CharsetInfo[ HUD_CHARSETNO ].height;
 
