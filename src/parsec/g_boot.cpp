@@ -114,7 +114,7 @@ void StartupMessages()
 
 	MSGOUT( " OPENPARSEC build " CLIENT_BUILD_NUMBER "." );
 	MSGOUT( "---------------------------------------------------" );
-	MSGOUT( "            http://www.openparsec.org              " );
+	MSGOUT( "            http://www.openparsec.com              " );
 	MSGOUT( "---------------------------------------------------" );
 	MSGOUT( "\n" );
 
