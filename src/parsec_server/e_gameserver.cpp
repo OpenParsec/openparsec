@@ -603,7 +603,8 @@ int E_GameServer::_MaintainMasterServer()
 						TheConnManager->GetNumConnected(),
 						MAX_NUM_CLIENTS,
 						SV_SERVERID,
-						CPU_VENDOR_OS
+						CPU_VENDOR_OS,
+						SV_NETCONF_PORT
 					);
 
 			// append a remote event containing the command

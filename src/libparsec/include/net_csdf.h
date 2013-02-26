@@ -54,7 +54,7 @@
 
 
 // gameserver -> masterserver
-#define MASV_CHALLSTRING			"c2 %02d.%02d ch %d n %s p %d/%d s %d os %s"
+#define MASV_CHALLSTRING			"c2 %02d.%02d ch %d n %s p %d/%d s %d os %s pt %d"
 
 // masterserver -> gameserver
 #define MASV_RESPONSE_NEW_CHALL		RECVSTR_CHALLENGE

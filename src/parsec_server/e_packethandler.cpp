@@ -1054,6 +1054,8 @@ int E_PacketHandler::_ParseHBPacket_MASTER(char* recvline) {
 
 	node_t _Node;
 	char OS[MAX_OSNAME_LEN + 1 ];
+	int srv_port = 0;
+
 	ident_str = strtok( NULL, ".");
 	if(ident_str == NULL){
 		return FALSE;
@@ -1141,9 +1143,31 @@ int E_PacketHandler::_ParseHBPacket_MASTER(char* recvline) {
 	// if we get this far, then we should have everything to try to add the node to the MasterServer->ServerList.
 	// BUT first let's see if the node's IP resolves...
 	int result = TheUDPDriver->ResolveHostName(ServerName, &_Node);
-	NODE_StorePort(&_Node, DEFAULT_GAMESERVER_UDP_PORT);
 	if(!result) {
 		return FALSE;
+	}
+
+	// resolved host name, let's see if they sent us a port
+	ident_str = strtok( NULL, " ");// skip a field, as it should just denote "p" for the server port
+	// FIXME: Check to make sure this is "p" for proper packet structure maybe?
+	if(ident_str == NULL) {
+		// null here means they didn't denote a port.  Let's use the default
+		// one
+		NODE_StorePort(&_Node, DEFAULT_GAMESERVER_UDP_PORT);
+	} else {
+		// next....
+		ident_str = strtok( NULL, " ");
+		if(ident_str != NULL){
+			// this should be the server port
+			srv_port = atoi(ident_str);
+		}
+		if(srv_port > 0 ) {
+			NODE_StorePort(&_Node, srv_port);
+		} else {
+			// error parsing the server port,
+			// use the default one perhaps.
+			NODE_StorePort(&_Node, DEFAULT_GAMESERVER_UDP_PORT);
+		}
 	}
 
 
