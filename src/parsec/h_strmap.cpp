@@ -1680,10 +1680,18 @@ void MAP_ExecSelButtonChoice()
 							memcpy(&Server_Node, &server_list[map_srv_pressed].node, sizeof( node_t ) );
 
 							// because we are bypassing the resolver at this point....
+							// set maximum number of players according to protocol
+							CurMaxPlayers = MAX_NET_GMSV_PLAYERS;
+
+							// (re)init tables
+							NET_InitRemotePlayerTables();
+
+							// discard old packets
+							NETs_FlushListenBuffers();
 							NumRemPlayers = 1;
 
 							// try to establish connection
-							int connect_success = NET_ServerConnect();
+							int connect_success = NETs_Connect();
 							if(connect_success) {
 								//FREEMEM(CurServerToResolve);
 								//CurServerToResolve = NULL;
