@@ -365,6 +365,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4A65465116DE86C0009900D6 /* pscdata0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata0.dat; sourceTree = "<group>"; };
+		4A65465216DE86C0009900D6 /* pscdata1.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata1.dat; sourceTree = "<group>"; };
+		4A65465316DE86C0009900D6 /* pscdata2.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata2.dat; sourceTree = "<group>"; };
+		4A65465416DE86C0009900D6 /* pscdata3.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata3.dat; sourceTree = "<group>"; };
 		FA17FD5116BB0C1D0003E370 /* g_emp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = g_emp.cpp; sourceTree = "<group>"; };
 		FA371573164DD36800230CE8 /* con_act_sv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = con_act_sv.cpp; sourceTree = "<group>"; };
 		FA371574164DD36800230CE8 /* con_aux_sv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = con_aux_sv.cpp; sourceTree = "<group>"; };
@@ -1584,6 +1588,10 @@
 		FAF65C75168D1DC0009EB267 /* client */ = {
 			isa = PBXGroup;
 			children = (
+				4A65465116DE86C0009900D6 /* pscdata0.dat */,
+				4A65465216DE86C0009900D6 /* pscdata1.dat */,
+				4A65465316DE86C0009900D6 /* pscdata2.dat */,
+				4A65465416DE86C0009900D6 /* pscdata3.dat */,
 				FAB66F31169A2223000CB9EC /* symbol.tga */,
 				FAF65C76168D1DC0009EB267 /* cons */,
 				FAF65C7A168D1DC0009EB267 /* hilite.jpg */,
@@ -2236,6 +2244,10 @@
 				FAB135BF164DB2CE006CBB88 /* parsec.icns in Resources */,
 				FAB135C2164DB2D4006CBB88 /* con.icns in Resources */,
 				FAB135C3164DB2D4006CBB88 /* dat.icns in Resources */,
+				4A65465516DE86C0009900D6 /* pscdata0.dat in Resources */,
+				4A65465616DE86C0009900D6 /* pscdata1.dat in Resources */,
+				4A65465716DE86C0009900D6 /* pscdata2.dat in Resources */,
+				4A65465816DE86C0009900D6 /* pscdata3.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
