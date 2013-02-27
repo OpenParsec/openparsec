@@ -43,6 +43,8 @@
 // subsystem headers
 #include "inp_defs.h"
 #include "net_defs.h"
+#include "net_game.h"
+#include "net_serv.h"
 #include "sys_defs.h"
 
 // drawing subsystem
@@ -1673,17 +1675,18 @@ void MAP_ExecSelButtonChoice()
 					case MAPSEL_CONNECT:
 						if(map_srv_pressed != -1) {
 							MSGOUT("We want to connect to server %d", map_srv_pressed);
-							// TODO: Do the connect.
-							// store server name temporarely
-							ASSERT( CurServerToResolve == NULL );
-							CurServerToResolve = (char *) ALLOCMEM( strlen( server_list[map_srv_pressed].server_name ) + 1 );
-							strcpy( CurServerToResolve, server_list[map_srv_pressed].server_name );
+							// make a copy of the node_t structure for this server.
+							// Server_Node is a special global that NET_ServerConnect() will use.
+							memcpy(&Server_Node, &server_list[map_srv_pressed].node, sizeof( node_t ) );
+
+							// because we are bypassing the resolver at this point....
+							NumRemPlayers = 1;
 
 							// try to establish connection
-							int connect_success = NETs_Connect();
+							int connect_success = NET_ServerConnect();
 							if(connect_success) {
-								FREEMEM(CurServerToResolve);
-								CurServerToResolve = NULL;
+								//FREEMEM(CurServerToResolve);
+								//CurServerToResolve = NULL;
 								MenuNotifyConnect();
 								MAP_ExecExit();
 							} 
