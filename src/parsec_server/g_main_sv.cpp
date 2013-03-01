@@ -354,22 +354,7 @@ void G_Main::JoinPlayer( int nClientID, E_SimShipState* pSimShipState )
 	ASSERT( ( nClientID >= 0 ) && ( nClientID < MAX_NUM_CLIENTS ) );
 	ASSERT( pSimShipState != NULL );
 
-    G_Player* pPlayer = &m_Players[ nClientID ];
-    
-    if(!pPlayer->GotSentState()) {
-        TheSimNetOutput->statesync( nClientID,TheGame->m_NebulaID,RMEVSTATE_NEBULAID);
-        TheSimNetOutput->statesync( nClientID,TheGame->EnergyExtraBoost,RMEVSTATE_ENERGYBOOST);
-        TheSimNetOutput->statesync( nClientID,TheGame->RepairExtraBoost,RMEVSTATE_REPAIRBOOST);
-        TheSimNetOutput->statesync( nClientID,TheGame->DumbPackNumMissls,RMEVSTATE_DUMBPACK);
-        TheSimNetOutput->statesync( nClientID,TheGame->HomPackNumMissls,RMEVSTATE_HOMPACK);
-        TheSimNetOutput->statesync( nClientID,TheGame->SwarmPackNumMissls,RMEVSTATE_SWARMPACK);
-        TheSimNetOutput->statesync( nClientID,TheGame->ProxPackNumMines,RMEVSTATE_PROXPACK);
-        pPlayer->SetSentState();
-    }
-	// reset to initial state
-	pSimShipState->Reset();
-
-	pXmatrx ObjPosition = pSimShipState->GetObjPosition();
+  	pXmatrx ObjPosition = pSimShipState->GetObjPosition();
 
 	int xdist = ( RAND() % JP_RANGE ) - JP_OFS;
 	int ydist = ( RAND() % JP_RANGE ) - JP_OFS;

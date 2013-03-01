@@ -111,17 +111,19 @@ protected:
 	playerlerp_s				m_playerlerp;
 
 	bool_t						m_ResyncClient;
+    bool_t                      m_ClientHasStateSync;
 
 public:
 	E_SimClientState()
 	{
-		m_States				= NULL;
-		m_nNumStateSlots		= -1;
-		m_nInputStateMessageID	= 0;
-		m_nLastInputStateMessageId= 0;
-		m_ClientMovementMode	= CMM_SIMULATING;
-		m_ResyncClient			= FALSE;
+		m_States				   = NULL;
+		m_nNumStateSlots		   = -1;
+		m_nInputStateMessageID	   = 0;
+		m_nLastInputStateMessageId = 0;
+		m_ClientMovementMode	   = CMM_SIMULATING;
+		m_ResyncClient			   = FALSE;
 		m_LastSwitchToSimRefFrame  = -1;
+        m_ClientHasStateSync       = FALSE;
 	}
 
 	~E_SimClientState()
@@ -143,6 +145,7 @@ public:
 		m_ClientMovementMode		= CMM_SIMULATING;
 		m_ResyncClient				= FALSE;
 		m_LastSwitchToSimRefFrame	= -1;
+        m_ClientHasStateSync       = FALSE;
 	}
 
 	// connect a client
@@ -181,6 +184,11 @@ public:
 
 	// check whether we must resync this client
 	int NeedsResync() { return m_ResyncClient; }
+    
+    // Check whether state variables (nebula id, ammo pack sizes) have been sent
+    int HasState() { return m_ClientHasStateSync; }
+    
+    void SetState() { m_ClientHasStateSync = TRUE; }
 
 protected:
 	// calculate the newest smooothing target

@@ -89,7 +89,6 @@ void G_Player::ResetGameVars()
 
       m_CurGun                = 0;
       m_CurLauncher           = 0;
-      m_StateSync             = 0; 
 }
 
 
