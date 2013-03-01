@@ -696,7 +696,7 @@ int CalculateBoundingRectFromBSphere( GenObject *object, boundrect_s* boundrect 
 
 // ----------------------------------------------------------------------------
 //
-#define PING_WAIT_MAX 	(5 * 60000)
+#define PING_WAIT_MAX 	(5 * 1000)
 
 static refframe_t stargate_ping_wait = 0;
 
@@ -708,7 +708,6 @@ void DetermineStargateDormantState( Stargate *stargate )
 {
 	ASSERT( stargate != NULL );
 
-#ifdef LINKED_PROTOCOL_GAMESERVER
 	
 	// only while connected
 	if ( !NET_ConnectedGMSV() ) {
@@ -747,8 +746,6 @@ void DetermineStargateDormantState( Stargate *stargate )
 			stargate->active  = FALSE;
 		}
 	}
-
-#endif // LINKED_PROTOCOL_GAMESERVER
 	
 }
 
@@ -819,7 +816,7 @@ int StargateDraw_HUD( Stargate *stargate )
 			// draw ping text
 			if ( stargate->ping == -1 ) {
 				sprintf( paste_str, "system unreachable" );
-			} else {
+            } else {
 				sprintf( paste_str, "ping: %dms", stargate->ping );
 			}
 			DrawStargateText( paste_str, &boundrect, FALSE );

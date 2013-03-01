@@ -1691,7 +1691,7 @@ void MAP_ExecSelButtonChoice()
 							NumRemPlayers = 1;
 
 							// try to establish connection
-							int connect_success = NETs_Connect();
+							int connect_success = NET_ServerConnect();
 							if(connect_success) {
 								//FREEMEM(CurServerToResolve);
 								//CurServerToResolve = NULL;
