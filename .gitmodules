@@ -1,0 +1,3 @@
+[submodule "openparsec-assets"]
+	path = openparsec-assets
+	url = https://uberlinuxguy@github.com/OpenParsec/openparsec-assets.git
