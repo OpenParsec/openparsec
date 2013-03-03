@@ -32,7 +32,6 @@ protected:
 	int 		m_CurLauncher;			// currently selected missile outlet
 
 	int			m_nClientID;
-    int         m_StateSync;            //Set to 1 after the server tells the client what the Nebula ID , ammo packs, energy/health values are
 
 	E_SimPlayerInfo* m_pSimPlayerInfo;
 protected:
@@ -139,10 +138,6 @@ public:
 
 	// return the player id that last killed this player
 	int GetLastKiller() { return m_nLastKiller; }
-    
-    //Send client ammo pack sizes, system ID
-    int GotSentState() { return m_StateSync; }
-    void SetSentState() { m_StateSync = 1; }
     
     //weapons cleanup
     void WFX_EnsurePhotonInactive( ShipObject *shippo );

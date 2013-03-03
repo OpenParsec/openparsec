@@ -346,7 +346,15 @@ int E_SimClientNetOutput::_PrepareClientUpdateInfo()
 	m_bIncludeDestClientState &= _ShouldSendHeartbeat();
 #endif // LAG_CLIENT_STATE
 
-	// check whether to include the gamestate ( RE_GameState ) in a heartbeat packet
+	if(!pSimClientState->HasState()) {
+        size_t state_size = E_REList::RmEvGetSizeFromType(RE_STATESYNC) * 7; //We current send 7 states to the client
+        if(_ReserveForOutput( state_size )) {
+            m_bIncludeStateSync = SEND_MODE_UNRELIABLE;
+        }
+        
+    }
+    
+    // check whether to include the gamestate ( RE_GameState ) in a heartbeat packet
 	//FIXME: why only if NeedsResync() == FALSE ?
 	if ( !pSimClientState->NeedsResync() && _ShouldSendHeartbeat() ) {
 
@@ -496,7 +504,42 @@ int E_SimClientNetOutput::_FillPacketForClient( E_REList* pReliable, E_REList* p
 		}
 	}
 
-	// include a RE_GAMESTATE ?
+    // include a StateSync ?
+    if (m_bIncludeStateSync != SEND_MODE_NONE) {
+        E_SimClientState* pSimClientState = TheSimulator->GetSimClientState( m_nDestClientID );
+        E_REList* relist = ( m_bIncludeStateSync == SEND_MODE_UNRELIABLE ? pUnreliable : pReliable );
+        if(!relist->RmEvStateSync(RMEVSTATE_NEBULAID,TheGame->m_NebulaID)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        if(!relist->RmEvStateSync(RMEVSTATE_ENERGYBOOST,TheGame->EnergyExtraBoost)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        if(!relist->RmEvStateSync(RMEVSTATE_REPAIRBOOST,TheGame->RepairExtraBoost)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        if(!relist->RmEvStateSync(RMEVSTATE_DUMBPACK,TheGame->DumbPackNumMissls)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        if(!relist->RmEvStateSync(RMEVSTATE_HOMPACK,TheGame->HomPackNumMissls)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        if(!relist->RmEvStateSync(RMEVSTATE_SWARMPACK,TheGame->SwarmPackNumMissls)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        if(!relist->RmEvStateSync(RMEVSTATE_PROXPACK,TheGame->ProxPackNumMines)) {
+            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+        }
+        pSimClientState->SetState();
+    }
+    
+    // include a RE_GAMESTATE ?
 	if ( m_bIncludeGameState != SEND_MODE_NONE ) {
 		E_REList* relist = ( m_bIncludeGameState == SEND_MODE_UNRELIABLE ? pUnreliable : pReliable );
 		if ( !relist->NET_Append_RE_GameState() ) {
@@ -645,6 +688,7 @@ void E_SimClientNetOutput::_ClearUpdates()
 	m_nNumClients			= 0;
 	m_bIncludeGameState		= SEND_MODE_NONE;
 	m_bIncludeKillStats		= SEND_MODE_NONE;
+    m_bIncludeStateSync     = SEND_MODE_NONE;
 	m_nNumDistsForNextPacket= 0;
 	m_nSizeAvail			= RE_LIST_MAXAVAIL;
 }
@@ -754,19 +798,6 @@ int E_SimNetOutput::ConnectPlayer( int nClientID )
 	}
 
     return TRUE;
-}
-
-void E_SimNetOutput::statesync(int nClientID, byte stateval, byte statekey)
-{
-    RE_StateSync re_statesync;
-    memset( &re_statesync , 0, sizeof ( RE_StateSync ) );
-	re_statesync.RE_Type		= RE_STATESYNC;
-	re_statesync.RE_BlockSize	= sizeof( RE_StateSync );
-	re_statesync.StateKey		= statekey;
-	re_statesync.StateValue	    = stateval;
-    
-    TheSimNetOutput->BufferForDirectRE((RE_StateSync *) &re_statesync , nClientID, TRUE);
-    
 }
 
 // disconnect the player in a specific slot -----------------------------------

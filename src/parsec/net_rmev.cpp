@@ -1139,7 +1139,7 @@ void NET_ExecRmEvStateSync( RE_Header *rmev, int ownerid )
 {
 	ASSERT( rmev != NULL );
 	ASSERT( rmev->RE_Type == RE_STATESYNC );
-	ASSERT( ( ownerid >= 0 ) && ( ownerid < MAX_NET_PROTO_PLAYERS ) );
+	//ASSERT( ( ownerid >= 0 ) && ( ownerid < MAX_NET_PROTO_PLAYERS ) );
 
 	RE_StateSync *re_ss = (RE_StateSync *) rmev;
 

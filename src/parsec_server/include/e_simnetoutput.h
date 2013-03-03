@@ -215,6 +215,9 @@ protected:
 	// indicate whether to send the killstats to the client
 	bool_t			m_bIncludeKillStats;
 
+    //Indicate whether to send state variables to client
+    bool_t          m_bIncludeStateSync;
+    
 	// array of distributables for next packet
 	E_Distributable*	m_DistsForNextPacket[ MAX_NUM_DISTRIBUTABLES_TO_SEND_PER_PACKET ];
 	int				m_nNumDistsForNextPacket;
@@ -348,8 +351,6 @@ public:
 	// cleanup all distributables, that are complete zombies
 	void CleanupZombieDistributables();
    
-    void statesync(int nClientID, byte stateval, byte statekey);
-    
 protected:
 	// destroy m_Distributables
 	void _DestroyDistributables();
