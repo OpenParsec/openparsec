@@ -11,6 +11,8 @@
 extern int		num_data_packages;
 extern char*	package_filename[];
 
+#define PSCDATA_VERSION	"010" // version to match in the embedded file to verify we are good to go.
+
 
 // external functions
 
@@ -18,7 +20,7 @@ int		SYS_OverridePackage( const char* oldpackname, const char* newpackname );
 int		SYS_RegisterPackage( const char *packname, size_t baseofs, char *prefix );
 int		SYS_AcquirePackageScripts( int comtype );
 int		SYS_AcquirePackageDemos();
-
+int		SYS_CheckDataVersion();
 
 // signature compatible system file function replacements
 

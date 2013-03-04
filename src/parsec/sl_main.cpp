@@ -270,6 +270,7 @@ void SLm_InitSound()
 // package string constants ---------------------------------------------------
 //
 static char package_error[]		= "Data package error: file %s";
+static char package_name_1[]	= "pscdata1.dat";
 static char package_name_2[]	= "pscdata2.dat";
 static char package_name_3[]	= "pscdata3.dat";
 
@@ -289,6 +290,9 @@ void SLm_InitFileSystem()
 		FERROR( package_error, DATA_PACKAGE_NAME );
 	}
 
+	// register optional package 1
+	SYS_RegisterPackage( package_name_1, 0, NULL);
+
 	// register optional data package
 	SYS_RegisterPackage( package_name_2, 0, NULL );
 
@@ -297,6 +301,11 @@ void SLm_InitFileSystem()
 	
 	//  duplicate files in pscdata2.dat with newer versions in pscdata3.dat
 	SYS_OverridePackage( package_name_2, package_name_3 );
+
+	if(!SYS_CheckDataVersion()){
+		MSGOUT("ERROR: OpenParsec Data File Version Mismatch!");
+		exit(1);
+	}
 }
 
 

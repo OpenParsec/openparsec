@@ -404,6 +404,37 @@ long int SYS_SysGetFileLength( const char *filename )
 	return siz;
 }
 
+// check the internal version agains the pscdata*.dat version
+//
+int SYS_CheckDataVersion(){
+	// attempt to open the version file
+	FILE *ver_file = SYS_fopen("psdatver.txt", "rb");
+	if(ver_file == NULL) {
+		MSGOUT("Unable to open psdatver.txt. Maybe you need to update your pscdata*.dat files?");
+		return false;
+	}
+
+	char verstr[3];
+	// attempt to read the file into the verstr buffer
+	int read_rc = SYS_fread((void *)verstr, sizeof(char), 3, ver_file);
+	if (read_rc <= 0) {
+		MSGOUT("Unable to read psdatver.txt. Maybe you need to update your pscdata*.dat files?");
+		return false;
+	}
+
+	// now let's try to convert the string to a integer so we can check the version
+	//int data_version = 0;
+	//data_version = (int)strtol(verstr, NULL, 10);
+	if(!strcmp(verstr, PSCDATA_VERSION)) {
+		MSGOUT("psdatver.txt version mismatch: Internal version %s does not match data file version %s.", PSCDATA_VERSION, verstr);
+		return false;
+	}
+
+	SYS_fclose(ver_file);
+
+	return true;
+}
+
 
 // fetch item return structure for the following two routines -----------------
 //

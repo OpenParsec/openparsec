@@ -173,6 +173,34 @@ static starmap_bg_info_s starmap_bg_info[] = {
 	{ 0, 0, 0, 0, 0, 0, NULL, NULL }
 };
 
+const char *inactive_button_textures [12] = {
+	"mn_zin_i",
+	"mn_up_i",
+	"mn_blank_i",
+	"mn_left_i",
+	"mn_reset_i",
+	"mn_right_i",
+	"mn_zout_i",
+	"mn_down_i",
+	"mn_blank_i",
+	"mn_connect_i",
+	"mn_refresh_i",
+	"mn_exit_i"
+};
+const char *active_button_textures [12] = {
+	"mn_zin_a",
+	"mn_up_a",
+	"mn_blank_i",
+	"mn_left_a",
+	"mn_reset_a",
+	"mn_right_a",
+	"mn_zout_a",
+	"mn_down_a",
+	"mn_blank_a",
+	"mn_connect_a",
+	"mn_refresh_a",
+	"mn_exit_a"
+};
 
 enum {
 	MAP_INFOBAR11,
@@ -227,8 +255,8 @@ enum {
 static float sel_leftedge   	= 488.0f / 640.0f;
 static float sel_rightedge  	= 608.0f / 640.0f;
 static float sel_topedge    	= 186.0f / 480.0f;
-static float sel_buttonoffs 	=  58.0f / 480.0f;
-static float sel_buttonheight	=  35.0f / 480.0f;
+static float sel_buttonoffs 	=  16.0f / 480.0f;
+static float sel_buttonheight	=  64.0f / 480.0f;
 
 
 #define NUM_NAV_BUTTONS 9
@@ -248,8 +276,8 @@ enum {
 
 static float nav_leftedge 	= 496.0f / 640.0f;
 static float nav_topedge  	=  16.0f / 480.0f;
-static float nav_buttonwidth  =  44.0f / 640.0f;
-static float nav_buttonheight =  44.0f / 480.0f;
+static float nav_buttonwidth  =  64.0f / 640.0f;
+static float nav_buttonheight =  64.0f / 480.0f;
 
 static float infopanel_height = 128.0f / 480.0f;
 static float navpanel_leftx   = 480.0f / 640.0f;
@@ -1087,16 +1115,16 @@ void MAP_DrawButtonCaptions()
 
 	for ( int bid = 0; bid < NUM_SELECT_BUTTONS; bid++ ) {
 
-		int butstart = (int)(sel_leftedge * Screen_Width);
+		int butstart = (Screen_Width - 150);
 		int strwidth = chwidth * strlen( select_button_text[ bid ] );
 		
-		int xpos = (int)(butstart + ( ( sel_rightedge * Screen_Width ) - butstart - strwidth ) / 2);
+		int xpos = (int)((butstart ));
 
-		topedge = sel_topedge + bid * sel_buttonoffs ;
+		topedge = 292 + bid * 64 ;
 				
-		bottomedge = topedge + sel_buttonheight;
+		bottomedge = topedge + 64;
 			
-		int ypos = (int)(topedge * Screen_Height + ( ( bottomedge - topedge ) * Screen_Height - chheight ) / 2);
+		int ypos = (int)(topedge  + ( ( bottomedge - topedge )  - chheight ) / 2);
 
 		PanelTextColor = fontcol1;
 		D_WriteTrString( select_button_text[ bid ], xpos + 1, ypos + 1, TRTAB_PANELTEXT );
@@ -1234,26 +1262,52 @@ void MAP_DrawBackground()
 	
 	DRAW_ClippedTrRect( ib_x, ib_y, ib_w, ib_h, TRTAB_PANELBACK );
 	
-
-	// draw navigation bar
-	for ( tid = MAP_NAVBAR11; tid < MAP_HILITE; tid++ ) {
 	
-		rect.x = (int)(Screen_Width - starmap_bg_info[ tid ].xpos * Screen_Width);
-		rect.y = (int)(starmap_bg_info[ tid ].ypos * Screen_Height);
-		rect.w = starmap_bg_info[ tid ].owidth;
-		rect.h = starmap_bg_info[ tid ].oheight;
-		rect.scaled_w = (int)(starmap_bg_info[ tid ].width * Screen_Width);
-		rect.scaled_h = (int)(starmap_bg_info[ tid ].height * Screen_Height);
+	// draw the nav buttons
+	int nbid=0;
+	for(nbid=0; nbid<9; nbid++){
+
+		rect.x = (int)((Screen_Width - (64*3+16))  + (nbid % 3) * 64 );
+		rect.y =  (int)((16   +  (nbid / 3) * 64) );
+		rect.w = 64;
+		rect.h = 64;
+		rect.scaled_w = 64;
+		rect.scaled_h = 64;
 		rect.texofsx  = 0;
 		rect.texofsy  = 0;
 		rect.itertype = itertype;
-		rect.texmap   = starmap_bg_info[ tid ].texmap;
+		rect.texmap = FetchTextureMap( inactive_button_textures[nbid]);
+		if(rect.texmap == NULL){
+			itertype = iter_texrgba | iter_specularadd;
+		}
 		
 		DRAW_TexturedScreenRect( &rect, NULL );
+
 	}
-	
+
+	//draw the other buttons
+	for(nbid=9; nbid<12; nbid++){
+		rect.x = (Screen_Width - (64+150)); 
+		rect.y = 292 + (nbid-9) * 64 ;
+		rect.w = 64;
+		rect.h = 64;
+		rect.scaled_w = 64;
+		rect.scaled_h = 64;
+		rect.texofsx  = 0;
+		rect.texofsy  = 0;
+		rect.itertype = itertype;
+		rect.texmap = FetchTextureMap( inactive_button_textures[nbid]);
+		if(rect.texmap == NULL){
+			itertype = iter_texrgba | iter_specularadd;
+		}
+		
+		DRAW_TexturedScreenRect( &rect, NULL );
+
+
+	}
+
 	// draw hilited selection indicator
-	
+
 	if ( map_sel_hilite != -1 || map_nav_hilite != -1 || map_srv_hilite != -1) {
 		int xpos=0;
 		int ypos=0;
@@ -1264,20 +1318,35 @@ void MAP_DrawBackground()
 		
 		if(map_sel_hilite != -1) {
 
-			xpos = (int)(sel_leftedge * Screen_Width);
-			
-			float topedge = sel_topedge + map_sel_hilite * sel_buttonoffs ;
-			ypos =  (int)(topedge * Screen_Height);
-			scaled_width = starmap_bg_info[ MAP_HILITE ].width * Screen_Width;
-			scaled_height = starmap_bg_info[ MAP_HILITE ].height * Screen_Height;
+			rect.x = (Screen_Width - (64+150)); 
+			rect.y = 292 + map_sel_hilite * 64 ;
+				
+			rect.w = 64;
+			rect.h = 64;
+			rect.scaled_w = 64;
+			rect.scaled_h = 64;
+			rect.texofsx  = 0;
+			rect.texofsy  = 0;
+			rect.itertype = itertype;
+			rect.texmap   = FetchTextureMap( active_button_textures[9+map_sel_hilite]);
 
 		
 		} else if (map_nav_hilite != -1) {
 			
-			xpos = (int)((nav_leftedge  + (map_nav_hilite % 3) * nav_buttonwidth ) * Screen_Width);
-			ypos = (int)((nav_topedge   +  (map_nav_hilite / 3) * nav_buttonheight) * Screen_Height);
-			scaled_width = nav_buttonwidth * Screen_Width;
-			scaled_height = nav_buttonheight * Screen_Height;
+			xpos = (int)((Screen_Width - (64*3+16))  + (map_nav_hilite % 3) * 64 );
+			ypos = (int)((16   +  (map_nav_hilite / 3) * 64) );
+			rect.texmap = FetchTextureMap( active_button_textures[map_nav_hilite]);
+			rect.x = xpos; 
+			rect.y = ypos;
+				
+			rect.w = 64;
+			rect.h = 64;
+			rect.scaled_w = 64;
+			rect.scaled_h = 64;
+			rect.texofsx  = 0;
+			rect.texofsy  = 0;
+			rect.itertype = itertype;
+		
 
 		} else if(map_srv_hilite != -1) {
 
@@ -1290,23 +1359,21 @@ void MAP_DrawBackground()
 				scaled_height = 11;
 				xpos = (SCALE_X_COORD(srv->xpos)+ map_xoffs - 6 + map_pan_x);
 				ypos = (SCALE_Y_COORD(srv->ypos ) - 6 + map_pan_y);
-				
+				rect.x = xpos; 
+				rect.y = ypos;
+			
+				rect.w = starmap_bg_info[ MAP_HILITE ].owidth;
+				rect.h = starmap_bg_info[ MAP_HILITE ].oheight;
+				rect.scaled_w = scaled_width;
+				rect.scaled_h = scaled_height;
+				rect.texofsx  = 0;
+				rect.texofsy  = 0;
+				rect.itertype = itertype;
+				rect.texmap   = starmap_bg_info[ MAP_HILITE ].texmap;
 				
 			}
 		}
 
-
-		rect.x = xpos; 
-		rect.y = ypos;
-			
-		rect.w = starmap_bg_info[ MAP_HILITE ].owidth;
-		rect.h = starmap_bg_info[ MAP_HILITE ].oheight;
-		rect.scaled_w = scaled_width;
-		rect.scaled_h = scaled_height;
-		rect.texofsx  = 0;
-		rect.texofsy  = 0;
-		rect.itertype = itertype;
-		rect.texmap   = starmap_bg_info[ MAP_HILITE ].texmap;
 
 		DRAW_TexturedScreenRect( &rect, NULL );
 	
@@ -1538,15 +1605,15 @@ void MAP_CheckMouseSelButtons()
 	float	topedge;
 	float bottomedge;
 
-	if ( cur_mouse_x >= sel_leftedge && cur_mouse_x <= sel_rightedge ) {
+	if ( (cur_mouse_x * Screen_Width) >= (Screen_Width - (64+150)) && (cur_mouse_x * Screen_Width) <= (Screen_Width - 150) ) {
 		int bid = 0;
 		for ( bid = 0; bid < NUM_SELECT_BUTTONS; bid++ ) {
 
-			topedge = sel_topedge + bid * sel_buttonoffs ;
+			topedge = 292 + bid * 64 ;
 
-			bottomedge = topedge + sel_buttonheight;		
+			bottomedge = topedge + 64;		
 
-			if ( cur_mouse_y >= topedge && cur_mouse_y <= bottomedge ) {
+			if ( (cur_mouse_y * Screen_Height) >= topedge && (cur_mouse_y * Screen_Height) <= bottomedge ) {
 
 				map_sel_hilite = bid;
 				break;
@@ -1571,15 +1638,15 @@ void MAP_CheckMouseNavButtons()
 	for ( bid = 0; bid < NUM_NAV_BUTTONS; bid++ ) {
 
 		int xidx = bid % 3; // 0 1 2
-		float left = nav_leftedge + xidx * nav_buttonwidth; //bw = 10
+		float left = (Screen_Width - (64*3+16)) + xidx * 64; //bw = 10
 
 		int yidx = bid / 3; // 0 1 2
-		float top = nav_topedge + yidx * nav_buttonheight;  // bh = 10
+		float top = 16 + yidx * 64;  // bh = 10
 
 
 
-		if ( cur_mouse_x >= left && cur_mouse_x < ( left + nav_buttonwidth ) &&
-			 cur_mouse_y >= top  && cur_mouse_y < ( top  + nav_buttonheight ) ) {
+		if ( (cur_mouse_x * Screen_Width) >= left && (cur_mouse_x * Screen_Width) < ( left + 64 ) &&
+			(cur_mouse_y * Screen_Height) >= top  && (cur_mouse_y * Screen_Height) < ( top  + 64 ) ) {
 
 			map_nav_hilite = bid;
 			break;
@@ -1587,7 +1654,7 @@ void MAP_CheckMouseNavButtons()
 	}
 
 
-	if ( bid == NUM_NAV_BUTTONS ) {
+	if ( bid == NUM_NAV_BUTTONS || bid ==  MAPNAV_NULL || bid == MAPNAV_NULL2) {
 		map_nav_hilite = -1;
 	} 
 
