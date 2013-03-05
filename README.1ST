@@ -1,27 +1,16 @@
-This is my own personal branch where I will probably be working on restructing the code
-and preparing it for trunk.  Things will probably change alot, so don't expect things
-to be in the same place for too long.  Oh and don't expect this to compile either. 
+To build OpenParsec:
 
-Here's a breif over view of my though pattern:
+On Linux:
+- Install premake or grab the premake4 binary and put it somewhere in your $PATH (http://industriousone.com/premake/download)
+- cd into platforms/premake/
+- run: premake4 gmake
+- To build the client: make client
+- To build the server: make server
+- To build both targets: make
 
-	build/ - where the object files from the built cpp files will be  This is easier
-	         for version control as I can just ignore the contents via a propset.
 
-	src/  - where the actual source is.  I am breaking it down into 3 pieces as before
-	        but since I want to turn the "common" stuff into a statically linked in lib
-			that is only built once, that's why it's called libparsec now.  I have also 
-			done away with also done away with the OS dependent dirs as most of the stuff
-			parsec will be dependent on will build with little to no mod on all platforms.
-			For OS dependent stuff, I am using #ifdef's in the source.  You'll see 'em. :-)
-
-That's about it now.  Oh and the game_src/ directory is mostly empty now.  The Makefiles are 
-being changed to do a more 'tandum' style GNU build, which might actually allow us to do
-a more central type config and maybe, just maybe, get parsec to build in a more readily 
-available GNU environment in windows.  Like, oh, cygwin or mingw instead of Visual Studio.
-Mac OSX should also allow for GNU build environments, making the build system itself 
-cross platform. :-)
-
---
-The Uber.
-
+NOTES ON LINUX:
+- There is no install script yet
+- binaries get copied into parsec_root/{client,server}
+- You will need a copy of the openparsec-assets to run the client (https://github.com/OpenParsec/openparsec-assets)
 
