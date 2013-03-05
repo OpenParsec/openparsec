@@ -68,72 +68,72 @@ ifeq ($(config),release32)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/utl_clip.o \
-	$(OBJDIR)/con_vald.o \
-	$(OBJDIR)/obj_odt.o \
-	$(OBJDIR)/sl_path.o \
-	$(OBJDIR)/con_arg.o \
-	$(OBJDIR)/debug.o \
-	$(OBJDIR)/obj_type.o \
-	$(OBJDIR)/net_pckt_gmsv.o \
-	$(OBJDIR)/utl_logfile.o \
-	$(OBJDIR)/obj_creg.o \
-	$(OBJDIR)/sys_file.o \
-	$(OBJDIR)/utl_bsp.o \
-	$(OBJDIR)/utl_clpo.o \
-	$(OBJDIR)/utl_math2.o \
-	$(OBJDIR)/sys_swap.o \
-	$(OBJDIR)/obj_cust.o \
-	$(OBJDIR)/sw_path.o \
-	$(OBJDIR)/obj_clas.o \
-	$(OBJDIR)/net_stream.o \
-	$(OBJDIR)/sw_timer.o \
-	$(OBJDIR)/net_util.o \
-	$(OBJDIR)/e_relist.o \
-	$(OBJDIR)/g_emp.o \
-	$(OBJDIR)/utl_cull.o \
-	$(OBJDIR)/sl_timer.o \
-	$(OBJDIR)/net_wrap.o \
-	$(OBJDIR)/g_extra.o \
 	$(OBJDIR)/net_swap.o \
-	$(OBJDIR)/utl_math.o \
-	$(OBJDIR)/con_tab.o \
+	$(OBJDIR)/sw_path.o \
 	$(OBJDIR)/sys_date.o \
+	$(OBJDIR)/sl_timer.o \
+	$(OBJDIR)/obj_cust.o \
+	$(OBJDIR)/utl_math.o \
+	$(OBJDIR)/net_pckt_gmsv.o \
+	$(OBJDIR)/sys_file.o \
+	$(OBJDIR)/net_util.o \
+	$(OBJDIR)/utl_logfile.o \
+	$(OBJDIR)/g_emp.o \
+	$(OBJDIR)/con_tab.o \
+	$(OBJDIR)/sl_path.o \
+	$(OBJDIR)/obj_odt.o \
+	$(OBJDIR)/utl_clpo.o \
+	$(OBJDIR)/net_stream.o \
+	$(OBJDIR)/utl_bsp.o \
+	$(OBJDIR)/con_arg.o \
+	$(OBJDIR)/utl_clip.o \
 	$(OBJDIR)/e_modulemanager.o \
-	$(OBJDIR)/con_aux_sv.o \
-	$(OBJDIR)/inp_main_sv.o \
-	$(OBJDIR)/MasterServer.o \
-	$(OBJDIR)/con_com_sv.o \
-	$(OBJDIR)/con_ext_sv.o \
-	$(OBJDIR)/e_colldet_sv.o \
-	$(OBJDIR)/con_info_sv.o \
-	$(OBJDIR)/net_util_sv.o \
-	$(OBJDIR)/e_gameserver.o \
-	$(OBJDIR)/con_act_sv.o \
-	$(OBJDIR)/e_global_sv.o \
-	$(OBJDIR)/sv_main.o \
-	$(OBJDIR)/con_int_sv.o \
-	$(OBJDIR)/g_main_sv.o \
-	$(OBJDIR)/e_simnetinput.o \
-	$(OBJDIR)/con_main_sv.o \
-	$(OBJDIR)/e_world.o \
-	$(OBJDIR)/nl_udpdriver.o \
-	$(OBJDIR)/net_packetdriver.o \
-	$(OBJDIR)/sys_util_sv.o \
-	$(OBJDIR)/sl_util_sv.o \
-	$(OBJDIR)/g_player.o \
-	$(OBJDIR)/sys_msg_sv.o \
-	$(OBJDIR)/e_simnetoutput.o \
-	$(OBJDIR)/e_simplayerinfo.o \
+	$(OBJDIR)/utl_math2.o \
+	$(OBJDIR)/debug.o \
+	$(OBJDIR)/net_wrap.o \
+	$(OBJDIR)/sw_timer.o \
+	$(OBJDIR)/sys_swap.o \
+	$(OBJDIR)/utl_cull.o \
+	$(OBJDIR)/obj_creg.o \
+	$(OBJDIR)/e_relist.o \
+	$(OBJDIR)/con_vald.o \
+	$(OBJDIR)/g_extra.o \
+	$(OBJDIR)/obj_clas.o \
+	$(OBJDIR)/obj_type.o \
 	$(OBJDIR)/e_simulator.o \
-	$(OBJDIR)/sys_err_sv.o \
-	$(OBJDIR)/con_load_sv.o \
-	$(OBJDIR)/e_packethandler.o \
-	$(OBJDIR)/MasterServerItem.o \
-	$(OBJDIR)/e_connmanager.o \
-	$(OBJDIR)/con_std_sv.o \
+	$(OBJDIR)/g_player.o \
+	$(OBJDIR)/con_com_sv.o \
+	$(OBJDIR)/net_util_sv.o \
+	$(OBJDIR)/con_info_sv.o \
+	$(OBJDIR)/inp_main_sv.o \
 	$(OBJDIR)/con_list_sv.o \
+	$(OBJDIR)/e_world.o \
+	$(OBJDIR)/con_main_sv.o \
+	$(OBJDIR)/e_connmanager.o \
 	$(OBJDIR)/g_stgate_sv.o \
+	$(OBJDIR)/e_simnetinput.o \
+	$(OBJDIR)/MasterServer.o \
+	$(OBJDIR)/sys_util_sv.o \
+	$(OBJDIR)/e_packethandler.o \
+	$(OBJDIR)/e_global_sv.o \
+	$(OBJDIR)/con_std_sv.o \
+	$(OBJDIR)/sys_err_sv.o \
+	$(OBJDIR)/sl_util_sv.o \
+	$(OBJDIR)/con_int_sv.o \
+	$(OBJDIR)/e_gameserver.o \
+	$(OBJDIR)/e_colldet_sv.o \
+	$(OBJDIR)/e_simnetoutput.o \
+	$(OBJDIR)/net_packetdriver.o \
+	$(OBJDIR)/e_simplayerinfo.o \
+	$(OBJDIR)/nl_udpdriver.o \
+	$(OBJDIR)/con_act_sv.o \
+	$(OBJDIR)/con_aux_sv.o \
+	$(OBJDIR)/con_ext_sv.o \
+	$(OBJDIR)/sv_main.o \
+	$(OBJDIR)/g_main_sv.o \
+	$(OBJDIR)/con_load_sv.o \
+	$(OBJDIR)/sys_msg_sv.o \
+	$(OBJDIR)/MasterServerItem.o \
 
 RESOURCES := \
 
@@ -194,202 +194,202 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/utl_clip.o: ../../../../src/libparsec/utl_clip.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_vald.o: ../../../../src/libparsec/con_vald.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/obj_odt.o: ../../../../src/libparsec/obj_odt.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sl_path.o: ../../../../src/libparsec/sl_path.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_arg.o: ../../../../src/libparsec/con_arg.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/debug.o: ../../../../src/libparsec/debug.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/obj_type.o: ../../../../src/libparsec/obj_type.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_pckt_gmsv.o: ../../../../src/libparsec/net_pckt_gmsv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/utl_logfile.o: ../../../../src/libparsec/utl_logfile.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/obj_creg.o: ../../../../src/libparsec/obj_creg.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sys_file.o: ../../../../src/libparsec/sys_file.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/utl_bsp.o: ../../../../src/libparsec/utl_bsp.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/utl_clpo.o: ../../../../src/libparsec/utl_clpo.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/utl_math2.o: ../../../../src/libparsec/utl_math2.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sys_swap.o: ../../../../src/libparsec/sys_swap.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/obj_cust.o: ../../../../src/libparsec/obj_cust.cpp
+$(OBJDIR)/net_swap.o: ../../../../src/libparsec/net_swap.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/sw_path.o: ../../../../src/libparsec/sw_path.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/obj_clas.o: ../../../../src/libparsec/obj_clas.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_stream.o: ../../../../src/libparsec/net_stream.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sw_timer.o: ../../../../src/libparsec/sw_timer.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_util.o: ../../../../src/libparsec/net_util.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_relist.o: ../../../../src/libparsec/e_relist.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/g_emp.o: ../../../../src/libparsec/g_emp.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/utl_cull.o: ../../../../src/libparsec/utl_cull.cpp
+$(OBJDIR)/sys_date.o: ../../../../src/libparsec/sys_date.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/sl_timer.o: ../../../../src/libparsec/sl_timer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_wrap.o: ../../../../src/libparsec/net_wrap.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/g_extra.o: ../../../../src/libparsec/g_extra.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_swap.o: ../../../../src/libparsec/net_swap.cpp
+$(OBJDIR)/obj_cust.o: ../../../../src/libparsec/obj_cust.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/utl_math.o: ../../../../src/libparsec/utl_math.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/net_pckt_gmsv.o: ../../../../src/libparsec/net_pckt_gmsv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/sys_file.o: ../../../../src/libparsec/sys_file.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/net_util.o: ../../../../src/libparsec/net_util.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/utl_logfile.o: ../../../../src/libparsec/utl_logfile.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/g_emp.o: ../../../../src/libparsec/g_emp.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/con_tab.o: ../../../../src/libparsec/con_tab.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sys_date.o: ../../../../src/libparsec/sys_date.cpp
+$(OBJDIR)/sl_path.o: ../../../../src/libparsec/sl_path.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/obj_odt.o: ../../../../src/libparsec/obj_odt.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/utl_clpo.o: ../../../../src/libparsec/utl_clpo.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/net_stream.o: ../../../../src/libparsec/net_stream.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/utl_bsp.o: ../../../../src/libparsec/utl_bsp.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_arg.o: ../../../../src/libparsec/con_arg.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/utl_clip.o: ../../../../src/libparsec/utl_clip.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/e_modulemanager.o: ../../../../src/libparsec/e_modulemanager.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_aux_sv.o: ../../../../src/parsec_server/con_aux_sv.cpp
+$(OBJDIR)/utl_math2.o: ../../../../src/libparsec/utl_math2.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/inp_main_sv.o: ../../../../src/parsec_server/inp_main_sv.cpp
+$(OBJDIR)/debug.o: ../../../../src/libparsec/debug.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/MasterServer.o: ../../../../src/parsec_server/MasterServer.cpp
+$(OBJDIR)/net_wrap.o: ../../../../src/libparsec/net_wrap.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_com_sv.o: ../../../../src/parsec_server/con_com_sv.cpp
+$(OBJDIR)/sw_timer.o: ../../../../src/libparsec/sw_timer.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_ext_sv.o: ../../../../src/parsec_server/con_ext_sv.cpp
+$(OBJDIR)/sys_swap.o: ../../../../src/libparsec/sys_swap.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_colldet_sv.o: ../../../../src/parsec_server/e_colldet_sv.cpp
+$(OBJDIR)/utl_cull.o: ../../../../src/libparsec/utl_cull.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_info_sv.o: ../../../../src/parsec_server/con_info_sv.cpp
+$(OBJDIR)/obj_creg.o: ../../../../src/libparsec/obj_creg.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_util_sv.o: ../../../../src/parsec_server/net_util_sv.cpp
+$(OBJDIR)/e_relist.o: ../../../../src/libparsec/e_relist.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_gameserver.o: ../../../../src/parsec_server/e_gameserver.cpp
+$(OBJDIR)/con_vald.o: ../../../../src/libparsec/con_vald.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_act_sv.o: ../../../../src/parsec_server/con_act_sv.cpp
+$(OBJDIR)/g_extra.o: ../../../../src/libparsec/g_extra.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_global_sv.o: ../../../../src/parsec_server/e_global_sv.cpp
+$(OBJDIR)/obj_clas.o: ../../../../src/libparsec/obj_clas.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sv_main.o: ../../../../src/parsec_server/sv_main.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_int_sv.o: ../../../../src/parsec_server/con_int_sv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/g_main_sv.o: ../../../../src/parsec_server/g_main_sv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_simnetinput.o: ../../../../src/parsec_server/e_simnetinput.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_main_sv.o: ../../../../src/parsec_server/con_main_sv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_world.o: ../../../../src/parsec_server/e_world.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/nl_udpdriver.o: ../../../../src/parsec_server/nl_udpdriver.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/net_packetdriver.o: ../../../../src/parsec_server/net_packetdriver.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sys_util_sv.o: ../../../../src/parsec_server/sys_util_sv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sl_util_sv.o: ../../../../src/parsec_server/sl_util_sv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/g_player.o: ../../../../src/parsec_server/g_player.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sys_msg_sv.o: ../../../../src/parsec_server/sys_msg_sv.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_simnetoutput.o: ../../../../src/parsec_server/e_simnetoutput.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_simplayerinfo.o: ../../../../src/parsec_server/e_simplayerinfo.cpp
+$(OBJDIR)/obj_type.o: ../../../../src/libparsec/obj_type.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/e_simulator.o: ../../../../src/parsec_server/e_simulator.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/sys_err_sv.o: ../../../../src/parsec_server/sys_err_sv.cpp
+$(OBJDIR)/g_player.o: ../../../../src/parsec_server/g_player.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_load_sv.o: ../../../../src/parsec_server/con_load_sv.cpp
+$(OBJDIR)/con_com_sv.o: ../../../../src/parsec_server/con_com_sv.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_packethandler.o: ../../../../src/parsec_server/e_packethandler.cpp
+$(OBJDIR)/net_util_sv.o: ../../../../src/parsec_server/net_util_sv.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/MasterServerItem.o: ../../../../src/parsec_server/MasterServerItem.cpp
+$(OBJDIR)/con_info_sv.o: ../../../../src/parsec_server/con_info_sv.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/e_connmanager.o: ../../../../src/parsec_server/e_connmanager.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/con_std_sv.o: ../../../../src/parsec_server/con_std_sv.cpp
+$(OBJDIR)/inp_main_sv.o: ../../../../src/parsec_server/inp_main_sv.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/con_list_sv.o: ../../../../src/parsec_server/con_list_sv.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_world.o: ../../../../src/parsec_server/e_world.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_main_sv.o: ../../../../src/parsec_server/con_main_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_connmanager.o: ../../../../src/parsec_server/e_connmanager.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/g_stgate_sv.o: ../../../../src/parsec_server/g_stgate_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_simnetinput.o: ../../../../src/parsec_server/e_simnetinput.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/MasterServer.o: ../../../../src/parsec_server/MasterServer.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/sys_util_sv.o: ../../../../src/parsec_server/sys_util_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_packethandler.o: ../../../../src/parsec_server/e_packethandler.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_global_sv.o: ../../../../src/parsec_server/e_global_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_std_sv.o: ../../../../src/parsec_server/con_std_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/sys_err_sv.o: ../../../../src/parsec_server/sys_err_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/sl_util_sv.o: ../../../../src/parsec_server/sl_util_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_int_sv.o: ../../../../src/parsec_server/con_int_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_gameserver.o: ../../../../src/parsec_server/e_gameserver.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_colldet_sv.o: ../../../../src/parsec_server/e_colldet_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_simnetoutput.o: ../../../../src/parsec_server/e_simnetoutput.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/net_packetdriver.o: ../../../../src/parsec_server/net_packetdriver.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/e_simplayerinfo.o: ../../../../src/parsec_server/e_simplayerinfo.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/nl_udpdriver.o: ../../../../src/parsec_server/nl_udpdriver.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_act_sv.o: ../../../../src/parsec_server/con_act_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_aux_sv.o: ../../../../src/parsec_server/con_aux_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_ext_sv.o: ../../../../src/parsec_server/con_ext_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/sv_main.o: ../../../../src/parsec_server/sv_main.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/g_main_sv.o: ../../../../src/parsec_server/g_main_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/con_load_sv.o: ../../../../src/parsec_server/con_load_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/sys_msg_sv.o: ../../../../src/parsec_server/sys_msg_sv.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/MasterServerItem.o: ../../../../src/parsec_server/MasterServerItem.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
