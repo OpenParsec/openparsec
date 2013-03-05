@@ -1,2 +1,3 @@
-Take pscdata0.dat, pscdata1.dat, pscdata2.dat and pscdata3.dat from an
-existing parsec 0197 installation and place them here.
+To run OpenParsec, you will need a copy of the latest openparsec-assets
+repository.  You can find it via git from this link: 
+https://github.com/OpenParsec/openparsec-assets
