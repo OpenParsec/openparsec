@@ -5,6 +5,7 @@
 #ifndef _M_OPTION_H_
 #define _M_OPTION_H_
 
+extern bool mod_player_name;
 
 // options menu item ids
 
@@ -28,10 +29,14 @@ enum {
 	INVERT_OPT,
 	SENSITIVITY_OPT,
 	CENTER_OPT,
+//	APPLY_MOUSE_OPT,
+	NAME_OPT,
 	EXIT_OPT,
 
 	NUM_OPTIONS
 };
+
+
 
 
 // external functions
@@ -40,6 +45,7 @@ int		OptionsListSelection();
 void	OptionsListSelectDefault();
 void	OptionsListCursorUp();
 void	OptionsListCursorDown();
+void	OptionsKeyPressed(char key);
 
 int		MouseOverOption( int mousex, int mousey );
 

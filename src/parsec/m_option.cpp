@@ -38,6 +38,8 @@
 // global externals
 #include "globals.h"
 
+#include "con_com.h"
+
 // subsystem headers
 #include "aud_defs.h"
 #include "net_defs.h"
@@ -65,9 +67,13 @@
 #include "sys_bind.h"
 #include "vid_plug.h"
 
+#ifdef SYSTEM_TARGET_LINUX
+	#include <SDL/SDL.h>
+#else
+	#include <SDL.h>
+#endif
 
 // flags
-
 #define DISABLE_VID_SUBSYS_SWITCHING
 
 
@@ -77,6 +83,9 @@
 #define PASTE_STR_LEN 2047
 static char paste_str[ PASTE_STR_LEN + 1 ];
 
+static char tmp_name[MAX_PLAYER_NAME + 1];
+
+bool mod_player_name;
 
 // string constants -----------------------------------------------------------
 //
@@ -112,6 +121,8 @@ static const char *option_lines[ NUM_OPTIONS ] = {
 	"  invert mouse y axis: ",
 	"  mouse sensitivity: ",
 	"  mouse centering speed: ",
+	//" ",
+	"  name: ",
 	"  exit options menu  ",
 };
 
@@ -141,7 +152,9 @@ static int option_spacing[ NUM_OPTIONS ] = {
 	OPT_SPACING_NONE,		// CTRL_OPT,
 	OPT_SPACING_NONE,		// INVERT_OPT,
 	OPT_SPACING_NONE,		// SENSITIVITY_OPT,
-	OPT_SPACING_NEWLINE,	// CENTER_OPT,
+	OPT_SPACING_DIVIDER,	// CENTER_OPT,
+	//OPT_SPACING_DIVIDER,    // APPLY_MOUSE_OPT (Actually a blank line),
+	OPT_SPACING_NEWLINE,	// NAME_OPT,
 	OPT_SPACING_DIVIDER,	// EXIT_OPT,
 };
 
@@ -322,6 +335,7 @@ void OptionsListCursorDown()
 
 	AUD_Select2();
 }
+
 
 
 // current metrics of options menu contents -----------------------------------
@@ -760,6 +774,24 @@ void ExecOptionSelectCenterSpeed()
 	inp_mouse_drift = cur_centerspeed;
 }
 
+// exec options menu item selection: select name-----------------
+//
+PRIVATE
+void ExecOptionSelectName()
+{
+	// toggle the flag to modify the LocalPlayerName
+	mod_player_name = !mod_player_name;
+	if(mod_player_name) {
+		// if we are modifying the player, copy the local player
+		// name to paste_str for editing.
+		strncpy(tmp_name, LocalPlayerName, MAX_PLAYER_NAME + 1);
+	} else {
+		CheckPlayerName(tmp_name);
+		//strncpy(LocalPlayerName, tmp_name, MAX_PLAYER_NAME + 1);
+	}
+		
+	
+}
 
 // exec options menu item selection: exit options menu ------------------------
 //
@@ -888,6 +920,9 @@ void ExecOptionApplyNetwork()
 //
 void ExecOptionSelection( int optno )
 {
+	// reset the mod_player_name flag 
+	mod_player_name = 0;
+
 	// invoke corresponding function
 	switch ( optno ) {
 
@@ -965,6 +1000,9 @@ void ExecOptionSelection( int optno )
 
 		case EXIT_OPT:
 			ExecOptionSelectExit();
+			break;
+		case NAME_OPT:
+			ExecOptionSelectName();
 			break;
 
 		default:
@@ -1206,7 +1244,22 @@ void CreateOptionTextCenterSpeed( int id )
 	strcat( opt_text_buffer, "  " );
 }
 
+// create options menu item text: set mouse centering speed -------------------
+//
+PRIVATE
+void CreateOptionTextName( int id )
+{
+	ASSERT( strlen( option_lines[ id ] ) + 2 <= OPT_MAX_TEXTLEN );
+	strcpy( opt_text_buffer, option_lines[ id ] );
+	if(!mod_player_name) {	
+		sprintf( paste_str, "%s", LocalPlayerName );
+	} else {
+		sprintf(paste_str, "%s", tmp_name);
+	}
 
+	strcat( opt_text_buffer, paste_str );
+	strcat( opt_text_buffer, "  " );
+}
 // create options menu item text: default -------------------------------------
 //
 PRIVATE
@@ -1283,12 +1336,73 @@ void CreateOptionsText( int id )
 		case CENTER_OPT:
 			CreateOptionTextCenterSpeed( id );
 			break;
-
+		case NAME_OPT:
+			CreateOptionTextName( id );
+			break;
 		default:
 			CreateOptionTextDefault( id );
 			break;
 	}
 }
+
+// filters unsafe charaters from the key pressed buffer.
+//void OptionsNameCharaterFilter(dword key){
+
+
+
+
+// used to modify name, modifies the past_str buffer thing
+void OptionsKeyPressed(char key)
+{
+
+	/*
+	// don't write console open/close key
+	if (character == '`' || character == '~')
+		return;
+
+	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
+
+	// typeable characters
+	if ( ( character & CON_ASCII_MASK ) && (character <= CON_ASCII_MASK) && (cursor_x < edit_max_x ) ) {
+		if ( insert_mode && ( cursor_x < curlinelen ) ) {
+			if ( curlinelen < edit_max_x ) {
+				strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x );
+				strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1, paste_str );
+				con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
+			}
+		} else {
+			con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
+		}
+	}*/
+	// filter some ascii keys.
+	if( (key > 32 && key < 45) ||   
+		(key == 46 || key == 47 ) ||
+		(key > 57 && key < 65) ||
+		(key > 90 && key < 95) || 
+		(key == 96) || 
+		(key > 121) ) {
+			return;
+	}
+
+
+	if(key == SDLK_BACKSPACE) { 
+		if(tmp_name[0] != '\0'){
+			tmp_name[strlen(tmp_name)-1]='\0';
+		}
+	} else if (key == SDLK_RETURN) {
+		ExecOptionSelectName();
+	
+	} else if(key == SDLK_ESCAPE) {
+		mod_player_name = 0; // exit with no modification
+	} else {
+		if(strlen(tmp_name) + 1 < MAX_PLAYER_NAME ) {
+			tmp_name[strlen(tmp_name)] = (char)key;
+		}
+	}
+
+
+}
+
 
 
 // slide the options menu to its specifed target x position -------------------

@@ -63,6 +63,8 @@
 #include "isdl_joy.h"
 #include "isdl_supp.h"
 
+#include "m_option.h"
+
 #if SDL_VERSION_ATLEAST(2, 0, 0)
 	// for the window handle
 	#include "vsdl_ogl.h"
@@ -424,6 +426,21 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 	if (event.type == SDL_KEYUP)
 		ISDLm_SetKeyRepeat(KeybFlags->ConActive && KeybFlags->ConEnabled);
 #endif
+	
+	if(pressed && mod_player_name) {
+		if (key == MKC_LSHIFT || key == MKC_RSHIFT) {
+			return;
+		}
+		char inkey = (char) event.key.keysym.unicode;
+		if( (inkey > 31 && inkey < 127) ||
+			(inkey == SDLK_BACKSPACE)  ||
+			(inkey == SDLK_RETURN) || 
+			(inkey == SDLK_ESCAPE) )
+		{ // only handle ASCII and a few special keys for now...
+			OptionsKeyPressed(inkey);
+		}
+		return;
+	}
 
 	// console keyboard buffer handling
 	if ( pressed && ( key != MKC_TILDE ) ) {
