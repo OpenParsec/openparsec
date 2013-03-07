@@ -1457,5 +1457,12 @@
     <ClInclude Include="..\..\src\libraries\stb_image\stb_image_write.h">
       <Filter>libraries\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\openparsec-assets\openparsec.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Parsec.rc" />
   </ItemGroup>
 </Project>

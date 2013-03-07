@@ -488,6 +488,13 @@
     <ClInclude Include="..\..\src\parsec\include\vsdl_inito.h" />
     <ClInclude Include="..\..\src\parsec\include\vsdl_ogl.h" />
     <ClInclude Include="..\..\src\parsec\include\vsdl_suppo.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\openparsec-assets\openparsec.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Parsec.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8B8F1A1D-E8DF-4739-812B-72FC14EDEE55}</ProjectGuid>
