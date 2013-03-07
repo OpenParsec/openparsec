@@ -875,18 +875,6 @@
     <ClInclude Include="..\..\src\libparsec\include\utl_model.h">
       <Filter>libparsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\al_cd.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\al_cdnul.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\al_gsi.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\al_gsih.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\al_initg.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -909,39 +897,6 @@
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\aud_supp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\aw_cd.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\aw_cdnul.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\aw_qmdx.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\aw_qmdxh.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_cd.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_cdnul.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_cdstr.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_inits.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_smgr.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_speak.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ax_struc.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\con_act.h">
@@ -1001,9 +956,6 @@
     <ClInclude Include="..\..\src\parsec\include\con_tani.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\d_blit.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\d_bmap.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1023,45 +975,6 @@
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\d_patch.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_blit.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_bmap.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_font.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_fonta.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_fontc.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_iter.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_misc.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_misca.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_miscc.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_patch.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_sst96.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\dg_vbv3.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\do_blit.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\do_bmap.h">
@@ -1145,9 +1058,6 @@
     <ClInclude Include="..\..\src\parsec\include\g_cloud.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\g_emp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\g_explod.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1190,12 +1100,6 @@
     <ClInclude Include="..\..\src\parsec\include\g_wfx.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\glew.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\glxew.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\h_cockpt.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1223,22 +1127,10 @@
     <ClInclude Include="..\..\src\parsec\include\il_joy.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\il_keydf.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\il_keyn.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\il_mouse.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\il_supp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\il_svlib.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\il_xlib.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\img_3df.h">
@@ -1253,16 +1145,10 @@
     <ClInclude Include="..\..\src\parsec\include\img_jpg.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\img_jpgh.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\img_load.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\img_supp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\img_tex.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\img_tga.h">
@@ -1305,36 +1191,6 @@
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\isdl_supp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\iw_joy.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\iw_keyb.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\iw_keydf.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\iw_keyn.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\iw_main.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\iw_mouse.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ix_keyn.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ix_keytb.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ix_main.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\ix_mouse.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\m_button.h">
@@ -1418,9 +1274,6 @@
     <ClInclude Include="..\..\src\parsec\include\nw_udp.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\nx_udp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\obj_ani.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1466,9 +1319,6 @@
     <ClInclude Include="..\..\src\parsec\include\r_gl.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\r_glide.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\r_glob.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1488,33 +1338,6 @@
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\r_supp.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_api.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_obj.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_objmc.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_part.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_patch.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_perf.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_poly.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_sfx.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\rg_supp.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\ro_api.h">
@@ -1553,9 +1376,6 @@
     <ClInclude Include="..\..\src\parsec\include\sl_msg.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sl_null.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\sl_opt.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1563,45 +1383,6 @@
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\snd_wav.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_debug.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_dib.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_drdib.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_err.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_main.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_msg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_opt.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sw_rsrc.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sx_err.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sx_gui.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sx_main.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sx_msg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\sx_opt.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\sys_bind.h">
@@ -1643,30 +1424,6 @@
     <ClInclude Include="..\..\src\parsec\include\vid_supp.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_buffg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_buffo.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_glide.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_glx.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_initg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_inito.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_suppg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vl_suppo.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\vsdl_buffo.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
@@ -1677,45 +1434,6 @@
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\parsec\include\vsdl_suppo.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_buffg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_buffo.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_glide.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_initg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_inito.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_suppg.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_suppo.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vw_wgl.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vx_agl.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vx_buffa.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vx_inita.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\vx_suppa.h">
-      <Filter>parsec\include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\parsec\include\wglew.h">
       <Filter>parsec\include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libparsec\include\sw_timer.h">

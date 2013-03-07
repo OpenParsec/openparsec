@@ -60,7 +60,6 @@
 #include "sl_main.h"
 
 // proprietary module headers
-#include "al_initg.h"
 #include "con_main.h"
 #include "con_rc.h"
 #include "e_color.h"

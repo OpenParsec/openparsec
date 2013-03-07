@@ -11,7 +11,7 @@
 extern int		num_data_packages;
 extern char*	package_filename[];
 
-#define PSCDATA_VERSION	"010" // version to match in the embedded file to verify we are good to go.
+#define PSCDATA_VERSION	"011" // version to match in the embedded file to verify we are good to go.
 
 
 // external functions

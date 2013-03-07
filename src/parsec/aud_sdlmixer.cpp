@@ -233,56 +233,6 @@ int AUDs_FreeWaveFile( int num )
 }
 
 
-// create additional audio voice ----------------------------------------------
-//
-int AUDs_CreateAudioVoice( int voice )
-{
-	return AUD_RETURN_SUCCESS; // NO!  32 is enough...
-}
-
-
-// create waveform object -----------------------------------------------------
-//
-int AUDs_CreateAudioData( audiowave_t wave )
-{
-    return AUD_RETURN_SUCCESS;
-}
-
-
-// download waveform object to hardware ---------------------------------------
-//
-int AUDs_WriteAudioData( audiowave_t lpWave, dword dwOffset, dword nCount )
-{
-	return AUD_RETURN_SUCCESS;
-}
-
-
-// free waveform object -------------------------------------------------------
-//
-int AUDs_DestroyAudioData( audiowave_t wave )
-{
-	return AUD_RETURN_SUCCESS;
-}
-
-
-// open num channels ----------------------------------------------------------
-//
-int AUDs_OpenVoices( int num )
-{
-//    Mix_AllocateChannels(num);
-    return AUD_RETURN_SUCCESS;
-}
-
-
-// close all open channels ----------------------------------------------------
-//
-int AUDs_CloseVoices()
-{
-//    Mix_AllocateChannels(0);
-    return AUD_RETURN_SUCCESS;
-}
-
-
 // set panning of channel voice -----------------------------------------------
 //
 int AUDs_SetVoicePanning( int voice, int panning )
@@ -326,14 +276,6 @@ int AUDs_StopVoice( int voice, int finishloop )
 	
     Mix_HaltChannel(voice);
 	return AUD_RETURN_SUCCESS;
-}
-
-
-// update mixing buffer if no separate thread/interrupt -----------------------
-//
-int AUDs_UpdateAudio()
-{
-    return AUD_RETURN_SUCCESS;
 }
 
 
@@ -591,27 +533,6 @@ void AUDs_MaintainSound()
 	
 	if (!Mix_PlayingMusic())
 		AUD_BackGroundPlayer_Start(FALSE);
-}
-
-
-// the sample quality flag must be provided as dummy --------------------------
-//
-
-
-
-// called from SL_MAIN.C to fork the gsi server process -----------------------
-//
-int AL_SpawnGSIServer()
-{
-	return 0;
-}
-
-
-// SYS_CONV.C can only be linked if this is at least implemented as dummy -----
-//
-char *SND_ConvertFileMP3ToMemWAV( FILE *fp, size_t mp3datasize, size_t *wavdatasize, dword cropstart, dword cropend )
-{
-	return NULL;
 }
 
 void AUDs_MusicFinished()

@@ -425,7 +425,8 @@ int SYS_CheckDataVersion(){
 	// now let's try to convert the string to a integer so we can check the version
 	//int data_version = 0;
 	//data_version = (int)strtol(verstr, NULL, 10);
-	if(!strcmp(verstr, PSCDATA_VERSION)) {
+	MSGOUT("pscdata version %s, internal version %s", PSCDATA_VERSION, verstr);
+	if(strcmp(verstr, PSCDATA_VERSION)) {
 		MSGOUT("psdatver.txt version mismatch: Internal version %s does not match data file version %s.", PSCDATA_VERSION, verstr);
 		return false;
 	}

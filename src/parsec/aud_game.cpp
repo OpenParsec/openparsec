@@ -74,8 +74,8 @@ int STREAM_VOICE_R = 1;
 
 // default audio file names and paths -----------------------------------------
 //
-char menu_stream_name[ PATH_MAX + 1 ]		   = "menu.mp3";
-char intro_stream_name[ PATH_MAX + 1 ]		   = "jingle.mp3";
+char menu_stream_name[ PATH_MAX + 1 ]		   = "menu.ogg";
+char intro_stream_name[ PATH_MAX + 1 ]		   = "jingle.ogg";
 char console_audio_stream_path[ PATH_MAX + 1 ] = ".\\music\\";
 
 

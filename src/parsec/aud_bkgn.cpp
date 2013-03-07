@@ -157,22 +157,26 @@ void AUD_BackGroundPlayer_Init( int voice )
 		// add music tracks (either from audio cd or as mp3)
 		for ( int tid = 2; tid < NUM_AUDIO_CD_TRACKS + 2; tid++ ) {
 
-				sprintf( paste_str, "track%d.mp3", tid );
+				sprintf( paste_str, "track%d.ogg", tid );
 				AUD_BackGroundPlayer_AddStream( paste_str );
+				MSGOUT("Loaded %s", paste_str);
         
 		}
 
 		// add game sfx
 		for ( int sid = 1; sid < NUM_GAMESFX_STREAMS + 1; sid++ ) {
 
-			sprintf( paste_str, "gamesfx%d.mp3", sid );
+			sprintf( paste_str, "gamesfx%d.ogg", sid );
 			AUD_BackGroundPlayer_AddStream( paste_str );
+			MSGOUT("Loaded %s", paste_str);
       
 		}
 
 		// new game sfx in pscdata3.dat
-		AUD_BackGroundPlayer_AddStream( "gamefx10.mp3" );
-		AUD_BackGroundPlayer_AddStream( "gamefx11.mp3" );
+		AUD_BackGroundPlayer_AddStream( "gamefx10.ogg" );
+		MSGOUT("Loaded gamefx10.ogg" );
+		AUD_BackGroundPlayer_AddStream( "gamefx11.ogg" );
+		MSGOUT("Loaded gamefx11.ogg" );
     
     //????RAM not sure what this silence stuff is ????
 		// add some silence
