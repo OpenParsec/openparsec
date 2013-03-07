@@ -414,9 +414,10 @@ int SYS_CheckDataVersion(){
 		return false;
 	}
 
-	char verstr[3];
+	char verstr[4];
 	// attempt to read the file into the verstr buffer
 	int read_rc = SYS_fread((void *)verstr, sizeof(char), 3, ver_file);
+	verstr[3] = '\0';
 	if (read_rc <= 0) {
 		MSGOUT("Unable to read psdatver.txt. Maybe you need to update your pscdata*.dat files?");
 		return false;
@@ -425,9 +426,9 @@ int SYS_CheckDataVersion(){
 	// now let's try to convert the string to a integer so we can check the version
 	//int data_version = 0;
 	//data_version = (int)strtol(verstr, NULL, 10);
-	MSGOUT("pscdata version %s, internal version %s", PSCDATA_VERSION, verstr);
+	MSGOUT("pscdata version %s, internal version %s", verstr, PSCDATA_VERSION);
 	if(strcmp(verstr, PSCDATA_VERSION)) {
-		MSGOUT("psdatver.txt version mismatch: Internal version %s does not match data file version %s.", PSCDATA_VERSION, verstr);
+		MSGOUT("psdatver.txt version mismatch: Internal version %s does not match data file version %s.", verstr, PSCDATA_VERSION);
 		return false;
 	}
 
