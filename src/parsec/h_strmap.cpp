@@ -1026,7 +1026,7 @@ int MAP_DrawStarmap()
 		if ( !srv->slot_free ) {
    
    			// don't draw unknown stars
-   			if ( srv->serverid == -1 )
+			if ( srv->serverid == -1 || srv->ping_in_ms < 0)
    				continue;
 
    			 xpos = srv->xpos;
