@@ -1460,9 +1460,9 @@
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\openparsec-assets\openparsec.ico" />
+    <ResourceCompile Include="Parsec.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Parsec.rc" />
+    <Image Include="parsec.ico" />
   </ItemGroup>
 </Project>

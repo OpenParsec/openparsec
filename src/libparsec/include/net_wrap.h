@@ -5,11 +5,11 @@
 #ifndef _NET_UNP_H_
 #define _NET_UNP_H_
 
-#if defined( SYSTEM_TARGET_WINDOWS )
+#if defined( SYSTEM_TARGET_WINDOWS ) && ( _WIN32_WINNT >= _WIN32_WINNT_VISTA )
 	#include <winsock2.h>
 	#include <ws2tcpip.h>
 	#include <io.h>
-#else
+#elif defined( SYSTEM_TARGET_WINDOWS ) && ( _WIN32_WINNT < _WIN32_WINNT_VISTA )
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <sys/time.h>
@@ -91,8 +91,9 @@
 
 	int			inet_aton(const char *cp, struct in_addr *ap);
 	const char*	hstrerror(int);
+#if ( _WIN32_WINNT < _WIN32_WINNT_VISTA )
 	const char* inet_ntop( int family, const void* addrptr, char* strptr, size_t len);
-
+#endif
 #else
 	#define ERRNO				errno
 	#define FETCH_ERRNO()		{}
