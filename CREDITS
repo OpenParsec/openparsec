@@ -1,0 +1,57 @@
+There are an awful lot of people that should be listed here.  I may not wind
+up listing them all, so if I miss your name, or what you have done, please
+let me or one of the other developers know and we'll get you set up.
+
+First of all, we would like to thank the Fathers of Parsec:
+
+
+Markus Hadwiger		programming
+Andreas Varga		programming
+Clemens Beer		programming
+Michael Wögerbauer	programming
+Alex Mastny [homepage]	artwork and 3D models
+Stefan Poiss		music and sound effects
+Karin Baier		vocals and sound effects
+Tamer Fahmy		programming
+Thomas Bauer		internal nursing and support
+Michel Fleck		graphics
+Alexander Fuchs		graphics
+
+Next we'd like to thank those who have brought OpenParsec back to life from
+the brink of almost certain death:
+
+Jason Williams		programming/project admin
+Phil Spencer		programming
+Alex Szpakowski		programming/bug hunting
+Alexander Harvey	programming/bug hunting
+
+
+Some special recognition follows for those who have made great contributions:
+
+- Phil Spencer
+  - for being the initial kick in the pants to get OpenParsec rolling again 
+    in 2012
+  - for handling the daunting task of implementing all of the weapons and
+    power-ups server side and getting the internet game working
+
+- Jason Williams
+  - for assisting with the initial port of Video, Audio and Input to SDL
+  - for implementing the first version of the master server code and starmap
+  - for project admin and keeping in touch with the Fathers for certain things.
+  - herding cats.
+
+- Alex Szpakowski
+  - for his invaluble help refining the SDL Video port and his continued help
+    with the video subsystem.
+  - for his bug hunting expertise.
+  - for his assistance with the Mac OSX port and bundle.
+
+- Alexander Harvey
+  - for his bug hunting assistance.
+  - for his help with the Linux bundle and port.
+  - for his initial implementation of the joystick code.
+
+
+OpenParsec has been a long time coming, and we are proud to finally present 
+it to the world.  There is still quite a bit of work to do, so please feel 
+free to help us along the way and partake in something pretty awesome.
