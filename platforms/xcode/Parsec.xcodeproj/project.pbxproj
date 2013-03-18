@@ -74,7 +74,6 @@
 		FA3716DC164E07A300230CE8 /* libncurses.5.4.dylib in Copy Libraries */ = {isa = PBXBuildFile; fileRef = FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */; };
 		FA5F84F9165478C600AD25B3 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5F84F8165478C600AD25B3 /* SDLMain.m */; };
 		FA72A2BE16E8209C00997EBE /* init.con in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15B16E8209B00997EBE /* init.con */; };
-		FA72A2BF16E8209C00997EBE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15C16E8209B00997EBE /* LICENSE */; };
 		FA72A2C016E8209C00997EBE /* pscdata0.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15D16E8209B00997EBE /* pscdata0.dat */; };
 		FA72A2C116E8209C00997EBE /* pscdata1.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15E16E8209B00997EBE /* pscdata1.dat */; };
 		FA72A2C216E8209C00997EBE /* pscdata2.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15F16E8209B00997EBE /* pscdata2.dat */; };
@@ -94,6 +93,7 @@
 		FABCE937163C876A0030912B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABCE936163C876A0030912B /* Cocoa.framework */; };
 		FAC1D4CC16B71D8A00DABF17 /* SDL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
 		FAC1D4CD16B71D8C00DABF17 /* SDL_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
+		FAC8E8D816F3FDDC004DADF3 /* LICENSE.artwork_sound in Resources */ = {isa = PBXBuildFile; fileRef = FAC8E8D716F3FDD2004DADF3 /* LICENSE.artwork_sound */; };
 		FAE294001655A28900D00541 /* sw_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE293FE1655A28700D00541 /* sw_path.cpp */; };
 		FAE294011655A28900D00541 /* sw_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE293FF1655A28800D00541 /* sw_timer.cpp */; };
 		FAE294061655A86F00D00541 /* nw_udp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE294051655A86C00D00541 /* nw_udp.cpp */; };
@@ -417,7 +417,6 @@
 		FA72A00016E8209A00997EBE /* strmpldr.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = strmpldr.con; sourceTree = "<group>"; };
 		FA72A00116E8209A00997EBE /* user.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = user.con; sourceTree = "<group>"; };
 		FA72A15B16E8209B00997EBE /* init.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = init.con; sourceTree = "<group>"; };
-		FA72A15C16E8209B00997EBE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		FA72A15D16E8209B00997EBE /* pscdata0.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata0.dat; sourceTree = "<group>"; };
 		FA72A15E16E8209B00997EBE /* pscdata1.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata1.dat; sourceTree = "<group>"; };
 		FA72A15F16E8209B00997EBE /* pscdata2.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = pscdata2.dat; sourceTree = "<group>"; };
@@ -440,6 +439,7 @@
 		FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
 		FABCE934163C86F50030912B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		FABCE936163C876A0030912B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		FAC8E8D716F3FDD2004DADF3 /* LICENSE.artwork_sound */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.artwork_sound; sourceTree = "<group>"; };
 		FAD2E087168BC22400E3EE7B /* _detail.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = _detail.hpp; sourceTree = "<group>"; };
 		FAD2E088168BC22400E3EE7B /* _fixes.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = _fixes.hpp; sourceTree = "<group>"; };
 		FAD2E089168BC22400E3EE7B /* _swizzle.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = _swizzle.hpp; sourceTree = "<group>"; };
@@ -1260,7 +1260,7 @@
 			children = (
 				FA729FFD16E8209A00997EBE /* cons */,
 				FA72A15B16E8209B00997EBE /* init.con */,
-				FA72A15C16E8209B00997EBE /* LICENSE */,
+				FAC8E8D716F3FDD2004DADF3 /* LICENSE.artwork_sound */,
 				FA72A15D16E8209B00997EBE /* pscdata0.dat */,
 				FA72A15E16E8209B00997EBE /* pscdata1.dat */,
 				FA72A15F16E8209B00997EBE /* pscdata2.dat */,
@@ -2200,7 +2200,7 @@
 				FAB135C2164DB2D4006CBB88 /* con.icns in Resources */,
 				FAB135C3164DB2D4006CBB88 /* dat.icns in Resources */,
 				FA72A2BE16E8209C00997EBE /* init.con in Resources */,
-				FA72A2BF16E8209C00997EBE /* LICENSE in Resources */,
+				FAC8E8D816F3FDDC004DADF3 /* LICENSE.artwork_sound in Resources */,
 				FA72A2C016E8209C00997EBE /* pscdata0.dat in Resources */,
 				FA72A2C116E8209C00997EBE /* pscdata1.dat in Resources */,
 				FA72A2C216E8209C00997EBE /* pscdata2.dat in Resources */,
