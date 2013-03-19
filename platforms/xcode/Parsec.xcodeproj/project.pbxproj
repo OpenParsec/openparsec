@@ -87,6 +87,9 @@
 		FAB135BF164DB2CE006CBB88 /* parsec.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135BE164DB2CE006CBB88 /* parsec.icns */; };
 		FAB135C2164DB2D4006CBB88 /* con.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135C0164DB2D4006CBB88 /* con.icns */; };
 		FAB135C3164DB2D4006CBB88 /* dat.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135C1164DB2D4006CBB88 /* dat.icns */; };
+		FAB42EDA16F819B40017E7FD /* CREDITS in Resources */ = {isa = PBXBuildFile; fileRef = FAB42ED916F819B40017E7FD /* CREDITS */; };
+		FAB42EDC16F819B80017E7FD /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FAB42EDB16F819B80017E7FD /* LICENSE */; };
+		FAB42EDE16F819BC0017E7FD /* LICENSE.readme in Resources */ = {isa = PBXBuildFile; fileRef = FAB42EDD16F819BC0017E7FD /* LICENSE.readme */; };
 		FAB6A4B916B666CA00052EF2 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
 		FAB6A4BB16B666CF00052EF2 /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
 		FABCE935163C86F60030912B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABCE934163C86F50030912B /* OpenGL.framework */; };
@@ -435,6 +438,9 @@
 		FAB135BE164DB2CE006CBB88 /* parsec.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = parsec.icns; sourceTree = SOURCE_ROOT; };
 		FAB135C0164DB2D4006CBB88 /* con.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = con.icns; sourceTree = SOURCE_ROOT; };
 		FAB135C1164DB2D4006CBB88 /* dat.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = dat.icns; sourceTree = SOURCE_ROOT; };
+		FAB42ED916F819B40017E7FD /* CREDITS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CREDITS; path = ../CREDITS; sourceTree = "<group>"; };
+		FAB42EDB16F819B80017E7FD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		FAB42EDD16F819BC0017E7FD /* LICENSE.readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.readme; path = ../LICENSE.readme; sourceTree = "<group>"; };
 		FAB6A4B816B666CA00052EF2 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = /Library/Frameworks/SDL.framework; sourceTree = "<absolute>"; };
 		FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
 		FABCE934163C86F50030912B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -1259,8 +1265,11 @@
 			isa = PBXGroup;
 			children = (
 				FA729FFD16E8209A00997EBE /* cons */,
+				FAB42ED916F819B40017E7FD /* CREDITS */,
 				FA72A15B16E8209B00997EBE /* init.con */,
+				FAB42EDB16F819B80017E7FD /* LICENSE */,
 				FAC8E8D716F3FDD2004DADF3 /* LICENSE.artwork_sound */,
+				FAB42EDD16F819BC0017E7FD /* LICENSE.readme */,
 				FA72A15D16E8209B00997EBE /* pscdata0.dat */,
 				FA72A15E16E8209B00997EBE /* pscdata1.dat */,
 				FA72A15F16E8209B00997EBE /* pscdata2.dat */,
@@ -2205,6 +2214,9 @@
 				FA72A2C116E8209C00997EBE /* pscdata1.dat in Resources */,
 				FA72A2C216E8209C00997EBE /* pscdata2.dat in Resources */,
 				FA72A2C316E8209C00997EBE /* pscdata3.dat in Resources */,
+				FAB42EDA16F819B40017E7FD /* CREDITS in Resources */,
+				FAB42EDC16F819B80017E7FD /* LICENSE in Resources */,
+				FAB42EDE16F819BC0017E7FD /* LICENSE.readme in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

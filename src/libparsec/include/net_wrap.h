@@ -9,7 +9,7 @@
 	#include <winsock2.h>
 	#include <ws2tcpip.h>
 	#include <io.h>
-#elif defined( SYSTEM_TARGET_WINDOWS ) && ( _WIN32_WINNT < _WIN32_WINNT_VISTA )
+#else
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <sys/time.h>
