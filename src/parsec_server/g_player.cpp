@@ -454,7 +454,8 @@ void G_Player::_WFX_DeactivateHelix()
 {
 	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
-	ASSERT( pShip != NULL );
+	if( pShip == NULL )
+        return;
     
 	// make sure helix cannon is inactive
 	if ( pShip->WeaponsActive & WPMASK_CANNON_HELIX ) {
@@ -519,7 +520,8 @@ void G_Player::_WFX_DeactivateLightning()
 {
 	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
-	ASSERT( pShip != NULL );
+	if( pShip == NULL )
+        return;
     
 	// make sure lightning device is inactive
 	if ( ( pShip->WeaponsActive & WPMASK_CANNON_LIGHTNING ) != 0 ) {
@@ -611,7 +613,8 @@ void G_Player::_WFX_DeactivatePhoton()
 
 	ASSERT( m_pSimPlayerInfo != NULL );
 	ShipObject* pShip = m_pSimPlayerInfo->GetShipObject();
-    ASSERT( pShip != NULL );
+    if( pShip == NULL )
+        return;
     
 	// send remote event to switch photon off
     
@@ -649,7 +652,7 @@ void G_Player::WFX_EnsureParticleWeaponsInactive( ShipObject *shippo )
 	// ensure lightning and helix are destroyed
 	WFX_EnsureLightningInactive( shippo );
 	WFX_EnsureHelixInactive( shippo );
-    WFX_EnsurePhotonInactive(shippo);
+    WFX_EnsurePhotonInactive( shippo );
 }
 
 // create missile originating from specified position -------------------------
