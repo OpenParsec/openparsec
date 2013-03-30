@@ -1126,7 +1126,11 @@ void E_World::CalcLightningAnimation( lightning_pcluster_s *cluster )
         
 		GenObject *shippo = cluster->baseobject;
 		ASSERT( shippo != NULL );
-		ASSERT( OBJECT_TYPE_SHIP( shippo ) );
+		if ( !OBJECT_TYPE_SHIP( shippo ) ) {
+            MSGOUT("E_WORLD::CalcLightningAnimation() 1130: Erroneous lightning particles detected and deleted --CrazySpence debug");
+            PRT_DeleteCluster( cluster );
+            return;
+        }
         
 		Xmatrx tmatrx;
 #if ( CT_LIGHTNING & CT_GENOBJECTRELATIVE_OBJ_MASK )
