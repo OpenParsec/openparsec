@@ -121,13 +121,8 @@ GLint 					sdl_wsz_y;
 GLsizei 				sdl_wsz_w;
 GLsizei 				sdl_wsz_h;
 
-
-#if SDL_VERSION_ATLEAST(2,0,0)
-
 SDL_Window *			curwindow = NULL;
 SDL_GLContext			curcontext = NULL;
-
-#endif
 
 
 // display next opengl buffer -------------------------------------------------
@@ -135,11 +130,7 @@ SDL_GLContext			curcontext = NULL;
 void VSDL_CommitOGLBuff()
 {
 	// Tell SDL to swap the GL Buffers
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_GL_SwapWindow(curwindow);
-#else
-	SDL_GL_SwapBuffers(); // calls glFlush() internally
-#endif
 }
 
 
@@ -149,96 +140,57 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 {
 	MSGOUT( "Using the OpenGL subsystem as rendering device." );
 
-	int v_init = SDL_Init(SDL_INIT_VIDEO);
+#ifdef SYSTEM_TARGET_OSX
+	// SDL 2 in OS X shows the window minimization visual at odd times if this
+	// hint isn't set to off.
+	SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
+#endif
 
-	if ( v_init < 0 ) {
+	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
 		MSGOUT("ERROR: Trouble initializing video subsystem.");
 		return FALSE;
 	}
-	
+
 	Resolutions.clear();
-	
-#if SDL_VERSION_ATLEAST(2,0,0)
-	
+
 	SDL_DisplayMode curmode;
 	SDL_GetDesktopDisplayMode(0, &curmode);
-	
+
 	MaxScreenBPP = SDL_BITSPERPIXEL(curmode.format);
-	
+
 	for (int i = 0; i < SDL_GetNumDisplayModes(0); i++) {
 		
 		if (SDL_GetDisplayMode(0, i, &curmode) < 0) {
 			MSGOUT("Could not get info for SDL display mode #%d: %s\n", i, SDL_GetError());
 			continue;
 		}
-		
+
 		int xres = curmode.w;
 		int yres = curmode.h;
-		
+
 		int bpp = SDL_BITSPERPIXEL(curmode.format);
-		
+
 		// we don't support resolutions below 640x480, or uneven ones
 		if (xres < 640 || yres < 480 || xres % 2 != 0 || yres % 2 != 0)
 			continue;
-		
+
 		// we don't support non-standard screen formats
 		if (bpp != 32 && bpp != 16)
 			continue;
-		
+
 		// TODO: look into supporting resolution-based BPP (if it's used at all anymore)
 		// for now, we can't use any screen mode that doesn't support the max known BPP
 		if (bpp < MaxScreenBPP)
 			continue;
-		
+
 		// make sure we don't already have this resolution in our list
 		if (GetResolutionIndex(xres, yres) < 0) {
 			Resolutions.push_back(resinfo_s(xres, yres));
 		}
 	}
-	
-#else
 
-	// fetch the display mode list of the selected screen
-	SDL_Rect ** mode_list = SDL_ListModes(NULL, SDL_OPENGL | SDL_FULLSCREEN);
-
-	const SDL_VideoInfo* v_info = SDL_GetVideoInfo();
-	
-	
-	// SDL_GetVideoInfo() should really never return null, but just in case, we check it here.
-	if (v_info == NULL) {
-		MSGOUT("ERROR:  Trouble enumerating video modes in VSDL_InitGLInterface()");
-		return FALSE;
-	}
-	
-	// mode_list contains w x h sizes based on the current video context's bpp, so let's grab out current bpp and save it
-	dword bpp = v_info->vfmt->BitsPerPixel;
-	
-	if (bpp < 16) {
-		MSGOUT("ERROR: System doesn't have enough color depth!");
-		return FALSE;
-	}
-	
-	MaxScreenBPP = bpp;
-	
-	// enumerate available modes into the video system
-	for (int i = 0; mode_list[i]; ++i) {
-		
-		int xres = mode_list[i]->w;
-		int yres = mode_list[i]->h;
-		
-		// we don't support resolutions below 640x480, or uneven ones
-		if (xres < 640 || yres < 480 || xres % 2 != 0 || yres % 2 != 0)
-			continue;
-		
-		// add resolution to the global list
-		resinfo_s resolution(xres, yres);
-		Resolutions.push_back(resolution);
-	}
-	
-#endif
-	
 	ASSERT(Resolutions.size() > 0);
-	
+
 	// sort resolution list, putting the smallest at the front
 	std::sort(Resolutions.begin(), Resolutions.end());
 
@@ -404,13 +356,13 @@ void VSDL_InitGLExtensions()
 {
 	// don't rely purely on extension string list to determine capabilities
 	glewExperimental = GL_TRUE;
-	
+
 	// initialize extensions from GLEW
 	if (glewInit() != GLEW_OK) {
 		MSGOUT("Warning: failed to initialize GLEW\n");
 		return;
 	}
-	
+
 	// some drivers support core GL occlusion querying but not the ARB extension
 	// so we just use the core GL function pointers for the ARB functions since the interface is the same
 	if (GLEW_VERSION_1_5 && !GLEW_ARB_occlusion_query) {
@@ -423,7 +375,7 @@ void VSDL_InitGLExtensions()
 		glGetQueryivARB = glGetQueryiv;
 		glIsQueryARB = glIsQuery;
 	}
-	
+
 	// same deal with vertex buffers
 	if (GLEW_VERSION_1_5 && !GLEW_ARB_vertex_buffer_object) {
 		glBindBufferARB = glBindBuffer;
@@ -437,15 +389,6 @@ void VSDL_InitGLExtensions()
 		glIsBufferARB = glIsBuffer;
 		glMapBufferARB = glMapBuffer;
 		glUnmapBufferARB = glUnmapBuffer;
-	}
-	
-	// if available, use apple vertex array object functions instead of ARB versions, even if both exist
-	// ARB versions seem to break in OSX without a 3.2+ core context...?
-	if (GLEW_APPLE_vertex_array_object) {
-		glGenVertexArrays = (PFNGLGENVERTEXARRAYSPROC) glGenVertexArraysAPPLE;
-		glDeleteVertexArrays = glDeleteVertexArraysAPPLE;
-		glBindVertexArray = glBindVertexArrayAPPLE;
-		glIsVertexArray = glIsVertexArrayAPPLE;
 	}
 }
 
@@ -645,11 +588,7 @@ int VSDL_InitOGLMode()
 
 	fullscreen_mode	= !Op_WindowedMode;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 	Uint32 mode_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_MOUSE_FOCUS;
-#else
-	Uint32 mode_flags = SDL_OPENGL;
-#endif
 	
 	sdl_win_bpp = GameScreenBPP;
 
@@ -657,13 +596,7 @@ int VSDL_InitOGLMode()
 	sdl_win_height = GameScreenRes.height;
 
 	if ( fullscreen_mode ) {
-
-#if SDL_VERSION_ATLEAST(2,0,0)
 		mode_flags |= SDL_WINDOW_FULLSCREEN;
-#else
-		mode_flags |= SDL_FULLSCREEN;
-#endif
-
 	}
 	
 	// disable system cursor inside the SDL window
@@ -683,7 +616,7 @@ int VSDL_InitOGLMode()
 	    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,    	    8);
 	    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,  	    8);
 	    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,   	    8);
-	    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,  	    0);
+	    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,  	    8);
 	    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,  	    24);
 
 	} else if ( sdl_win_bpp == 16 ) {
@@ -700,11 +633,6 @@ int VSDL_InitOGLMode()
 		PANIC( 0 );
 	}
 	
-	// set vertical synchronization (set further down in SDL2)
-#if !(SDL_VERSION_ATLEAST(2,0,0))
-	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, FlipSynched ? 1 : 0);
-#endif
-	
 	// use double buffering if possible
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
@@ -712,97 +640,40 @@ int VSDL_InitOGLMode()
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, AUX_MSAA > 0 ? 1 : 0);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, AUX_MSAA);
 
-	// set window title (not needed here in 2.0)
-#if !SDL_VERSION_ATLEAST(2,0,0)
-	SDL_WM_SetCaption("Parsec", 0);
-#endif
-
-
 	// change the video mode.
 	printf("Changing vid mode to %ix%i, bpp: %i, vsync: %d, aa: %dx\n", sdl_win_width, sdl_win_height, sdl_win_bpp, FlipSynched, AUX_MSAA);
-	
-#if SDL_VERSION_ATLEAST(2,0,0)
 
 	if (curwindow != NULL) {
+		SDL_DestroyWindow(curwindow);
+		curwindow = NULL;
+	}
 
-		if (fullscreen_mode) {
-			
-			SDL_DisplayMode mode;
-			
-			mode.format = SDL_PIXELFORMAT_RGB888; // is this necessary?
-			mode.refresh_rate = 0;
-			mode.w = sdl_win_width;
-			mode.h = sdl_win_height;
+	curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, sdl_win_width, sdl_win_height, mode_flags);
 
-			// set fullscreen mode
-			if (SDL_SetWindowDisplayMode(curwindow, &mode) < 0) {
-				MSGOUT("Could not set display mode: %s\n", SDL_GetError());
-				return FALSE;
-			}
-
-			// if we were previously in fullscreen then we need to force the mode to properly set,
-			// by quickly toggling fullscreen
-			if ((SDL_SetWindowFullscreen(curwindow, SDL_FALSE) < 0) || (SDL_SetWindowFullscreen(curwindow, SDL_TRUE) < 0)) {
-				MSGOUT("Could not make window fullscreen: %s\n", SDL_GetError());
-			}
-			
-		} else {
-			// windowed mode
-			SDL_SetWindowFullscreen(curwindow, SDL_FALSE);
-			SDL_SetWindowSize(curwindow, sdl_win_width, sdl_win_height);
-			SDL_SetWindowPosition(curwindow, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-		}
-		
-	} else {
-
-		// window doesn't exist, so we have to make a new one
-		curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, sdl_win_width, sdl_win_height, mode_flags);
-
-		if (curwindow == NULL) {
-			MSGOUT("Could not create SDL window: %s\n", SDL_GetError());
-			return FALSE;
-		}
+	if (curwindow == NULL) {
+		MSGOUT("Could not create SDL window: %s\n", SDL_GetError());
+		return FALSE;
 	}
 
 	// TODO: check bpp and MSAA, and remake context if they've changed
 
-	if (curcontext == NULL) {
-		
+	if (curcontext == NULL || SDL_GL_MakeCurrent(curwindow, curcontext) < 0) {
+
+		if (curcontext) {
+			SDL_GL_DeleteContext(curcontext);
+		}
+
 		curcontext = SDL_GL_CreateContext(curwindow);
 		if (curcontext == NULL) {
 			MSGOUT("Could not create OpenGL context: %s\n", SDL_GetError());
 			return FALSE;
 		}
-	} else {
-		SDL_GL_MakeCurrent(curwindow, curcontext);
 	}
-	
-	
+
 	// set vertical synchronization
 	SDL_GL_SetSwapInterval(FlipSynched ? 1 : 0);
 	
 	SDL_ShowWindow(curwindow);
-	
-#else
-	
-	if ( SDL_SetVideoMode(sdl_win_width, sdl_win_height, sdl_win_bpp, mode_flags) == NULL ) {
-		bool failed = true;
-		
-		if ( AUX_MSAA > 0 ) {
-			// try disabling MSAA
-			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, 0);
-			SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 0);
-			
-			failed = SDL_SetVideoMode(sdl_win_width, sdl_win_height, sdl_win_bpp, mode_flags) == NULL;
-		}
-		
-		if ( failed ) {
-			MSGOUT("Could not set Video Mode!\n");
-			return FALSE;
-		}
-	}
-	
-#endif
 
 	// setup current rendering context
 	SDL_RCSetup();
@@ -824,9 +695,7 @@ void VSDL_ShutDownOGL()
 	
 	SDL_ShowCursor(SDL_ENABLE);
 	
-#if SDL_VERSION_ATLEAST(2,0,0)
-	
-	/*if (curwindow != NULL) {
+	if (curwindow != NULL) {
 		SDL_DestroyWindow(curwindow);
 		curwindow = NULL;
 	}
@@ -834,9 +703,7 @@ void VSDL_ShutDownOGL()
 	if (curcontext != NULL) {
 		SDL_GL_DeleteContext(curcontext);
 		curcontext = NULL;
-	}*/
-	
-#endif
+	}
 
 	// simply restore mode XXX: SDL should take care of restoring everything to pre-game state
 	SDL_RestoreMode();

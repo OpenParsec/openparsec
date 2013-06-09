@@ -65,10 +65,8 @@
 
 #include "m_option.h"
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-	// for the window handle
-	#include "vsdl_ogl.h"
-#endif
+// for the window handle
+#include "vsdl_ogl.h"
 
 
 // flags
@@ -358,14 +356,7 @@ void INPs_KillGeneral()
 PRIVATE
 bool ISDLm_IsKeyRepeatEnabled()
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
 	return false;
-#else
-	int delay, interval;
-	SDL_GetKeyRepeat(&delay, &interval);
-	
-	return delay > 0;
-#endif
 }
 
 
@@ -374,14 +365,6 @@ bool ISDLm_IsKeyRepeatEnabled()
 PRIVATE
 void ISDLm_SetKeyRepeat(bool enable)
 {
-#if !SDL_VERSION_ATLEAST(2,0,0)
-	bool isenabled = ISDLm_IsKeyRepeatEnabled();
-	
-	if (enable && !isenabled)
-		SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
-	else if (!enable && isenabled)
-		SDL_EnableKeyRepeat(0, 0);
-#endif
 }
 
 
@@ -399,12 +382,10 @@ void ISDLm_ProcessTextInput(const char *text)
 PRIVATE
 void ISDLm_TextInputHandler(const SDL_Event &event)
 {
-#if SDL_VERSION_ATLEAST(2,0,0)
 	if (event.type != SDL_TEXTINPUT)
 		return;
 
 	ISDLm_ProcessTextInput(event.text.text);
-#endif
 }
 
 
@@ -416,16 +397,9 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 	bool pressed = event.type == SDL_KEYDOWN;
 	dword key = event.key.keysym.sym;
 
-#if SDL_VERSION_ATLEAST(2,0,0)
 	// only process a key repeat event if we're in the console or quicksay console
 	if (event.key.repeat && !(KeybFlags->ConActive && KeybFlags->ConEnabled))
 		return;
-#else
-	// enable key repeat on keyup if in the console or quicksay console
-	// TODO: only set when toggling the console and quicksay console
-	if (event.type == SDL_KEYUP)
-		ISDLm_SetKeyRepeat(KeybFlags->ConActive && KeybFlags->ConEnabled);
-#endif
 	
 	if(pressed && mod_player_name) {
 		if (key == MKC_LSHIFT || key == MKC_RSHIFT) {
@@ -452,11 +426,6 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 			}
 
 			CON_HandleKeyPress(key);
-
-#if !SDL_VERSION_ATLEAST(2,0,0)
-			const char text[] = {(char) event.key.keysym.unicode, '\0'};
-			ISDLm_ProcessTextInput(text);
-#endif
 
 			// console grabs all input
 			return;
@@ -497,12 +466,6 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 //
 void INPs_KeybInitHandler()
 {
-	// enable unicode character handling for keypress events
-	
-#if !SDL_VERSION_ATLEAST(2,0,0)
-	SDL_EnableUNICODE(SDL_ENABLE);
-#endif
-	
 	// XXX: Not sure if this is needed either....
 
 	// prevent multiple inits
@@ -621,11 +584,7 @@ int INPs_MouseSetState( mousestate_s *state )
 	int mposy = (int)( state->ypos * Screen_Height );
 
 	// set new mouse position
-#if SDL_VERSION_ATLEAST(2,0,0)
 	SDL_WarpMouseInWindow(curwindow, mposx, mposy);
-#else
-	SDL_WarpMouse(mposx, mposy);
-#endif
 
 	return TRUE;
 }
@@ -738,11 +697,9 @@ void ISDLm_ProcessEvents()
 			case SDL_MOUSEBUTTONUP:
 				ISDLm_MouseEventHandler(event);
 				break;
-#if SDL_VERSION_ATLEAST(2,0,0)
 			case SDL_TEXTINPUT:
 				ISDLm_TextInputHandler(event);
 				break;
-#endif
 			case SDL_QUIT:
 				// clean up and quit ASAP
 				ExitGameLoop = 3;

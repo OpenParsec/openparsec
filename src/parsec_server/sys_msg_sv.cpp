@@ -32,7 +32,7 @@
 #include "debug.h"
 
 // C library 
-#ifdef SYSTEM_WIN32_UNUSED
+#ifdef SYSTEM_TARGET_WINDOWS
 #  include <time.h>
 #else
 #  include <sys/time.h>
@@ -64,9 +64,9 @@
 
 
 //FIXME: Win32 specific
-#ifdef SYSTEM_WIN32_UNUSED
+#ifdef SYSTEM_TARGET_WINDOWS
 	#include "windows.h"
-#endif // SYSTEM_WIN32_UNUSED
+#endif
 
 // flags ----------------------------------------------------------------------
 //
@@ -311,7 +311,7 @@ int SYS_WriteLogFileMessage( const char *format, ... )
 
 		// prepend the current date/time
 		
-#ifdef SYSTEM_WIN32_UNUSED
+#ifdef SYSTEM_TARGET_WINDOWS
 
 		//FIXME: recheck whether SYSs_GetCurTimeString() works properly
 		//fprintf( fp, "%s: ", SYSs_GetCurTimeString() );

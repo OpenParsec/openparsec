@@ -216,20 +216,7 @@ int VIDs_SetColIndexZero( int color )
 int VIDs_SetGammaCorrection( float gamma )
 {
 	// disabled because it causes visual glitches, isn't well-supported, and leaks gamma changes onto the desktop
-	
-	/*
-	 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-	Uint16 ramp[256];
-	SDL_CalculateGammaRamp(gamma, ramp);
-	SDL_SetWindowGammaRamp(curwindow, ramp, ramp, ramp);
-#else
-	 if ( !Op_WindowedMode ) {
-		 SDL_SetGamma(gamma, gamma, gamma); // sets R G and B gamma to the same value.
-	 }
-#endif
-	 
-	 */
+	// SDL_SetWindowBrightness(curwindow, gamma);
 
 	return TRUE;
 }

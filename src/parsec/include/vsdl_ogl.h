@@ -12,12 +12,8 @@
 #endif
 
 
-#if SDL_VERSION_ATLEAST(2, 0, 0)
-
 extern SDL_Window *		curwindow;
 extern SDL_GLContext	curcontext;
-
-#endif
 
 
 // external functions

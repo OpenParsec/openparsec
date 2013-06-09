@@ -200,11 +200,8 @@ void ISDL_JoyKillHandler()
 {
 	for (int i = 0; i < isdl_nJoystickFound; i++)
 	{
-#if SDL_VERSION_ATLEAST(2,0,0)
 		// TODO: implement
-#else
-		if (SDL_JoystickOpened(i))
-#endif
+		//if (SDL_JoystickOpened(i))
 			//SDL_JoystickClose(isdl_joyHandle[i]);
 			SDL_JoystickClose(isdl_joyHandle);
 	}

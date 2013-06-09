@@ -72,7 +72,6 @@
 		FA3716D0164DEE8D00230CE8 /* utl_math2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF8F6163BE1CF0056CECD /* utl_math2.cpp */; };
 		FA3716DA164DFC9800230CE8 /* libncurses.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */; };
 		FA3716DC164E07A300230CE8 /* libncurses.5.4.dylib in Copy Libraries */ = {isa = PBXBuildFile; fileRef = FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */; };
-		FA5F84F9165478C600AD25B3 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5F84F8165478C600AD25B3 /* SDLMain.m */; };
 		FA72A2BE16E8209C00997EBE /* init.con in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15B16E8209B00997EBE /* init.con */; };
 		FA72A2C016E8209C00997EBE /* pscdata0.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15D16E8209B00997EBE /* pscdata0.dat */; };
 		FA72A2C116E8209C00997EBE /* pscdata1.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15E16E8209B00997EBE /* pscdata1.dat */; };
@@ -82,6 +81,10 @@
 		FA72A2C616E820C500997EBE /* strmpldr.con in Copy Cons */ = {isa = PBXBuildFile; fileRef = FA72A00016E8209A00997EBE /* strmpldr.con */; };
 		FA72A2C716E820C700997EBE /* user.con in Copy Cons */ = {isa = PBXBuildFile; fileRef = FA72A00116E8209A00997EBE /* user.con */; };
 		FA84A68016A7B59F005F649F /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FA84A67F16A7B59F005F649F /* stb_image_write.c */; };
+		FAA251AF17647A6600A0756F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251AE17647A6600A0756F /* SDL2.framework */; };
+		FAA251B117647A6A00A0756F /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251B017647A6A00A0756F /* SDL2_mixer.framework */; };
+		FAA251B217647AAD00A0756F /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251AE17647A6600A0756F /* SDL2.framework */; };
+		FAA251B317647AAF00A0756F /* SDL2_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251B017647A6A00A0756F /* SDL2_mixer.framework */; };
 		FAADE10016AB271B005D7250 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FAADE0FC16AB271B005D7250 /* glew.c */; };
 		FAB135B5164DAB73006CBB88 /* aud_sdlmixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB135B4164DAB73006CBB88 /* aud_sdlmixer.cpp */; };
 		FAB135BF164DB2CE006CBB88 /* parsec.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135BE164DB2CE006CBB88 /* parsec.icns */; };
@@ -90,12 +93,8 @@
 		FAB42EDA16F819B40017E7FD /* CREDITS in Resources */ = {isa = PBXBuildFile; fileRef = FAB42ED916F819B40017E7FD /* CREDITS */; };
 		FAB42EDC16F819B80017E7FD /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FAB42EDB16F819B80017E7FD /* LICENSE */; };
 		FAB42EDE16F819BC0017E7FD /* LICENSE.readme in Resources */ = {isa = PBXBuildFile; fileRef = FAB42EDD16F819BC0017E7FD /* LICENSE.readme */; };
-		FAB6A4B916B666CA00052EF2 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
-		FAB6A4BB16B666CF00052EF2 /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
 		FABCE935163C86F60030912B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABCE934163C86F50030912B /* OpenGL.framework */; };
 		FABCE937163C876A0030912B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABCE936163C876A0030912B /* Cocoa.framework */; };
-		FAC1D4CC16B71D8A00DABF17 /* SDL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4B816B666CA00052EF2 /* SDL.framework */; };
-		FAC1D4CD16B71D8C00DABF17 /* SDL_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */; };
 		FAC8E8D816F3FDDC004DADF3 /* LICENSE.artwork_sound in Resources */ = {isa = PBXBuildFile; fileRef = FAC8E8D716F3FDD2004DADF3 /* LICENSE.artwork_sound */; };
 		FAE294001655A28900D00541 /* sw_path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE293FE1655A28700D00541 /* sw_path.cpp */; };
 		FAE294011655A28900D00541 /* sw_timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAE293FF1655A28800D00541 /* sw_timer.cpp */; };
@@ -331,8 +330,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				FAC1D4CC16B71D8A00DABF17 /* SDL.framework in Copy Frameworks */,
-				FAC1D4CD16B71D8C00DABF17 /* SDL_mixer.framework in Copy Frameworks */,
+				FAA251B217647AAD00A0756F /* SDL2.framework in Copy Frameworks */,
+				FAA251B317647AAF00A0756F /* SDL2_mixer.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,8 +412,6 @@
 		FA371689164DD43600230CE8 /* Parsec Server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Parsec Server"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libncurses.5.4.dylib; path = usr/lib/libncurses.5.4.dylib; sourceTree = SDKROOT; };
 		FA3716DB164E068600230CE8 /* al_initg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = al_initg.h; sourceTree = "<group>"; };
-		FA5F84F7165478C600AD25B3 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
-		FA5F84F8165478C600AD25B3 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
 		FA729FFE16E8209A00997EBE /* .bindings.con.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .bindings.con.swp; sourceTree = "<group>"; };
 		FA729FFF16E8209A00997EBE /* bindings.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bindings.con; sourceTree = "<group>"; };
 		FA72A00016E8209A00997EBE /* strmpldr.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = strmpldr.con; sourceTree = "<group>"; };
@@ -428,6 +425,8 @@
 		FA82524016AD50DD003A9277 /* glew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glew.h; sourceTree = "<group>"; };
 		FA84A67B16A7B515005F649F /* stb_image_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_write.h; sourceTree = "<group>"; };
 		FA84A67F16A7B59F005F649F /* stb_image_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stb_image_write.c; sourceTree = "<group>"; };
+		FAA251AE17647A6600A0756F /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = /Library/Frameworks/SDL2.framework; sourceTree = "<absolute>"; };
+		FAA251B017647A6A00A0756F /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = /Library/Frameworks/SDL2_mixer.framework; sourceTree = "<absolute>"; };
 		FAADE0FC16AB271B005D7250 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
 		FAADE0FE16AB271B005D7250 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
 		FAADE0FF16AB271B005D7250 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
@@ -441,8 +440,6 @@
 		FAB42ED916F819B40017E7FD /* CREDITS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CREDITS; path = ../CREDITS; sourceTree = "<group>"; };
 		FAB42EDB16F819B80017E7FD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		FAB42EDD16F819BC0017E7FD /* LICENSE.readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE.readme; path = ../LICENSE.readme; sourceTree = "<group>"; };
-		FAB6A4B816B666CA00052EF2 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = /Library/Frameworks/SDL.framework; sourceTree = "<absolute>"; };
-		FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
 		FABCE934163C86F50030912B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		FABCE936163C876A0030912B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		FAC8E8D716F3FDD2004DADF3 /* LICENSE.artwork_sound */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.artwork_sound; sourceTree = "<group>"; };
@@ -1146,11 +1143,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAA251B117647A6A00A0756F /* SDL2_mixer.framework in Frameworks */,
+				FAA251AF17647A6600A0756F /* SDL2.framework in Frameworks */,
 				FAFE57FD16791C1C00A31DAA /* CoreFoundation.framework in Frameworks */,
 				FABCE937163C876A0030912B /* Cocoa.framework in Frameworks */,
 				FABCE935163C86F60030912B /* OpenGL.framework in Frameworks */,
-				FAB6A4B916B666CA00052EF2 /* SDL.framework in Frameworks */,
-				FAB6A4BB16B666CF00052EF2 /* SDL_mixer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1588,8 +1585,6 @@
 		FAFEE687163BDA5E0056CECD = {
 			isa = PBXGroup;
 			children = (
-				FA5F84F8165478C600AD25B3 /* SDLMain.m */,
-				FA5F84F7165478C600AD25B3 /* SDLMain.h */,
 				FAFEF87B163BE1CF0056CECD /* Source */,
 				FAFEE69F163BDA5E0056CECD /* Supporting Files */,
 				FAFEE696163BDA5E0056CECD /* Frameworks */,
@@ -1611,8 +1606,8 @@
 		FAFEE696163BDA5E0056CECD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FAB6A4BA16B666CF00052EF2 /* SDL_mixer.framework */,
-				FAB6A4B816B666CA00052EF2 /* SDL.framework */,
+				FAA251AE17647A6600A0756F /* SDL2.framework */,
+				FAA251B017647A6A00A0756F /* SDL2_mixer.framework */,
 				FAFE57FB16791C1100A31DAA /* CoreFoundation.framework */,
 				FABCE936163C876A0030912B /* Cocoa.framework */,
 				FABCE934163C86F50030912B /* OpenGL.framework */,
@@ -2483,7 +2478,6 @@
 				FAFEFE2C163BE1D00056CECD /* vsdl_ogl.cpp in Sources */,
 				FAFEFE2D163BE1D00056CECD /* vsdl_suppo.cpp in Sources */,
 				FAB135B5164DAB73006CBB88 /* aud_sdlmixer.cpp in Sources */,
-				FA5F84F9165478C600AD25B3 /* SDLMain.m in Sources */,
 				FAE294001655A28900D00541 /* sw_path.cpp in Sources */,
 				FAE294011655A28900D00541 /* sw_timer.cpp in Sources */,
 				FAE294061655A86F00D00541 /* nw_udp.cpp in Sources */,
@@ -2622,7 +2616,6 @@
 					"\"$(SRCROOT)/../src/parsec\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "";
-				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2651,8 +2644,8 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_SHADOW = NO;
 				HEADER_SEARCH_PATHS = (
-					/Library/Frameworks/SDL.framework/Headers,
-					/Library/Frameworks/SDL_mixer.framework/Headers,
+					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_mixer.framework/Headers,
 					/usr/local/include,
 					"\"$(SRCROOT)/../../src/libraries\"",
 				);
@@ -2684,15 +2677,14 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_SHADOW = NO;
 				HEADER_SEARCH_PATHS = (
-					/Library/Frameworks/SDL.framework/Headers,
-					/Library/Frameworks/SDL_mixer.framework/Headers,
+					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_mixer.framework/Headers,
 					/usr/local/include,
 					"\"$(SRCROOT)/../../src/libraries\"",
 				);
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
 				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
-				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
