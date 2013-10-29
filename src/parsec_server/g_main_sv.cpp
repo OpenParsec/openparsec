@@ -383,7 +383,9 @@ void G_Main::UnjoinPlayer( int nClientID )
 	ASSERT( ( nClientID >= 0 ) && ( nClientID < MAX_NUM_CLIENTS ) );
 	G_Player* pPlayer = &m_Players[ nClientID ];
 	int rc = m_CurJoinedPlayerList->Remove( pPlayer );
-	ASSERT( rc );
+	ShipObject* pShip = m_Players[nClientID].GetShipObject();
+    pPlayer->WFX_EnsureParticleWeaponsInactive(pShip); //Turn off all particle weapons when unjoined
+    ASSERT( rc );
 }
 
 
