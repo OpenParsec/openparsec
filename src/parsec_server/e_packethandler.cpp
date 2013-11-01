@@ -986,20 +986,20 @@ int E_PacketHandler::_ParseListRequest_MASTER( char* recvline, int *serverid){
 
 	// copy parseline for safe processing
 	SAFE_STR_DUPLICATE( parseline, recvline, MAX_RE_COMMANDINFO_COMMAND_LEN );
-	MSGOUT("E_PacketHandler::_ParseListRequest_MASTER(): parseline: x%sx", parseline);
+	//MSGOUT("E_PacketHandler::_ParseListRequest_MASTER(): parseline: x%sx", parseline);
 
 	// check for Master Sever List request identifier
 	char* ident_str = strtok( parseline, " " );
 	if ( ident_str == NULL ){
-		MSGOUT("Returning NNULL on first strtok");
+		//MSGOUT("Returning NNULL on first strtok");
 		return FALSE;
 	}
 
 	int len = strlen( ident_str );
 	if ( strncmp( recvline, MASV_LIST, len ) != 0 ) {
-		MSGOUT("first STRCMP: x%sx x%sx %d", recvline, MASV_LIST, len);
+		//MSGOUT("first STRCMP: x%sx x%sx %d", recvline, MASV_LIST, len);
 		if (strncmp (recvline, "info", 4) != 0) {
-			MSGOUT("returning on second strcmp");
+			//MSGOUT("returning on second strcmp");
 			return false;
 		}
 	}
@@ -1190,6 +1190,7 @@ int E_PacketHandler::_ParseHBPacket_MASTER(char* recvline) {
 				// if we get here, the requested ServerID exists, but the node address
 				// doesn't match.  Ignore the packet
 				// XXX: Perhaps send a packet back to the server to notify them the ID is taken?
+				MSGOUT("Server ID config mismatch for existing server %s\n", ServerName);
 				return FALSE;
 			}
 		}
@@ -1205,7 +1206,7 @@ int E_PacketHandler::_ParseHBPacket_MASTER(char* recvline) {
 			 ServerName,
 			 OS,
 			 &_Node ));
-
+	MSGOUT("Added new server %s\n", ServerName);
 	// if we get this far, we should have successfully parsed the packet.  So return true.
 	return TRUE;
 }
@@ -1230,8 +1231,10 @@ void E_PacketHandler::_Handle_STREAM_MASTER(NetPacket_GMSV* gamepacket, int bufi
 	RE_CommandInfo * re_commandinfo = NULL;
 	node_t*			clientnode		= ThePacketDriver->GetPktSender( bufid );
 
-	char clientIP [ MAX_IPADDR_LEN + 1 ];
-	inet_ntop( AF_INET, &clientnode, clientIP, MAX_IPADDR_LEN + 1 );
+	char *clientIP;
+	
+	clientIP=NODE_Print(clientnode);
+//	inet_ntop( AF_INET, &clientnode, clientIP, MAX_IPADDR_LEN + 1 );
 
 	// process remote event list
 	while ( relist->RE_Type != RE_EMPTY ) {
@@ -1260,10 +1263,10 @@ void E_PacketHandler::_Handle_STREAM_MASTER(NetPacket_GMSV* gamepacket, int bufi
 					for(MSI = TheMaster->ServerList.begin(); MSI != TheMaster->ServerList.end(); ++MSI){
 						SendIPV4Response(clientnode, (MasterServerItem *)&MSI,  nClientID);
 					}*/
-					MSGOUT("E_PacketHandler::_Handle_STREAM_MASTER(): Got LIST from client %s\n", clientIP);
+					//MSGOUT("E_PacketHandler::_Handle_STREAM_MASTER(): Got LIST from client %s\n", clientIP);
 				}
 				if ( _ParseHBPacket_MASTER(re_commandinfo->command)) {
-					MSGOUT("E_PacketHandler::_Handle_STREAM_MASTER(): Got HB from client: %s\n", clientIP);
+					//MSGOUT("E_PacketHandler::_Handle_STREAM_MASTER(): Got HB from client: %s\n", clientIP);
 					return;
 				} else {
 					MSGOUT("E_PacketHandler::_Handle_STREAM_MASTER(): Failed to parse HeartBeat Packet from: %s\n", clientIP);
