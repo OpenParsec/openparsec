@@ -1441,8 +1441,9 @@ void E_PacketHandler::_Handle_COMMAND_MASTER( NetPacket_GMSV* gamepacket, int bu
 	RE_CommandInfo* re_commandinfo	= (RE_CommandInfo*) &gamepacket->RE_List;
 	node_t*			clientnode		= ThePacketDriver->GetPktSender( bufid );
 
-	char clientIP [ MAX_IPADDR_LEN + 1 ];
-	inet_ntop( AF_INET, &clientnode, clientIP, MAX_IPADDR_LEN + 1 );
+	char *clientIP;
+	
+	clientIP=NODE_Print(clientnode);
 
 	UPDTXT2( MSGOUT( "PKTP_COMMAND C -> S: id: %d msg: %d cmd: '%s'", nClientID, gamepacket->MessageId, re_commandinfo->command ); );
 
@@ -1457,9 +1458,9 @@ void E_PacketHandler::_Handle_COMMAND_MASTER( NetPacket_GMSV* gamepacket, int bu
 
 		// walk the MasterServer->ServerList and send out IPV4 packets for all or the one
 
-			SendIPV4Response(clientnode,   nClientID, serverid);
+		SendIPV4Response(clientnode,   nClientID, serverid);
 
-		MSGOUT("E_PacketHandler::_Handle_COMMAND_MASTER(): Got LIST from client: %s\n", clientIP);
+		MSGOUT("List Request from client %s\n", clientIP);
 		return;
 	}
 	if ( _ParseHBPacket_MASTER(re_commandinfo->command)) {

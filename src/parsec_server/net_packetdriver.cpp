@@ -566,7 +566,6 @@ int NET_PacketDriver::_ChainPacket( NetPacket_GMSV* gamepacket, int bufid )
 			}
 			break;
 		case PLAYERID_ANONYMOUS:
-			MSGOUT("Ignoring Anonymous Packet");
 			break;
 
 		case PLAYERID_MASTERSERVER:
