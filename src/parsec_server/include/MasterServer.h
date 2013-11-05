@@ -27,6 +27,8 @@ public:
 
 
 	std::vector<MasterServerItem>		ServerList;
+private:
+	int last_check;
 };
 
 #endif /* MASTERSERVER_H_ */

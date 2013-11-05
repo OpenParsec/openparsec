@@ -81,15 +81,46 @@
 
 MasterServer::MasterServer() {
 	// TODO Auto-generated constructor stub
-
+	last_check=0;
 }
 
 MasterServer::MasterServer(E_GameServer* gameserver) {
 
-
+	last_check=0;
 }
 
 MasterServer::~MasterServer() {
 	// TODO Auto-generated destructor stub
 }
 
+
+int MasterServer::RemoveStaleEntries(){
+	// TODO: remove stale entries from the list.
+
+	int i = 0;
+	int curr_check=(int)time(NULL);
+	int entry_time=(int)time(NULL);
+	if(last_check + 60 < curr_check){
+		std::vector<MasterServerItem>::iterator it= ServerList.begin();
+		std::vector<MasterServerItem>::iterator it_end = ServerList.end();
+		for(it; it != it_end;  ++it){
+		
+			entry_time = it->GetMTime();
+
+			// TODO: Hard coding a expire of 1 hour.  This should be 
+			// configurable once I figure out how to get the master 
+			// server to run .cons without all the bloat.
+			if((curr_check > entry_time + 60) && !(entry_time < 1)){
+				//DEBUG: MSGOUT("Currtime: %i, Entry_Time: %i, removing server: %i", curr_check,  entry_time, it->GetSrvID());
+				char srv_name[MAX_SERVER_NAME]; 
+				it->GetServerName(srv_name, MAX_SERVER_NAME-1);
+				MSGOUT("Expiring %s due to lack of heartbeat.", srv_name);
+				ServerList.erase(it);
+			}
+
+
+		}
+	last_check=curr_check;
+	}
+	
+}

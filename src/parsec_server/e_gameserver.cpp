@@ -60,6 +60,9 @@
 
 // local module header
 #include "e_gameserver.h"
+// MasterServer object
+#include "MasterServer.h"
+
 
 // proprietary module headers
 #include "con_arg.h"
@@ -690,6 +693,7 @@ refframe_t E_GameServer::ServerFrame()
 		TheSimNetOutput->DoClientUpdates();
 	} else {
 		// TODO: Master server stuff....
+		TheMaster->RemoveStaleEntries();
 
 	}
 	// increment the serverframe counter
