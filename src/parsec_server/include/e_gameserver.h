@@ -193,6 +193,9 @@ public: 	// methods
 	// add a serverlink
 	int			AddServerLink( int serverid, Vector3* pos_spec, Vector3* dir_spec );
 
+	// add a teleporter
+	int AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec );
+
 	// accessor methods
 	refframe_t	GetSimTickFrameTime()		{ return m_SimTick_FrameTime; }
 	int			GetPacketAverageSecs()		{ return m_nPacketAverageSecs; }

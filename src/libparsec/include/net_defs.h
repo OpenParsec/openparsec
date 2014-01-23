@@ -633,7 +633,8 @@ enum re_events {
 	RE_SERVERLINKINFO,		// 0x19		// 25
 	RE_MAPOBJECT,			// 0x1a		// 26
 	RE_STARGATE,			// 0x1b		// 27
-       RE_CREATEMINE,
+    RE_CREATEMINE,
+    RE_TELEPORTER,
 	RE_NUMEVENTS
 };
 	
@@ -927,6 +928,15 @@ struct RE_Stargate : RE_Header {
 	// sizeof( RE_Stargate ) = 128
 };
 
+// teleporter properties --------------------------------------------------------
+//
+struct RE_Teleporter : RE_Header {
+	word padding;			// 2
+	float	pos[ 3 ];			// 12
+	float	dir[ 3 ];			// 12
+
+	// sizeof( RE_Teleporter ) = 128
+};
 
 //NOTE:
 // new remote event structures must ensure proper alignment

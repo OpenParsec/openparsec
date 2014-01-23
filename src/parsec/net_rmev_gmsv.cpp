@@ -75,6 +75,7 @@
 //#include "g_emp.h"
 //#include "g_swarm.h"
 #include "g_stgate.h"
+#include "g_telep.h"
 
 
 // process entire remote event list (execute all contained events) coming from the server
@@ -277,7 +278,10 @@ void NET_ProcessRmEvList_GMSV( NetPacket_GMSV* gamepacket )
 				// can only be received when connected
 				NET_ExecRmEvStargate( (RE_Stargate*) pREList );
 				break;
-				
+			case RE_TELEPORTER:
+				NET_ExecRmEvTeleporter( (RE_Teleporter*)pREList );
+				break;
+
 			default:
 				MSGOUT( "ProcessRmEvList_GMSV(): unknown remote event (%d).", pREList->RE_Type );
 		}
@@ -420,6 +424,60 @@ void NET_ExecRmEvMapObject( RE_MapObject* pMapObject )
 	NET_ServerList_AddMapObject( pMapObject );
 }
 
+// exectue RE containing a teleporter -------------------------------------------
+//
+void NET_ExecRmEvTeleporter( RE_Teleporter* pRE_Teleporter )
+{
+	ASSERT( pRE_Teleporter != NULL );
+	ASSERT( NetConnected );
+
+	// found an existing stargate ?
+	Teleporter* teleporter = NET_FindTeleporter( (Vertex3 *)pRE_Teleporter->pos );
+
+	// create new stargate ?
+	if ( teleporter == NULL ) {
+
+		DBGTXT( MSGOUT( "adding teleporter at (%d %d %d)", 
+										    			pRE_Teleporter->pos[ 0 ],
+														pRE_Teleporter->pos[ 1 ],
+														pRE_Teleporter->pos[ 2 ] ); );
+
+		dword objclass = OBJ_FetchObjectClassId( "teleporter" );
+
+		if ( objclass != CLASS_ID_INVALID ) {
+
+			Xmatrx startm;
+			MakeIdMatrx( startm );
+			startm[ 0 ][ 3 ] = pRE_Teleporter->pos[ 0 ];
+			startm[ 1 ][ 3 ] = pRE_Teleporter->pos[ 1 ];
+			startm[ 2 ][ 3 ] = pRE_Teleporter->pos[ 2 ];
+
+			startm[ 0 ][ 2 ] = pRE_Teleporter->dir[ 0 ];
+			startm[ 1 ][ 2 ] = pRE_Teleporter->dir[ 1 ];
+			startm[ 2 ][ 2 ] = pRE_Teleporter->dir[ 2 ];
+
+			// ensure orthogonal matrix
+			CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
+			CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
+
+			teleporter = (Teleporter *) SummonObject( objclass, startm );
+		} else {
+			MSGOUT( "object class Teleporter not found." );
+		}
+	}
+
+	// read properties with persistency callback
+	if ( teleporter != NULL ) {
+		/* XXX: What is this?
+		if ( stargate->callback_persist != NULL ) {
+			stargate->callback_persist( (CustomObject*)stargate, FALSE, (void*)pRE_Stargate );
+		}
+
+		// request server information for server
+		NET_ServerList_Get( Masters[ 0 ], stargate->serverid );
+		*/
+	}
+}
 
 // exectue RE containing a stargate -------------------------------------------
 //
@@ -460,18 +518,20 @@ void NET_ExecRmEvStargate( RE_Stargate* pRE_Stargate )
 
 			stargate = (Stargate *) SummonObject( objclass, startm );
 		} else {
-			MSGOUT( "object class stargate not found." );
+			MSGOUT( "object class teleporter not found." );
 		}
 	}
 
 	// read properties with persistency callback
 	if ( stargate != NULL ) {
+		/* XXX: What's this do?
 		if ( stargate->callback_persist != NULL ) {
 			stargate->callback_persist( (CustomObject*)stargate, FALSE, (void*)pRE_Stargate );
 		}
 
 		// request server information for server
 		NET_ServerList_Get( Masters[ 0 ], stargate->serverid );
+		*/
 	}
 }
 

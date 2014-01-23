@@ -535,6 +535,42 @@ int E_GameServer::AddServerLink( int serverid, Vector3* pos_spec, Vector3* dir_s
 	return TRUE;
 }
 
+// add a Teleporter -----------------------------------------------------------
+//
+int E_GameServer::AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec )
+{
+	ASSERT( pos_spec != NULL );
+	ASSERT( dir_spec != NULL );
+	ASSERT( expos_spec != NULL );
+	ASSERT( exdir_spec != NULL );
+
+	// TODO: create a teleporter list
+	/*
+	if ( m_nNumServerLinks >= MAX_NUM_LINKS ) {
+		return FALSE;
+	}*/
+
+	// norm the direction
+	NormVctX( dir_spec );
+
+	/*
+	m_ServerLinks[ m_nNumServerLinks ].m_serverid = serverid;
+
+	m_ServerLinks[ m_nNumServerLinks ].m_pos.X = pos_spec->X;
+	m_ServerLinks[ m_nNumServerLinks ].m_pos.Y = pos_spec->Y;
+	m_ServerLinks[ m_nNumServerLinks ].m_pos.Z = pos_spec->Z;
+
+	m_ServerLinks[ m_nNumServerLinks ].m_dir.X = dir_spec->X;
+	m_ServerLinks[ m_nNumServerLinks ].m_dir.Y = dir_spec->Y;
+	m_ServerLinks[ m_nNumServerLinks ].m_dir.Z = dir_spec->Z;
+*/
+	// create the corresponding stargate
+	TheGame->CreateTeleporter( pos_spec, dir_spec, expos_spec, exdir_spec );
+
+	//m_nNumServerLinks++;
+
+	return TRUE;
+}
 
 
 // set the new masterserver info ----------------------------------------------

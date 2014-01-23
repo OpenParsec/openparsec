@@ -312,9 +312,6 @@
     <ClCompile Include="..\..\src\parsec\g_swarm.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\parsec\g_telep.cpp">
-      <Filter>parsec</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\parsec\g_vapor.cpp">
       <Filter>parsec</Filter>
     </ClCompile>
@@ -605,6 +602,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\stb_image\stb_image_write.c">
       <Filter>libraries\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\g_telep.cpp">
+      <Filter>libparsec</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1457,12 +1457,5 @@
     <ClInclude Include="..\..\src\libraries\stb_image\stb_image_write.h">
       <Filter>libraries\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Parsec.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="parsec.ico" />
   </ItemGroup>
 </Project>

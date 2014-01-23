@@ -19,6 +19,7 @@
     <ClCompile Include="..\..\src\libparsec\e_relist.cpp" />
     <ClCompile Include="..\..\src\libparsec\g_emp.cpp" />
     <ClCompile Include="..\..\src\libparsec\g_extra.cpp" />
+    <ClCompile Include="..\..\src\libparsec\g_telep.cpp" />
     <ClCompile Include="..\..\src\libparsec\net_pckt_gmsv.cpp" />
     <ClCompile Include="..\..\src\libparsec\net_stream.cpp" />
     <ClCompile Include="..\..\src\libparsec\net_swap.cpp" />
@@ -110,7 +111,6 @@
     <ClCompile Include="..\..\src\parsec\g_stgate.cpp" />
     <ClCompile Include="..\..\src\parsec\g_supp.cpp" />
     <ClCompile Include="..\..\src\parsec\g_swarm.cpp" />
-    <ClCompile Include="..\..\src\parsec\g_telep.cpp" />
     <ClCompile Include="..\..\src\parsec\g_vapor.cpp" />
     <ClCompile Include="..\..\src\parsec\g_wfx.cpp" />
     <ClCompile Include="..\..\src\parsec\h_cockpt.cpp" />
@@ -488,13 +488,6 @@
     <ClInclude Include="..\..\src\parsec\include\vsdl_inito.h" />
     <ClInclude Include="..\..\src\parsec\include\vsdl_ogl.h" />
     <ClInclude Include="..\..\src\parsec\include\vsdl_suppo.h" />
-    <ClInclude Include="resource.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Parsec.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="parsec.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8B8F1A1D-E8DF-4739-812B-72FC14EDEE55}</ProjectGuid>

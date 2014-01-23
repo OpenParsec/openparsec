@@ -528,6 +528,31 @@ void NET_RmEvList_Swap( RE_Header* relist, int incoming )
 					}
 				}
 				break;
+			case RE_TELEPORTER:
+				{
+					RE_Teleporter* re_tlp = (RE_Teleporter*) relist;
+
+
+					if ( incoming ) {
+						Geomv_in( &re_tlp->pos[ 0 ] );
+						Geomv_in( &re_tlp->pos[ 1 ] );
+						Geomv_in( &re_tlp->pos[ 2 ] );
+
+						Geomv_in( &re_tlp->dir[ 0 ] );
+						Geomv_in( &re_tlp->dir[ 1 ] );
+						Geomv_in( &re_tlp->dir[ 2 ] );
+					} else {
+						Geomv_out( &re_tlp->pos[ 0 ] );
+						Geomv_out( &re_tlp->pos[ 1 ] );
+						Geomv_out( &re_tlp->pos[ 2 ] );
+
+						Geomv_out( &re_tlp->dir[ 0 ] );
+						Geomv_out( &re_tlp->dir[ 1 ] );
+						Geomv_out( &re_tlp->dir[ 2 ] );
+					}
+				}
+				break;
+
 				//break;
 				//break;
 				//break;

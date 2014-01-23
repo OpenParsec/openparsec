@@ -228,6 +228,8 @@ public:
 	// create a stargate for a specific server at a position, with a direction
 	void CreateStargate( int serverid, Vector3* pos_spec, Vector3* dir_spec );
 
+	void CreateTeleporter(  Vector3* pos_spec, Vector3* dir_spec, Vector3* expos_spec, Vector3* exdir_spec );
+
 protected:
 
 	// reset all player game vars

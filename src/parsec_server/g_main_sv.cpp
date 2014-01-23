@@ -64,6 +64,7 @@
 #include "od_props.h"
 #include "od_class.h"
 #include "g_stgate.h"
+#include "g_telep.h"
 #include "e_connmanager.h"
 #include "e_gameserver.h"
 #include "e_simnetoutput.h"
@@ -314,6 +315,46 @@ void G_Main::CreateStargate( int serverid, Vector3* pos_spec, Vector3* dir_spec 
 	}
 }
 
+// create a teleporter at a position, with a direction ----
+//
+void G_Main::CreateTeleporter(  Vector3* pos_spec, Vector3* dir_spec, Vector3* expos_spec, Vector3* exdir_spec )
+{
+	ASSERT( pos_spec != NULL );
+	ASSERT( dir_spec != NULL );
+	ASSERT( expos_spec != NULL );
+	ASSERT( exdir_spec != NULL );
+
+
+	// create corresponding stargate objects
+	dword objclass = OBJ_FetchObjectClassId( "teleporter" );
+	dword exobjclass = OBJ_FetchObjectClassId("telep_exit");
+	if ( objclass != CLASS_ID_INVALID ) {
+
+		Xmatrx startm;
+		MakeIdMatrx( startm );
+		startm[ 0 ][ 3 ] = pos_spec->X;
+		startm[ 1 ][ 3 ] = pos_spec->Y;
+		startm[ 2 ][ 3 ] = pos_spec->Z;
+
+		startm[ 0 ][ 2 ] = dir_spec->X;
+		startm[ 1 ][ 2 ] = dir_spec->Y;
+		startm[ 2 ][ 2 ] = dir_spec->Z;
+
+		// ensure orthogonal matrix
+		CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
+		CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
+
+		// create the object
+		Teleporter* teleporter = (Teleporter*)TheWorld->CreateObject( objclass, startm, PLAYERID_SERVER );
+
+		// attach the created E_Distributable for the engine object
+		// stargates are to be delivered reliable
+		teleporter->pDist = TheSimNetOutput->CreateDistributable( teleporter, TRUE );
+
+	} else {
+		MSGOUT( "object class teleporter could not be found.\n" );
+	}
+}
 
 
 // init all game vars ---------------------------------------------------------
