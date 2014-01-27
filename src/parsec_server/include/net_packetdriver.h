@@ -5,6 +5,8 @@
 #ifndef _NET_PACKETDRIVER_H_
 #define _NET_PACKETDRIVER_H_
 
+#include "net_csdf.h"
+
 // forward decls --------------------------------------------------------------
 //
 struct NetPacket_GMSV;
@@ -81,6 +83,12 @@ protected:
 	// fetch a packet into a listen buffer
 	int _UDP_FetchPacket( int bufid );
 
+	// send the protocol incompatible message to the client, using the right protocol ids so the client doesn't drop it.
+	int _SendClientIncompatible(node_t* node, int nClientID, byte clientProtoMajor = CLSV_PROTOCOL_MAJOR, byte clientProtoMinor = CLSV_PROTOCOL_MINOR);
+
+	// check that an incompatible packet is or isn't a challenge request.
+	int _CheckIncompatibleChallenge(node_t *node);
+
 	// determine if packet should be artificially dropped
 	int _CheckForcePacketDrop();
 
@@ -109,7 +117,7 @@ public:
 	int SendPacket( NetPacket_GMSV* gamepacket, node_t* node, int nClientID, E_REList* pReliable, E_REList* pUnreliable );
 
 	// send a datagram ( unreliable, unnumbered packet ) to a node
-	int SendDatagram( NetPacket_GMSV* gamepacket, node_t* node, int nClientID, E_REList* pUnreliable );
+	int SendDatagram( NetPacket_GMSV* gamepacket, node_t* node, int nClientID, E_REList* pUnreliable, byte clientProtoMajor = CLSV_PROTOCOL_MAJOR, byte clientProtoMinor = CLSV_PROTOCOL_MINOR );
 
 	// fill standard fields in gamepacket header
 	void FillStdGameHeader( byte command, NetPacket_GMSV* gamepacket );

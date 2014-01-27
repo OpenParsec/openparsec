@@ -1380,6 +1380,19 @@ void E_PacketHandler::_Handle_COMMAND( NetPacket_GMSV* gamepacket, int bufid )
 	char playername[ MAX_PLAYER_NAME + 1 ];
 
 	refframe_t client_ping_send_frame;
+/*
+	if ((_ClientConnectInfo->m_nVersionMajor != CLSV_PROTOCOL_MAJOR ) &&
+			( _ClientConnectInfo->m_nVersionMinor != CLSV_PROTOCOL_MINOR ) ){
+
+			// output to logfile
+			MSGOUT( "client %s with incompatible version %d.%d tried to join\n", _ClientConnectInfo->m_szHostName,
+					_ClientConnectInfo->m_nVersionMajor, _ClientConnectInfo->m_nVersionMinor );
+
+			// send the response
+			SendConnectResponse( E_ConnManager::CONN_CLIENT_INCOMAPTIBLE, _ClientConnectInfo );
+
+			return;
+	}*/
 
 	// parse for challenge request
 	if ( _ParseChallengeRequest( re_commandinfo->command ) ) {

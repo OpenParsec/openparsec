@@ -24,6 +24,7 @@
 // C library
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -50,6 +51,7 @@
 
 // network code config
 #include "net_conf.h"
+#include "net_csdf.h"
 
 // local module header
 #include "net_packetdriver.h"
@@ -63,6 +65,7 @@
 #include "e_packethandler.h"
 #include "e_simulator.h"
 #include "sys_util_sv.h"
+#include "sys_refframe_sv.h"
 
 
 // flags ----------------------------------------------------------------------
@@ -308,7 +311,7 @@ int NET_PacketDriver::_CheckForcePacketDrop()
 
 // send a datagram ( unreliable, unnumbered packet ) to a node ----------------
 //
-int NET_PacketDriver::SendDatagram( NetPacket_GMSV* gamepacket, node_t* node, int nClientID, E_REList* pUnreliable )
+int NET_PacketDriver::SendDatagram( NetPacket_GMSV* gamepacket, node_t* node, int nClientID, E_REList* pUnreliable, byte clientProtoMajor, byte clientProtoMinor )
 {
 	ASSERT( gamepacket  != NULL );
 	ASSERT( node	    != NULL );
@@ -333,7 +336,7 @@ int NET_PacketDriver::SendDatagram( NetPacket_GMSV* gamepacket, node_t* node, in
 	gamepacket->AckReliableMessageId	= 0;
 
 	// pack from internal packet to external packet
-	size_t pktsize = NETs_HandleOutPacket( (NetPacket*)gamepacket, SendNetPacketExternal );
+	size_t pktsize = NETs_HandleOutPacket( (NetPacket*)gamepacket, SendNetPacketExternal, clientProtoMajor,  clientProtoMinor );
 
 	sockaddr_in SendAddress;
 	bzero( &SendAddress, sizeof( SendAddress ) );
@@ -732,6 +735,14 @@ int NET_PacketDriver::_UDP_FetchPacket( int bufid )
 
 		// convert external packet to internal format
 		if ( !NETs_HandleInPacket( RecvNetPacketExternal, (size_t )rc, (NetPacket*) NetPacketsInternal[ bufid ] ) ) {
+			// if we got kicked back because of a protocol mismatch, send the client an incompatible message with THEIR protocol version
+			// numbers so the packet isn't dropped on their end.
+			if((RecvNetPacketExternal->MajorVersion != CLSV_PROTOCOL_MAJOR) ||
+					(RecvNetPacketExternal->MinorVersion != CLSV_PROTOCOL_MINOR)) {
+				// first check to see if the client just wants a challenge, we can kick them after they get what they want.
+				_CheckIncompatibleChallenge(GetPktSender(bufid));
+				_SendClientIncompatible(GetPktSender(bufid), PLAYERID_SERVER, RecvNetPacketExternal->MajorVersion, RecvNetPacketExternal->MinorVersion);
+			}
 			DBGTXT( MSGOUT( "NET_PacketDriver::_UDP_FetchPacket(): dropped packet [conversion error]." ); );
 			return FALSE;
 		} else {
@@ -750,5 +761,95 @@ int NET_PacketDriver::_UDP_FetchPacket( int bufid )
 	}
 }
 
+int NET_PacketDriver::_SendClientIncompatible(node_t* node, int nClientID, byte clientProtoMajor, byte clientProtoMinor){
+	char clientcommand[MAX_RE_COMMANDINFO_COMMAND_LEN + 1];
+
+	snprintf( clientcommand, sizeof(clientcommand), RECVSTR_SERVER_INCOMP );
+
+	MSGOUT("NET_PacketDriver::_SendClientIncompatible(): Incompatible Protocol Notification going to %s", NODE_Print(node));
+
+	char			buffer[ NET_MAX_NETPACKET_INTERNAL_LEN ];
+	NetPacket_GMSV*	gamepacket = (NetPacket_GMSV *) buffer;
+
+	// fill game data header
+	ThePacketDriver->FillStdGameHeader( PKTP_COMMAND, gamepacket );
+
+	if ( nClientID == PLAYERID_MASTERSERVER ) {
+
+		UPDTXT2( MSGOUT( "DATAGRAM: PKTP_COMMAND S -> M: node: %s msg: %d cmd: '%s'",
+						NODE_Print( node ),
+						nClientID,
+						clientcommand ); );
+
+	} else {
+
+		UPDTXT2( MSGOUT( "DATAGRAM: PKTP_COMMAND S -> C: node: %s msg: %d cmd: '%s'",
+						NODE_Print( node ),
+						nClientID,
+						clientcommand ); );
+
+	}
+
+	// append a remote event containing the command
+	E_REList* pUnreliable = E_REList::CreateAndAddRef( RE_LIST_MAXAVAIL );
+	if ( !pUnreliable->NET_Append_RE_CommandInfo( clientcommand ) ) {
+		DBGTXT( MSGOUT( "e_PacketHandler::Send_COMMAND_Datagram(): RE list choke." ); );
+	}
+
+	// send the packet
+	int rc = SendDatagram( gamepacket, node, nClientID, pUnreliable, clientProtoMajor, clientProtoMinor );
+
+	// release the RE list from here
+	pUnreliable->Release();
+
+	return rc;
+}
+
+int NET_PacketDriver::_CheckIncompatibleChallenge(node_t *node){
+
+	// This is a pretty bad hack....
+
+	// get a pointer to the RE_List and cast it as a command.
+	RE_CommandInfo *pckt_cmd = (RE_CommandInfo* )&RecvNetPacketExternal->RE_List;
+
+	if(!strncmp((const char*)&pckt_cmd->command,"givechall", 9)) {
+		// spoof a challenge to the client so we can kick them
+		E_ClientChallengeInfo* pCurChallengeInfo = new E_ClientChallengeInfo();
+
+		// generate a new unique challenge
+		pCurChallengeInfo->m_challenge = RAND();
+		pCurChallengeInfo->m_frame_generated = SYSs_GetRefFrameCount();
+		NODE_Copy( &pCurChallengeInfo->m_node, node );
 
 
+		// send the response back to the client
+		// prepare response
+		char sendline[ MAX_RE_COMMANDINFO_COMMAND_LEN + 1 ];
+		snprintf( sendline, sizeof(sendline), RECVSTR_CHALLENGE, pCurChallengeInfo->m_challenge );
+
+		// send response datagram
+
+		char			buffer[ NET_MAX_NETPACKET_INTERNAL_LEN ];
+		NetPacket_GMSV*	gamepacket = (NetPacket_GMSV *) buffer;
+
+		// fill game data header
+		ThePacketDriver->FillStdGameHeader( PKTP_COMMAND, gamepacket );
+
+
+		// append a remote event containing the command
+		E_REList* pUnreliable = E_REList::CreateAndAddRef( RE_LIST_MAXAVAIL );
+		if ( !pUnreliable->NET_Append_RE_CommandInfo( sendline ) ) {
+			DBGTXT( MSGOUT( "NET_PacketDriver::_CheckIncompatibleChallenge: RE list choke." ); );
+		}
+
+		// send the packet
+		int rc = SendDatagram( gamepacket, node, PLAYERID_SERVER, pUnreliable, RecvNetPacketExternal->MajorVersion, RecvNetPacketExternal->MinorVersion );
+
+		// release the RE list from here
+		pUnreliable->Release();
+
+	}
+
+
+
+}

@@ -675,6 +675,14 @@ int E_ConnManager::_IsClientCompatible( E_ClientConnectInfo* pClientConnectInfo 
 	if ( ( pClientConnectInfo->m_nVersionMajor == CLSV_PROTOCOL_MAJOR ) && ( pClientConnectInfo->m_nVersionMinor == CLSV_PROTOCOL_MINOR ) ) {
 		return TRUE;
 	} else {
+		// output to logfile
+		MSGOUT( "client %s with incompatible version %d.%d tried to join\n", pClientConnectInfo->m_szHostName,
+				pClientConnectInfo->m_nVersionMajor, pClientConnectInfo->m_nVersionMinor );
+
+
+		// send the response
+		ThePacketHandler->SendConnectResponse( E_ConnManager::CONN_CLIENT_INCOMAPTIBLE, pClientConnectInfo );
+
 		return FALSE;
 	}
 }

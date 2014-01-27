@@ -334,6 +334,9 @@ int	E_GameServer::Init()
 	// master server not yet resolved
 	m_bMasterServer_NodeValid = false;
 
+	MSGOUT("\n\nOpenParsec Server\n");
+	MSGOUT("Network Protocol: %i.%i", CLSV_PROTOCOL_MAJOR, CLSV_PROTOCOL_MINOR);
+
 	// init the game, only if in game server mode.
 	if(!this->GetServerIsMaster()){
 		TheGame->Init();

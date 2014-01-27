@@ -10,7 +10,10 @@
 // NETWORKING SUBSYSTEM (NET) system-dependent function declarations          -
 // ----------------------------------------------------------------------------
 //#define NULL 0
+#include <string.h>
+
 #include "e_relist.h"
+#include "net_csdf.h"
 
 //// remote event functions (RMEV)
 //
@@ -86,7 +89,7 @@
 //
 // protocol api - packet handling functions 
 
-size_t		NETs_HandleOutPacket		( const NetPacket*			int_gamepacket, NetPacketExternal* ext_gamepacket );
+size_t		NETs_HandleOutPacket		( const NetPacket*			int_gamepacket, NetPacketExternal* ext_gamepacket,  byte clientProtoMajor = CLSV_PROTOCOL_MAJOR, byte clientProtoMinor = CLSV_PROTOCOL_MINOR );
 //size_t		NETs_HandleOutPacket_DEMO	( const NetPacket*			int_gamepacket, NetPacketExternal* ext_gamepacket );
 int			NETs_HandleInPacket			( const NetPacketExternal*	ext_gamepacket, const int ext_pktsize, NetPacket* int_gamepacket );
 //int			NETs_HandleInPacket_DEMO	( const NetPacketExternal*	ext_gamepacket, NetPacket* int_gamepacket, size_t* psize_external );
