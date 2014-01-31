@@ -26,6 +26,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -432,15 +434,15 @@ void NET_ExecRmEvTeleporter( RE_Teleporter* pRE_Teleporter )
 	ASSERT( NetConnected );
 
 	// found an existing stargate ?
-	Teleporter* teleporter = NET_FindTeleporter( (Vertex3 *)pRE_Teleporter->pos );
+	Teleporter* teleporter = NET_FindTeleporter( pRE_Teleporter->id );
 
 	// create new stargate ?
 	if ( teleporter == NULL ) {
 
-		DBGTXT( MSGOUT( "adding teleporter at (%d %d %d)", 
+		 MSGOUT( "adding teleporter at (%d %d %d)", 
 										    			pRE_Teleporter->pos[ 0 ],
 														pRE_Teleporter->pos[ 1 ],
-														pRE_Teleporter->pos[ 2 ] ); );
+														pRE_Teleporter->pos[ 2 ] ); 
 
 		dword objclass = OBJ_FetchObjectClassId( "teleporter" );
 
@@ -461,22 +463,43 @@ void NET_ExecRmEvTeleporter( RE_Teleporter* pRE_Teleporter )
 			CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
 
 			teleporter = (Teleporter *) SummonObject( objclass, startm );
+			teleporter->id = pRE_Teleporter->id;    
+			teleporter->exit_delta_x = pRE_Teleporter->exit_delta_x;
+			teleporter->exit_delta_y = pRE_Teleporter->exit_delta_y;
+			teleporter->exit_delta_z = pRE_Teleporter->exit_delta_z;
+
+			teleporter->exit_rot_phi = pRE_Teleporter->exit_rot_phi;
+			teleporter->exit_rot_theta = pRE_Teleporter->exit_rot_theta;
+
 		} else {
 			MSGOUT( "object class Teleporter not found." );
 		}
-	}
+	} else {
+		// found the teleporter, let's edit some of the stuff.
+ 
+		// set the start coords
+		teleporter->start.X = pRE_Teleporter->pos[ 0 ];
+		teleporter->start.Y = pRE_Teleporter->pos[ 1 ];
+		teleporter->start.Z = pRE_Teleporter->pos[ 2 ];
 
-	// read properties with persistency callback
-	if ( teleporter != NULL ) {
-		/* XXX: What is this?
-		if ( stargate->callback_persist != NULL ) {
-			stargate->callback_persist( (CustomObject*)stargate, FALSE, (void*)pRE_Stargate );
-		}
+		// set the start rotation spherical coords
+		float phi_atan = (pRE_Teleporter->dir[ 0 ]) ? (pRE_Teleporter->dir[ 1 ]/pRE_Teleporter->dir[ 0 ]) : 0; 
+		teleporter->start_rot_phi = (atan(phi_atan)*180)/M_PI;
+		float theta_atan = (pRE_Teleporter->dir[ 2 ]) ? ((sqrt(powf(pRE_Teleporter->dir[ 0 ],2)+powf(pRE_Teleporter->dir[ 1 ],2))/pRE_Teleporter->dir[ 2 ])) : 0;
+		teleporter->start_rot_theta = (atan(theta_atan)*180)/M_PI;
 
-		// request server information for server
-		NET_ServerList_Get( Masters[ 0 ], stargate->serverid );
-		*/
-	}
+		teleporter->exit_delta_x = pRE_Teleporter->exit_delta_x;
+		teleporter->exit_delta_y = pRE_Teleporter->exit_delta_y;
+		teleporter->exit_delta_z = pRE_Teleporter->exit_delta_z;
+
+		teleporter->exit_rot_phi = pRE_Teleporter->exit_rot_phi;
+		teleporter->exit_rot_theta = pRE_Teleporter->exit_rot_theta;
+ 
+ 	}
+
+	// notify the teleporter that it changed some properties.
+	TeleporterPropsChanged(teleporter);
+
 }
 
 // exectue RE containing a stargate -------------------------------------------
@@ -518,20 +541,18 @@ void NET_ExecRmEvStargate( RE_Stargate* pRE_Stargate )
 
 			stargate = (Stargate *) SummonObject( objclass, startm );
 		} else {
-			MSGOUT( "object class teleporter not found." );
+			MSGOUT( "object class stargate not found." );
 		}
 	}
 
 	// read properties with persistency callback
 	if ( stargate != NULL ) {
-		/* XXX: What's this do?
 		if ( stargate->callback_persist != NULL ) {
 			stargate->callback_persist( (CustomObject*)stargate, FALSE, (void*)pRE_Stargate );
 		}
 
 		// request server information for server
 		NET_ServerList_Get( Masters[ 0 ], stargate->serverid );
-		*/
 	}
 }
 

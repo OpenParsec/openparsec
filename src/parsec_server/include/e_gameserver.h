@@ -11,6 +11,7 @@
 #define MAX_NUM_CLIENTS							TheServer->GetMaxNumClients()
 
 #include <string.h>
+#include "g_telep.h"
 
 // class holding the server configuration -------------------------------------
 //
@@ -143,6 +144,8 @@ protected: 	// data
 
 	E_ServerLinkInfo	m_ServerLinks[ MAX_NUM_LINKS ];
 	int					m_nNumServerLinks;
+	Teleporter			*m_Teleporters[MAX_NUM_TELEP];
+	int					m_nNumTeleporters;
 
 	bool_t				m_bQuit;
 protected: 	// methods
@@ -195,6 +198,7 @@ public: 	// methods
 
 	// add a teleporter
 	int AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec );
+	int ModTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec );
 
 	// accessor methods
 	refframe_t	GetSimTickFrameTime()		{ return m_SimTick_FrameTime; }

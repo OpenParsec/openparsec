@@ -136,6 +136,9 @@
 //
 #define MAX_NUM_LINKS			16
 
+// maximum # of teleporters from one server
+#define MAX_NUM_TELEP			32
+
 
 // maximum # of map objects ---------------------------------------------------
 //
@@ -931,11 +934,16 @@ struct RE_Stargate : RE_Header {
 // teleporter properties --------------------------------------------------------
 //
 struct RE_Teleporter : RE_Header {
-	word padding;			// 2
+	word id;			// 2
 	float	pos[ 3 ];			// 12
 	float	dir[ 3 ];			// 12
+	geomv_t	exit_delta_x; // 4
+	geomv_t 	exit_delta_y; // 4
+	geomv_t	exit_delta_z; // 4
+	float exit_rot_phi; // 4
+	float exit_rot_theta; // 4
 
-	// sizeof( RE_Teleporter ) = 128
+	// sizeof( RE_Teleporter ) = 40
 };
 
 //NOTE:

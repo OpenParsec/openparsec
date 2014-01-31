@@ -131,7 +131,7 @@ Stargate* NET_FindStargate( word serverid )
 
 // try to find the teleporter object a location ---------------------
 //
-Teleporter* NET_FindTeleporter( Vertex3 *origin)
+Teleporter* NET_FindTeleporter( int id )
 {
 	// try to find the stargate for the specific serverid
 	GenObject* walkobjs = FetchFirstCustom();
@@ -141,7 +141,7 @@ Teleporter* NET_FindTeleporter( Vertex3 *origin)
 		static dword teleporter_typeid = TYPE_ID_INVALID;
 
 		if ( teleporter_typeid == TYPE_ID_INVALID ) {
-			teleporter_typeid = OBJ_FetchCustomTypeId( "stargate" );
+			teleporter_typeid = OBJ_FetchCustomTypeId( "teleporter" );
 		}
 
 		// we only want to walk stargates
@@ -150,10 +150,7 @@ Teleporter* NET_FindTeleporter( Vertex3 *origin)
 		}
 
 		Teleporter *teleporter= (Teleporter*) walkobjs;
-		if ( (teleporter->start_vtxlist->X == origin->X) &&
-			 (teleporter->start_vtxlist->Y == origin->Y) &&
-			 (teleporter->start_vtxlist->Z == origin->Z)) {
-
+		if ( id == teleporter->id ) {
 			return teleporter;
 		}
 	}

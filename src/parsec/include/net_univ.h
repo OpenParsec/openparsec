@@ -35,7 +35,7 @@ extern int			num_map_objs;
 //
 int			NET_GetGameServerList();
 Stargate*	NET_FindStargate( word serverid );
-Teleporter* NET_FindTeleporter( Vertex3 *origin );
+Teleporter* NET_FindTeleporter( int id );
 
 
 #endif // _NET_UNIV_H_

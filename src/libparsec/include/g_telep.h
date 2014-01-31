@@ -62,6 +62,7 @@ struct Teleporter : CustomObject {
 	geomv_t				tunnel_cur_anim_step;
 	geomv_t				tunnel_spline_arclen;
 	CullBox3			tunnel_cullbox;
+	word					id;
 
 	// hacks :)
 	Xmatrx				start_frame, end_frame;
@@ -70,8 +71,7 @@ struct Teleporter : CustomObject {
 
 
 // external functions
-
-// (none)
+PUBLIC void TeleporterPropsChanged(GenObject* base);
 
 
 #endif // _S_TELEP_H_

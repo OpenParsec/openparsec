@@ -671,10 +671,22 @@ void QuaternionFromSpherical( Quaternion_f *quat, float deg_angle, float deg_lat
 PRIVATE
 void Teleporter_Rotation_Transform( float phi, float theta, Xmatrx trafo )
 {
-	ASSERT( ( phi   >= 0.0f ) && ( phi <= 360.0f ) );
-	ASSERT( ( theta >= 0.0f ) && ( theta <= 360.0f ) );
+
 	ASSERT( trafo != NULL );
 
+	if(phi < 0.0f || isnan(phi)) {
+		phi=0.0f;
+	}
+	if(phi>360.0f){
+		phi=360.0f;
+	}
+
+	if(theta < 0.0f || isnan(theta)) {
+		theta=0.0f;
+	}
+	if(theta>360.0f){
+		theta=360.0f;
+	}
 	// NOTE: formula to get the position on the 1-sphere from angular coordinates:
 	//
 	// x = sin( phi ) * cos( theta )
@@ -763,11 +775,11 @@ int TeleporterModify_ExitPropsChanged( GenObject* base )
 	ChildTrans[ 0 ][ 3 ] = teleporter->exit_delta_x;
 	ChildTrans[ 1 ][ 3 ] = teleporter->exit_delta_y;
 	ChildTrans[ 2 ][ 3 ] = teleporter->exit_delta_z;
-
+#ifndef PARSEC_SERVER
 	MtxMtxMUL( teleporter->ObjPosition, ChildTrans, teleporter->child_object->ObjPosition );
 	
 	TeleporterModify_SplinePropsChanged( base );
-	
+#endif
 	return TRUE;
 }
 
@@ -1560,6 +1572,7 @@ void TeleporterInitType( CustomObject *base )
 	teleporter->tunnel_spline_arclen    = GEOMV_0;
 
 	teleporter->tunnel_tex_alpha		= 128;
+	teleporter->id				=0;
 }
 
 // teleporter constructor (class instantiation) ---------------------------------
@@ -1654,9 +1667,15 @@ void TeleporterInstantiate( CustomObject *base )
 	// get the initial start position
 	FetchTVector( teleporter->ObjPosition, &teleporter->start );
 
-	//FIXME: we need to get the angles out of the matrix
-	teleporter->start_rot_phi			= 0;
-	teleporter->start_rot_theta			= 0;
+	// we need to get the angles out of the matrix
+	geomv_t startx = teleporter->ObjPosition[0][2];
+	geomv_t starty = teleporter->ObjPosition[1][2];
+	geomv_t startz = teleporter->ObjPosition[1][2];
+
+	// yay maths....
+	// store the rotational spherical coords.
+	teleporter->start_rot_phi			= atan(starty/startx);
+	teleporter->start_rot_theta			= atan((sqrt(powf(startx,2)+powf(starty,2))/startz));
 }
 
 #ifndef PARSEC_SERVER
@@ -2023,8 +2042,6 @@ int TeleporterPersistFromStream( CustomObject* base, int tostream, void* rl )
 		RE_Teleporter* re_tlp = (RE_Teleporter*)pREList->NET_Allocate( RE_TELEPORTER );
 		ASSERT( re_tlp != NULL );
 
-		re_tlp->padding	= 0;
-
 		re_tlp->pos[ 0 ]	= teleporter->ObjPosition[ 0 ][ 3 ];
 		re_tlp->pos[ 1 ]	= teleporter->ObjPosition[ 1 ][ 3 ];
 		re_tlp->pos[ 2 ]	= teleporter->ObjPosition[ 2 ][ 3 ];
@@ -2033,12 +2050,27 @@ int TeleporterPersistFromStream( CustomObject* base, int tostream, void* rl )
 		re_tlp->dir[ 1 ]	= teleporter->ObjPosition[ 1 ][ 2 ];
 		re_tlp->dir[ 2 ]	= teleporter->ObjPosition[ 2 ][ 2 ];
 
+		re_tlp->exit_delta_x = teleporter->exit_delta_x;
+		re_tlp->exit_delta_y = teleporter->exit_delta_y;
+		re_tlp->exit_delta_z = teleporter->exit_delta_z;
+
+		re_tlp->id	= teleporter->id;
+
+		re_tlp->exit_rot_phi = teleporter->exit_rot_phi;
+		re_tlp->exit_rot_theta = teleporter->exit_rot_theta;
+
 	}
 
 	return size;
 #else
 	return 0;
 #endif
+}
+
+PUBLIC void TeleporterPropsChanged(GenObject* base){
+	TeleporterModify_StartPropsChanged(base);
+
+
 }
 
 // register object type for Teleporter ------------------------------------------
@@ -2085,7 +2117,8 @@ void TeleporterRegisterCustomType()
 
 // key table for "tp.create" command --------------------------------------------
 //
-key_value_s tp_create_key_value[] = {
+key_value_s tp_command_keys[] = {
+	{"id",			NULL, 	KEYVALFLAG_NONE },
 	{ "pos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
 	{ "dir",		NULL,	KEYVALFLAG_PARENTHESIZE		},
 	{ "expos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
@@ -2095,7 +2128,7 @@ key_value_s tp_create_key_value[] = {
 };
 
 enum {
-
+	KEY_TELEPORTER_ID,
 	KEY_TELEPORTER_POS,
 	KEY_TELEPORTER_DIR,
 	KEY_TELEPORTER_EXPOS,
@@ -2121,7 +2154,7 @@ int Cmd_TP_CREATE( char* tp_create_command )
 	HANDLE_COMMAND_DOMAIN( tp_create_command );
 
 	// scan out all values to keys
-	if ( !ScanKeyValuePairs( tp_create_key_value,tp_create_command ) ) {
+	if ( !ScanKeyValuePairs( tp_command_keys,tp_create_command ) ) {
 		return TRUE;
 	}
 
@@ -2129,8 +2162,8 @@ int Cmd_TP_CREATE( char* tp_create_command )
 
 	// parse position
 	Vector3 pos_spec;
-	if ( tp_create_key_value[ KEY_TELEPORTER_POS ].value != NULL ) {
-		if ( !ScanKeyValueFloatList( &tp_create_key_value[ KEY_TELEPORTER_POS ], (float*)&pos_spec.X, 3, 3 ) ) {
+	if ( tp_command_keys[ KEY_TELEPORTER_POS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_POS ], (float*)&pos_spec.X, 3, 3 ) ) {
 			CON_AddLine( "position invalid" );
 			return TRUE;
 		}
@@ -2145,8 +2178,8 @@ int Cmd_TP_CREATE( char* tp_create_command )
 
 	// parse exit position
 	Vector3 expos_spec;
-	if ( tp_create_key_value[ KEY_TELEPORTER_EXPOS ].value != NULL ) {
-		if ( !ScanKeyValueFloatList( &tp_create_key_value[ KEY_TELEPORTER_EXPOS ], (float*)&expos_spec.X, 3, 3 ) ) {
+	if ( tp_command_keys[ KEY_TELEPORTER_EXPOS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXPOS ], (float*)&expos_spec.X, 3, 3 ) ) {
 			CON_AddLine( "position invalid" );
 			return TRUE;
 		}
@@ -2160,11 +2193,13 @@ int Cmd_TP_CREATE( char* tp_create_command )
 
 	// parse direction
 	Vector3 dir_spec;
-	if ( tp_create_key_value[ KEY_TELEPORTER_DIR ].value != NULL ) {
-		if ( !ScanKeyValueFloatList( &tp_create_key_value[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
+	if ( tp_command_keys[ KEY_TELEPORTER_DIR ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
 			CON_AddLine( "direction invalid" );
 			return TRUE;
 		}
+		if(dir_spec.X == 0 && dir_spec.Y == 0 && dir_spec.Z==0)
+			dir_spec.Z=1; // default to Z if all zero
 	} else {
 		// default to point in z direction
 		dir_spec.X = 0.0f;
@@ -2175,11 +2210,13 @@ int Cmd_TP_CREATE( char* tp_create_command )
 
 	// parse exit direction
 		Vector3 exdir_spec;
-		if ( tp_create_key_value[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
-			if ( !ScanKeyValueFloatList( &tp_create_key_value[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
+		if ( tp_command_keys[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
+			if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
 				CON_AddLine( "direction invalid" );
 				return TRUE;
 			}
+			if(exdir_spec.X == 0 && dir_spec.Y == 0 && exdir_spec.Z==0)
+				exdir_spec.Z=1; // default to Z if all zero
 		} else {
 			// default to point in z direction
 			exdir_spec.X = 0.0f;
@@ -2193,6 +2230,106 @@ int Cmd_TP_CREATE( char* tp_create_command )
 
 	return TRUE;
 }
+
+// console command for specifying teleporters in game server mode --------------------------------
+//
+PRIVATE
+int Cmd_TP_MODIFY( char* tp_mod_command )
+{
+	//NOTE:
+	//CONCOM:
+	// tp_modify_command	::= 'tp.mod' id_spec [<pos_spec>] [<dir_spec>] [expos_spec] [exdir_spec]
+	// id_spec			::= 'id' <int>
+	// pos_spec			::= 'pos' '(' <float> <float> <float> ')'
+	// dir_spec			::= 'dir' '(' <float> <float> <float> ')'
+	// expos_spec	::= 'expos' '(' <float> <float> <float> ')'
+	// exdir_spec			::= 'exdir' '(' <float> <float> <float> ')'
+
+
+	ASSERT( tp_mod_command != NULL );
+	HANDLE_COMMAND_DOMAIN( tp_mod_command );
+
+	int tp_id = 0;
+	Vector3 pos_spec;
+	Vector3 expos_spec;
+	Vector3 dir_spec;
+	Vector3 exdir_spec;
+
+	Vector3 *pos, *expos, *dir, *exdir;
+
+	bool pos_ch, expos_ch, dir_ch, exdir_ch;
+
+	// scan out all values to keys
+	if ( !ScanKeyValuePairs( tp_command_keys,tp_mod_command ) ) {
+		return TRUE;
+	}
+
+	if(tp_command_keys[KEY_TELEPORTER_ID].value != NULL ) {
+		if(!ScanKeyValueInt(&tp_command_keys[KEY_TELEPORTER_ID],&tp_id)) {
+			CON_AddLine("Teleporter ID Invalid");
+			return TRUE;
+		}
+	}
+
+	// parse position
+	if ( tp_command_keys[ KEY_TELEPORTER_POS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_POS ], (float*)&pos_spec.X, 3, 3 ) ) {
+			CON_AddLine( "position invalid" );
+			return TRUE;
+		}
+		pos_ch = TRUE;
+	} else {
+		pos_ch = FALSE;
+	}
+
+	// parse exit position
+	if ( tp_command_keys[ KEY_TELEPORTER_EXPOS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXPOS ], (float*)&expos_spec.X, 3, 3 ) ) {
+			CON_AddLine( "position invalid" );
+			return TRUE;
+		}
+		expos_ch = TRUE;
+
+	} else {
+		expos_ch = FALSE;
+	}
+	// parse direction
+	if ( tp_command_keys[ KEY_TELEPORTER_DIR ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
+			CON_AddLine( "direction invalid" );
+			return TRUE;
+		}
+		dir_ch = TRUE;
+		if(dir_spec.X == 0 && dir_spec.Y == 0 && dir_spec.Z==0)
+			dir_spec.Z=1; // default to Z if all zero
+	} else {
+		dir_ch = FALSE;
+	}
+
+	// parse exit direction
+	if ( tp_command_keys[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
+			CON_AddLine( "direction invalid" );
+			return TRUE;
+		}
+		exdir_ch = TRUE;
+		if(exdir_spec.X == 0 && exdir_spec.Y == 0 && exdir_spec.Z==0)
+			exdir_spec.Z=1; // default to Z if all zero
+	} else {
+		exdir_ch = FALSE;
+	}
+
+	pos=(pos_ch) ? &pos_spec : NULL;
+	expos=(expos_ch) ? &expos_spec : NULL;
+	dir=(dir_ch) ? &dir_spec : NULL;
+	exdir=(exdir_ch) ? &exdir_spec : NULL;
+
+	// add the teleporter
+	TheServer->ModTeleporter( tp_id, pos, dir, expos, exdir );
+
+	return TRUE;
+}
+
 #endif //PARSEC_SERVER
 
 
@@ -2210,6 +2347,13 @@ REGISTER_MODULE( G_TELEP )
 	regcom.command	 = "tp.create";
 	regcom.numparams = 0;
 	regcom.execute	 = Cmd_TP_CREATE;
+	regcom.statedump = NULL;
+	CON_RegisterUserCommand( &regcom );
+
+	// register "tp.create" command
+	regcom.command	 = "tp.mod";
+	regcom.numparams = 0;
+	regcom.execute	 = Cmd_TP_MODIFY;
 	regcom.statedump = NULL;
 	CON_RegisterUserCommand( &regcom );
 #endif
