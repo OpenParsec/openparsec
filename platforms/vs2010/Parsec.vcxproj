@@ -234,9 +234,8 @@
     <ClInclude Include="..\..\src\libparsec\include\g_extra.h" />
     <ClInclude Include="..\..\src\libparsec\include\g_shipobject.h" />
     <ClInclude Include="..\..\src\libparsec\include\g_stgate.h" />
+    <ClInclude Include="..\..\src\libparsec\include\g_telep.h" />
     <ClInclude Include="..\..\src\libparsec\include\keycodes.h" />
-    <ClInclude Include="..\..\src\libparsec\include\keys_mac.h" />
-    <ClInclude Include="..\..\src\libparsec\include\keys_pc.h" />
     <ClInclude Include="..\..\src\libparsec\include\keys_sdl.h" />
     <ClInclude Include="..\..\src\libparsec\include\keys_server.h" />
     <ClInclude Include="..\..\src\libparsec\include\linkinfo.h" />
@@ -271,14 +270,11 @@
     <ClInclude Include="..\..\src\libparsec\include\od_types.h" />
     <ClInclude Include="..\..\src\libparsec\include\parttype.h" />
     <ClInclude Include="..\..\src\libparsec\include\platform.h" />
-    <ClInclude Include="..\..\src\libparsec\include\platform_lnx.h" />
     <ClInclude Include="..\..\src\libparsec\include\platform_sdl.h" />
     <ClInclude Include="..\..\src\libparsec\include\sl_path.h" />
     <ClInclude Include="..\..\src\libparsec\include\sl_timer.h" />
     <ClInclude Include="..\..\src\libparsec\include\sw_path.h" />
     <ClInclude Include="..\..\src\libparsec\include\sw_timer.h" />
-    <ClInclude Include="..\..\src\libparsec\include\sx_path.h" />
-    <ClInclude Include="..\..\src\libparsec\include\sx_timer.h" />
     <ClInclude Include="..\..\src\libparsec\include\sys_date.h" />
     <ClInclude Include="..\..\src\libparsec\include\sys_defs.h" />
     <ClInclude Include="..\..\src\libparsec\include\sys_file.h" />
@@ -301,7 +297,6 @@
     <ClInclude Include="..\..\src\libraries\glew\wglew.h" />
     <ClInclude Include="..\..\src\libraries\stb_image\stb_image.h" />
     <ClInclude Include="..\..\src\libraries\stb_image\stb_image_write.h" />
-    <ClInclude Include="..\..\src\parsec\include\al_initg.h" />
     <ClInclude Include="..\..\src\parsec\include\aud_bkgn.h" />
     <ClInclude Include="..\..\src\parsec\include\aud_comm.h" />
     <ClInclude Include="..\..\src\parsec\include\aud_defs.h" />
@@ -373,7 +368,6 @@
     <ClInclude Include="..\..\src\parsec\include\g_stars.h" />
     <ClInclude Include="..\..\src\parsec\include\g_supp.h" />
     <ClInclude Include="..\..\src\parsec\include\g_swarm.h" />
-    <ClInclude Include="..\..\src\parsec\include\g_telep.h" />
     <ClInclude Include="..\..\src\parsec\include\g_vapor.h" />
     <ClInclude Include="..\..\src\parsec\include\g_wfx.h" />
     <ClInclude Include="..\..\src\parsec\include\h_cockpt.h" />
