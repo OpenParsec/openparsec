@@ -29,6 +29,10 @@
 #include <math.h>
 #include <limits.h>
 
+#ifndef isnan
+#define isnan(x) _isnan(x)
+#endif
+
 // compilation flags/debug support
 #include "config.h"
 #include "debug.h"
