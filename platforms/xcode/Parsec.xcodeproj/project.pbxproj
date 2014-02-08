@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AD72FAB18A6C15000E60FFE /* g_telep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA25B87818A1D1D700DC2E29 /* g_telep.cpp */; };
 		FA17FD5216BB0C1D0003E370 /* g_emp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA17FD5116BB0C1D0003E370 /* g_emp.cpp */; };
 		FA17FD5316BB0C530003E370 /* g_emp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA17FD5116BB0C1D0003E370 /* g_emp.cpp */; };
 		FA25B87918A1D1D700DC2E29 /* g_telep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA25B87818A1D1D700DC2E29 /* g_telep.cpp */; };
@@ -2225,6 +2226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AD72FAB18A6C15000E60FFE /* g_telep.cpp in Sources */,
 				FA3716BB164DEE8D00230CE8 /* net_pckt_gmsv.cpp in Sources */,
 				FA3716BC164DEE8D00230CE8 /* net_stream.cpp in Sources */,
 				FA3716BD164DEE8D00230CE8 /* net_swap.cpp in Sources */,
