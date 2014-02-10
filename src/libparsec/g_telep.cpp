@@ -2006,23 +2006,23 @@ int TeleporterCollide( CustomObject *base )
 	}
 	
 #ifndef DONT_MOVE_REMOTE_SHIPS
-	
-	// walk all ships and check for teleportings
-	ShipObject *shippo = FetchFirstShip();
-	for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
-		if ( shippo != MyShip ) {
-			if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
-				
-				// transform the ship to (teleporter) object space
-				Xmatrx ShipInTelepSpace;
-				MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
-				
-				// transform ship to world space ( using the teleporter exit frame )
-				MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
+	if(!NET_ProtocolGMSV()){
+		// walk all ships and check for teleportings
+		ShipObject *shippo = FetchFirstShip();
+		for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
+			if ( shippo != MyShip ) {
+				if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
+
+					// transform the ship to (teleporter) object space
+					Xmatrx ShipInTelepSpace;
+					MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
+
+					// transform ship to world space ( using the teleporter exit frame )
+					MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
+				}
 			}
 		}
 	}
-	
 #endif // !DONT_MOVE_REMOTE_SHIPS
 /* XXX: remove
 #else // !PARSEC_SERVER
