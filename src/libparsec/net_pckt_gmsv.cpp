@@ -423,7 +423,8 @@ int NETs_HandleInPacket( const NetPacketExternal* ext_gamepacket, const int ext_
 	
 	// check for correct protocol version
 #ifndef PARSEC_SERVER
-	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion != CLSV_PROTOCOL_MINOR ) ) {
+	// for client and MASTER server.
+	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion < CLSV_PROTOCOL_MINOR ) ) {
 		DBGTXT( MSGOUT( "NETs_HandleInPacket(): dropped packet [incompatible protocol version]." ); );
 		return FALSE;
 	}

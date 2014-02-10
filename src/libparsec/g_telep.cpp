@@ -97,6 +97,8 @@
 #include "sys_date.h"
 #include "sys_path.h"
 
+// assigned type id for teleporter
+dword teleporter_type;
 
 // string constants -----------------------------------------------------------
 //
@@ -1538,7 +1540,7 @@ void TeleporterInitType( CustomObject *base )
 	teleporter->exit_rot_phi			= 0;
 	teleporter->exit_rot_theta			= 0;
 
-	teleporter->actoffset				= 5;
+	teleporter->actoffset				= 10;
 	teleporter->act_cone_angle			= 30;
 
 	teleporter->u_variation[ 0 ]		= 0.05;		// percentage of texture space
@@ -1630,6 +1632,8 @@ void TeleporterInstantiate( CustomObject *base )
 #ifndef PARSEC_SERVER
 		// summon a object from a class ( do not show stargate )
 		teleporter->child_object = SummonObject( objclass, ChildPos );
+#else
+		teleporter->child_object = TheWorld->CreateObject( objclass, ChildPos, PLAYERID_SERVER );
 #endif
 	}
 
@@ -1886,7 +1890,7 @@ void Teleporter_Animate_Tunnel( Teleporter* teleporter )
 
 // check whether a ship is in range of a teleporter entry ---------------------
 //
-PRIVATE
+PUBLIC
 int Teleporter_ShipInRange( Teleporter *teleporter, ShipObject *ship )
 {
 	ASSERT( teleporter != NULL );
@@ -1956,6 +1960,10 @@ int TeleporterCollide( CustomObject *base )
 	if ( !teleporter->active )
 		return TRUE;
 	
+	// get the world->object transform
+	Xmatrx World2Telep;
+	CalcOrthoInverse( teleporter->ObjPosition, World2Telep );
+
 #ifndef PARSEC_SERVER
 	// determine whether MyShip is in audio range of teleporter
 	Vector3 diff;
@@ -1972,9 +1980,6 @@ int TeleporterCollide( CustomObject *base )
 		AUD_TeleporterOff( teleporter );
 	}
 	
-	// get the world->object transform
-	Xmatrx World2Telep;
-	CalcOrthoInverse( teleporter->ObjPosition, World2Telep );
 	
 	// first check local ship
 	if ( Teleporter_ShipInRange( teleporter, MyShip ) ) {
@@ -2015,8 +2020,22 @@ int TeleporterCollide( CustomObject *base )
 	}
 	
 #endif // !DONT_MOVE_REMOTE_SHIPS
+/* XXX: remove
 #else // !PARSEC_SERVER
 // TODO code the server side collision code
+	// walk all ships and check for teleportings
+	ShipObject *shippo = FetchFirstShip();
+	for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
+			if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
+
+				// transform the ship to (teleporter) object space
+				Xmatrx ShipInTelepSpace;
+				MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
+
+				// transform ship to world space ( using the teleporter exit frame )
+				MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
+			}
+	}*/
 #endif // !PARSEC_SERVER
 	
 	return TRUE;
@@ -2094,7 +2113,7 @@ void TeleporterRegisterCustomType()
 	info.callback_notify	= NULL;
 	info.callback_persist   = TeleporterPersistFromStream;
 
-	OBJ_RegisterCustomType( &info );
+	teleporter_type = OBJ_RegisterCustomType( &info );
 	CON_RegisterCustomType( info.type_id, Teleporter_PropList );
 
 	memset( &info, 0, sizeof( info ) );

@@ -10,6 +10,9 @@
 //
 #define TELEPORTER_MAX_TEX_NAME			63
 
+// assigned type id for teleporter
+extern dword teleporter_type;
+
 
 // teleporter custom type structure -------------------------------------------
 
@@ -67,11 +70,13 @@ struct Teleporter : CustomObject {
 	// hacks :)
 	Xmatrx				start_frame, end_frame;
 	Xmatrx*				spline_frames;
+
 };
 
 
 // external functions
 PUBLIC void TeleporterPropsChanged(GenObject* base);
+PUBLIC int Teleporter_ShipInRange( Teleporter *teleporter, ShipObject *ship );
 
 
 #endif // _S_TELEP_H_

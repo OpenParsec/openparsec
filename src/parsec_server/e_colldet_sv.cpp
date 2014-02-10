@@ -462,6 +462,71 @@ void G_CollDet::_CheckShipLaserCollision()
 		cur_ship = nextship;
 	}
 }
+// teleporter collision detection ----------------------------------------------------
+//
+void G_CollDet::_CheckShipTelepCollision()
+{
+	// walk the list of Teleporter objects
+	ASSERT( TheWorld->m_CustmObjects != NULL );
+
+	CustomObject *precnode  = TheWorld->m_CustmObjects;
+	CustomObject *walkobjs = (CustomObject *)TheWorld->m_CustmObjects->NextObj;
+
+	// walk all teleporters
+	while ( walkobjs != NULL ) {
+		if (walkobjs->ObjectType == teleporter_type) {
+
+			Teleporter *tmptelep = (Teleporter *)walkobjs;
+				// got an teleporter object, now let's walk the ship objects
+				// and check for collisions.
+
+				for ( cur_ship = TheWorld->FetchFirstShip(); cur_ship != NULL; ) {
+
+					// get pointer to next ship in list, as the current might get removed upon collision
+					ShipObject* nextship = (ShipObject *) cur_ship->NextObj;
+
+					// do the actual check
+					if(Teleporter_ShipInRange(tmptelep, cur_ship)){
+						// HIT!  Record damage and send out packets.
+						_CollisionResponse_TelepShip(tmptelep);
+					}
+
+					cur_ship = nextship;
+				}
+		}
+
+		precnode  = walkobjs;
+		walkobjs = (CustomObject *)walkobjs->NextObj;
+	}
+
+
+}
+// ship collided with EMP ---------------------------------------------------
+//
+void G_CollDet::_CollisionResponse_TelepShip( Teleporter *curtelep )
+{
+	ASSERT( curtelep != NULL );
+	ASSERT( cur_ship != NULL );
+
+	// TODO: Is there a "response" to a ship colliding with a teleporter?
+	// get the world->object transform
+	Xmatrx World2Telep;
+	CalcOrthoInverse( curtelep->ObjPosition, World2Telep );
+	// transform the ship to (teleporter) object space
+	Xmatrx ShipInTelepSpace;
+	MtxMtxMUL( World2Telep, cur_ship->ObjPosition, ShipInTelepSpace );
+
+	// transform ship to world space ( using the teleporter exit frame )
+	MtxMtxMUL( curtelep->child_object->ObjPosition, ShipInTelepSpace, cur_ship->ObjPosition );
+
+	// force a client resync of the colliding client
+	int coll_ship = GetOwnerFromHostOjbNumber( cur_ship->HostObjNumber );
+	TheSimulator->GetSimClientState( coll_ship )->SetClientResync();
+
+}
+
+
+/// STOP HERE!!
 
 // emp collision detection ----------------------------------------------------
 //
@@ -1247,5 +1312,8 @@ void G_CollDet::OBJ_CheckCollisions()
 
 	// check for emp collisions
 	_CheckShipEmpCollision();
+
+	// check for Teleporter Collisions
+	_CheckShipTelepCollision();
 }
 
