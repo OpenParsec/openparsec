@@ -520,6 +520,11 @@ void RO_DownloadTexture( GLTexInfo *texinfo, int mipmappingon )
 	int docompression = ( tmap != NULL ) ?
 		( tmap->Flags & TEXFLG_DO_COMPRESSION ) : FALSE;
 
+    // Actually we don't want compression: the current implementation will use
+    // OpenGL to compress the texture when it's uploaded, which results in poor
+    // quality - and performance and VRAM usage isn't an issue anyway right now.
+    docompression = FALSE;
+
 	// compressed textures are only possible if the extension is supported
 	if ( !(GLEW_VERSION_1_3 || GLEW_ARB_texture_compression) ) {
 		docompression = FALSE;
