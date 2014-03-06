@@ -253,7 +253,12 @@ size_t NETs_HandleOutPacket_DEMO( const NetPacket* int_gamepacket, NetPacketExte
 
 // pack an internal packet to an external packet ( gameserver ) ---------------
 //
+#ifdef PARSEC_SERVER
+size_t NETs_HandleOutPacket( const NetPacket* int_gamepacket, NetPacketExternal* ext_gamepacket, byte clientProtoMajor, byte clientProtoMinor )
+#else
+// because client side dynamic binding is fucking annoying...
 size_t NETs_HandleOutPacket( const NetPacket* int_gamepacket, NetPacketExternal* ext_gamepacket )
+#endif
 {
 	ASSERT( int_gamepacket != NULL );
 	ASSERT( ext_gamepacket != NULL );
@@ -277,9 +282,16 @@ size_t NETs_HandleOutPacket( const NetPacket* int_gamepacket, NetPacketExternal*
 	strncpy( ext_gamepacket_GMSV->Signature, net_packet_signature_gameserver, SIGNATURE_LEN_GAMESERVER );
 	ext_gamepacket_GMSV->Signature[ SIGNATURE_LEN_GAMESERVER ] = 0;
 	ext_gamepacket_GMSV->Protocol				= PROTOCOL_GAMESERVER;
+#ifdef PARSEC_SERVER
+	// server side can spoof packet versions
+	ext_gamepacket_GMSV->MajorVersion			= clientProtoMajor;
+	ext_gamepacket_GMSV->MinorVersion			= clientProtoMinor;
+#else
+	//client SHOULD not.
 	ext_gamepacket_GMSV->MajorVersion			= CLSV_PROTOCOL_MAJOR;
 	ext_gamepacket_GMSV->MinorVersion			= CLSV_PROTOCOL_MINOR;
-	
+#endif
+
 	// pack internal packet data to external packet
 	ext_gamepacket_GMSV->SendPlayerId			= int_gamepacket_GMSV->SendPlayerId;
 
@@ -422,10 +434,18 @@ int NETs_HandleInPacket( const NetPacketExternal* ext_gamepacket, const int ext_
 	}
 	
 	// check for correct protocol version
-	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion != CLSV_PROTOCOL_MINOR ) ) {
+#ifndef PARSEC_SERVER
+	// for client and MASTER server.
+	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion < CLSV_PROTOCOL_MINOR ) ) {
 		DBGTXT( MSGOUT( "NETs_HandleInPacket(): dropped packet [incompatible protocol version]." ); );
 		return FALSE;
 	}
+#else
+	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion != CLSV_PROTOCOL_MINOR ) ) {
+			DBGTXT( MSGOUT( "NETs_HandleInPacket(): dropped packet [incompatible protocol version]." ); );
+			return FALSE;
+		}
+#endif
 
 	// unpack external packet data to internal packet
 	int_gamepacket_GMSV->SendPlayerId			= ext_gamepacket_GMSV->SendPlayerId;

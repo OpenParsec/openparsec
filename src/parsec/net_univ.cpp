@@ -47,16 +47,17 @@
 // subsystem linkage info
 #include "linkinfo.h"
 
-// local module header
-#include "net_univ.h"
+
 
 // proprietary module headers
 #include "net_csdf.h"
 #include "obj_cust.h"
 #include "obj_ctrl.h"
 #include "g_stgate.h"
+#include "g_telep.h"
 
-
+// local module header
+#include "net_univ.h"
 
 // ----------------------------------------------------------------------------
 //
@@ -128,5 +129,33 @@ Stargate* NET_FindStargate( word serverid )
 	return NULL;
 }
 
+// try to find the teleporter object a location ---------------------
+//
+Teleporter* NET_FindTeleporter( int id )
+{
+	// try to find the stargate for the specific serverid
+	GenObject* walkobjs = FetchFirstCustom();
+	for ( ; walkobjs; walkobjs = walkobjs->NextObj ) {
+
+		// get type id of the custom stargate
+		static dword teleporter_typeid = TYPE_ID_INVALID;
+
+		if ( teleporter_typeid == TYPE_ID_INVALID ) {
+			teleporter_typeid = OBJ_FetchCustomTypeId( "teleporter" );
+		}
+
+		// we only want to walk stargates
+		if ( walkobjs->ObjectType != teleporter_typeid ) {
+			continue;
+		}
+
+		Teleporter *teleporter= (Teleporter*) walkobjs;
+		if ( id == teleporter->id ) {
+			return teleporter;
+		}
+	}
+
+	return NULL;
+}
 
 

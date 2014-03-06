@@ -186,7 +186,7 @@ int AUDs_LoadWaveFile( int num )
 	}
 
 	SDL_RWops *waverwops = SDL_RWFromMem((void *)tmp_sample_buffer, tmp_sample_size);
-	snd_chunks[num] = Mix_LoadWAV_RW(waverwops, 1);
+	snd_chunks[num] = Mix_LoadWAV_RW(waverwops, 0);
 	SYS_fclose(wave);
 
 	FREEMEM( tmp_sample_buffer );
@@ -357,10 +357,10 @@ int AUDs_PlayAudioStream( char *fname )
 		MSGOUT("ERROR: Error reading music %s.", fname);
 		return FALSE;
 	}
-    
-	SDL_RWops * musicrwops = SDL_RWFromMem((void *)tmp_music_buffer, tmp_music_size);
 
-    music = Mix_LoadMUS_RW(musicrwops);
+	SDL_RWops *musicrwops = SDL_RWFromMem((void *)tmp_music_buffer, tmp_music_size);
+
+    music = Mix_LoadMUS_RW(musicrwops, 1);
     //MSGOUT("      PlayAudioStream() with %s       ", fname);
     if (music == NULL) {
 		printf("Mix_LoadMUS(\"%s\"): %s\n", fname, Mix_GetError());

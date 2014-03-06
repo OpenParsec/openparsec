@@ -45,7 +45,8 @@ int		OptionsListSelection();
 void	OptionsListSelectDefault();
 void	OptionsListCursorUp();
 void	OptionsListCursorDown();
-void	OptionsKeyPressed(char key);
+void	OptionsKeyPressed(int key);
+void    OptionsProcessTextInput(char character);
 
 int		MouseOverOption( int mousex, int mousey );
 

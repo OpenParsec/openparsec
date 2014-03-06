@@ -818,7 +818,7 @@ $(OBJDIR)/e_level.o: ../../../../src/parsec/e_level.cpp
 $(OBJDIR)/con_list.o: ../../../../src/parsec/con_list.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/g_telep.o: ../../../../src/parsec/g_telep.cpp
+$(OBJDIR)/g_telep.o: ../../../../src/libparsec/g_telep.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/sl_err.o: ../../../../src/parsec/sl_err.cpp

@@ -4,6 +4,7 @@
 #ifndef _G_MAIN_H_
 #define _G_MAIN_H_
 
+#include "g_telep.h"
 
 // join position control ------------------------------------------------------
 //
@@ -227,6 +228,10 @@ public:
 
 	// create a stargate for a specific server at a position, with a direction
 	void CreateStargate( int serverid, Vector3* pos_spec, Vector3* dir_spec );
+
+	Teleporter * CreateTeleporter(  int id, Vector3* pos_spec, Vector3* dir_spec, Vector3* expos_spec, Vector3* exdir_spec );
+
+	//void ModTeleporter( Teleporter *teleporter);
 
 protected:
 

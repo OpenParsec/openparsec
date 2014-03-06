@@ -67,11 +67,7 @@
 #include "sys_bind.h"
 #include "vid_plug.h"
 
-#ifdef SYSTEM_TARGET_LINUX
-	#include <SDL/SDL.h>
-#else
-	#include <SDL.h>
-#endif
+#include "keycodes.h"
 
 // flags
 #define DISABLE_VID_SUBSYS_SWITCHING
@@ -1352,57 +1348,41 @@ void CreateOptionsText( int id )
 
 
 // used to modify name, modifies the past_str buffer thing
-void OptionsKeyPressed(char key)
+void OptionsKeyPressed(int key)
 {
+    if (!mod_player_name) {
+        return;
+    }
 
-	/*
-	// don't write console open/close key
-	if (character == '`' || character == '~')
-		return;
-
-	int curlinelen = strlen( con_lines[ con_bottom ] + PROMPT_SIZE );
-
-	// typeable characters
-	if ( ( character & CON_ASCII_MASK ) && (character <= CON_ASCII_MASK) && (cursor_x < edit_max_x ) ) {
-		if ( insert_mode && ( cursor_x < curlinelen ) ) {
-			if ( curlinelen < edit_max_x ) {
-				strcpy( paste_str, con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x );
-				strcpy( con_lines[ con_bottom ] + PROMPT_SIZE + cursor_x + 1, paste_str );
-				con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
-			}
-		} else {
-			con_lines[ con_bottom ][ PROMPT_SIZE + cursor_x++ ] = (byte) character;
+	if (key == MKC_BACKSPACE) {
+		if (tmp_name[0] != '\0') {
+			tmp_name[strlen(tmp_name) - 1] = '\0';
 		}
-	}*/
-	// filter some ascii keys.
-	if( (key > 32 && key < 45) ||   
-		(key == 46 || key == 47 ) ||
-		(key > 57 && key < 65) ||
-		(key > 90 && key < 95) || 
-		(key == 96) || 
-		(key > 121) ) {
-			return;
-	}
-
-
-	if(key == SDLK_BACKSPACE) { 
-		if(tmp_name[0] != '\0'){
-			tmp_name[strlen(tmp_name)-1]='\0';
-		}
-	} else if (key == SDLK_RETURN) {
+	} else if (key == MKC_ENTER) {
 		ExecOptionSelectName();
-	
-	} else if(key == SDLK_ESCAPE) {
-		mod_player_name = 0; // exit with no modification
-	} else {
-		if(strlen(tmp_name) + 1 < MAX_PLAYER_NAME ) {
-			tmp_name[strlen(tmp_name)] = (char)key;
-		}
+	} else if (key == MKC_ESCAPE) {
+		mod_player_name = false; // exit with no modification
 	}
-
-
 }
 
+void OptionsProcessTextInput(char character)
+{
+    if (!mod_player_name) {
+        return;
+    }
+
+    // We can only handle ASCII for now.
+    if (character < 32 || character >= 127) {
+        return;
+    }
+
+    size_t namelen = strlen(tmp_name);
+
+    if (namelen + 1 < MAX_PLAYER_NAME) {
+        tmp_name[namelen] = character;
+        tmp_name[namelen+1] = 0;
+    }
+}
 
 
 // slide the options menu to its specifed target x position -------------------

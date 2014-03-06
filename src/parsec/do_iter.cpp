@@ -975,7 +975,7 @@ void D_DrawIterRectangle2( IterRectangle2 *itrect )
 
 	// draw rectangle
 	INIT_GL_ARRAYS( itrect, 0, 4 );
-	glDrawArrays( GL_QUADS, 0, 4 );
+	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 	DEINIT_GL_ARRAYS( itrect );
 
 	// set rasterizer state to default
@@ -1062,7 +1062,7 @@ void D_DrawIterRectangle3( IterRectangle3 *itrect, dword cullmask )
 
 	// draw rectangle
 	INIT_GL_ARRAYS( itrect, 0, 4 );
-	glDrawArrays( GL_QUADS, 0, 4 );
+	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 	DEINIT_GL_ARRAYS( itrect );
 
 	// set rasterizer state to default

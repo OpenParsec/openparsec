@@ -373,6 +373,7 @@ void ISDLm_ProcessTextInput(const char *text)
 {
 	if (text[0] > 31 && text[0] < 127) { // only handle ASCII for now
 		CON_HandleTextInput(text[0]);
+        OptionsProcessTextInput(text[0]);
 	}
 }
 
@@ -400,20 +401,10 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 	// only process a key repeat event if we're in the console or quicksay console
 	if (event.key.repeat && !(KeybFlags->ConActive && KeybFlags->ConEnabled))
 		return;
-	
-	if(pressed && mod_player_name) {
-		if (key == MKC_LSHIFT || key == MKC_RSHIFT) {
-			return;
-		}
-		char inkey = (char) event.key.keysym.unicode;
-		if( (inkey > 31 && inkey < 127) ||
-			(inkey == SDLK_BACKSPACE)  ||
-			(inkey == SDLK_RETURN) || 
-			(inkey == SDLK_ESCAPE) )
-		{ // only handle ASCII and a few special keys for now...
-			OptionsKeyPressed(inkey);
-		}
-		return;
+
+	if (pressed && mod_player_name) {
+        // Luckily we've mapped SDL keycodes to our MKC keycodes directly.
+        OptionsKeyPressed((int) event.key.keysym.sym);
 	}
 
 	// console keyboard buffer handling

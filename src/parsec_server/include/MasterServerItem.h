@@ -7,7 +7,7 @@
 
 #ifndef MASTERSERVERLIST_H_
 #define MASTERSERVERLIST_H_
-
+#include <time.h>	
 
 /*
  *
@@ -36,7 +36,7 @@ public:
 	int GetServerName(char *buffer, int buffer_sz);
 	int GetOS(char *buffer, int buffer_sz);
 	int GetNode(node_t *node);
-
+	time_t GetMTime();
 
 private:
 	int _SrvID;
@@ -44,10 +44,10 @@ private:
 	int _MaxPlayers;
 	int _PMajor;
 	int _PMinor;
+	time_t _MTime;
 	char _ServerName[ MAX_SERVER_NAME + 1 ];
 	char _OS[MAX_OSNAME_LEN + 1 ];
 	node_t _Node;
-
 };
 
 #endif /* MASTERSERVERLIST_H_ */

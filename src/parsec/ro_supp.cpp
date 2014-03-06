@@ -520,6 +520,11 @@ void RO_DownloadTexture( GLTexInfo *texinfo, int mipmappingon )
 	int docompression = ( tmap != NULL ) ?
 		( tmap->Flags & TEXFLG_DO_COMPRESSION ) : FALSE;
 
+    // Actually we don't want compression: the current implementation will use
+    // OpenGL to compress the texture when it's uploaded, which results in poor
+    // quality - and performance and VRAM usage isn't an issue anyway right now.
+    docompression = FALSE;
+
 	// compressed textures are only possible if the extension is supported
 	if ( !(GLEW_VERSION_1_3 || GLEW_ARB_texture_compression) ) {
 		docompression = FALSE;
@@ -1316,7 +1321,7 @@ void RO_Render2DRectangle( sgrid_t putx, sgrid_t puty, float srcw, float srch, d
 	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( GLVertex3 ), &glvtxs->r );
 	glTexCoordPointer( 2, GL_FLOAT, sizeof( GLVertex3 ), &glvtxs->s );
 
-	glDrawArrays( GL_QUADS, 0, 4 );
+	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 
 //	RO_ClientState( VTXARRAY_NONE );
 }
@@ -1376,8 +1381,8 @@ int R_PrecacheTextures()
 		RO_ArrayMakeCurrent(VTXPTRS_NONE, NULL);
 		glVertexPointer(2, GL_SHORT, 0, vertices);
 		glTexCoordPointer(2, GL_SHORT, 0, texcoords);
-		
-		glDrawArrays(GL_QUADS, 0, 4);
+
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 	
 	VIDs_CommitRenderBuffer();

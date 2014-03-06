@@ -79,6 +79,7 @@ OBJECTS := \
 	$(OBJDIR)/net_util.o \
 	$(OBJDIR)/utl_logfile.o \
 	$(OBJDIR)/g_emp.o \
+	$(OBJDIR)/g_telep.o \
 	$(OBJDIR)/con_tab.o \
 	$(OBJDIR)/sl_path.o \
 	$(OBJDIR)/obj_odt.o \
@@ -225,6 +226,9 @@ $(OBJDIR)/utl_logfile.o: ../../../../src/libparsec/utl_logfile.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/g_emp.o: ../../../../src/libparsec/g_emp.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/g_telep.o: ../../../../src/libparsec/g_telep.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/con_tab.o: ../../../../src/libparsec/con_tab.cpp

@@ -322,7 +322,108 @@ int NET_UDPDriver::ResolveHostName( char *hostname, node_t* node )
 	return FALSE;
 }
 
+#ifdef SYSTEM_TARGET_OSX
+// get the local IP corresponding to the configured interface -----------------
+//
+int	NET_UDPDriver::_RetrieveLocalIP()
+{
+	//FIXME: implement :)
+	int selected_interface = 0;
+	
+	int sockfd = socket( AF_INET, SOCK_DGRAM, 0 );
+	if ( sockfd < 0 ) {
+		MSGOUT( "NET_UDPDriver::_RetrieveLocalIP(): can't open socket." );
+		return FALSE;
+	}
+    
+	int   infolen = sizeof( struct ifreq ) * 10;
+	char* infobuf = NULL;
+	struct ifconf ifc;
+    
+	// get all interface configurations into buffer
+	int lastlen = 0;
+	for ( ;; ) {
+        
+		infobuf = (char *) ALLOCMEM( infolen );
+		if ( infobuf == NULL )
+			OUTOFMEM( 0 );
+        
+		ifc.ifc_len = infolen;
+		ifc.ifc_buf = infobuf;
+        
+		if ( ioctl( sockfd, SIOCGIFCONF, &ifc ) < 0 ) {
+			if ( ( errno != EINVAL ) || ( lastlen != 0 ) ) {
+				MSGOUT( "NET_UDPDriver::_RetrieveLocalIP(): ioctl error." );
+				FREEMEM( infobuf );
+				CLOSESOCKET( sockfd );
+				return FALSE;
+			}
+		} else {
+			if ( ifc.ifc_len == lastlen )
+				break;
+			lastlen = ifc.ifc_len;
+		}
+        
+		infolen += sizeof( struct ifreq ) * 10;
+		FREEMEM( infobuf );
+	}
+    
+	int ifnum = 0;
+    
+	// analyze all interface configurations in buffer
+	for ( char *ptr = infobuf; ptr < infobuf + ifc.ifc_len; ) {
+        
+		struct ifreq* ifr = (struct ifreq *) ptr;
+        
+		// advance to next structure in buffer
+        
+		int len = sizeof(struct sockaddr);
+        
+		//		int len = max( sizeof(struct sockaddr), ifr->ifr_addr.sa_len );
+		
+		ptr += sizeof( ifr->ifr_name ) + len;
+        
+		// only handle IPV4 entries
+		if ( ifr->ifr_addr.sa_family != AF_INET ) {
+			continue;
+		}
+        
+		char if_addr[ MAX_IPADDR_LEN + 1 ];
+		sockaddr_in	*sa = (struct sockaddr_in *) &ifr->ifr_addr;
+		inet_ntop( AF_INET, &sa->sin_addr, if_addr, MAX_IPADDR_LEN + 1 );
+        
+		if ( strcmp( "127.0.0.1", if_addr ) == 0 ) {
+			MSGOUT( "skipping loopback interface" );
+			continue;
+		}
+        
+		MSGOUT( "found interface #%d: %s", ifnum, if_addr );
+        
+		// is this our interface, then take the ip address
+		if ( ifnum == selected_interface ) {
+            
+			// store numeric
+			memcpy( &m_Node, &sa->sin_addr, IP_ADR_LENGTH );
+            
+			// store presentation
+			inet_ntop( AF_INET, &m_Node, m_szIP, MAX_IPADDR_LEN + 1 );
+            
+			// store port number in ip address
+			NODE_StorePort( &m_Node, m_selected_port );
+			
+			break;
+		}
+        
+		ifnum++;
+	}
+    
+	FREEMEM( infobuf );
+	CLOSESOCKET( sockfd );
+	
+	return TRUE;
+}
 
+#else
 // get the local IP corresponding to the configured interface -----------------
 //
 int	NET_UDPDriver::_RetrieveLocalIP()
@@ -450,7 +551,7 @@ int	NET_UDPDriver::_RetrieveLocalIP()
 	return TRUE;
 }
 
-
+#endif
 // key table for netiface command -----------------------------------------
 //
 key_value_s netiface_key_value[] = {

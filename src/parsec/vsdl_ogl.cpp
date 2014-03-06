@@ -366,14 +366,14 @@ void VSDL_InitGLExtensions()
 	// some drivers support core GL occlusion querying but not the ARB extension
 	// so we just use the core GL function pointers for the ARB functions since the interface is the same
 	if (GLEW_VERSION_1_5 && !GLEW_ARB_occlusion_query) {
-		glBeginQueryARB = glBeginQuery;
-		glDeleteQueriesARB = glDeleteQueries;
-		glEndQueryARB = glEndQuery;
-		glGenQueriesARB = glGenQueries;
-		glGetQueryObjectivARB = glGetQueryObjectiv;
-		glGetQueryObjectuivARB = glGetQueryObjectuiv;
-		glGetQueryivARB = glGetQueryiv;
-		glIsQueryARB = glIsQuery;
+		glBeginQueryARB = (PFNGLBEGINQUERYARBPROC) glBeginQuery;
+		glDeleteQueriesARB = (PFNGLDELETEQUERIESARBPROC) glDeleteQueries;
+		glEndQueryARB = (PFNGLENDQUERYARBPROC) glEndQuery;
+		glGenQueriesARB = (PFNGLGENQUERIESARBPROC) glGenQueries;
+		glGetQueryObjectivARB = (PFNGLGETQUERYOBJECTIVARBPROC) glGetQueryObjectiv;
+		glGetQueryObjectuivARB = (PFNGLGETQUERYOBJECTUIVARBPROC) glGetQueryObjectuiv;
+		glGetQueryivARB = (PFNGLGETQUERYIVARBPROC) glGetQueryiv;
+		glIsQueryARB = (PFNGLISQUERYARBPROC) glIsQuery;
 	}
 
 	// same deal with vertex buffers
@@ -444,55 +444,31 @@ void SDL_RCSetup()
 
 #ifdef EXPLICIT_GL_ORTHO
 	glLoadIdentity();
-	 rc = glGetError();
-	if(rc == GL_INVALID_VALUE) {
-		MSGOUT("Error: Invalid GL Viewport values");
-		exit(1);
-	}
+
 	//glOrtho( sdl_wsz_x, sdl_wsz_x + sdl_wsz_w,
     //        sdl_wsz_y + sdl_wsz_h, sdl_wsz_y,
     //        -1.0, 0.0 );
 	glOrtho( gl_orthogonal_params[ 0 ], gl_orthogonal_params[ 1 ],
 			 gl_orthogonal_params[ 2 ], gl_orthogonal_params[ 3 ],
 			 gl_orthogonal_params[ 4 ], gl_orthogonal_params[ 5 ] );
-	rc = glGetError();
-	if(rc == GL_INVALID_VALUE) {
-		MSGOUT("Error: Invalid GL Viewport values");
-		exit(1);
-	}
+
 #else
 	glLoadMatrixf( gl_orthogonal_matrix );
 #endif
 
 	// select reversed depth range
 	glDepthRange( 1.0, 0.0 );
-	rc = glGetError();
-	if(rc == GL_INVALID_VALUE) {
-		MSGOUT("Error: Invalid GL Viewport values");
-		exit(1);
-	}
+
 	// no transformation
 	glMatrixMode( GL_MODELVIEW );
-	rc = glGetError();
-	if(rc == GL_INVALID_VALUE) {
-		MSGOUT("Error: Invalid GL Viewport values");
-		exit(1);
-	}
 	glLoadIdentity();
-	rc = glGetError();
-	if(rc == GL_INVALID_VALUE) {
-		MSGOUT("Error: Invalid GL Viewport values");
-		exit(1);
-	}
+
 	// set viewport
 	glViewport( sdl_wsz_x, sdl_wsz_y, sdl_wsz_w, sdl_wsz_h );
 	rc = glGetError();
-	if(rc == GL_INVALID_VALUE) {
+	if (rc == GL_INVALID_VALUE) {
 		MSGOUT("Error: Invalid GL Viewport values");
 		exit(1);
-	}
-	if(rc == GL_INVALID_OPERATION){
-		MSGOUT("Error: Inavlid GL Operation: glViewport()");
 	}
 
 	//glFrontFace( GL_CW ); //FIXME: ?? why was this labelled FIXME?
@@ -505,13 +481,10 @@ void SDL_RCSetup()
 
 	glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
 
-	// disable dithering
-	glDisable( GL_DITHER );
-	
 	// prettiest possible mipmaps, please
 	if (GLEW_VERSION_1_4 || GLEW_SGIS_generate_mipmap)
 		glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
-	
+
 	// same with texture compression
 	if (GLEW_VERSION_1_3 || GLEW_ARB_texture_compression)
 		glHint(GL_TEXTURE_COMPRESSION_HINT, GL_NICEST);

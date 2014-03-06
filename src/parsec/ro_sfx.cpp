@@ -215,8 +215,8 @@ void R_DrawLensFlare()
 			RO_ArrayMakeCurrent(VTXPTRS_NONE, NULL);
 			
 			glVertexPointer(3, GL_FLOAT, 0, vertices);
-			
-			glDrawArrays(GL_QUADS, 0, 4);
+
+			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 			
 			// we're done telling the GPU what to query (we won't know the result until the next glGetQueryObject call)
 			glEndQueryARB(GL_SAMPLES_PASSED);

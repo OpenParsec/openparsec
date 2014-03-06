@@ -29,6 +29,7 @@
 #include <sys/types.h> 
 #include <sys/timeb.h>
 #include <unistd.h>
+#include <math.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -60,6 +61,9 @@
 
 // local module header
 #include "e_gameserver.h"
+// MasterServer object
+#include "MasterServer.h"
+
 
 // proprietary module headers
 #include "con_arg.h"
@@ -212,6 +216,7 @@ int E_GameServer::_InitPreConsoleScript()
 	strncpy( m_MasterServer_Hostname, DEFAULT_MASTERSERVER_NAME, MAX_MASTERSERVER_NAME );
 	m_MasterServer_Hostname[ MAX_MASTERSERVER_NAME ] = 0;
 	m_nNumServerLinks			= 0;
+	m_nNumTeleporters			= 0;
 
 	// non modifiable
 	m_nServerFrame				= 0;
@@ -330,6 +335,9 @@ int	E_GameServer::Init()
 
 	// master server not yet resolved
 	m_bMasterServer_NodeValid = false;
+
+	MSGOUT("\n\nOpenParsec Server\n");
+	MSGOUT("Network Protocol: %i.%i", CLSV_PROTOCOL_MAJOR, CLSV_PROTOCOL_MINOR);
 
 	// init the game, only if in game server mode.
 	if(!this->GetServerIsMaster()){
@@ -532,6 +540,99 @@ int E_GameServer::AddServerLink( int serverid, Vector3* pos_spec, Vector3* dir_s
 	return TRUE;
 }
 
+// add a Teleporter -----------------------------------------------------------
+//
+int E_GameServer::AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec )
+{
+	ASSERT( pos_spec != NULL );
+	ASSERT( dir_spec != NULL );
+	ASSERT( expos_spec != NULL );
+	ASSERT( exdir_spec != NULL );
+
+
+	if ( m_nNumTeleporters >= MAX_NUM_TELEP ) {
+		return FALSE;
+	}
+
+	// norm the direction
+	NormVctX( dir_spec );
+	NormVctX( exdir_spec );
+
+
+	// create the corresponding teleporter
+	Teleporter *teleporter = TheGame->CreateTeleporter( m_nNumTeleporters, pos_spec, dir_spec, expos_spec, exdir_spec );
+	if(teleporter != NULL){
+		m_Teleporters[m_nNumTeleporters] = teleporter;
+		MSGOUT("Created Teleporter with ID %i", m_nNumTeleporters);
+		m_nNumTeleporters++;
+		return TRUE;
+	}
+	return FALSE;
+}
+
+// Mod a Teleporter -----------------------------------------------------------
+//
+int E_GameServer::ModTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec )
+{
+	if ( id < 0 ) {
+		return FALSE;
+	}
+
+	// norm the direction
+	if(dir_spec != NULL)
+		NormVctX( dir_spec );
+
+	if(exdir_spec != NULL )
+		NormVctX( exdir_spec );
+
+
+	// create the corresponding teleporter
+	Teleporter *teleporter = this->m_Teleporters[id];
+	float phi_atan=0, theta_atan=0;
+
+	if(teleporter != NULL){
+
+		// change the stuff
+		if(pos_spec != NULL) {
+			teleporter->start.X = pos_spec->X;
+			teleporter->start.Y = pos_spec->Y;
+			teleporter->start.Z = pos_spec->Z;
+
+		}
+		if(dir_spec != NULL) {
+			phi_atan = (dir_spec->X) ? (dir_spec->Y/dir_spec->X) : 0;
+			teleporter->start_rot_phi = (atan(phi_atan)*180)/M_PI;
+			theta_atan = (dir_spec->Z) ? ((sqrt(powf(dir_spec->X,2)+powf(dir_spec->Y,2))/dir_spec->Z))  : 0;
+			teleporter->start_rot_theta = (atan(theta_atan)*180)/M_PI;
+		}
+
+		if(expos_spec != NULL) {
+			teleporter->exit_delta_x = expos_spec->X;
+			teleporter->exit_delta_y = expos_spec->Y;
+			teleporter->exit_delta_z = expos_spec->Z;
+
+		}
+		if(exdir_spec != NULL) {
+			phi_atan = (exdir_spec->X) ? (exdir_spec->Y/exdir_spec->X) : 0;
+			teleporter->exit_rot_phi = (atan(phi_atan)*180)/M_PI;
+			theta_atan = (exdir_spec->Z) ? ((sqrt(powf(exdir_spec->X,2)+powf(exdir_spec->Y,2))/exdir_spec->Z))  : 0;
+			teleporter->exit_rot_theta = (atan(theta_atan)*180)/M_PI;
+		}
+
+		TeleporterPropsChanged(teleporter);
+
+
+		// attach the created E_Distributable for the engine object
+		// stargates are to be delivered reliable
+		teleporter->pDist = TheSimNetOutput->CreateDistributable( teleporter, TRUE );
+		/*
+		// modify the teleporter.
+		TheGame->ModTeleporter(Teleporter teleporter );*/
+		MSGOUT("Modified Teleporter with ID %i", m_nNumTeleporters);
+		return TRUE;
+	}
+	return FALSE;
+}
 
 
 // set the new masterserver info ----------------------------------------------
@@ -690,6 +791,7 @@ refframe_t E_GameServer::ServerFrame()
 		TheSimNetOutput->DoClientUpdates();
 	} else {
 		// TODO: Master server stuff....
+		TheMaster->RemoveStaleEntries();
 
 	}
 	// increment the serverframe counter

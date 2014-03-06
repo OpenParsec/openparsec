@@ -90,6 +90,8 @@ MasterServerItem::MasterServerItem(int SrvID, int CurrPlayers, int MaxPlayers,
 		strncpy(_OS, OS, MAX_OSNAME_LEN);
 		_OS[MAX_OSNAME_LEN]  = '\0';
 		NODE_Copy(&_Node, node);
+		_MTime = time(NULL);
+		//MSGOUT("Added %i in constructor with time %i", _SrvID, _MTime);
 
 }
 MasterServerItem::~MasterServerItem() {
@@ -110,6 +112,8 @@ bool MasterServerItem::update(int SrvID, int CurrPlayers, int MaxPlayers,
 	SAFE_STR_DUPLICATE(_OS, OS, MAX_OSNAME_LEN-1);
 	_OS[MAX_OSNAME_LEN]  = '\0';
 	NODE_Copy(&_Node, node);
+	_MTime =time(NULL);
+	//MSGOUT("Added %i in update() with time %i", _SrvID, _MTime);
 
 
 	return true;
@@ -117,11 +121,13 @@ bool MasterServerItem::update(int SrvID, int CurrPlayers, int MaxPlayers,
 
 bool MasterServerItem::remove() {
 
-	// set the SrvID to -1 to indicate it should be removed.
-	_SrvID = -1;
-
+	// sets _MTime to zero which should always remove it on next 
+	// pass of the array for expiry
+//	_MTime=0;
+	_SrvID=-1;
 	return false;
 }
+
 
 bool MasterServerItem::operator <(const MasterServerItem& msl) const {
 
@@ -192,6 +198,11 @@ int  MasterServerItem::GetOS(char *buffer, int buffer_sz) {
 	return 0;
 }
 
+time_t MasterServerItem::GetMTime(){
+	//MSGOUT("Reading entry time %d", (int)_MTime);
+	return _MTime;
+}
+
 MasterServerItem::MasterServerItem(const MasterServerItem& msi_copy) :
 			 _SrvID (msi_copy._SrvID),
 			 _CurrPlayers (msi_copy._CurrPlayers),
@@ -199,7 +210,7 @@ MasterServerItem::MasterServerItem(const MasterServerItem& msi_copy) :
 			 _PMajor (msi_copy._PMajor),
 			 _PMinor (msi_copy._PMinor)
 {
-	strncpy(_ServerName, msi_copy._OS, MAX_SERVER_NAME);
+	strncpy(_ServerName, msi_copy._ServerName, MAX_SERVER_NAME);
 	_ServerName[MAX_SERVER_NAME]='\0';
 	strncpy( _OS, msi_copy._OS, MAX_OSNAME_LEN);
 	_OS[MAX_OSNAME_LEN]='\0';

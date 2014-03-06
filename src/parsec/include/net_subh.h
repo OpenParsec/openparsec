@@ -54,6 +54,7 @@ void		NET_ExecRmEvIPv4ServerInfo		( RE_IPv4ServerInfo* pIPv4ServerInfo );
 void		NET_ExecRmEvServerLinkInfo		( RE_ServerLinkInfo* pServerLinkInfo );
 void		NET_ExecRmEvMapObject			( RE_MapObject* pMapObject );
 void		NET_ExecRmEvStargate			( RE_Stargate* pRE_Stargate );
+void		NET_ExecRmEvTeleporter			( RE_Teleporter* pRE_Teleporter );
 	
 // utility functions (UTIL)
 

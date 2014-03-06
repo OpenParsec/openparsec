@@ -29,6 +29,10 @@
 #include <math.h>
 #include <limits.h>
 
+#ifndef isnan
+#define isnan(x) _isnan(x)
+#endif
+
 // compilation flags/debug support
 #include "config.h"
 #include "debug.h"
@@ -40,15 +44,19 @@
 // global externals
 #include "globals.h"
 
-// subsystem headers
-#include "aud_defs.h"
-
 // subsystem linkage info
 #include "linkinfo.h"
+
+#ifndef PARSEC_SERVER
+// subsystem headers
+#include "aud_defs.h"
 
 // drawing subsystem
 #include "d_iter.h"
 #include "d_misc.h"
+
+#endif 
+
 
 // mathematics header
 #include "utl_math.h"
@@ -60,8 +68,10 @@
 #include "g_telep.h"
 
 // proprietary module headers
-#include "aud_game.h"
 #include "con_arg.h"
+#include "net_defs.h"
+#ifndef PARSEC_SERVER
+#include "aud_game.h"
 #include "con_aux.h"
 #include "con_com.h"
 #include "con_ext.h"
@@ -70,13 +80,29 @@
 #include "e_callbk.h"
 #include "e_level.h"
 #include "e_supp.h"
-#include "net_defs.h"
+#include "obj_game.h"
+#include "net_game.h"
+#include "net_limits.h"
+#include "net_stream.h"
+#else
+#include "con_info_sv.h"
+#include "con_main_sv.h"
+#include "con_com_sv.h"
+#include "net_game_sv.h"
+#include "net_limits.h"
+#include "e_gameserver.h"
+#endif
+
 #include "obj_clas.h"
+#ifndef PARSEC_SERVER
 #include "obj_ctrl.h"
+#endif
 #include "obj_cust.h"
 #include "sys_date.h"
 #include "sys_path.h"
 
+// assigned type id for teleporter
+dword teleporter_type;
 
 // string constants -----------------------------------------------------------
 //
@@ -198,6 +224,7 @@ proplist_s Teleporter_PropList[] = {
 PRIVATE
 void Teleporter_Calc_Tunnel_Verts( Teleporter* teleporter )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( teleporter != NULL );
 	
 	// free any previous geometry
@@ -512,6 +539,7 @@ void Teleporter_Calc_Tunnel_Verts( Teleporter* teleporter )
 		cullbox->minmax[ 4 ] = max( cullbox->minmax[ 4 ], vtx_in_ospc.Y );
 		cullbox->minmax[ 5 ] = max( cullbox->minmax[ 5 ], vtx_in_ospc.Z );
 	}
+#endif
 }
 
 
@@ -574,12 +602,13 @@ int TeleporterModify_TexPropsChanged( GenObject* base )
 	// eventually remove leadin/trainling quotations from the texture names
 	//StripQuotations( teleporter->tex_name_interior );
 	//StripQuotations( teleporter->tex_name_tunnel   );
-
+#ifndef PARSEC_SERVER
 	// get pointer to texture map
 	teleporter->start_texmap = FetchTextureMap( teleporter->tex_name_interior );
 	if ( teleporter->start_texmap == NULL ) {
 		MSGOUT( telep_texture_not_found, teleporter->tex_name_interior );
 	} else {
+
 		// init the u/v deltas with some random value
 		geomv_t uwidth  = INT_TO_GEOMV( 1L << teleporter->start_texmap->Width  );
 		geomv_t vheight = INT_TO_GEOMV( 1L << teleporter->start_texmap->Height );
@@ -588,6 +617,7 @@ int TeleporterModify_TexPropsChanged( GenObject* base )
 		teleporter->v_maxdelta[ 0 ] = vheight * teleporter->v_variation[ 0 ];
 		teleporter->u_maxdelta[ 1 ] = uwidth  * teleporter->u_variation[ 1 ];
 		teleporter->v_maxdelta[ 1 ] = vheight * teleporter->v_variation[ 1 ];
+
 	}
 
 	// get pointer to texture map
@@ -595,7 +625,7 @@ int TeleporterModify_TexPropsChanged( GenObject* base )
 	if ( teleporter->tunnel_texmap == NULL ) {
 		MSGOUT( telep_texture_not_found, teleporter->tex_name_tunnel );
 	}
-	
+#endif
 
 	return TRUE;
 }
@@ -647,10 +677,22 @@ void QuaternionFromSpherical( Quaternion_f *quat, float deg_angle, float deg_lat
 PRIVATE
 void Teleporter_Rotation_Transform( float phi, float theta, Xmatrx trafo )
 {
-	ASSERT( ( phi   >= 0.0f ) && ( phi <= 360.0f ) );
-	ASSERT( ( theta >= 0.0f ) && ( theta <= 360.0f ) );
+
 	ASSERT( trafo != NULL );
 
+	if(phi < 0.0f || isnan(phi)) {
+		phi=0.0f;
+	}
+	if(phi>360.0f){
+		phi=360.0f;
+	}
+
+	if(theta < 0.0f || isnan(theta)) {
+		theta=0.0f;
+	}
+	if(theta>360.0f){
+		theta=360.0f;
+	}
 	// NOTE: formula to get the position on the 1-sphere from angular coordinates:
 	//
 	// x = sin( phi ) * cos( theta )
@@ -739,11 +781,11 @@ int TeleporterModify_ExitPropsChanged( GenObject* base )
 	ChildTrans[ 0 ][ 3 ] = teleporter->exit_delta_x;
 	ChildTrans[ 1 ][ 3 ] = teleporter->exit_delta_y;
 	ChildTrans[ 2 ][ 3 ] = teleporter->exit_delta_z;
-
+#ifndef PARSEC_SERVER
 	MtxMtxMUL( teleporter->ObjPosition, ChildTrans, teleporter->child_object->ObjPosition );
 	
 	TeleporterModify_SplinePropsChanged( base );
-	
+#endif
 	return TRUE;
 }
 
@@ -751,6 +793,7 @@ int TeleporterModify_ExitPropsChanged( GenObject* base )
 //
 void Teleporter_Draw_Entry_Interior( Teleporter* teleporter )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( teleporter != NULL );
 
 	// ensure we have the texture for the start interior	
@@ -859,6 +902,8 @@ void Teleporter_Draw_Entry_Interior( Teleporter* teleporter )
 	
 	// restore identity transformation
 	D_LoadIterMatrix( NULL );
+
+#endif
 }
 
 // check whether tunnel is visible --------------------------------------------
@@ -866,6 +911,7 @@ void Teleporter_Draw_Entry_Interior( Teleporter* teleporter )
 PRIVATE 
 int Teleporter_Check_Tunnel_Visibility( Teleporter* teleporter )
 {
+#ifndef PARSEC_SERVER
 	// NOTE: the teleporter cullbox is given as an axis aligned bounding box
 	//       relative to the teleporter entry
 
@@ -878,6 +924,9 @@ int Teleporter_Check_Tunnel_Visibility( Teleporter* teleporter )
 	int cull_result = CULL_BoxAgainstVolume( &cullbox_world, World_ViewVolume, &cullmask );
 
 	return !cull_result;
+#else
+	return TRUE;
+#endif
 }
 
 
@@ -886,6 +935,7 @@ int Teleporter_Check_Tunnel_Visibility( Teleporter* teleporter )
 PRIVATE
 int Teleporter_Draw( void *param )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( param != NULL );
 	Teleporter *teleporter = (Teleporter *) param;
 
@@ -915,7 +965,7 @@ int Teleporter_Draw( void *param )
 			Teleporter_Debug_Show_Tunnel_Spline( teleporter );
 		}
 	}
-	
+#endif
 	return TRUE;
 }
 
@@ -949,6 +999,7 @@ void VctLerp( Vector3* dst, Vector3* src1, Vector3* src2, float t )
 PRIVATE
 void Teleporter_Draw_Tunnel( Teleporter* teleporter )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( teleporter != NULL );
 
 	if ( teleporter->tunnel_texmap == NULL )
@@ -1212,6 +1263,7 @@ void Teleporter_Draw_Tunnel( Teleporter* teleporter )
 	
 	// free vertex array
 	FREEMEM( itarray );
+#endif
 }
 
 
@@ -1221,6 +1273,7 @@ void D_DrawSplineLine( int num_steps, const Xmatrx transform,
 					  const Vector3* start, const Vector3* end, 
 					  const Vector3* start_tan, const Vector3* end_tan, dword mode )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( start		!= NULL );
 	ASSERT( end			!= NULL );
 	ASSERT( start_tan	!= NULL );
@@ -1294,6 +1347,8 @@ void D_DrawSplineLine( int num_steps, const Xmatrx transform,
 	
 	// restore identity transformation
 	D_LoadIterMatrix( NULL );
+#endif
+
 }
 
 // make a cube out of a cullbox -----------------------------------------------
@@ -1318,6 +1373,7 @@ void CubeFromCullBox3( CullBox3* cullbox, Vertex3* vtxs )
 PRIVATE
 void Teleporter_Debug_Show_Tunnel_Spline( Teleporter* teleporter )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( teleporter != NULL );
 
 	// get the tangents
@@ -1465,6 +1521,7 @@ void Teleporter_Debug_Show_Tunnel_Spline( Teleporter* teleporter )
 			D_LineWorld( &vtxs[ nLine ], &vtxs[ 4 + nLine ], &color );
 		}
 	}
+#endif
 
 	return;
 }
@@ -1487,7 +1544,7 @@ void TeleporterInitType( CustomObject *base )
 	teleporter->exit_rot_phi			= 0;
 	teleporter->exit_rot_theta			= 0;
 
-	teleporter->actoffset				= 5;
+	teleporter->actoffset				= 10;
 	teleporter->act_cone_angle			= 30;
 
 	teleporter->u_variation[ 0 ]		= 0.05;		// percentage of texture space
@@ -1521,6 +1578,7 @@ void TeleporterInitType( CustomObject *base )
 	teleporter->tunnel_spline_arclen    = GEOMV_0;
 
 	teleporter->tunnel_tex_alpha		= 128;
+	teleporter->id				=0;
 }
 
 // teleporter constructor (class instantiation) ---------------------------------
@@ -1575,8 +1633,12 @@ void TeleporterInstantiate( CustomObject *base )
 		Xmatrx ChildPos;
 		MtxMtxMUL( teleporter->ObjPosition, ChildTrans, ChildPos );
 
+#ifndef PARSEC_SERVER
 		// summon a object from a class ( do not show stargate )
 		teleporter->child_object = SummonObject( objclass, ChildPos );
+#else
+		teleporter->child_object = TheWorld->CreateObject( objclass, ChildPos, PLAYERID_SERVER );
+#endif
 	}
 
 	// get the texture maps and calc the max u/v deltas
@@ -1613,15 +1675,22 @@ void TeleporterInstantiate( CustomObject *base )
 	// get the initial start position
 	FetchTVector( teleporter->ObjPosition, &teleporter->start );
 
-	//FIXME: we need to get the angles out of the matrix
-	teleporter->start_rot_phi			= 0;
-	teleporter->start_rot_theta			= 0;
+	// we need to get the angles out of the matrix
+	geomv_t startx = teleporter->ObjPosition[0][2];
+	geomv_t starty = teleporter->ObjPosition[1][2];
+	geomv_t startz = teleporter->ObjPosition[1][2];
+
+	// yay maths....
+	// store the rotational spherical coords.
+	teleporter->start_rot_phi			= atan(starty/startx);
+	teleporter->start_rot_theta			= atan((sqrt(powf(startx,2)+powf(starty,2))/startz));
 }
 
+#ifndef PARSEC_SERVER
 // callback type and flags ----------------------------------------------------
 //
 static int callback_type = CBTYPE_DRAW_CUSTOM_ITER | CBFLAG_REMOVE;
-
+#endif
 
 
 // teleporter destructor (instance destruction) ---------------------------------
@@ -1631,10 +1700,10 @@ void TeleporterDestroy( CustomObject *base )
 {
 	ASSERT( base != NULL );
 	Teleporter *teleporter = (Teleporter *) base;
-
+#ifndef PARSEC_SERVER
 	// stop any playing teleporter sound
 	AUD_TeleporterOff( teleporter );
-	
+#endif	
 	// destroy attached vertex info
 	ASSERT( teleporter->start_vtxlist != NULL );
 	ASSERT( teleporter->tunnel_verts  != NULL );
@@ -1649,10 +1718,12 @@ void TeleporterDestroy( CustomObject *base )
 		FREEMEM( teleporter->spline_frames );
 	}
 
+#ifndef PARSEC_SERVER
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
 	//ASSERT( numremoved <= 1 );
+#endif
 }
 
 
@@ -1661,6 +1732,7 @@ void TeleporterDestroy( CustomObject *base )
 PRIVATE
 int TeleporterAnimate( CustomObject *base )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( base != NULL );
 	Teleporter *teleporter = (Teleporter *) base;
 	
@@ -1688,7 +1760,7 @@ int TeleporterAnimate( CustomObject *base )
 	
 	// register the drawing callback for drawing the interior of the teleporter
 	CALLBACK_RegisterCallback( callback_type, Teleporter_Draw, (void *) base );
-	
+#endif
 	return TRUE;
 }
 
@@ -1697,6 +1769,7 @@ int TeleporterAnimate( CustomObject *base )
 PRIVATE
 void Teleporter_Animate_Tunnel( Teleporter* teleporter )
 {
+#ifndef PARSEC_SERVER
 	ASSERT( teleporter != NULL );
 
 	// do nothing if teleporter inactive
@@ -1815,12 +1888,13 @@ void Teleporter_Animate_Tunnel( Teleporter* teleporter )
 	StoreTVector( teleporter->tunnel_frame, &tunnel_pos );
 
 #endif // ANIMATE_TUNNEL_FRAME
+#endif
 }
 
 
 // check whether a ship is in range of a teleporter entry ---------------------
 //
-PRIVATE
+PUBLIC
 int Teleporter_ShipInRange( Teleporter *teleporter, ShipObject *ship )
 {
 	ASSERT( teleporter != NULL );
@@ -1890,6 +1964,11 @@ int TeleporterCollide( CustomObject *base )
 	if ( !teleporter->active )
 		return TRUE;
 	
+	// get the world->object transform
+	Xmatrx World2Telep;
+	CalcOrthoInverse( teleporter->ObjPosition, World2Telep );
+
+#ifndef PARSEC_SERVER
 	// determine whether MyShip is in audio range of teleporter
 	Vector3 diff;
 	Vertex3 teleppos;
@@ -1905,9 +1984,6 @@ int TeleporterCollide( CustomObject *base )
 		AUD_TeleporterOff( teleporter );
 	}
 	
-	// get the world->object transform
-	Xmatrx World2Telep;
-	CalcOrthoInverse( teleporter->ObjPosition, World2Telep );
 	
 	// first check local ship
 	if ( Teleporter_ShipInRange( teleporter, MyShip ) ) {
@@ -1930,28 +2006,95 @@ int TeleporterCollide( CustomObject *base )
 	}
 	
 #ifndef DONT_MOVE_REMOTE_SHIPS
-	
-	// walk all ships and check for teleportings
-	ShipObject *shippo = FetchFirstShip();
-	for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
-		if ( shippo != MyShip ) {
-			if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
-				
-				// transform the ship to (teleporter) object space
-				Xmatrx ShipInTelepSpace;
-				MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
-				
-				// transform ship to world space ( using the teleporter exit frame )
-				MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
+	if(!NET_ProtocolGMSV()){
+		// walk all ships and check for teleportings
+		ShipObject *shippo = FetchFirstShip();
+		for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
+			if ( shippo != MyShip ) {
+				if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
+
+					// transform the ship to (teleporter) object space
+					Xmatrx ShipInTelepSpace;
+					MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
+
+					// transform ship to world space ( using the teleporter exit frame )
+					MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
+				}
 			}
 		}
 	}
-	
 #endif // !DONT_MOVE_REMOTE_SHIPS
+/* XXX: remove
+#else // !PARSEC_SERVER
+// TODO code the server side collision code
+	// walk all ships and check for teleportings
+	ShipObject *shippo = FetchFirstShip();
+	for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
+			if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
+
+				// transform the ship to (teleporter) object space
+				Xmatrx ShipInTelepSpace;
+				MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
+
+				// transform ship to world space ( using the teleporter exit frame )
+				MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
+			}
+	}*/
+#endif // !PARSEC_SERVER
 	
 	return TRUE;
 }
 
+// handle persistency ---------------------------------------------------------
+//
+int TeleporterPersistFromStream( CustomObject* base, int tostream, void* rl )
+{
+#ifdef PARSEC_SERVER
+	ASSERT( base != NULL );
+	ASSERT( tostream == TRUE );
+	Teleporter* teleporter = (Teleporter*) base;
+
+	// determine size in packet
+	size_t size = E_REList::RmEvGetSizeFromType(RE_TELEPORTER);;
+
+	// write to RE list
+	if ( rl != NULL ) {
+
+		E_REList* pREList = (E_REList*)rl;
+
+		RE_Teleporter* re_tlp = (RE_Teleporter*)pREList->NET_Allocate( RE_TELEPORTER );
+		ASSERT( re_tlp != NULL );
+
+		re_tlp->pos[ 0 ]	= teleporter->ObjPosition[ 0 ][ 3 ];
+		re_tlp->pos[ 1 ]	= teleporter->ObjPosition[ 1 ][ 3 ];
+		re_tlp->pos[ 2 ]	= teleporter->ObjPosition[ 2 ][ 3 ];
+
+		re_tlp->dir[ 0 ]	= teleporter->ObjPosition[ 0 ][ 2 ];
+		re_tlp->dir[ 1 ]	= teleporter->ObjPosition[ 1 ][ 2 ];
+		re_tlp->dir[ 2 ]	= teleporter->ObjPosition[ 2 ][ 2 ];
+
+		re_tlp->exit_delta_x = teleporter->exit_delta_x;
+		re_tlp->exit_delta_y = teleporter->exit_delta_y;
+		re_tlp->exit_delta_z = teleporter->exit_delta_z;
+
+		re_tlp->id	= teleporter->id;
+
+		re_tlp->exit_rot_phi = teleporter->exit_rot_phi;
+		re_tlp->exit_rot_theta = teleporter->exit_rot_theta;
+
+	}
+
+	return size;
+#else
+	return 0;
+#endif
+}
+
+PUBLIC void TeleporterPropsChanged(GenObject* base){
+	TeleporterModify_StartPropsChanged(base);
+
+
+}
 
 // register object type for Teleporter ------------------------------------------
 //
@@ -1972,9 +2115,9 @@ void TeleporterRegisterCustomType()
 	info.callback_animate	= TeleporterAnimate;
 	info.callback_collide	= TeleporterCollide;
 	info.callback_notify	= NULL;
-	info.callback_persist   = NULL;//TeleporterPersistFromStream;
+	info.callback_persist   = TeleporterPersistFromStream;
 
-	OBJ_RegisterCustomType( &info );
+	teleporter_type = OBJ_RegisterCustomType( &info );
 	CON_RegisterCustomType( info.type_id, Teleporter_PropList );
 
 	memset( &info, 0, sizeof( info ) );
@@ -1995,6 +2138,223 @@ void TeleporterRegisterCustomType()
 	OBJ_RegisterCustomType( &info );
 }
 
+// key table for "tp.create" command --------------------------------------------
+//
+key_value_s tp_command_keys[] = {
+	{"id",			NULL, 	KEYVALFLAG_NONE },
+	{ "pos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
+	{ "dir",		NULL,	KEYVALFLAG_PARENTHESIZE		},
+	{ "expos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
+	{ "exdir",		NULL,	KEYVALFLAG_PARENTHESIZE		},
+
+	{ NULL,			NULL,	KEYVALFLAG_NONE				},
+};
+
+enum {
+	KEY_TELEPORTER_ID,
+	KEY_TELEPORTER_POS,
+	KEY_TELEPORTER_DIR,
+	KEY_TELEPORTER_EXPOS,
+	KEY_TELEPORTER_EXDIR
+};
+
+#ifdef PARSEC_SERVER
+// console command for specifying teleporters in game server mode --------------------------------
+//
+PRIVATE
+int Cmd_TP_CREATE( char* tp_create_command )
+{
+	//NOTE:
+	//CONCOM:
+	// tp_create_command	::= 'tp.create' [<pos_spec>] [<dir_spec>] [expos_spec] [exdir_spec]
+	// pos_spec			::= 'pos' '(' <float> <float> <float> ')'
+	// dir_spec			::= 'dir' '(' <float> <float> <float> ')'
+	// expos_spec	::= 'expos' '(' <float> <float> <float> ')'
+	// exdir_spec			::= 'exdir' '(' <float> <float> <float> ')'
+
+
+	ASSERT( tp_create_command != NULL );
+	HANDLE_COMMAND_DOMAIN( tp_create_command );
+
+	// scan out all values to keys
+	if ( !ScanKeyValuePairs( tp_command_keys,tp_create_command ) ) {
+		return TRUE;
+	}
+
+
+
+	// parse position
+	Vector3 pos_spec;
+	if ( tp_command_keys[ KEY_TELEPORTER_POS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_POS ], (float*)&pos_spec.X, 3, 3 ) ) {
+			CON_AddLine( "position invalid" );
+			return TRUE;
+		}
+	} else {
+		//FIXME: constants
+		pos_spec.X = ( RAND() % 1000 ) - 500;
+		pos_spec.Y = ( RAND() % 1000 ) - 500;
+		pos_spec.Z = ( RAND() % 1000 ) - 500;
+		pos_spec.VisibleFrame = 0;
+	}
+
+
+	// parse exit position
+	Vector3 expos_spec;
+	if ( tp_command_keys[ KEY_TELEPORTER_EXPOS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXPOS ], (float*)&expos_spec.X, 3, 3 ) ) {
+			CON_AddLine( "position invalid" );
+			return TRUE;
+		}
+	} else {
+		//FIXME: constants
+		expos_spec.X = ( RAND() % 1000 ) - 500;
+		expos_spec.Y = ( RAND() % 1000 ) - 500;
+		expos_spec.Z = ( RAND() % 1000 ) - 500;
+		expos_spec.VisibleFrame = 0;
+	}
+
+	// parse direction
+	Vector3 dir_spec;
+	if ( tp_command_keys[ KEY_TELEPORTER_DIR ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
+			CON_AddLine( "direction invalid" );
+			return TRUE;
+		}
+		if(dir_spec.X == 0 && dir_spec.Y == 0 && dir_spec.Z==0)
+			dir_spec.Z=1; // default to Z if all zero
+	} else {
+		// default to point in z direction
+		dir_spec.X = 0.0f;
+		dir_spec.Y = 0.0f;
+		dir_spec.Z = 1.0f;
+		dir_spec.VisibleFrame = 0;
+	}
+
+	// parse exit direction
+		Vector3 exdir_spec;
+		if ( tp_command_keys[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
+			if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
+				CON_AddLine( "direction invalid" );
+				return TRUE;
+			}
+			if(exdir_spec.X == 0 && dir_spec.Y == 0 && exdir_spec.Z==0)
+				exdir_spec.Z=1; // default to Z if all zero
+		} else {
+			// default to point in z direction
+			exdir_spec.X = 0.0f;
+			exdir_spec.Y = 0.0f;
+			exdir_spec.Z = 1.0f;
+			exdir_spec.VisibleFrame = 0;
+		}
+
+	// add the teleporter
+	TheServer->AddTeleporter( &pos_spec, &dir_spec, &expos_spec, &exdir_spec );
+
+	return TRUE;
+}
+
+// console command for specifying teleporters in game server mode --------------------------------
+//
+PRIVATE
+int Cmd_TP_MODIFY( char* tp_mod_command )
+{
+	//NOTE:
+	//CONCOM:
+	// tp_modify_command	::= 'tp.mod' id_spec [<pos_spec>] [<dir_spec>] [expos_spec] [exdir_spec]
+	// id_spec			::= 'id' <int>
+	// pos_spec			::= 'pos' '(' <float> <float> <float> ')'
+	// dir_spec			::= 'dir' '(' <float> <float> <float> ')'
+	// expos_spec	::= 'expos' '(' <float> <float> <float> ')'
+	// exdir_spec			::= 'exdir' '(' <float> <float> <float> ')'
+
+
+	ASSERT( tp_mod_command != NULL );
+	HANDLE_COMMAND_DOMAIN( tp_mod_command );
+
+	int tp_id = 0;
+	Vector3 pos_spec;
+	Vector3 expos_spec;
+	Vector3 dir_spec;
+	Vector3 exdir_spec;
+
+	Vector3 *pos, *expos, *dir, *exdir;
+
+	bool pos_ch, expos_ch, dir_ch, exdir_ch;
+
+	// scan out all values to keys
+	if ( !ScanKeyValuePairs( tp_command_keys,tp_mod_command ) ) {
+		return TRUE;
+	}
+
+	if(tp_command_keys[KEY_TELEPORTER_ID].value != NULL ) {
+		if(!ScanKeyValueInt(&tp_command_keys[KEY_TELEPORTER_ID],&tp_id)) {
+			CON_AddLine("Teleporter ID Invalid");
+			return TRUE;
+		}
+	}
+
+	// parse position
+	if ( tp_command_keys[ KEY_TELEPORTER_POS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_POS ], (float*)&pos_spec.X, 3, 3 ) ) {
+			CON_AddLine( "position invalid" );
+			return TRUE;
+		}
+		pos_ch = TRUE;
+	} else {
+		pos_ch = FALSE;
+	}
+
+	// parse exit position
+	if ( tp_command_keys[ KEY_TELEPORTER_EXPOS ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXPOS ], (float*)&expos_spec.X, 3, 3 ) ) {
+			CON_AddLine( "position invalid" );
+			return TRUE;
+		}
+		expos_ch = TRUE;
+
+	} else {
+		expos_ch = FALSE;
+	}
+	// parse direction
+	if ( tp_command_keys[ KEY_TELEPORTER_DIR ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
+			CON_AddLine( "direction invalid" );
+			return TRUE;
+		}
+		dir_ch = TRUE;
+		if(dir_spec.X == 0 && dir_spec.Y == 0 && dir_spec.Z==0)
+			dir_spec.Z=1; // default to Z if all zero
+	} else {
+		dir_ch = FALSE;
+	}
+
+	// parse exit direction
+	if ( tp_command_keys[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
+		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
+			CON_AddLine( "direction invalid" );
+			return TRUE;
+		}
+		exdir_ch = TRUE;
+		if(exdir_spec.X == 0 && exdir_spec.Y == 0 && exdir_spec.Z==0)
+			exdir_spec.Z=1; // default to Z if all zero
+	} else {
+		exdir_ch = FALSE;
+	}
+
+	pos=(pos_ch) ? &pos_spec : NULL;
+	expos=(expos_ch) ? &expos_spec : NULL;
+	dir=(dir_ch) ? &dir_spec : NULL;
+	exdir=(exdir_ch) ? &exdir_spec : NULL;
+
+	// add the teleporter
+	TheServer->ModTeleporter( tp_id, pos, dir, expos, exdir );
+
+	return TRUE;
+}
+
+#endif //PARSEC_SERVER
+
 
 // module registration function -----------------------------------------------
 //
@@ -2002,5 +2362,23 @@ REGISTER_MODULE( G_TELEP )
 {
 	// register type
 	TeleporterRegisterCustomType();
+
+	user_command_s regcom;
+	memset( &regcom, 0, sizeof( user_command_s ) );
+#ifdef PARSEC_SERVER
+	// register "tp.create" command
+	regcom.command	 = "tp.create";
+	regcom.numparams = 0;
+	regcom.execute	 = Cmd_TP_CREATE;
+	regcom.statedump = NULL;
+	CON_RegisterUserCommand( &regcom );
+
+	// register "tp.create" command
+	regcom.command	 = "tp.mod";
+	regcom.numparams = 0;
+	regcom.execute	 = Cmd_TP_MODIFY;
+	regcom.statedump = NULL;
+	CON_RegisterUserCommand( &regcom );
+#endif
 }
 

@@ -9,6 +9,8 @@
 // for server_s ---------------------------------------------------------------
 // 
 #include "net_csdf.h"
+#include "g_telep.h"
+#include "od_prim.h"
 
 // max. # of entries in the linklist ------------------------------------------
 //
@@ -33,6 +35,7 @@ extern int			num_map_objs;
 //
 int			NET_GetGameServerList();
 Stargate*	NET_FindStargate( word serverid );
+Teleporter* NET_FindTeleporter( int id );
 
 
 #endif // _NET_UNIV_H_

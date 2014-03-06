@@ -9,7 +9,7 @@
 // parsec client/server protocol version number -------------------------------
 //
 #define CLSV_PROTOCOL_MAJOR			0
-#define CLSV_PROTOCOL_MINOR			20
+#define CLSV_PROTOCOL_MINOR			22
 
 #ifdef PARSEC_CLIENT
 	#include "net_udpdf.h"

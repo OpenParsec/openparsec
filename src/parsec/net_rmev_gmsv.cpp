@@ -26,6 +26,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -75,6 +77,7 @@
 //#include "g_emp.h"
 //#include "g_swarm.h"
 #include "g_stgate.h"
+#include "g_telep.h"
 
 
 // process entire remote event list (execute all contained events) coming from the server
@@ -277,7 +280,10 @@ void NET_ProcessRmEvList_GMSV( NetPacket_GMSV* gamepacket )
 				// can only be received when connected
 				NET_ExecRmEvStargate( (RE_Stargate*) pREList );
 				break;
-				
+			case RE_TELEPORTER:
+				NET_ExecRmEvTeleporter( (RE_Teleporter*)pREList );
+				break;
+
 			default:
 				MSGOUT( "ProcessRmEvList_GMSV(): unknown remote event (%d).", pREList->RE_Type );
 		}
@@ -420,6 +426,81 @@ void NET_ExecRmEvMapObject( RE_MapObject* pMapObject )
 	NET_ServerList_AddMapObject( pMapObject );
 }
 
+// exectue RE containing a teleporter -------------------------------------------
+//
+void NET_ExecRmEvTeleporter( RE_Teleporter* pRE_Teleporter )
+{
+	ASSERT( pRE_Teleporter != NULL );
+	ASSERT( NetConnected );
+
+	// found an existing stargate ?
+	Teleporter* teleporter = NET_FindTeleporter( pRE_Teleporter->id );
+
+	// create new stargate ?
+	if ( teleporter == NULL ) {
+
+		 MSGOUT( "adding teleporter at (%d %d %d)", 
+										    			pRE_Teleporter->pos[ 0 ],
+														pRE_Teleporter->pos[ 1 ],
+														pRE_Teleporter->pos[ 2 ] ); 
+
+		dword objclass = OBJ_FetchObjectClassId( "teleporter" );
+
+		if ( objclass != CLASS_ID_INVALID ) {
+
+			Xmatrx startm;
+			MakeIdMatrx( startm );
+			startm[ 0 ][ 3 ] = pRE_Teleporter->pos[ 0 ];
+			startm[ 1 ][ 3 ] = pRE_Teleporter->pos[ 1 ];
+			startm[ 2 ][ 3 ] = pRE_Teleporter->pos[ 2 ];
+
+			startm[ 0 ][ 2 ] = pRE_Teleporter->dir[ 0 ];
+			startm[ 1 ][ 2 ] = pRE_Teleporter->dir[ 1 ];
+			startm[ 2 ][ 2 ] = pRE_Teleporter->dir[ 2 ];
+
+			// ensure orthogonal matrix
+			CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
+			CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
+
+			teleporter = (Teleporter *) SummonObject( objclass, startm );
+			teleporter->id = pRE_Teleporter->id;    
+			teleporter->exit_delta_x = pRE_Teleporter->exit_delta_x;
+			teleporter->exit_delta_y = pRE_Teleporter->exit_delta_y;
+			teleporter->exit_delta_z = pRE_Teleporter->exit_delta_z;
+
+			teleporter->exit_rot_phi = pRE_Teleporter->exit_rot_phi;
+			teleporter->exit_rot_theta = pRE_Teleporter->exit_rot_theta;
+
+		} else {
+			MSGOUT( "object class Teleporter not found." );
+		}
+	} else {
+		// found the teleporter, let's edit some of the stuff.
+ 
+		// set the start coords
+		teleporter->start.X = pRE_Teleporter->pos[ 0 ];
+		teleporter->start.Y = pRE_Teleporter->pos[ 1 ];
+		teleporter->start.Z = pRE_Teleporter->pos[ 2 ];
+
+		// set the start rotation spherical coords
+		float phi_atan = (pRE_Teleporter->dir[ 0 ]) ? (pRE_Teleporter->dir[ 1 ]/pRE_Teleporter->dir[ 0 ]) : 0; 
+		teleporter->start_rot_phi = (atan(phi_atan)*180)/M_PI;
+		float theta_atan = (pRE_Teleporter->dir[ 2 ]) ? ((sqrt(powf(pRE_Teleporter->dir[ 0 ],2)+powf(pRE_Teleporter->dir[ 1 ],2))/pRE_Teleporter->dir[ 2 ])) : 0;
+		teleporter->start_rot_theta = (atan(theta_atan)*180)/M_PI;
+
+		teleporter->exit_delta_x = pRE_Teleporter->exit_delta_x;
+		teleporter->exit_delta_y = pRE_Teleporter->exit_delta_y;
+		teleporter->exit_delta_z = pRE_Teleporter->exit_delta_z;
+
+		teleporter->exit_rot_phi = pRE_Teleporter->exit_rot_phi;
+		teleporter->exit_rot_theta = pRE_Teleporter->exit_rot_theta;
+ 
+ 	}
+
+	// notify the teleporter that it changed some properties.
+	TeleporterPropsChanged(teleporter);
+
+}
 
 // exectue RE containing a stargate -------------------------------------------
 //

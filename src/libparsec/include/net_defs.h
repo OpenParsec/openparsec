@@ -136,6 +136,9 @@
 //
 #define MAX_NUM_LINKS			16
 
+// maximum # of teleporters from one server
+#define MAX_NUM_TELEP			32
+
 
 // maximum # of map objects ---------------------------------------------------
 //
@@ -633,7 +636,8 @@ enum re_events {
 	RE_SERVERLINKINFO,		// 0x19		// 25
 	RE_MAPOBJECT,			// 0x1a		// 26
 	RE_STARGATE,			// 0x1b		// 27
-       RE_CREATEMINE,
+    RE_CREATEMINE,
+    RE_TELEPORTER,
 	RE_NUMEVENTS
 };
 	
@@ -927,6 +931,20 @@ struct RE_Stargate : RE_Header {
 	// sizeof( RE_Stargate ) = 128
 };
 
+// teleporter properties --------------------------------------------------------
+//
+struct RE_Teleporter : RE_Header {
+	word id;			// 2
+	float	pos[ 3 ];			// 12
+	float	dir[ 3 ];			// 12
+	geomv_t	exit_delta_x; // 4
+	geomv_t 	exit_delta_y; // 4
+	geomv_t	exit_delta_z; // 4
+	float exit_rot_phi; // 4
+	float exit_rot_theta; // 4
+
+	// sizeof( RE_Teleporter ) = 40
+};
 
 //NOTE:
 // new remote event structures must ensure proper alignment

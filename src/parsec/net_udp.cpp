@@ -69,6 +69,8 @@
 #include "net_wrap.h"
 #include "net_util.h"
 
+// client <-->server network defs for protocol version
+#include "net_csdf.h"
 
 // flags
 #define ALLOW_BROADCASTS
@@ -559,6 +561,7 @@ int UDP_InitInterface()
 		// set ports to use
 		if ( NET_ProtocolGMSV() ) {
 			server_udp_port = DEFAULT_GAMESERVER_UDP_PORT;
+			MSGOUT("OpenParsec Client Network Protocol Version: %i.%i", CLSV_PROTOCOL_MAJOR, CLSV_PROTOCOL_MINOR);
 		} else {
 			server_udp_port = DEFAULT_PEERTOPEER_UDP_PORT;
 		}
