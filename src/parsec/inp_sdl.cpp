@@ -24,7 +24,7 @@
 #include "config.h"
 
 #ifdef SYSTEM_TARGET_LINUX
-	#include <SDL/SDL.h>
+	#include <SDL2/SDL.h>
 #else
 	#include <SDL.h>
 #endif

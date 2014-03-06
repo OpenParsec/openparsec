@@ -6,7 +6,7 @@
 #define _VSDL_OGL_H_
 
 #ifdef SYSTEM_TARGET_LINUX
-#include <SDL/SDL.h>
+#include <SDL2/SDL.h>
 #else
 #include <SDL.h>
 #endif

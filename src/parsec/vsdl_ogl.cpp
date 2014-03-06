@@ -140,12 +140,6 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 {
 	MSGOUT( "Using the OpenGL subsystem as rendering device." );
 
-#ifdef SYSTEM_TARGET_OSX
-	// SDL 2 in OS X shows the window minimization visual at odd times if this
-	// hint isn't set to off.
-	SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-#endif
-
 	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
 		MSGOUT("ERROR: Trouble initializing video subsystem.");
 		return FALSE;
@@ -153,7 +147,7 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 
 	Resolutions.clear();
 
-	SDL_DisplayMode curmode;
+	SDL_DisplayMode curmode = {};
 	SDL_GetDesktopDisplayMode(0, &curmode);
 
 	MaxScreenBPP = SDL_BITSPERPIXEL(curmode.format);
@@ -497,19 +491,19 @@ void SDL_RCSetup()
 		VidInfo_MaxTextureSize = maxgltexsize;
 		VidInfo_MaxTextureLod  = CeilPow2Exp(maxgltexsize);
 	}
-	
+
 	// determine maximum number of active texture units
 	if (GLEW_VERSION_1_3 || GLEW_ARB_multitexture) {
 		GLint maxtextureunits;
 		glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxtextureunits);
-		
+
 		// GL 2.0 / shaders introduce texture image units, max tex units is the greater of the above and below
 		if (GLEW_VERSION_2_0 || GLEW_ARB_vertex_shader) {
 			GLint maxteximageunits;
 			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxteximageunits);
 			maxtextureunits = max(maxtextureunits, maxteximageunits);
 		}
-		
+
 		VidInfo_NumTextureUnits = max(maxtextureunits, 1);
 	} else {
 		VidInfo_NumTextureUnits = 1;
@@ -525,43 +519,17 @@ void SDL_RCSetup()
 static int fullscreen_mode	= TRUE;
 
 
-// flag whether old mode must be restored before initing new one --------------
-//
-static int must_restore_mode = FALSE;
-
-
-// restore previous mode by destroying context --------------------------------
-//
-void SDL_RestoreMode()
-{
-	static bool recursive_panic = false;
-	if ( recursive_panic )
-		return;
-
-	// safeguard on
-	recursive_panic = true;
-
-
-	// safeguard off
-	recursive_panic = false;
-
-	must_restore_mode = FALSE;
-}
-
 
 // set opengl graphics mode ---------------------------------------------------
 //
 int VSDL_InitOGLMode()
 {
-	if ( must_restore_mode )
-		SDL_RestoreMode();
-
 	// set our mode index
 	ASSERT(VID_MODE_AVAILABLE(GetResolutionIndex(GameScreenRes.width, GameScreenRes.height)));
 
 	fullscreen_mode	= !Op_WindowedMode;
 
-	Uint32 mode_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_MOUSE_FOCUS;
+	Uint32 mode_flags = SDL_WINDOW_OPENGL;
 	
 	sdl_win_bpp = GameScreenBPP;
 
@@ -571,10 +539,6 @@ int VSDL_InitOGLMode()
 	if ( fullscreen_mode ) {
 		mode_flags |= SDL_WINDOW_FULLSCREEN;
 	}
-	
-	// disable system cursor inside the SDL window
-	SDL_ShowCursor(SDL_DISABLE);
-
 
 	sdl_wsz_x = 0;
 	sdl_wsz_y = 0;
@@ -621,6 +585,11 @@ int VSDL_InitOGLMode()
 		curwindow = NULL;
 	}
 
+    if (curcontext != NULL) {
+        SDL_GL_DeleteContext(curcontext);
+        curcontext = NULL;
+    }
+
 	curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, sdl_win_width, sdl_win_height, mode_flags);
 
 	if (curwindow == NULL) {
@@ -628,25 +597,15 @@ int VSDL_InitOGLMode()
 		return FALSE;
 	}
 
-	// TODO: check bpp and MSAA, and remake context if they've changed
+    curcontext = SDL_GL_CreateContext(curwindow);
 
-	if (curcontext == NULL || SDL_GL_MakeCurrent(curwindow, curcontext) < 0) {
-
-		if (curcontext) {
-			SDL_GL_DeleteContext(curcontext);
-		}
-
-		curcontext = SDL_GL_CreateContext(curwindow);
-		if (curcontext == NULL) {
-			MSGOUT("Could not create OpenGL context: %s\n", SDL_GetError());
-			return FALSE;
-		}
-	}
+    if (curcontext == NULL) {
+        MSGOUT("Could not create OpenGL context: %s\n", SDL_GetError());
+        return FALSE;
+    }
 
 	// set vertical synchronization
 	SDL_GL_SetSwapInterval(FlipSynched ? 1 : 0);
-	
-	SDL_ShowWindow(curwindow);
 
 	// setup current rendering context
 	SDL_RCSetup();
@@ -654,7 +613,9 @@ int VSDL_InitOGLMode()
 	// display current rendering context info
 	SDL_RCDisplayInfo();
 
-	must_restore_mode = TRUE;
+    // disable system cursor inside the SDL window
+	SDL_ShowCursor(SDL_DISABLE);
+
 	return TRUE;
 }
 
@@ -677,9 +638,6 @@ void VSDL_ShutDownOGL()
 		SDL_GL_DeleteContext(curcontext);
 		curcontext = NULL;
 	}
-
-	// simply restore mode XXX: SDL should take care of restoring everything to pre-game state
-	SDL_RestoreMode();
 }
 
 

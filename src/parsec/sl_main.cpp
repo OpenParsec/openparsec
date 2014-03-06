@@ -76,7 +76,7 @@
 #include "vid_init.h"
 
 #ifdef SYSTEM_TARGET_LINUX
-	#include <SDL/SDL.h>
+	#include <SDL2/SDL.h>
 #else
 	#include <SDL.h>
 #endif
@@ -180,13 +180,13 @@ const char * SLm_GetMacResourcesPath()
 	CFURLRef resourcesURL = CFBundleCopyResourcesDirectoryURL(mainBundle);
 	CFURLRef absoluteResourcesURL = CFURLCopyAbsoluteURL(resourcesURL);
 	CFStringRef cfResourcesStringRef = CFURLCopyFileSystemPath(absoluteResourcesURL, kCFURLPOSIXPathStyle);
-	
+
 	CFStringGetCString(cfResourcesStringRef, macresourcespath, sizeof(macresourcespath), kCFStringEncodingASCII);
-	
+
 	CFRelease(resourcesURL);
 	CFRelease(absoluteResourcesURL);
 	CFRelease(cfResourcesStringRef);
-	
+
 	return macresourcespath;
 }
 
