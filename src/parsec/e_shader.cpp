@@ -167,7 +167,7 @@ static dword const_color_shader[] = {
 	iter_texconstaspecrgb,
 	iter_texconstrgbspeca,
 
-	~0
+	(dword) ~0
 };
 
 
@@ -182,7 +182,7 @@ static dword vtxalpha_disabled_shader[] = {
 	iter_constrgbtexa,
 	iter_rgbtexa,
 
-	~0
+	(dword) ~0
 };
 
 

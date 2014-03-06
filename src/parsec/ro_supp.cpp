@@ -1321,7 +1321,7 @@ void RO_Render2DRectangle( sgrid_t putx, sgrid_t puty, float srcw, float srch, d
 	glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( GLVertex3 ), &glvtxs->r );
 	glTexCoordPointer( 2, GL_FLOAT, sizeof( GLVertex3 ), &glvtxs->s );
 
-	glDrawArrays( GL_QUADS, 0, 4 );
+	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 
 //	RO_ClientState( VTXARRAY_NONE );
 }
@@ -1381,8 +1381,8 @@ int R_PrecacheTextures()
 		RO_ArrayMakeCurrent(VTXPTRS_NONE, NULL);
 		glVertexPointer(2, GL_SHORT, 0, vertices);
 		glTexCoordPointer(2, GL_SHORT, 0, texcoords);
-		
-		glDrawArrays(GL_QUADS, 0, 4);
+
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 	}
 	
 	VIDs_CommitRenderBuffer();
