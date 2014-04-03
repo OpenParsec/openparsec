@@ -542,25 +542,20 @@ int E_GameServer::AddServerLink( int serverid, Vector3* pos_spec, Vector3* dir_s
 
 // add a Teleporter -----------------------------------------------------------
 //
-int E_GameServer::AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec )
+int E_GameServer::AddTeleporter( Vector3* pos_spec,Vector3* expos_spec, float start_rot_phi, float start_rot_theta, float exit_rot_phi, float exit_rot_theta )
 {
 	ASSERT( pos_spec != NULL );
-	ASSERT( dir_spec != NULL );
+
 	ASSERT( expos_spec != NULL );
-	ASSERT( exdir_spec != NULL );
+
 
 
 	if ( m_nNumTeleporters >= MAX_NUM_TELEP ) {
 		return FALSE;
 	}
 
-	// norm the direction
-	NormVctX( dir_spec );
-	NormVctX( exdir_spec );
-
-
 	// create the corresponding teleporter
-	Teleporter *teleporter = TheGame->CreateTeleporter( m_nNumTeleporters, pos_spec, dir_spec, expos_spec, exdir_spec );
+	Teleporter *teleporter = TheGame->CreateTeleporter( m_nNumTeleporters, pos_spec, expos_spec, start_rot_phi, start_rot_theta,  exit_rot_phi,  exit_rot_theta );
 	if(teleporter != NULL){
 		m_Teleporters[m_nNumTeleporters] = teleporter;
 		MSGOUT("Created Teleporter with ID %i", m_nNumTeleporters);
@@ -572,23 +567,15 @@ int E_GameServer::AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* e
 
 // Mod a Teleporter -----------------------------------------------------------
 //
-int E_GameServer::ModTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec )
+int E_GameServer::ModTeleporter( int id,  Vector3* pos_spec, Vector3* expos_spec, float start_rot_phi, float start_rot_theta, float exit_rot_phi, float exit_rot_theta )
 {
 	if ( id < 0 ) {
 		return FALSE;
 	}
 
-	// norm the direction
-	if(dir_spec != NULL)
-		NormVctX( dir_spec );
-
-	if(exdir_spec != NULL )
-		NormVctX( exdir_spec );
-
-
 	// create the corresponding teleporter
 	Teleporter *teleporter = this->m_Teleporters[id];
-	float phi_atan=0, theta_atan=0;
+
 
 	if(teleporter != NULL){
 
@@ -599,12 +586,6 @@ int E_GameServer::ModTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec,V
 			teleporter->start.Z = pos_spec->Z;
 
 		}
-		if(dir_spec != NULL) {
-			phi_atan = (dir_spec->X) ? (dir_spec->Y/dir_spec->X) : 0;
-			teleporter->start_rot_phi = (atan(phi_atan)*180)/M_PI;
-			theta_atan = (dir_spec->Z) ? ((sqrt(powf(dir_spec->X,2)+powf(dir_spec->Y,2))/dir_spec->Z))  : 0;
-			teleporter->start_rot_theta = (atan(theta_atan)*180)/M_PI;
-		}
 
 		if(expos_spec != NULL) {
 			teleporter->exit_delta_x = expos_spec->X;
@@ -612,12 +593,16 @@ int E_GameServer::ModTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec,V
 			teleporter->exit_delta_z = expos_spec->Z;
 
 		}
-		if(exdir_spec != NULL) {
-			phi_atan = (exdir_spec->X) ? (exdir_spec->Y/exdir_spec->X) : 0;
-			teleporter->exit_rot_phi = (atan(phi_atan)*180)/M_PI;
-			theta_atan = (exdir_spec->Z) ? ((sqrt(powf(exdir_spec->X,2)+powf(exdir_spec->Y,2))/exdir_spec->Z))  : 0;
-			teleporter->exit_rot_theta = (atan(theta_atan)*180)/M_PI;
-		}
+
+		// change the direction rotations of the start and end points, if needed.
+		if(exit_rot_phi >= 0)
+			teleporter->exit_rot_phi = exit_rot_phi;
+		if(exit_rot_theta >= 0)
+			teleporter->exit_rot_theta = exit_rot_theta;
+		if(start_rot_phi >= 0)
+			teleporter->start_rot_phi = start_rot_phi;
+		if(start_rot_theta >= 0)
+			teleporter->start_rot_theta = start_rot_theta;
 
 		TeleporterPropsChanged(teleporter);
 

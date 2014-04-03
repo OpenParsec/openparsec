@@ -197,9 +197,8 @@ public: 	// methods
 	int			AddServerLink( int serverid, Vector3* pos_spec, Vector3* dir_spec );
 
 	// add a teleporter
-	int AddTeleporter( Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec );
-	int ModTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec,Vector3* expos_spec, Vector3* exdir_spec );
-
+	int AddTeleporter( Vector3* pos_spec,Vector3* expos_spec, float start_rot_phi, float start_rot_theta, float exit_rot_phi, float exit_rot_theta );
+	int ModTeleporter( int id,  Vector3* pos_spec, Vector3* expos_spec, float start_rot_phi, float start_rot_theta, float exit_rot_phi, float exit_rot_theta );
 	// accessor methods
 	refframe_t	GetSimTickFrameTime()		{ return m_SimTick_FrameTime; }
 	int			GetPacketAverageSecs()		{ return m_nPacketAverageSecs; }
