@@ -293,17 +293,13 @@ void G_Main::CreateStargate( int serverid, Vector3* pos_spec, Vector3* dir_spec 
 		startm[ 1 ][ 3 ] = pos_spec->Y;
 		startm[ 2 ][ 3 ] = pos_spec->Z;
 
-		//startm[ 0 ][ 2 ] = dir_spec->X;
-        ObjRotX(startm, DEG_TO_BAMS(pos_spec->X));
-		//startm[ 1 ][ 2 ] = dir_spec->Y;
-        ObjRotY(startm, DEG_TO_BAMS(pos_spec->Y));
-		//startm[ 2 ][ 2 ] = dir_spec->Z;
-        ObjRotZ(startm, DEG_TO_BAMS(pos_spec->Z));
+		startm[ 0 ][ 2 ] = dir_spec->X;
+		startm[ 1 ][ 2 ] = dir_spec->Y;
+		startm[ 2 ][ 2 ] = dir_spec->Z;
 
 		// ensure orthogonal matrix
-		//CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
-		//CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
-        ReOrthoNormMtx(startm);
+		CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
+		CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
 
 		// create the object
 		Stargate* stargate = (Stargate*)TheWorld->CreateObject( objclass, startm, PLAYERID_SERVER );
@@ -322,12 +318,10 @@ void G_Main::CreateStargate( int serverid, Vector3* pos_spec, Vector3* dir_spec 
 
 // create a teleporter at a position, with a direction ----
 //
-Teleporter * G_Main::CreateTeleporter( int id,  Vector3* pos_spec, Vector3* dir_spec, Vector3* expos_spec, Vector3* exdir_spec )
+Teleporter * G_Main::CreateTeleporter( int id,  Vector3* pos_spec, Vector3* expos_spec, float start_rot_phi, float start_rot_theta, float exit_rot_phi, float exit_rot_theta)
 {
 	ASSERT( pos_spec != NULL );
-	ASSERT( dir_spec != NULL );
 	ASSERT( expos_spec != NULL );
-	ASSERT( exdir_spec != NULL );
 
 
 	// create corresponding stargate objects
@@ -341,17 +335,14 @@ Teleporter * G_Main::CreateTeleporter( int id,  Vector3* pos_spec, Vector3* dir_
 		startm[ 1 ][ 3 ] = pos_spec->Y;
 		startm[ 2 ][ 3 ] = pos_spec->Z;
 
-		//startm[ 0 ][ 2 ] = dir_spec->X;
-        ObjRotX(startm, DEG_TO_BAMS(pos_spec->X));
-		//startm[ 1 ][ 2 ] = dir_spec->Y;
-        ObjRotY(startm, DEG_TO_BAMS(pos_spec->Y));
-		//startm[ 2 ][ 2 ] = dir_spec->Z;
-        ObjRotZ(startm, DEG_TO_BAMS(pos_spec->Z));
+		/*
+		startm[ 0 ][ 2 ] = dir_spec->X;
+		startm[ 1 ][ 2 ] = dir_spec->Y;
+		startm[ 2 ][ 2 ] = dir_spec->Z;*/
 
 		// ensure orthogonal matrix
-		//CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
-		//CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
-        ReOrthoNormMtx(startm);
+		CrossProduct2( &startm[ 0 ][ 1 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 0 ] );
+		CrossProduct2( &startm[ 0 ][ 0 ], &startm[ 0 ][ 2 ], &startm[ 0 ][ 1 ] );
 
 		// create the object
 		Teleporter* teleporter = (Teleporter*)TheWorld->CreateObject( objclass, startm, PLAYERID_SERVER );
@@ -362,12 +353,16 @@ Teleporter * G_Main::CreateTeleporter( int id,  Vector3* pos_spec, Vector3* dir_
 		teleporter->exit_delta_y = expos_spec->Y;
 		teleporter->exit_delta_z = expos_spec->Z;
 
-		float phi_atan=0, theta_atan=0;
-		phi_atan = (exdir_spec->X) ? (exdir_spec->Y/exdir_spec->X) : 0;
-		teleporter->exit_rot_phi =  (atan(phi_atan)*180)/M_PI;
-		theta_atan = (exdir_spec->Z) ? ((sqrt(powf(exdir_spec->X,2)+powf(exdir_spec->Y,2))/exdir_spec->Z))  : 0;
-		teleporter->exit_rot_theta = (atan(theta_atan)*180)/M_PI;
+
+		teleporter->exit_rot_phi = exit_rot_phi;
+		teleporter->exit_rot_theta = exit_rot_theta;
+		teleporter->start_rot_phi = start_rot_phi;
+		teleporter->start_rot_theta = start_rot_theta;
+
 		teleporter->id = id;
+
+		// do some math and such.
+		TeleporterPropsChanged(teleporter);
 
 		// attach the created E_Distributable for the engine object
 		// stargates are to be delivered reliable
