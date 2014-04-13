@@ -518,11 +518,12 @@ void G_CollDet::_CollisionResponse_TelepShip( Teleporter *curtelep )
 
 	// transform ship to world space ( using the teleporter exit frame )
 	MtxMtxMUL( curtelep->child_object->ObjPosition, ShipInTelepSpace, cur_ship->ObjPosition );
-
+    /*
 	// force a client resync of the colliding client
 	int coll_ship = GetOwnerFromHostOjbNumber( cur_ship->HostObjNumber );
 	TheSimulator->GetSimClientState( coll_ship )->SetClientResync();
-
+     * This is breaking successful teleport collisions resulting in being synced out of the teleporter
+     */
 }
 
 

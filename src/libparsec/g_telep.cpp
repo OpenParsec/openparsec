@@ -1545,7 +1545,7 @@ void TeleporterInitType( CustomObject *base )
 	teleporter->exit_rot_theta			= 0;
 
 	teleporter->actoffset				= 10;
-	teleporter->act_cone_angle			= 30;
+	teleporter->act_cone_angle			= 60;
 
 	teleporter->u_variation[ 0 ]		= 0.05;		// percentage of texture space
 	teleporter->v_variation[ 0 ]		= 0.05;
@@ -2147,7 +2147,7 @@ key_value_s tp_command_keys[] = {
 	{ "start_rot_theta",		NULL,	KEYVALFLAG_NONE		},
 	{ "expos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
 	{ "exit_rot_phi",		NULL,	KEYVALFLAG_NONE		},
-	{ "exitt_rot_theta",		NULL,	KEYVALFLAG_NONE		},
+	{ "exit_rot_theta",		NULL,	KEYVALFLAG_NONE		},
 
 	{ NULL,			NULL,	KEYVALFLAG_NONE				},
 };
@@ -2219,9 +2219,13 @@ int Cmd_TP_CREATE( char* tp_create_command )
 		expos_spec.Z = ( RAND() % 1000 ) - 500;
 		expos_spec.VisibleFrame = 0;
 	}
-
+    
+    float start_rot_phi=0,start_rot_theta=0;
+    
+    /*
+     * Broken or not actually implemented to begin with so leave as default until someday --CrazySpence
 	// parse direction
-	float start_rot_phi=0,start_rot_theta=0;
+	
 	if ( tp_command_keys[ KEY_TELEPORTER_START_PHI ].value != NULL ) {
 		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_START_PHI ], &start_rot_phi ) ) {
 			CON_AddLine( "start_rot_phi invalid" );
@@ -2235,7 +2239,8 @@ int Cmd_TP_CREATE( char* tp_create_command )
 			return TRUE;
 		}
 	}
-
+    */
+    
 	// parse exit direction
 	float exit_rot_phi=0, exit_rot_theta=0;
 	if ( tp_command_keys[ KEY_TELEPORTER_EXIT_PHI ].value != NULL ) {
