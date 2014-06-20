@@ -66,7 +66,7 @@ int D_DrawSquare( ugrid_t xko, ugrid_t yko, visual_t col, dword siz )
 	// set color
 	colrgba_s colrgba;
 	VisualToRGBA( &colrgba, col );
-	glColor3ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B );
+	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
 	RO_PointSize( (GLfloat)siz );
 	
@@ -109,7 +109,7 @@ int D_DrawSquareZ( ugrid_t xko, ugrid_t yko, visual_t col, dword siz, dword zval
 	// set color
 	colrgba_s colrgba;
 	VisualToRGBA( &colrgba, col );
-	glColor3ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B );
+	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
 	RO_PointSize( siz );
 	
@@ -147,7 +147,7 @@ void D_DrawRadarObj( ugrid_t xko, ugrid_t yko, visual_t col )
 	// set color
 	colrgba_s colrgba;
 	VisualToRGBA( &colrgba, col );
-	glColor3ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B );
+	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
 	RO_PointSize( 2.0f );
 	
@@ -179,7 +179,7 @@ void D_DrawHorzBar( ugrid_t xko, ugrid_t yko, visual_t col, dword leng )
 	// set color
 	colrgba_s colrgba;
 	VisualToRGBA( &colrgba, col );
-	glColor3ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B );
+	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
 	GLshort vertices[] = {xko, yko, xko + leng, yko};
 	
@@ -209,7 +209,7 @@ void D_DrawVertBar( ugrid_t xko, ugrid_t yko, visual_t col, dword leng )
 	// set color
 	colrgba_s colrgba;
 	VisualToRGBA( &colrgba, col );
-	glColor3ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B );
+	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 	
 	GLshort vertices[] = {xko, yko, xko, yko + leng};
 	
@@ -285,7 +285,7 @@ void D_DrawLineStrip( ugrid_t *vtxs, dword numvtxs, visual_t col, dword mode )
 	// set color
 	colrgba_s colrgba;
 	VisualToRGBA( &colrgba, col );
-	glColor3ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B );
+	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
 	// set line antialiasing mode
 	if ( mode & D_DRAWLINE_STYLE_ANTIALIASED )

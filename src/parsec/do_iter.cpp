@@ -557,6 +557,7 @@ void DO_KillProjection()
 	glLoadIdentity();
 	extern GLfloat gl_orthogonal_params[];
 	//SDL_CalcOrthogonalMatrix();
+    // FIXME: glOrthof on GLES1
 	glOrtho( gl_orthogonal_params[ 0 ], gl_orthogonal_params[ 1 ],
 			 gl_orthogonal_params[ 2 ], gl_orthogonal_params[ 3 ],
 			 gl_orthogonal_params[ 4 ], gl_orthogonal_params[ 5 ] );
@@ -1706,8 +1707,6 @@ static GLenum gl_array_modes[] = {
 	GL_TRIANGLES,		// ITERARRAY_MODE_TRIANGLES
 	GL_TRIANGLE_STRIP,	// ITERARRAY_MODE_TRISTRIP
 	GL_TRIANGLE_FAN,	// ITERARRAY_MODE_TRIFAN
-	GL_QUADS,			// ITERARRAY_MODE_QUADS
-	GL_QUAD_STRIP,		// ITERARRAY_MODE_QUADSTRIP
 };
 
 
@@ -1742,7 +1741,7 @@ void D_DrawIterArray( dword mode, dword first, dword count, dword cullmask )
 
 // draw vertex array with indexes using iterated vertex attributes ------------
 //
-void D_DrawIterArrayIndexed( dword mode, dword count, dword *indexes, dword cullmask )
+void D_DrawIterArrayIndexed( dword mode, dword count, uint16 *indexes, dword cullmask )
 {
 	ASSERT( indexes != NULL );
 
@@ -1765,7 +1764,7 @@ void D_DrawIterArrayIndexed( dword mode, dword count, dword *indexes, dword cull
 	GLenum glmode = gl_array_modes[ mode ];
 
 	// draw indexed array elements
-	glDrawElements( glmode, count, GL_UNSIGNED_INT, indexes );
+	glDrawElements( glmode, count, GL_UNSIGNED_SHORT, indexes );
 }
 
 

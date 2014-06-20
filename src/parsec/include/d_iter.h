@@ -29,7 +29,7 @@ void D_LockIterArray2( IterArray2 *itarray, dword first, dword count );
 void D_LockIterArray3( IterArray3 *itarray, dword first, dword count );
 void D_UnlockIterArray();
 void D_DrawIterArray( dword mode, dword first, dword count, dword cullmask );
-void D_DrawIterArrayIndexed( dword mode, dword count, dword *indexes, dword cullmask );
+void D_DrawIterArrayIndexed( dword mode, dword count, uint16 *indexes, dword cullmask );
 
 
 #endif // _D_ITER_H_

@@ -66,8 +66,8 @@ struct openglstate_s {
 	GLboolean	depthmask;			// glDepthMask()
 
 	// depth range [glDepthRange()]
-	GLclampd	depthrange_zNear;
-	GLclampd	depthrange_zFar;
+	GLclampf	depthrange_zNear;
+	GLclampf	depthrange_zFar;
 
 	// blend function [glBlendFunc()]
 	GLenum		blendfunc_sfactor;
@@ -141,8 +141,8 @@ void RO_InitializeState()
 	state.depthrange_zFar = depthrange[1];
 
 	// blending
-	glGetIntegerv(GL_BLEND_SRC_RGB, (GLint *) &state.blendfunc_sfactor);
-	glGetIntegerv(GL_BLEND_DST_RGB, (GLint *) &state.blendfunc_dfactor);
+	glGetIntegerv(GL_BLEND_SRC, (GLint *) &state.blendfunc_sfactor);
+	glGetIntegerv(GL_BLEND_DST, (GLint *) &state.blendfunc_dfactor);
 
 	// alpha testing
 	glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *) &state.alphatest_func);
@@ -337,7 +337,6 @@ void RO_ClientState( dword statebits )
 	RO_CheckClientState( statebits, VTXARRAY_VERTICES, GL_VERTEX_ARRAY );
 	RO_CheckClientState( statebits, VTXARRAY_COLORS, GL_COLOR_ARRAY );
 	RO_CheckClientState( statebits, VTXARRAY_TEXCOORDS, GL_TEXTURE_COORD_ARRAY );
-//	RO_CheckClientState( statebits, VTXARRAY_EDGEFLAGS, GL_EDGE_FLAG_ARRAY );
 	RO_CheckClientState( statebits, VTXARRAY_NORMALS, GL_NORMAL_ARRAY );
 }
 

@@ -1040,7 +1040,7 @@ void StargateDraw_InteriorStripOrderTris( IterArray3 *itarray )
 	size_t numstriptris = STARGATE_INTERIOR_NUM_RINGS * 2 - 1;
 	size_t numtriindxs  = numstrips * numstriptris * 3;
 
-	dword *vindxs = (dword *) ALLOCMEM( numtriindxs * sizeof( dword ) );
+	uint16 *vindxs = (uint16 *) ALLOCMEM( numtriindxs * sizeof( uint16 ) );
 	if ( vindxs == NULL )
 		OUTOFMEM( "no mem for interior indexes." );
 
@@ -1118,7 +1118,7 @@ void StargateDraw_InteriorIndexedStrips( IterArray3 *itarray )
 	ASSERT( itarray != NULL );
 
 	size_t numstripvtxs = STARGATE_INTERIOR_NUM_RINGS * 2 + 1;
-	dword *vindxs = (dword *) ALLOCMEM( numstripvtxs * sizeof( dword ) );
+	uint16 *vindxs = (uint16 *) ALLOCMEM( numstripvtxs * sizeof( uint16 ) );
 	if ( vindxs == NULL )
 		OUTOFMEM( "no mem for strip indexes." );
 

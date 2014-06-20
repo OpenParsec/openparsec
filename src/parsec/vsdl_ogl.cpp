@@ -451,7 +451,7 @@ void SDL_RCSetup()
 #endif
 
 	// select reversed depth range
-	glDepthRange( 1.0, 0.0 );
+	glDepthRange( 1.0, 0.0 ); // FIXME: glDepthRangef on GLES
 
 	// no transformation
 	glMatrixMode( GL_MODELVIEW );
@@ -585,7 +585,7 @@ int VSDL_InitOGLMode()
     const char *driver = SDL_GetCurrentVideoDriver();
 
     // We always want to use OpenGL ES on some video backends.
-    if (strstr(driver, "RPI")) {
+    if (driver && strstr(driver, "RPI")) {
         contextprofile |= SDL_GL_CONTEXT_PROFILE_ES;
 
         // OpenGL ES 1.1 for now...

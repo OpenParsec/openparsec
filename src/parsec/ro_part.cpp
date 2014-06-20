@@ -66,7 +66,7 @@
 
 
 // flags
-//#define USE_INDEXED_TRIANGLES
+#define USE_INDEXED_TRIANGLES
 //#define REVERSED_DEPTH_RANGE		    // must be consistent with ogl setup
 
 
@@ -97,7 +97,7 @@ static GLTexInfo	gl_cluster_texinfo;
 static pcldrawinf_s	gl_cluster_drawinf;
 
 #ifdef USE_INDEXED_TRIANGLES
-static dword*		gl_cluster_trindxs;
+static uint16*		gl_cluster_trindxs;
 static int			gl_cluster_icount;
 #endif
 
@@ -467,7 +467,7 @@ void RO_DrawScheduledParticles()
 	}
 
 	// draw vertex array
-	glDrawArrays( GL_QUADS, 0, gl_cluster_vcount );
+    glDrawElements( GL_TRIANGLES, gl_cluster_icount, GL_UNSIGNED_SHORT, gl_cluster_trindxs);
 
 	// disable vertex arrays
 //	RO_ClientState( VTXARRAY_NONE );
@@ -519,7 +519,7 @@ int R_DrawParticleCluster( pcluster_s *cluster, int *numactive )
 
 	// create index array
 	gl_cluster_icount = 0;
-	gl_cluster_trindxs = (dword *) ALLOCMEM( cluster->numel * sizeof( dword ) * 6 );
+	gl_cluster_trindxs = (uint16 *) ALLOCMEM( cluster->numel * sizeof( uint16 ) * 6 );
 	if ( gl_cluster_trindxs == NULL ) {
 		OUTOFMEM( "no mem for vertex indexes." );
 	}

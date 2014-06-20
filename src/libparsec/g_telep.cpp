@@ -1226,7 +1226,7 @@ void Teleporter_Draw_Tunnel( Teleporter* teleporter )
 	
 	size_t num_triindxs = num_tunnel_cords * 8 * 3;
 	
-	dword *vindxs = (dword *) ALLOCMEM( num_triindxs * sizeof( dword ) );
+	uint16 *vindxs = (uint16 *) ALLOCMEM( num_triindxs * sizeof( uint16 ) );
 	if ( vindxs == NULL )
 		OUTOFMEM( 0 );
 	

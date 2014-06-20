@@ -849,7 +849,7 @@ void RO_PlanetDrawSphereTris( IterArray3 *itarray )
 
 	int numtriindxs = sphere_numtris * 3;
 
-	dword *vindxs = (dword *) ALLOCMEM( numtriindxs * sizeof( dword ) );
+	uint16 *vindxs = (uint16 *) ALLOCMEM( numtriindxs * sizeof( uint16 ) );
 	if ( vindxs == NULL )
 		OUTOFMEM( "no mem for indexes." );
 
@@ -884,7 +884,7 @@ void RO_PlanetDrawSphereTrisWireFrame( IterArray3 *itarray )
 
 	int numtriindxs = sphere_numtris * 6;
 
-	dword *vindxs = (dword *) ALLOCMEM( numtriindxs * sizeof( dword ) );
+	uint16 *vindxs = (uint16 *) ALLOCMEM( numtriindxs * sizeof( uint16 ) );
 	if ( vindxs == NULL )
 		OUTOFMEM( "no mem for indexes." );
 
@@ -895,17 +895,17 @@ void RO_PlanetDrawSphereTrisWireFrame( IterArray3 *itarray )
 			continue;
 		}
 
-		vindxs[ dsttri + 0 ] = sphere_indexes[ tri * 3 + 0 ];
-		vindxs[ dsttri + 1 ] = sphere_indexes[ tri * 3 + 1 ];
-		vindxs[ dsttri + 2 ] = sphere_indexes[ tri * 3 + 1 ];
-		vindxs[ dsttri + 3 ] = sphere_indexes[ tri * 3 + 2 ];
-		vindxs[ dsttri + 4 ] = sphere_indexes[ tri * 3 + 2 ];
-		vindxs[ dsttri + 5 ] = sphere_indexes[ tri * 3 + 0 ];
+		vindxs[ dsttri + 0 ] = (uint16) sphere_indexes[ tri * 3 + 0 ];
+		vindxs[ dsttri + 1 ] = (uint16) sphere_indexes[ tri * 3 + 1 ];
+		vindxs[ dsttri + 2 ] = (uint16) sphere_indexes[ tri * 3 + 1 ];
+		vindxs[ dsttri + 3 ] = (uint16) sphere_indexes[ tri * 3 + 2 ];
+		vindxs[ dsttri + 4 ] = (uint16) sphere_indexes[ tri * 3 + 2 ];
+		vindxs[ dsttri + 5 ] = (uint16) sphere_indexes[ tri * 3 + 0 ];
 
 		dsttri += 6;
 	}
 
-	glDrawElements( GL_LINES, dsttri, GL_UNSIGNED_INT, vindxs );
+	glDrawElements( GL_LINES, dsttri, GL_UNSIGNED_SHORT, vindxs );
 
 	FREEMEM( vindxs );
 }

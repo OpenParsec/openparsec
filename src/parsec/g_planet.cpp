@@ -214,7 +214,7 @@ void PlanetDraw_Rings( Planet *planet )
 
 	size_t numtriindxs = PLANET_RING_SEGMENTS * 6;
 
-	dword *vindxs = (dword *) ALLOCMEM( numtriindxs * sizeof( dword ) );
+	uint16 *vindxs = (uint16 *) ALLOCMEM( numtriindxs * sizeof( uint16 ) );
 	if ( vindxs == NULL )
 		OUTOFMEM( 0 );
 
