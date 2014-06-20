@@ -414,7 +414,6 @@
 		FA371683164DD36800230CE8 /* sys_util_sv.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = sys_util_sv.cpp; sourceTree = "<group>"; };
 		FA371689164DD43600230CE8 /* Parsec Server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Parsec Server"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libncurses.5.4.dylib; path = usr/lib/libncurses.5.4.dylib; sourceTree = SDKROOT; };
-		FA3716DB164E068600230CE8 /* al_initg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = al_initg.h; sourceTree = "<group>"; };
 		FA729FFE16E8209A00997EBE /* .bindings.con.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .bindings.con.swp; sourceTree = "<group>"; };
 		FA729FFF16E8209A00997EBE /* bindings.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bindings.con; sourceTree = "<group>"; };
 		FA72A00016E8209A00997EBE /* strmpldr.con */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = strmpldr.con; sourceTree = "<group>"; };
@@ -1594,6 +1593,7 @@
 				FAFEE694163BDA5E0056CECD /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		FAFEE694163BDA5E0056CECD /* Products */ = {
 			isa = PBXGroup;

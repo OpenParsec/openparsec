@@ -377,6 +377,7 @@
 				FA5D3B0C1672A65A00011ABD /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		FA5D3B0C1672A65A00011ABD /* Products */ = {
 			isa = PBXGroup;

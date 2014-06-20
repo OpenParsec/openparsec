@@ -396,13 +396,13 @@ void D_TexfontWrite( const char *string, IterTexfont *itexfont )
 		OUTOFMEM( 0 );
 	}
 
-    // allocate index array
-    size_t numindices = numchars * 6;
-    uint16 *indices = (uint16 *) ALLOCMEM( numindices * sizeof( uint16 ) );
-    if (indices == NULL) {
-        FREEMEM( glvtxs );
-        OUTOFMEM( 0 );
-    }
+	// allocate index array
+	size_t numindices = numchars * 6;
+	uint16 *indices = (uint16 *) ALLOCMEM( numindices * sizeof( uint16 ) );
+	if (indices == NULL) {
+		FREEMEM( glvtxs );
+		OUTOFMEM( 0 );
+	}
 
 	// coordinates of upper left point
 	float dstx = RASTV_TO_FLOAT( itexfont->Vtxs[ 0 ].X ) + 0.5f;
@@ -423,7 +423,7 @@ void D_TexfontWrite( const char *string, IterTexfont *itexfont )
 		// skip undefined chars
 		if ( chcode >= texfont->numtexchars ) {
 			numvtxs -= 4;
-            numindices -= 6;
+			numindices -= 6;
 			continue;
 		}
 
@@ -439,7 +439,7 @@ void D_TexfontWrite( const char *string, IterTexfont *itexfont )
 		if ( curchar->tex_id == -1 ) {
 			dstx += dstwidth;
 			numvtxs -= 4;
-            numindices -= 6;
+			numindices -= 6;
 			continue;
 		} else {
 			// currently only one texture supported
@@ -470,20 +470,20 @@ void D_TexfontWrite( const char *string, IterTexfont *itexfont )
 		glvtxs[ vtx + 3 ].s = srcu * scale_u;
 		glvtxs[ vtx + 3 ].t = ( srcv + srcheight ) * scale_v;
 
-        // triangle #1: 0, 1, 2.
-        indices[ index + 0 ] = (uint16) vtx + 0;
-        indices[ index + 1 ] = (uint16) vtx + 1;
-        indices[ index + 2 ] = (uint16) vtx + 2;
+		// triangle #1: 0, 1, 2.
+		indices[ index + 0 ] = (uint16) vtx + 0;
+		indices[ index + 1 ] = (uint16) vtx + 1;
+		indices[ index + 2 ] = (uint16) vtx + 2;
 
-        // triangle #2: 0, 2, 3.
-        indices[ index + 3 ] = (uint16) vtx + 0;
-        indices[ index + 4 ] = (uint16) vtx + 2;
-        indices[ index + 5 ] = (uint16) vtx + 3;
+		// triangle #2: 0, 2, 3.
+		indices[ index + 3 ] = (uint16) vtx + 0;
+		indices[ index + 4 ] = (uint16) vtx + 2;
+		indices[ index + 5 ] = (uint16) vtx + 3;
 
 		vtx  += 4;
 		dstx += dstwidth;
 
-        index += 6;
+		index += 6;
 	}
 
 	// draw non-empty strings
@@ -509,7 +509,7 @@ void D_TexfontWrite( const char *string, IterTexfont *itexfont )
 			glColorPointer( 4, GL_UNSIGNED_BYTE, sizeof( GLVertex2 ), &glvtxs->r );
 			glTexCoordPointer( 2, GL_FLOAT, sizeof( GLVertex2 ), &glvtxs->s );
 		}
-        glDrawElements( GL_TRIANGLES, numindices, GL_UNSIGNED_SHORT, indices );
+		glDrawElements( GL_TRIANGLES, numindices, GL_UNSIGNED_SHORT, indices );
 
 		// set rasterizer state to default
 		RO_DefaultRasterizerState();
@@ -520,7 +520,7 @@ void D_TexfontWrite( const char *string, IterTexfont *itexfont )
 
 	// free intermediate storage
 	FREEMEM( glvtxs );
-    FREEMEM( indices );
+	FREEMEM( indices );
 }
 
 

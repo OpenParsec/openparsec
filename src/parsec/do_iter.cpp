@@ -557,7 +557,7 @@ void DO_KillProjection()
 	glLoadIdentity();
 	extern GLfloat gl_orthogonal_params[];
 	//SDL_CalcOrthogonalMatrix();
-    // FIXME: glOrthof on GLES1
+	// FIXME: glOrthof on GLES1
 	glOrtho( gl_orthogonal_params[ 0 ], gl_orthogonal_params[ 1 ],
 			 gl_orthogonal_params[ 2 ], gl_orthogonal_params[ 3 ],
 			 gl_orthogonal_params[ 4 ], gl_orthogonal_params[ 5 ] );

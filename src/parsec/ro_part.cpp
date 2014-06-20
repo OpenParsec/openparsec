@@ -467,7 +467,7 @@ void RO_DrawScheduledParticles()
 	}
 
 	// draw vertex array
-    glDrawElements( GL_TRIANGLES, gl_cluster_icount, GL_UNSIGNED_SHORT, gl_cluster_trindxs);
+	glDrawElements( GL_TRIANGLES, gl_cluster_icount, GL_UNSIGNED_SHORT, gl_cluster_trindxs);
 
 	// disable vertex arrays
 //	RO_ClientState( VTXARRAY_NONE );
