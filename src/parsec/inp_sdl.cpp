@@ -399,8 +399,9 @@ void ISDLm_KeyboardHandler(const SDL_Event &event)
 	dword key = event.key.keysym.sym;
 
 	// only process a key repeat event if we're in the console or quicksay console
-	if (event.key.repeat && !(KeybFlags->ConActive && KeybFlags->ConEnabled))
+	if (event.key.repeat && !(KeybFlags->ConActive && KeybFlags->ConEnabled)) {
 		return;
+    }
 
 	if (pressed && mod_player_name) {
         // Luckily we've mapped SDL keycodes to our MKC keycodes directly.

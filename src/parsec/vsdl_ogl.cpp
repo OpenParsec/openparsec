@@ -577,6 +577,26 @@ int VSDL_InitOGLMode()
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, AUX_MSAA > 0 ? 1 : 0);
 	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, AUX_MSAA);
 
+    // SDL's default values.
+    int contextprofile = 0;
+    int gl_majorversion = 2;
+    int gl_minorversion = 1;
+
+    const char *driver = SDL_GetCurrentVideoDriver();
+
+    // We always want to use OpenGL ES on some video backends.
+    if (strstr(driver, "RPI")) {
+        contextprofile |= SDL_GL_CONTEXT_PROFILE_ES;
+
+        // OpenGL ES 1.1 for now...
+        gl_majorversion = 1;
+        gl_minorversion = 1;
+    }
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, contextprofile);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, gl_majorversion);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, gl_minorversion);
+
 	// change the video mode.
 	printf("Changing vid mode to %ix%i, bpp: %i, vsync: %d, aa: %dx\n", sdl_win_width, sdl_win_height, sdl_win_bpp, FlipSynched, AUX_MSAA);
 
