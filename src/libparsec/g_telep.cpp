@@ -1545,7 +1545,7 @@ void TeleporterInitType( CustomObject *base )
 	teleporter->exit_rot_theta			= 0;
 
 	teleporter->actoffset				= 10;
-	teleporter->act_cone_angle			= 30;
+	teleporter->act_cone_angle			= 60;
 
 	teleporter->u_variation[ 0 ]		= 0.05;		// percentage of texture space
 	teleporter->v_variation[ 0 ]		= 0.05;
@@ -1941,7 +1941,7 @@ int Teleporter_ShipInRange( Teleporter *teleporter, ShipObject *ship )
 		shipdot = DOT_PRODUCT( &telepnormal, &shipnormal );
 		sincosval_s sincosv;
 		GetSinCos( DEG_TO_BAMS( teleporter->act_cone_angle ), &sincosv );
-		
+		MSGOUT("%d %f %f",( shipdot >= sincosv.cosval ),shipdot,sincosv.cosval); //CrazySpence Debug
 		return ( shipdot >= sincosv.cosval );
 		
 	} else {
@@ -2143,9 +2143,11 @@ void TeleporterRegisterCustomType()
 key_value_s tp_command_keys[] = {
 	{"id",			NULL, 	KEYVALFLAG_NONE },
 	{ "pos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
-	{ "dir",		NULL,	KEYVALFLAG_PARENTHESIZE		},
+	{ "start_rot_phi",		NULL,	KEYVALFLAG_NONE		},
+	{ "start_rot_theta",		NULL,	KEYVALFLAG_NONE		},
 	{ "expos",		NULL,	KEYVALFLAG_PARENTHESIZE		},
-	{ "exdir",		NULL,	KEYVALFLAG_PARENTHESIZE		},
+	{ "exit_rot_phi",		NULL,	KEYVALFLAG_NONE		},
+	{ "exit_rot_theta",		NULL,	KEYVALFLAG_NONE		},
 
 	{ NULL,			NULL,	KEYVALFLAG_NONE				},
 };
@@ -2153,9 +2155,11 @@ key_value_s tp_command_keys[] = {
 enum {
 	KEY_TELEPORTER_ID,
 	KEY_TELEPORTER_POS,
-	KEY_TELEPORTER_DIR,
+	KEY_TELEPORTER_START_PHI,
+	KEY_TELEPORTER_START_THETA,
 	KEY_TELEPORTER_EXPOS,
-	KEY_TELEPORTER_EXDIR
+	KEY_TELEPORTER_EXIT_PHI,
+	KEY_TELEPORTER_EXIT_THETA,
 };
 
 #ifdef PARSEC_SERVER
@@ -2166,11 +2170,13 @@ int Cmd_TP_CREATE( char* tp_create_command )
 {
 	//NOTE:
 	//CONCOM:
-	// tp_create_command	::= 'tp.create' [<pos_spec>] [<dir_spec>] [expos_spec] [exdir_spec]
+	// tp_create_command	::= 'tp.create' [<pos_spec>] [<start_rot_phi_spec>] [<start_rot_theta_spec>] [expos_spec]
 	// pos_spec			::= 'pos' '(' <float> <float> <float> ')'
-	// dir_spec			::= 'dir' '(' <float> <float> <float> ')'
+	// start_rot_phi_spec ::= 'start_rot_phi' float
+	// start_rot_theta_spec ::= 'start_rot_theta' float
 	// expos_spec	::= 'expos' '(' <float> <float> <float> ')'
-	// exdir_spec			::= 'exdir' '(' <float> <float> <float> ')'
+	// exit_rot_phi_spec ::= 'exit_rot_phi' float
+	// exit_rot_theta_spec ::= 'exit_rot_theta' float
 
 
 	ASSERT( tp_create_command != NULL );
@@ -2213,43 +2219,47 @@ int Cmd_TP_CREATE( char* tp_create_command )
 		expos_spec.Z = ( RAND() % 1000 ) - 500;
 		expos_spec.VisibleFrame = 0;
 	}
-
+    
+    float start_rot_phi=0,start_rot_theta=0;
+    
+    /*
+     * Broken or not actually implemented to begin with so leave as default until someday --CrazySpence
 	// parse direction
-	Vector3 dir_spec;
-	if ( tp_command_keys[ KEY_TELEPORTER_DIR ].value != NULL ) {
-		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
-			CON_AddLine( "direction invalid" );
+	
+	if ( tp_command_keys[ KEY_TELEPORTER_START_PHI ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_START_PHI ], &start_rot_phi ) ) {
+			CON_AddLine( "start_rot_phi invalid" );
 			return TRUE;
 		}
-		if(dir_spec.X == 0 && dir_spec.Y == 0 && dir_spec.Z==0)
-			dir_spec.Z=1; // default to Z if all zero
-	} else {
-		// default to point in z direction
-		dir_spec.X = 0.0f;
-		dir_spec.Y = 0.0f;
-		dir_spec.Z = 1.0f;
-		dir_spec.VisibleFrame = 0;
 	}
 
-	// parse exit direction
-		Vector3 exdir_spec;
-		if ( tp_command_keys[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
-			if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
-				CON_AddLine( "direction invalid" );
-				return TRUE;
-			}
-			if(exdir_spec.X == 0 && dir_spec.Y == 0 && exdir_spec.Z==0)
-				exdir_spec.Z=1; // default to Z if all zero
-		} else {
-			// default to point in z direction
-			exdir_spec.X = 0.0f;
-			exdir_spec.Y = 0.0f;
-			exdir_spec.Z = 1.0f;
-			exdir_spec.VisibleFrame = 0;
+	if ( tp_command_keys[ KEY_TELEPORTER_START_THETA ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_START_THETA ], &start_rot_theta ) ) {
+			CON_AddLine( "start_rot_theta invalid" );
+			return TRUE;
 		}
+	}
+    */
+    
+	// parse exit direction
+	float exit_rot_phi=0, exit_rot_theta=0;
+	if ( tp_command_keys[ KEY_TELEPORTER_EXIT_PHI ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_EXIT_PHI ], &exit_rot_phi ) ) {
+			CON_AddLine( "exitt_rot_phi invalid" );
+			return TRUE;
+		}
+	}
+
+	if ( tp_command_keys[ KEY_TELEPORTER_EXIT_THETA ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_EXIT_THETA ], &exit_rot_theta ) ) {
+			CON_AddLine( "exitt_rot_theta invalid" );
+			return TRUE;
+		}
+	}
+
 
 	// add the teleporter
-	TheServer->AddTeleporter( &pos_spec, &dir_spec, &expos_spec, &exdir_spec );
+	TheServer->AddTeleporter( &pos_spec, &expos_spec, start_rot_phi, start_rot_theta, exit_rot_phi, exit_rot_theta );
 
 	return TRUE;
 }
@@ -2280,7 +2290,7 @@ int Cmd_TP_MODIFY( char* tp_mod_command )
 
 	Vector3 *pos, *expos, *dir, *exdir;
 
-	bool pos_ch, expos_ch, dir_ch, exdir_ch;
+	bool pos_ch, expos_ch, start_phi_ch, start_theta_ch,exit_phi_ch, exit_theta_ch;
 
 	// scan out all values to keys
 	if ( !ScanKeyValuePairs( tp_command_keys,tp_mod_command ) ) {
@@ -2316,39 +2326,63 @@ int Cmd_TP_MODIFY( char* tp_mod_command )
 	} else {
 		expos_ch = FALSE;
 	}
+
 	// parse direction
-	if ( tp_command_keys[ KEY_TELEPORTER_DIR ].value != NULL ) {
-		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_DIR ], (float*)&dir_spec.X, 3, 3 ) ) {
-			CON_AddLine( "direction invalid" );
+	float start_rot_phi=0,start_rot_theta=0;
+	if ( tp_command_keys[ KEY_TELEPORTER_START_PHI ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_START_PHI ], &start_rot_phi ) ) {
+			CON_AddLine( "start_rot_phi invalid" );
 			return TRUE;
 		}
-		dir_ch = TRUE;
-		if(dir_spec.X == 0 && dir_spec.Y == 0 && dir_spec.Z==0)
-			dir_spec.Z=1; // default to Z if all zero
+		start_phi_ch = TRUE;
 	} else {
-		dir_ch = FALSE;
+		start_phi_ch = FALSE;
 	}
 
-	// parse exit direction
-	if ( tp_command_keys[ KEY_TELEPORTER_EXDIR ].value != NULL ) {
-		if ( !ScanKeyValueFloatList( &tp_command_keys[ KEY_TELEPORTER_EXDIR ], (float*)&exdir_spec.X, 3, 3 ) ) {
-			CON_AddLine( "direction invalid" );
+	if ( tp_command_keys[ KEY_TELEPORTER_START_THETA ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_START_THETA ], &start_rot_theta ) ) {
+			CON_AddLine( "start_rot_theta invalid" );
 			return TRUE;
 		}
-		exdir_ch = TRUE;
-		if(exdir_spec.X == 0 && exdir_spec.Y == 0 && exdir_spec.Z==0)
-			exdir_spec.Z=1; // default to Z if all zero
+		start_theta_ch = TRUE;
 	} else {
-		exdir_ch = FALSE;
+		start_theta_ch = FALSE;
+	}
+
+
+
+	// parse exit direction
+	float exit_rot_phi=0, exit_rot_theta=0;
+	if ( tp_command_keys[ KEY_TELEPORTER_EXIT_PHI ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_EXIT_PHI ], &exit_rot_phi ) ) {
+			CON_AddLine( "exitt_rot_phi invalid" );
+			return TRUE;
+		}
+		exit_phi_ch = TRUE;
+	} else {
+		exit_phi_ch = FALSE;
+	}
+
+	if ( tp_command_keys[ KEY_TELEPORTER_EXIT_THETA ].value != NULL ) {
+		if ( !ScanKeyValueFloat( &tp_command_keys[ KEY_TELEPORTER_EXIT_THETA ], &exit_rot_theta ) ) {
+			CON_AddLine( "exitt_rot_theta invalid" );
+			return TRUE;
+		}
+		exit_theta_ch = TRUE;
+	} else {
+		exit_theta_ch = FALSE;
 	}
 
 	pos=(pos_ch) ? &pos_spec : NULL;
 	expos=(expos_ch) ? &expos_spec : NULL;
-	dir=(dir_ch) ? &dir_spec : NULL;
-	exdir=(exdir_ch) ? &exdir_spec : NULL;
+	start_rot_phi = (start_phi_ch) ? start_rot_phi : -1;
+	start_rot_theta= (start_theta_ch) ? start_rot_theta : -1;
+	exit_rot_phi = (exit_phi_ch) ? exit_rot_phi : -1;
+	exit_rot_theta = (exit_theta_ch) ? exit_rot_theta : -1;
+
 
 	// add the teleporter
-	TheServer->ModTeleporter( tp_id, pos, dir, expos, exdir );
+	TheServer->ModTeleporter( tp_id, pos, expos, start_rot_phi, start_rot_theta, exit_rot_phi, exit_rot_theta);
 
 	return TRUE;
 }
