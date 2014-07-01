@@ -289,7 +289,7 @@ size_t NETs_HandleOutPacket( const NetPacket* int_gamepacket, NetPacketExternal*
 #else
 	//client SHOULD not.
 	ext_gamepacket_GMSV->MajorVersion			= CLSV_PROTOCOL_MAJOR;
-	ext_gamepacket_GMSV->MinorVersion			= CLSV_PROTOCOL_MINOR;
+	ext_gamepacket_GMSV->MinorVersion			= clsv_protocol_minor_internal;
 #endif
 
 	// pack internal packet data to external packet
@@ -436,7 +436,7 @@ int NETs_HandleInPacket( const NetPacketExternal* ext_gamepacket, const int ext_
 	// check for correct protocol version
 #ifndef PARSEC_SERVER
 	// for client and MASTER server.
-	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion < CLSV_PROTOCOL_MINOR ) ) {
+	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion < clsv_protocol_minor_internal ) ) {
 		DBGTXT( MSGOUT( "NETs_HandleInPacket(): dropped packet [incompatible protocol version]." ); );
 		return FALSE;
 	}

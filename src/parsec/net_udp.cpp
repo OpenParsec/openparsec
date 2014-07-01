@@ -63,6 +63,7 @@
 #include "net_game.h"
 #ifdef LINKED_PROTOCOL_GAMESERVER
 	#include "net_game_gmsv.h"
+	#include "net_csdf.h"
 #endif // LINKED_PROTOCOL_GAMESERVER
 #include "net_stream.h"
 #include "net_swap.h"
@@ -292,6 +293,11 @@ int InitNetCode()
 	//NOTE:
 	// these initializations even have to be done if
 	// only simulated networking is available.
+
+#ifdef LINKED_PROTOCOL_GAMESERVER
+	// if running gameserver, init the internal minor protocol version
+	clsv_protocol_minor_internal = CLSV_PROTOCOL_MINOR;
+#endif
 
 	if ( !netcode_init_done ) {
 
@@ -561,7 +567,7 @@ int UDP_InitInterface()
 		// set ports to use
 		if ( NET_ProtocolGMSV() ) {
 			server_udp_port = DEFAULT_GAMESERVER_UDP_PORT;
-			MSGOUT("OpenParsec Client Network Protocol Version: %i.%i", CLSV_PROTOCOL_MAJOR, CLSV_PROTOCOL_MINOR);
+			MSGOUT("OpenParsec Client Network Protocol Version: %i.%i", CLSV_PROTOCOL_MAJOR, clsv_protocol_minor_internal);
 		} else {
 			server_udp_port = DEFAULT_PEERTOPEER_UDP_PORT;
 		}

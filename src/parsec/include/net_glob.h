@@ -135,6 +135,8 @@ struct net_subsys_jtab_s {
 //
 extern net_subsys_jtab_s net_subsys_jtab;
 
+extern int clsv_protocol_minor_internal;
+
 // exported by NET_UDP.C ------------------------------------------------------
 //
 extern NET_Stream ServerStream;

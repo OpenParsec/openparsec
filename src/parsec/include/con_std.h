@@ -99,6 +99,7 @@ enum enum_std_commands {
 	CM_WRITESTRING,
 	CM_AUD_CONF,
 	CM_INP_CONF,
+	CM_SETNETVER,
 
 	// must be last in list!!
 	NUM_STD_COMMAND_CONSTANTS

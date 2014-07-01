@@ -140,6 +140,7 @@ std_command_s std_commands[] = {
 	{ "write",              0,	1	},
 	{ "aud.conf",           0,	1	},
 	{ "inp.conf",           0,	1	},
+	{ "netver",			0,	1	},
 };
 
 #define NUM_STD_COMMANDS	CALC_NUM_ARRAY_ENTRIES( std_commands )

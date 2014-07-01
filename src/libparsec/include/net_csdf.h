@@ -10,6 +10,7 @@
 //
 #define CLSV_PROTOCOL_MAJOR			0
 #define CLSV_PROTOCOL_MINOR			22
+extern int clsv_protocol_minor_internal;
 
 #ifdef PARSEC_CLIENT
 	#include "net_udpdf.h"

@@ -789,6 +789,39 @@ int Cmd_SetVidMode( char *modestr )
 	return TRUE;
 }
 
+PRIVATE
+int Cmd_SetNetVer( char *netVersion_str ) {
+	ASSERT( netVersion_str != NULL );
+	HANDLE_COMMAND_DOMAIN( netVersion_str );
+
+	// eat whitespace behind command
+	const char *scan = GetStringBehindCommand( netVersion_str, FALSE );
+
+	if ( scan != NULL ) {
+		// convert the version string to an int.
+		int tmp_nver = 0;
+		errno = 0; 
+		tmp_nver = strtol(netVersion_str, NULL, 10);
+		if(errno) {
+			CON_AddLine ("setnetver: unable to determine what version number you requested.");
+			return TRUE;
+		}
+		// set the internal networking minor version
+		clsv_protocol_minor_internal = tmp_nver;
+		// output to the user the danger of doing this.
+		CON_AddLine("******************* NOTE ******************");
+		CON_AddLine("!!! YOU ARE FORCING THE NETWORKING PROTOCOL");
+		CON_AddLine("!!! VERSION! THIS IS DANGEROUS AND CAN LEAD");
+		CON_AddLine("!!! TO CRASHES AND OTHER BAD BEHAVIOR!");
+		CON_AddLine("!!! DO THIS AT YOUR OWN RISK!!!!");
+		CON_AddLine("*******************************************");
+
+		
+	} else {
+		CON_AddLine( "Network Minor Version Missing" );
+	}
+	return TRUE;
+}
 
 // connect to server ("connect") ----------------------------------------------
 //
@@ -867,6 +900,7 @@ cmd_noparam_s cmd_noparam[] = {
 	{ CM_TALKMODE,				Cmd_TALK					},
 	{ CM_RESCAN,				Cmd_RescanExternalCommands	},
 	{ CM_LISTDEMOS,				Cmd_ListBinaryDemos			},
+	
 };
 
 #define NUM_CMDS_NOPARAM		CALC_NUM_ARRAY_ENTRIES( cmd_noparam )
@@ -953,6 +987,7 @@ cmd_customstring_s cmd_customstring[] = {
 	{ CM_SETSHADER,				Cmd_SetShader				},
 	{ CM_COLANIM,				Cmd_DefColAnim				},
 	{ CM_FACEINFO,				Cmd_FaceInfo				},
+	{ CM_SETNETVER,				Cmd_SetNetVer				},
 };
 
 #define NUM_CMDS_CUSTOMSTRING	CALC_NUM_ARRAY_ENTRIES( cmd_customstring )
@@ -988,7 +1023,8 @@ int CheckCmdsCustomString( const char *command )
 	// this behavior also depends on HANDLE_COMMAND_DOMAIN().
 
 	// check for commands in "custom string" table
-	for ( unsigned int tid = 0; tid < NUM_CMDS_CUSTOMSTRING; tid++ ) {
+	unsigned int num_custcommstr = NUM_CMDS_CUSTOMSTRING;
+	for ( unsigned int tid = 0; tid < num_custcommstr; tid++ ) {
 
 		const char *cmdstr = CMSTR( cmd_customstring[ tid ].commandid );
 		int  cmdlen  = CMLEN( cmd_customstring[ tid ].commandid );
@@ -999,7 +1035,7 @@ int CheckCmdsCustomString( const char *command )
 			return (*cmd_customstring[ tid ].commandfunc)( (char *) command + cmdlen );
 		}
 	}
-
+	num_custcommstr = 0;
 	return FALSE;
 }
 

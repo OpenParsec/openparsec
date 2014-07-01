@@ -41,6 +41,9 @@
 // subsystem headers
 #include "net_defs.h"
 
+#include "net_csdf.h"
+
+
 // engine globals
 #include "e_global.h"
 
@@ -186,6 +189,10 @@ char*			Masters[ MAX_MASTERSERVERS ] = { NULL, NULL, NULL };
 // jump table for networking subsystem ----------------------------------------
 //
 net_subsys_jtab_s	net_subsys_jtab;
+
+
+// client minor version, changable via console
+int clsv_protocol_minor_internal = CLSV_PROTOCOL_MINOR;
 
 
 // module registration function -----------------------------------------------

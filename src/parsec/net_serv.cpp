@@ -432,7 +432,7 @@ int RequestConnect()
 	char command[ 75 ];
 	snprintf( command, sizeof( command ),
 		connline2,
-		CLSV_PROTOCOL_MAJOR, CLSV_PROTOCOL_MINOR,
+		CLSV_PROTOCOL_MAJOR, clsv_protocol_minor_internal,
 		GMSV_connect_challenge,
 		LocalPlayerName, 
 		Packet_Send_Frequency,
