@@ -534,7 +534,7 @@
       <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\src\parsec\include;..\..\src\libparsec\include;include;include\SDL;include\SDL_mixer;include\libjpeg;..\..\src\libraries</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\src\parsec\include;..\..\src\libparsec\include;include;include\SDL2;include\SDL2_mixer;include\libjpeg;..\..\src\libraries</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>SYSTEM_ENABLE_SDL;PARSEC_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>
       </DisableSpecificWarnings>
@@ -544,7 +544,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>opengl32.lib;SDL.lib;SDLmain.lib;SDL_mixer.lib;jpeg-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;SDL2.lib;SDL2main.lib;SDL2_mixer.lib;jpeg-static.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Windows</SubSystem>
       <IgnoreSpecificDefaultLibraries>
