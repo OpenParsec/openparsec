@@ -140,8 +140,9 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 {
 	MSGOUT( "Using the OpenGL subsystem as rendering device." );
 
+	int displayCount = 0;
 	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
-		MSGOUT("ERROR: Trouble initializing video subsystem.");
+		MSGOUT("[VIDEO]: ERROR: Trouble initializing video subsystem.");
 		return FALSE;
 	}
 
@@ -152,10 +153,18 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 
 	MaxScreenBPP = SDL_BITSPERPIXEL(curmode.format);
 
-	for (int i = 0; i < SDL_GetNumDisplayModes(0); i++) {
+	// grab the display count, and check it prior to entering the loop
+	// so that we can output an SDL Error if need be.
+	displayCount = SDL_GetNumDisplayModes(0);
+	if(displayCount < 1) {
+		MSGOUT("[VIDEO]: Error getting number of displays: %s\n", SDL_GetError());
+		ASSERT(displayCount > 0);
+	}
+
+	for (int i = 0; i < displayCount; i++) {
 		
 		if (SDL_GetDisplayMode(0, i, &curmode) < 0) {
-			MSGOUT("Could not get info for SDL display mode #%d: %s\n", i, SDL_GetError());
+			MSGOUT("[VIDEO]: Could not get info for SDL display mode #%d: %s\n", i, SDL_GetError());
 			continue;
 		}
 
@@ -165,17 +174,24 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 		int bpp = SDL_BITSPERPIXEL(curmode.format);
 
 		// we don't support resolutions below 640x480, or uneven ones
-		if (xres < 640 || yres < 480 || xres % 2 != 0 || yres % 2 != 0)
+		if (xres < 640 || yres < 480 || xres % 2 != 0 || yres % 2 != 0){
+			MSGOUT("[VIDEO]: Unsupported Resolution: x: %i; y: %i\n", xres, yres);
 			continue;
+		}
 
 		// we don't support non-standard screen formats
-		if (bpp != 32 && bpp != 16)
+		// XXX: Uber: Added 24 bpp cuz I'm not sure why it's excluded.
+		if (bpp != 32 && bpp != 16 && bpp != 24) { 
+			MSGOUT("[VIDEO]: Unsupported BPP: %i\n", bpp);
 			continue;
+		}
 
 		// TODO: look into supporting resolution-based BPP (if it's used at all anymore)
 		// for now, we can't use any screen mode that doesn't support the max known BPP
-		if (bpp < MaxScreenBPP)
+		if (bpp < MaxScreenBPP){ 
+			MSGOUT("[VIDEO]: Unsupported BPP: %i\n", bpp);
 			continue;
+		}
 
 		// make sure we don't already have this resolution in our list
 		if (GetResolutionIndex(xres, yres) < 0) {
