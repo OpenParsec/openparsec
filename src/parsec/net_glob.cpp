@@ -26,6 +26,7 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // compilation flags/debug support
 #include "config.h"

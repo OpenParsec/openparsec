@@ -67,7 +67,7 @@ project "client"
 	
 	configuration "linux"
 		targetname "parsec"
-		links { "SDL", "SDL_mixer", "GL" }
+		links { "SDL2", "SDL2_mixer", "GL" }
 		postbuildcommands {
 			--("cp parsec %q"):format(paths.parsecroot.."/client/"),
 			"cp parsec ../../../../parsec_root/client/"
