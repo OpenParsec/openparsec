@@ -67,6 +67,54 @@ ifeq ($(config),release32)
   endef
 endif
 
+ifeq ($(config),debug64)
+  OBJDIR     = obj/x64/Debug
+  TARGETDIR  = .
+  TARGET     = $(TARGETDIR)/parsec_server
+  DEFINES   += -DDEBUG -DPARSEC_SERVER
+  INCLUDES  += -I../../../../src/libraries -I/usr/include -I/usr/local/include -I/opt/include -I../../../../src/libparsec/include -I../../../../src/parsec_server/include
+  CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -g -m64
+  CXXFLAGS  += $(CFLAGS) 
+  LDFLAGS   += -m64 -L/usr/lib64
+  LIBS      += -lncurses
+  RESFLAGS  += $(DEFINES) $(INCLUDES) 
+  LDDEPS    += 
+  LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
+  define PREBUILDCMDS
+  endef
+  define PRELINKCMDS
+  endef
+  define POSTBUILDCMDS
+	@echo Running post-build commands
+	cp parsec_server ../../../../parsec_root/server/
+  endef
+endif
+
+ifeq ($(config),release64)
+  OBJDIR     = obj/x64/Release
+  TARGETDIR  = .
+  TARGET     = $(TARGETDIR)/parsec_server
+  DEFINES   += -DPARSEC_SERVER
+  INCLUDES  += -I../../../../src/libraries -I/usr/include -I/usr/local/include -I/opt/include -I../../../../src/libparsec/include -I../../../../src/parsec_server/include
+  CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
+  CFLAGS    += $(CPPFLAGS) $(ARCH) -O2 -m64
+  CXXFLAGS  += $(CFLAGS) 
+  LDFLAGS   += -s -m64 -L/usr/lib64
+  LIBS      += -lncurses
+  RESFLAGS  += $(DEFINES) $(INCLUDES) 
+  LDDEPS    += 
+  LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
+  define PREBUILDCMDS
+  endef
+  define PRELINKCMDS
+  endef
+  define POSTBUILDCMDS
+	@echo Running post-build commands
+	cp parsec_server ../../../../parsec_root/server/
+  endef
+endif
+
 OBJECTS := \
 	$(OBJDIR)/con_arg.o \
 	$(OBJDIR)/con_tab.o \

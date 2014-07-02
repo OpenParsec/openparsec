@@ -26,7 +26,7 @@ local srcpaths = {
 
 solution "ParsecSolution"
 	language "C++"
-	platforms { "x32" }
+	platforms { "x32", "x64" }
 	includedirs { srcpaths.libraries }
 	
 	configurations { "Debug", "Release" }
