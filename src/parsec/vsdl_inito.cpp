@@ -154,8 +154,8 @@ void SDL_ExecSubsysScript()
 static int texfmt_general[] = {
 
 	FALSE,		// TEXFMT_STANDARD
-	FALSE,		// TEXFMT_RGB_565
-	FALSE,		// TEXFMT_RGBA_1555
+	TRUE,		// TEXFMT_RGB_565
+	TRUE,		// TEXFMT_RGBA_1555
 	TRUE,		// TEXFMT_RGB_888
 	TRUE,		// TEXFMT_RGBA_8888
 	TRUE,		// TEXFMT_ALPHA_8

@@ -411,15 +411,13 @@ void SDL_RCSetup()
 	VSDL_InitGLExtensions();
 	
 	// attempt to enable MSAA if set
-	if (AUX_MSAA > 0 && (GLEW_VERSION_1_3 || GLEW_ARB_multisample)) {
+	if (AUX_MSAA > 0) {
 		glEnable(GL_MULTISAMPLE);
-	
-		GLint buffers;
-		GLint samples;
-		
+
+		GLint buffers = 0, samples = 0;
 		glGetIntegerv(GL_SAMPLE_BUFFERS, &buffers);
 		glGetIntegerv(GL_SAMPLES, &samples);
-		
+
 		if ((AUX_MSAA && !buffers) || (AUX_MSAA != samples)) {
 			// OpenGL multisampling values different than expected 
 			MSGOUT("MSAA warning: expected 1 buffer and %d samples, got %d buffer(s) and %d sample(s)\n", AUX_MSAA, buffers, samples);
@@ -431,11 +429,7 @@ void SDL_RCSetup()
 				AUX_MSAA = 0;
 			}
 		}
-	} else {
-		// MSAA is 0 or multisampling isn't supported
-		AUX_MSAA = 0;
 	}
-	
 
 	// calculate projection matrix, setup projection
 	// calc projection matrices
@@ -491,14 +485,6 @@ void SDL_RCSetup()
 
 	glColorMask( GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE );
 
-	// prettiest possible mipmaps, please
-	if (GLEW_VERSION_1_4 || GLEW_SGIS_generate_mipmap)
-		glHint(GL_GENERATE_MIPMAP_HINT, GL_NICEST);
-
-	// same with texture compression
-	if (GLEW_VERSION_1_3 || GLEW_ARB_texture_compression)
-		glHint(GL_TEXTURE_COMPRESSION_HINT, GL_NICEST);
-
 	// limit maximum texture size
 	int maxgltexsize = 0;
 	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxgltexsize);
@@ -509,21 +495,11 @@ void SDL_RCSetup()
 	}
 
 	// determine maximum number of active texture units
-	if (GLEW_VERSION_1_3 || GLEW_ARB_multitexture) {
-		GLint maxtextureunits;
-		glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxtextureunits);
+	// TODO: If/when shaders are used, use GL_MAX_TEXTURE_IMAGE_UNITS instead.
+	GLint maxtextureunits;
+	glGetIntegerv(GL_MAX_TEXTURE_UNITS, &maxtextureunits);
 
-		// GL 2.0 / shaders introduce texture image units, max tex units is the greater of the above and below
-		if (GLEW_VERSION_2_0 || GLEW_ARB_vertex_shader) {
-			GLint maxteximageunits;
-			glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxteximageunits);
-			maxtextureunits = max(maxtextureunits, maxteximageunits);
-		}
-
-		VidInfo_NumTextureUnits = max(maxtextureunits, 1);
-	} else {
-		VidInfo_NumTextureUnits = 1;
-	}
+	VidInfo_NumTextureUnits = max(maxtextureunits, 1);
 
 	// initialize GL state tracking
 	RO_InitializeState();

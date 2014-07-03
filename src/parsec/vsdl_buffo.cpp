@@ -140,9 +140,6 @@ char *VIDs_ScreenshotBuffer( int create, int *size )
 		// assert that screenwidth is even
 		ASSERT( ( Screen_Width & 0x01 ) == 0 );
 
-		// read from back buffer
-		glReadBuffer( GL_BACK );
-
 		// read RGB data from the backbuffer
 		glReadPixels( 0, 0, Screen_Width, Screen_Height, GL_RGB, GL_UNSIGNED_BYTE, readbuffer );
 

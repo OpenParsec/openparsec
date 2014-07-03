@@ -21,7 +21,6 @@ void D_DrawIterTriangle2( IterTriangle2 *ittri );
 void D_DrawIterTriangle3( IterTriangle3 *ittri, dword cullmask );
 void D_DrawIterRectangle2( IterRectangle2 *itrect );
 void D_DrawIterRectangle3( IterRectangle3 *itrect, dword cullmask );
-void D_DrawIterPolygon2( IterPolygon2 *itpoly );
 void D_DrawIterPolygon3( IterPolygon3 *itpoly, dword cullmask );
 void D_DrawIterTriStrip2( IterTriStrip2 *itstrip );
 void D_DrawIterTriStrip3( IterTriStrip3 *itstrip, dword cullmask );

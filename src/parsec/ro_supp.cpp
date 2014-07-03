@@ -350,30 +350,21 @@ struct tex_format_opengl_s {
 	int		pixsize;			// size in bytes of source pixel
 	GLenum	format;
 	GLint	internalformat;
+	GLenum  datatype;
 };
 
 static tex_format_opengl_s tex_format_opengl[] = {
 
-	{ 0, (GLenum) 0,	0			 	},		// TEXFMT_STANDARD
-	{ 2, (GLenum) 0,	0			 	},		// TEXFMT_RGB_565
-	{ 2, (GLenum) 0,	0			 	},		// TEXFMT_RGBA_1555
-	{ 3, GL_RGB,		GL_RGB8		 	},		// TEXFMT_RGB_888
-	{ 4, GL_RGBA,		GL_RGBA8		},		// TEXFMT_RGBA_8888
-	{ 1, GL_ALPHA,		GL_ALPHA8		},		// TEXFMT_ALPHA_8
-	{ 1, GL_INTENSITY,	GL_INTENSITY8 	},		// TEXFMT_INTENSITY_8
-	{ 1, GL_LUMINANCE,	GL_LUMINANCE8 	},		// TEXFMT_LUMINANCE_8
-};
-
-static tex_format_opengl_s tex_format_compressed_opengl[] = {
-
-	{ 0, (GLenum) 0,	0			 				},		// TEXFMT_STANDARD
-	{ 2, (GLenum) 0,	0			 				},		// TEXFMT_RGB_565
-	{ 2, (GLenum) 0,	0			 				},		// TEXFMT_RGBA_1555
-	{ 3, GL_RGB,		GL_COMPRESSED_RGB_ARB		},		// TEXFMT_RGB_888
-	{ 4, GL_RGBA,		GL_COMPRESSED_RGBA_ARB		},		// TEXFMT_RGBA_8888
-	{ 1, GL_ALPHA,		GL_COMPRESSED_ALPHA_ARB		},		// TEXFMT_ALPHA_8
-	{ 1, GL_INTENSITY,	GL_COMPRESSED_INTENSITY_ARB	},		// TEXFMT_INTENSITY_8
-	{ 1, GL_LUMINANCE,	GL_COMPRESSED_LUMINANCE_ARB	},		// TEXFMT_LUMINANCE_8
+	// We use the base (unsized) internal formats for compatibility with GLES.
+	// GL will pick the correct sized internal format based on format + datatype.
+	{ 0, (GLenum) 0,   0,            (GLenum) 0                }, // TEXFMT_STANDARD
+	{ 2, GL_RGB,       GL_RGB,       GL_UNSIGNED_SHORT_5_6_5   }, // TEXFMT_RGB_565
+	{ 2, GL_RGBA,      GL_RGBA,      GL_UNSIGNED_SHORT_5_5_5_1 }, // TEXFMT_RGBA_1555
+	{ 3, GL_RGB,       GL_RGB,       GL_UNSIGNED_BYTE          }, // TEXFMT_RGB_888
+	{ 4, GL_RGBA,      GL_RGBA,      GL_UNSIGNED_BYTE          }, // TEXFMT_RGBA_8888
+	{ 1, GL_ALPHA,     GL_ALPHA,     GL_UNSIGNED_BYTE          }, // TEXFMT_ALPHA_8
+	{ 1, GL_INTENSITY, GL_INTENSITY, GL_UNSIGNED_BYTE          }, // TEXFMT_INTENSITY_8
+	{ 1, GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE          }, // TEXFMT_LUMINANCE_8
 };
 
 
@@ -515,66 +506,25 @@ void RO_DownloadTexture( GLTexInfo *texinfo, int mipmappingon )
 		}
 	}
 
-	// check texture compression info
+	// check texture compression info. TODO: check TEXFLG_IS_COMPRESSED.
 	TextureMap *tmap  = texinfo->texmap;
-	int docompression = ( tmap != NULL ) ?
-		( tmap->Flags & TEXFLG_DO_COMPRESSION ) : FALSE;
 
-    // Actually we don't want compression: the current implementation will use
-    // OpenGL to compress the texture when it's uploaded, which results in poor
-    // quality - and performance and VRAM usage isn't an issue anyway right now.
-    docompression = FALSE;
-
-	// compressed textures are only possible if the extension is supported
-	if ( !(GLEW_VERSION_1_3 || GLEW_ARB_texture_compression) ) {
-		docompression = FALSE;
+	if (tmap != NULL && (tmap->Flags & TEXFLG_DO_COMPRESSION)) {
+		// We don't support on-the-fly texture compression.
+		tmap->CompFormat = 0;
 	}
 
 	// determine texture format
 	GLenum glformat = tex_format_opengl[ texfmt ].format;
-	GLint  glinternalformat	= docompression ?
-		tex_format_compressed_opengl[ texfmt ].internalformat :
-		tex_format_opengl[ texfmt ].internalformat;
+	GLint  glinternalformat	= tex_format_opengl[ texfmt ].internalformat;
+	GLenum gltype = tex_format_opengl[ texfmt ].datatype;
 
-	// auto-generate mipmaps if provided ones are incomplete
-	bool generatemipmaps = false;
-	if (mipmappingon && (texinfo->lodsmall != TEXLOD_1) && (GLEW_VERSION_1_4 || GLEW_SGIS_generate_mipmap)) {
-		generatemipmaps = true;
-	}
-	
-	// enable automatic native mipmap generation, if mipmaps are enabled but provided ones are incomplete
-	if (generatemipmaps) {
-		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-	}
-	
 	// download most detailed mipmap level (or more if we support it)
 	glTexImage2D( GL_TEXTURE_2D, 0, glinternalformat, width, height,
-		0, glformat, GL_UNSIGNED_BYTE, data );
-	
-	// disable native mipmap generation for any further textures
-	if (generatemipmaps) {
-		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_FALSE);
-	}
+		0, glformat, gltype, data );
 
-	if ( docompression ) {
-		GLint compressed;
-		glGetTexLevelParameteriv( GL_TEXTURE_2D, 0,
-			GL_TEXTURE_COMPRESSED_ARB, &compressed );
-
-		if ( compressed ) {
-			GLint compressedformat;
-			glGetTexLevelParameteriv( GL_TEXTURE_2D, 0,
-				GL_TEXTURE_INTERNAL_FORMAT, &compressedformat );
-
-			// remember actual internal format
-			tmap->CompFormat = compressedformat;
-		} else {
-			tmap->CompFormat = 0;
-		}
-	}
-
-	// don't do anything if mipmapping is off or we generated mips already
-	if ( !mipmappingon || generatemipmaps ) {
+	// don't do anything if mipmapping is off
+	if ( !mipmappingon ) {
 		return;
 	}
 
@@ -593,7 +543,7 @@ void RO_DownloadTexture( GLTexInfo *texinfo, int mipmappingon )
 		}
 
 		glTexImage2D( GL_TEXTURE_2D, level, glinternalformat, width, height,
-			0, glformat, GL_UNSIGNED_BYTE, data );
+			0, glformat, gltype, data );
 	}
 }
 
@@ -723,21 +673,17 @@ texmementry_s *RO_CacheTexture( GLTexInfo *texinfo, int expand )
 	// determine whether mipmapping should be used
 	ASSERT( texinfo->lodsmall <= texinfo->lodlarge );
 	int mipmappingallow = ( texinfo->lodlarge != texinfo->lodsmall );
-
-	if ( texinfo->lodsmall != TEXLOD_1 ) {
-
-		//NOTE:
-		// under OpenGL either none or all mipmap levels must be
-		// provided. therefore we ignore mipmaps if some are missing
-		// in the original texture.
-		
-		//NOTE2:
-		// we can enable it in this case if hardware mipmap generation is supported
-
-		mipmappingallow = (GLEW_VERSION_1_4 || GLEW_SGIS_generate_mipmap) ? mipmappingallow : FALSE;
-	}
-
 	int mipmappingon = mipmappingallow && !AUX_DISABLE_POLYGON_MIPMAPPING;
+
+	if ( mipmappingon && texinfo->lodsmall != TEXLOD_1 ) {
+
+		// We have to tell OpenGL if not all mipmap levels are present.
+		int maxlevel = texinfo->lodlarge - texinfo->lodsmall;
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, maxlevel);
+
+		// TODO: This isn't supported on GLES, so we should disable mipmapping
+		// (or let OpenGL generate the mipmaps) for this texture in that case.
+	}
 
 	// set filter params accordingly
 	GLint texfiltmag, texfiltmin, mipfilter;
@@ -756,9 +702,9 @@ texmementry_s *RO_CacheTexture( GLTexInfo *texinfo, int expand )
 	
 	
 	// set anisotropic filtering levels on mipmapped textures if supported
-	int anisotropy = 0;
+	int anisotropy = 1;
 	if ( GLEW_EXT_texture_filter_anisotropic ) {
-		anisotropy = mipmappingon ? AUX_ANISOTROPIC_FILTERING : 0;
+		anisotropy = mipmappingon ? AUX_ANISOTROPIC_FILTERING : 1;
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, max((GLfloat) anisotropy, 1.0f) );
 	}
 

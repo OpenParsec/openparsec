@@ -63,7 +63,7 @@
 
 // flags
 #define ALLOW_LINE_STRIP_RESTARTS
-#define PERFORM_PRE_CLIPPING
+//#define PERFORM_PRE_CLIPPING
 #define EXPLICIT_GL_ORTHO
 
 
@@ -1065,51 +1065,6 @@ void D_DrawIterRectangle3( IterRectangle3 *itrect, dword cullmask )
 	INIT_GL_ARRAYS( itrect, 0, 4 );
 	glDrawArrays( GL_TRIANGLE_FAN, 0, 4 );
 	DEINIT_GL_ARRAYS( itrect );
-
-	// set rasterizer state to default
-	RO_DefaultRasterizerState();
-
-	// restore zcmp and zwrite state
-	RO_RestoreDepthState( zcmpstate, zwritestate );
-
-	// free intermediate storage
-//	DO_KillTemporaries();
-}
-
-
-// draw 2-D n-gon using iterated vertex attributes ----------------------------
-//
-void D_DrawIterPolygon2( IterPolygon2 *itpoly )
-{
-	ASSERT( itpoly != NULL );
-	ASSERT( itpoly->NumVerts > 2 );
-	ASSERT( itpoly->NumVerts <= MAX_ITERPOLY_VERTICES );
-
-	ASSERT( gl_array_current == NULL );
-
-	// get info and select texture
-	GLTexInfo _texinfo;
-	GLTexInfo *texinfo = NULL;
-	if ( ITERPRIM_TEXTURED( itpoly ) ) {
-		texinfo = &_texinfo;
-		DO_SelectTexture( itpoly->texmap, texinfo );
-	}
-
-	// convert vertex info into opengl format
-	DO_PrepVertices2( itpoly->flags, itpoly->Vtxs, itpoly->NumVerts, texinfo );
-
-	// save zcmp and zwrite state
-	int zcmpstate   = RO_DepthCmpEnabled();
-	int zwritestate = RO_DepthWriteEnabled();
-
-	// configure rasterizer
-	RO_InitRasterizerState( itpoly->itertype, itpoly->raststate, itpoly->rastmask );
-	RO_TextureCombineState( texcomb_decal );
-
-	// draw n-gon
-	INIT_GL_ARRAYS( itpoly, 0, itpoly->NumVerts );
-	glDrawArrays( GL_POLYGON, 0, itpoly->NumVerts );
-	DEINIT_GL_ARRAYS( itpoly );
 
 	// set rasterizer state to default
 	RO_DefaultRasterizerState();
