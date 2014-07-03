@@ -399,7 +399,7 @@ int NET_PacketDriver::SendPacket( NetPacket_GMSV* gamepacket, node_t* node, int 
 		// copy reliable RE and check for reliable overflow
 		reliable_size = pReliable->WriteTo( pFillPosition, maxfillsize, FALSE );
 		if ( reliable_size == 0 ) {
-			DBGTXT( MSGOUT( "NET_PacketDriver::SendPacket(): ERROR: reliable overflow" ); );
+			MSGOUT( "NET_PacketDriver::SendPacket(): ERROR: reliable overflow" );
 			return -1;
 		}
 		// determine next fill position

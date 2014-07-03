@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-//#include <math.h>
+#include <math.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -463,7 +463,163 @@ int E_SimClientNetOutput::_PrepareClientUpdateInfo()
 	return _HasUpdates();
 }
 
+// fill and send the player ship statuses. ---------------------------------
+//
+int E_SimClientNetOutput::_FillAndSend_PNSS( E_REList* pReliable, E_REList* pUnreliable )
+{
+	ASSERT( pReliable	!= NULL );
+	ASSERT( pUnreliable != NULL );
 
+	//FIXME: we want to send the state of all players as unreliable and not necessarely the whole state in one packet
+
+	//FIXME: we get a serious space problem with our default packet size here, if more
+	//       than 10 (=1000/92) players connected. strip size of RE_PlayerAndShipStatus and increase max.
+	//       packetsize to ~1400 bytes ( should be MTU of Ethernet packet minus PPP/IP/UDP headers )
+
+	// calculate how many clients we can send in a single packet.
+	int max_packet_clients = floor(NET_MAX_DATA_LENGTH/sizeof(RE_PlayerAndShipStatus));
+
+	// append a RE containing state for each connected player ( all but the destination player )
+	for( int nAboutClient = 0; nAboutClient < m_nNumClients; nAboutClient++ ) {
+
+		// get the client-id we want to send information about
+		int nClientID = m_ClientIDList[ nAboutClient ];
+
+		// get the result state from last simulation run
+		// NOTE: as the simframe counter is increased at the end of each sim-frame and the network update
+		//       is done after that, we need to get the state from the last-sim-frame here
+		E_SimShipState* pPrevState = TheSimulator->GetSimClientState( nClientID )->GetPrevSimFrameStateSlot();
+
+		//DBGTXT( LOGOUT( "SENDING info about %d to %d: phi: %f", nClientID, nDestClientID, RAD_TO_DEG( acos( pPrevState->m_ObjPosition[ 0 ][ 0 ] ) ) ); );
+
+		// determine in which RE list we want to stuff the state
+		E_REList* relist = ( m_SendReliable[ nAboutClient ] ? pReliable : pUnreliable );
+
+		bool_t bUpdatePropsOnly = ( ( nClientID == m_nDestClientID ) && m_bIncludeDestClientState );
+		if ( !relist->NET_Append_RE_PlayerAndShipStatus( nClientID,
+														 TheSimulator->GetSimPlayerInfo( nClientID ),
+														 pPrevState,
+														 TheSimulator->GetCurSimRefFrame(),
+														 bUpdatePropsOnly ) ) {
+			DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+			return FALSE;
+
+		}
+		if(!(nAboutClient % max_packet_clients) ) {
+			// if we are divisable by the max_packet_clients, send the packet now and clear the buffers so we can send all clients.
+			ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
+			m_pReliableBuffer->Clear();
+			m_pUnreliableBuffer->Clear();
+		}
+	}
+
+	return ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
+
+}
+
+int E_SimClientNetOutput::_FillAndSend_State( E_REList* pReliable, E_REList* pUnreliable )
+{
+	ASSERT( pReliable	!= NULL );
+	ASSERT( pUnreliable != NULL );
+	   // include a StateSync ?
+	    if (m_bIncludeStateSync != SEND_MODE_NONE) {
+	        E_SimClientState* pSimClientState = TheSimulator->GetSimClientState( m_nDestClientID );
+	        E_REList* relist = ( m_bIncludeStateSync == SEND_MODE_UNRELIABLE ? pUnreliable : pReliable );
+	        if(!relist->RmEvStateSync(RMEVSTATE_NEBULAID,TheGame->m_NebulaID)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        if(!relist->RmEvStateSync(RMEVSTATE_ENERGYBOOST,TheGame->EnergyExtraBoost)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        if(!relist->RmEvStateSync(RMEVSTATE_REPAIRBOOST,TheGame->RepairExtraBoost)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        if(!relist->RmEvStateSync(RMEVSTATE_DUMBPACK,TheGame->DumbPackNumMissls)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        if(!relist->RmEvStateSync(RMEVSTATE_HOMPACK,TheGame->HomPackNumMissls)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        if(!relist->RmEvStateSync(RMEVSTATE_SWARMPACK,TheGame->SwarmPackNumMissls)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        if(!relist->RmEvStateSync(RMEVSTATE_PROXPACK,TheGame->ProxPackNumMines)) {
+	            DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+	        }
+	        pSimClientState->SetState();
+	    }
+
+	    // include a RE_GAMESTATE ?
+		if ( m_bIncludeGameState != SEND_MODE_NONE ) {
+			E_REList* relist = ( m_bIncludeGameState == SEND_MODE_UNRELIABLE ? pUnreliable : pReliable );
+			if ( !relist->NET_Append_RE_GameState() ) {
+				DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+			}
+		}
+
+		// include a RE_KILLSTATS ?
+		if ( m_bIncludeKillStats != SEND_MODE_NONE ) {
+			E_REList* relist = ( m_bIncludeKillStats == SEND_MODE_UNRELIABLE ? pUnreliable : pReliable );
+			if ( !relist->NET_Append_RE_KillStats() ) {
+				DBGTXT( MSGOUT( "E_SimClientNetOutput::_FillPacketForClient(): packet choke" ); );
+				return FALSE;
+			}
+		}
+
+		return ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
+
+}
+
+int E_SimClientNetOutput::_FillAndSend_Distributables( E_REList* pReliable, E_REList* pUnreliable )
+{
+
+	int curr_dist_size=0;
+
+
+	ASSERT( pReliable	!= NULL );
+	ASSERT( pUnreliable != NULL );
+	// create remote events for all distributables to send in this packet
+	for( int nEntry = 0; nEntry < m_nNumDistsForNextPacket; nEntry++ ) {
+
+		E_Distributable* pDist = m_DistsForNextPacket[ nEntry ];
+		ASSERT( pDist->HasUpdate( m_nDestClientID ) );
+
+		if(curr_dist_size + pDist->DetermineSizeInPacket() > NET_MAX_DATA_LENGTH){
+			// by adding this distributable, we would over flow the packet size.  Send the current packet and reset
+			ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
+			m_pReliableBuffer->Clear();
+			m_pUnreliableBuffer->Clear();
+			curr_dist_size = 0;
+		}
+
+		// add the distributable size to the tally
+		curr_dist_size += pDist->DetermineSizeInPacket();
+
+		E_REList* relist = pDist->NeedsReliable() ? pReliable : pUnreliable;
+
+		// write RE to list
+		pDist->DistributeToREList( relist );
+
+		// mark that we sent the update
+		pDist->MarkUpdateSent( m_nDestClientID );
+
+
+	}
+
+	return ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
+
+
+
+
+}
 // fill the RE lists to be sent to the client ---------------------------------
 //
 int E_SimClientNetOutput::_FillPacketForClient( E_REList* pReliable, E_REList* pUnreliable )
@@ -592,20 +748,31 @@ void E_SimClientNetOutput::_CreateBuffers()
 //
 void E_SimClientNetOutput::_TerminateBufferMulticast()
 {
+	bool should_send_packet = false;
 	// if we have buffered multicasts from other clients, we must append a RE_OWNERSECTION with PLAYERID_SERVER
 	if ( m_pReliableBuffer && m_pReliableBuffer->HasEvents() ) {
 		bool_t rc = _ReserveForOutput( E_REList::RmEvGetSizeFromType( RE_OWNERSECTION ) );
 		//ASSERT( rc );
         if(!rc)
-            MSGOUT("CRAZYSPENCE: If an odd issue starts cropping up, line 555 esimnetoutput is where to look");
+            MSGOUT("CRAZYSPENCE: If an odd issue starts cropping up, line 729 esimnetoutput is where to look");
 		m_pReliableBuffer->NET_Append_RE_OwnerSection( PLAYERID_SERVER );
+		should_send_packet=true;
 	}
 	if ( m_pUnreliableBuffer && m_pUnreliableBuffer->HasEvents() ) {
 		bool_t rc = _ReserveForOutput( E_REList::RmEvGetSizeFromType( RE_OWNERSECTION ) );
         if(!rc)
-           MSGOUT("CRAZYSPENCE: If an odd issue starts cropping up, line 561 esimnetoutput is where to look");
+           MSGOUT("CRAZYSPENCE: If an odd issue starts cropping up, line 735 esimnetoutput is where to look");
 		m_pUnreliableBuffer->NET_Append_RE_OwnerSection( PLAYERID_SERVER );
+		should_send_packet=true;
 	}
+
+	// now flush out the multicasts and clear the buffers, if we need to.
+	if(should_send_packet){
+		 ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
+		 m_pReliableBuffer->Clear();
+		 m_pUnreliableBuffer->Clear();
+	}
+
 }
 
 
@@ -625,7 +792,9 @@ int E_SimClientNetOutput::SendUpdateToClient()
 		spi->m_size		= 0;
 		spi->m_sendtime	= SYSs_GetRefFrameCount();
 
-		//DBGTXT( MSGOUT( "E_SimClientNetOutput::UpdateClient(): RATE_CHOKE" ); );
+		DBGTXT(MSGOUT( "E_SimClientNetOutput::UpdateClient(): RATE_CHOKE" ););
+
+		//DBGTXT( MSGOUT( "E_SimClientNetOutput::UpdateClient(): RATE_CHOKE" ); );per
 		//TheStatsManager->IncStats( m_nDestClientID, STAT_RATE_CHOKE, 1 );
 		return FALSE;
 	}
@@ -638,12 +807,28 @@ int E_SimClientNetOutput::SendUpdateToClient()
 
 	// prepare the client update
 	if ( _PrepareClientUpdateInfo() ) {
+		ssize_t sent_size = 0;
 		
 		// fill the RE lists to be sent to the client
-		_FillPacketForClient( m_pReliableBuffer, m_pUnreliableBuffer );
+		//_FillPacketForClient( m_pReliableBuffer, m_pUnreliableBuffer );
+
+		// fill and send player and ship status.
+		sent_size += _FillAndSend_PNSS( m_pReliableBuffer, m_pUnreliableBuffer );
+		m_pReliableBuffer->Clear();
+		m_pUnreliableBuffer->Clear();
+
+
+		// fill and send state sync, game state and kill stats.
+		sent_size += _FillAndSend_State( m_pReliableBuffer, m_pUnreliableBuffer  );
+		m_pReliableBuffer->Clear();
+		m_pUnreliableBuffer->Clear();
+
+		// fill and send distributables.
+		sent_size += _FillAndSend_Distributables(m_pReliableBuffer, m_pUnreliableBuffer  );
+
 
 		// send the stream-packet
-		ssize_t sent_size = ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer ); 
+		//ssize_t sent_size = 0;//ThePacketHandler->Send_STREAM( m_nDestClientID, m_pReliableBuffer, m_pUnreliableBuffer );
 
 		// check whether the packet could be sent
 		if ( ( sent_size == -1 ) || ( sent_size == -2 ) ){
@@ -666,8 +851,6 @@ int E_SimClientNetOutput::SendUpdateToClient()
 			rc = true;
 		}
 
-	} else {
-		//DBGTXT( MSGOUT( "_PrepareClientUpdateInfo() for %d had nothing to send", m_nDestClientID ); );
 	}
 
 	// release lists
@@ -728,6 +911,14 @@ void E_SimClientNetOutput::_FlagIncludeClient( int nClientID, bool_t bReliable )
 // 
 bool_t E_SimClientNetOutput::_ReserveForOutput( int size )
 {
+	// XXX: New sending routines do not necessarily need size stuff.
+	// however this may still be usable if/when I implement packet size
+	// fragmenting on the server.
+	// FIXME: For now, just return true so that everything
+	// is added to the packet in question.
+
+	return true;
+
 	ASSERT( size >= 0 );
 
 	//FIXME: check whether we really need 4 trailing bytes for sentinel RE_EMPTY

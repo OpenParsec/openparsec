@@ -73,6 +73,8 @@
 #include "sys_refframe_sv.h"
 #include "g_emp.h"
 
+#include "e_simplayerinfo.h"
+
 #undef PShipObjects		
 #undef LaserObjects		
 #undef MisslObjects		
@@ -1191,6 +1193,12 @@ GenObject* G_Main::OBJ_CreateSwarm( ShipObject *pShip, int nClientID, dword targ
 void G_Input::ActivateGun( int nClientID, int SelectedGun )
 {
 	G_Player*  pPlayer = TheGame->GetPlayer( nClientID );
+
+	// somehow the ship can be destroyed before the player fires a gun in some
+	// instances. This ignores that if the ship is gone.
+	if(pPlayer->GetShipObject() == NULL) {
+		return;
+	}
 
 	// fire selected gun
 	switch ( SelectedGun ) {

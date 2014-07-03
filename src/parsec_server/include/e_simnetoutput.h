@@ -274,6 +274,10 @@ protected:
 
 	// fill the RE lists to be sent to the client
 	int _FillPacketForClient( E_REList* pReliable, E_REList* pUnreliable );
+	int _FillAndSend_PNSS( E_REList* pReliable, E_REList* pUnreliable );
+	int _FillAndSend_State( E_REList* pReliable, E_REList* pUnreliable );
+	int _FillAndSend_Distributables( E_REList* pReliable, E_REList* pUnreliable );
+
 
 	// getters/setters
 	size_t _GetSizeAvail()	{ return m_nSizeAvail; }

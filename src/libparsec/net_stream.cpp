@@ -240,7 +240,7 @@ E_REList* NET_Stream::GetNextReliableToSend()
 	// check for first transmit of top entry in FIFO
 	if ( pEntry->m_Timeout == -1 ) {
 		
-		DBGOUT( "NET_Stream::GetNextReliableToSend(): %d first transmit FIFO entry: %d", m_nPeerID, m_nFIFO_ReadPos  );
+		DBGTXT(DBGOUT( "NET_Stream::GetNextReliableToSend(): %d first transmit FIFO entry: %d", m_nPeerID, m_nFIFO_ReadPos  ););
 
 		// update timeout value & first-transmit 
 		_FIFO_UpdateTimeOut( pEntry );
@@ -256,7 +256,7 @@ E_REList* NET_Stream::GetNextReliableToSend()
 		// timer expired ?
 		if ( pEntry->m_Timeout < SYSs_GetRefFrameCount() ) {
 
-			DBGOUT( "NET_Stream::GetNextReliableToSend(): %d timer expired - retransmit #%d - FIFO entry: %d", m_nPeerID, pEntry->m_nRetransmitCount + 1, m_nFIFO_ReadPos );
+			DBGTXT(DBGOUT( "NET_Stream::GetNextReliableToSend(): %d timer expired - retransmit #%d - FIFO entry: %d", m_nPeerID, pEntry->m_nRetransmitCount + 1, m_nFIFO_ReadPos ););
 
 			// update timeout value & return for retransmit
 			pEntry->m_nRetransmitCount++;
@@ -264,7 +264,7 @@ E_REList* NET_Stream::GetNextReliableToSend()
 			return pREList;
 		}
 
-		DBGOUT( "NET_Stream::GetNextReliableToSend(): %d entry %d not yet ACK", m_nPeerID, m_nFIFO_ReadPos  );
+		DBGTXT(DBGOUT( "NET_Stream::GetNextReliableToSend(): %d entry %d not yet ACK", m_nPeerID, m_nFIFO_ReadPos  ););
 
 		return NULL;
 	}
@@ -291,7 +291,7 @@ E_REList* NET_Stream::GetNextReliableToSend()
 				pEntry->Reset();
 			}
 #else
-			DBGOUT( "NET_Stream::GetNextReliableToSend(): %d removing from FIFO due to ACK : %d", m_nPeerID, m_nFIFO_ReadPos  );
+			DBGTXT(DBGOUT( "NET_Stream::GetNextReliableToSend(): %d removing from FIFO due to ACK : %d", m_nPeerID, m_nFIFO_ReadPos  ););
 			pEntry->Reset();
 #endif // _IDEMPOTENCY_TESTING
 		}
@@ -304,7 +304,7 @@ E_REList* NET_Stream::GetNextReliableToSend()
 		if ( pREList != NULL ) {
 
 			ASSERT( pEntry->m_Timeout == -1 );
-			DBGOUT( "NET_Stream::GetNextReliableToSend(): %d first transmit FIFO entry: %d", m_nPeerID, m_nFIFO_ReadPos  );
+			DBGTXT(DBGOUT( "NET_Stream::GetNextReliableToSend(): %d first transmit FIFO entry: %d", m_nPeerID, m_nFIFO_ReadPos  ););
 
 			// update timeout value 
 			_FIFO_UpdateTimeOut( pEntry );
@@ -322,7 +322,7 @@ E_REList* NET_Stream::GetNextReliableToSend()
 		// retransmit top of FIFO
 		ASSERT( YOU_ACK_ReliableMessageId < ( Out_ReliableMessageId - 1 ) );
 
-		DBGOUT( "NET_Stream::GetNextReliableToSend(): %d NACK detected - retransmit - FIFO entry: %d", m_nPeerID, m_nFIFO_ReadPos  );
+		DBGTXT(DBGOUT( "NET_Stream::GetNextReliableToSend(): %d NACK detected - retransmit - FIFO entry: %d", m_nPeerID, m_nFIFO_ReadPos  ););
 
 		// update timeout value & retransmit
 		pEntry->m_nRetransmitCount++;
