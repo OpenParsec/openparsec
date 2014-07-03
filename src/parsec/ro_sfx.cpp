@@ -150,6 +150,8 @@ void RO_FlareStateRestore()
 void R_DrawLensFlare()
 {
 	// lens flares rely on hardware depth occlusion querying now
+	// occlusion querying isn't available in GLES
+#if GL_VERSION_1_5 || GL_ARB_occlusion_query
 	if ( !(DoLensFlare && (GLEW_VERSION_1_5 || GLEW_ARB_occlusion_query)) )
 		return;
 
@@ -305,6 +307,7 @@ void R_DrawLensFlare()
 			}
 		}
 	}
+#endif // GL_VERSION_1_5 || GL_ARB_occlusion_query
 }
 
 

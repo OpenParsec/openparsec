@@ -364,6 +364,7 @@ void SDL_RCDisplayInfo()
 PRIVATE
 void VSDL_InitGLExtensions()
 {
+#ifdef GLEW_VERSION
 	// don't rely purely on extension string list to determine capabilities
 	glewExperimental = GL_TRUE;
 
@@ -400,6 +401,7 @@ void VSDL_InitGLExtensions()
 		glMapBufferARB = glMapBuffer;
 		glUnmapBufferARB = glUnmapBuffer;
 	}
+#endif
 }
 
 

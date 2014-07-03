@@ -363,7 +363,7 @@ static tex_format_opengl_s tex_format_opengl[] = {
 	{ 3, GL_RGB,       GL_RGB,       GL_UNSIGNED_BYTE          }, // TEXFMT_RGB_888
 	{ 4, GL_RGBA,      GL_RGBA,      GL_UNSIGNED_BYTE          }, // TEXFMT_RGBA_8888
 	{ 1, GL_ALPHA,     GL_ALPHA,     GL_UNSIGNED_BYTE          }, // TEXFMT_ALPHA_8
-	{ 1, GL_INTENSITY, GL_INTENSITY, GL_UNSIGNED_BYTE          }, // TEXFMT_INTENSITY_8
+	{ 0, (GLenum) 0,   0,            (GLenum) 0                }, // TEXFMT_INTENSITY_8
 	{ 1, GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE          }, // TEXFMT_LUMINANCE_8
 };
 

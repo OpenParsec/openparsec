@@ -159,7 +159,7 @@ static int texfmt_general[] = {
 	TRUE,		// TEXFMT_RGB_888
 	TRUE,		// TEXFMT_RGBA_8888
 	TRUE,		// TEXFMT_ALPHA_8
-	TRUE,		// TEXFMT_INTENSITY_8
+	FALSE,		// TEXFMT_INTENSITY_8
 	TRUE,		// TEXFMT_LUMINANCE_8
 };
 
@@ -184,10 +184,10 @@ void SDL_VideoFlagsSetup()
 
 	// texture conversion flags
 	dword textures = 0;
-	textures |= COLORSETUP_STANDARD_TO_RGB_888;
-	textures |= COLORSETUP_GLIDE3DF_TO_RGB_888;		// RGB-only allowed
-//	textures |= COLORSETUP_GLIDE3DF_TO_RGBA_8888;	// no RGB-only: use RGBA
+	textures |= COLORSETUP_STANDARD_TO_RGBA_8888;
+	textures |= COLORSETUP_GLIDE3DF_TO_RGBA_8888;	// no RGB-only: use RGBA
 	textures |= COLORSETUP_ALPHA_8_TO_RGBA_8888;	// no alpha-only textures
+	textures |= COLORSETUP_INTENSITY_8_TO_RGBA_8888;
 
 	// font conversion flags
 	dword fonts = 0;
