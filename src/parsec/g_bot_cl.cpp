@@ -951,8 +951,8 @@ int Cmd_CLBOT_SERVER( char* pszServername )
 	for( p = pszServername; *p == ' '; p++ );
 
 	if ( *p == '\0' ) {
-		char* pszSetServer = TheBot->GetConnectServer();
-		if ( pszSetServer == '\0' ) {
+		const char* pszSetServer = TheBot->GetConnectServer();
+		if ( pszSetServer == NULL || pszSetServer[0] == '\0' ) {
 			CON_AddLine( "no server set." );
 		} else {
 			CON_AddLine( pszSetServer );

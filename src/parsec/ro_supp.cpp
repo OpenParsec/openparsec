@@ -1329,10 +1329,10 @@ int R_PrecacheTextures()
 		int yOffset = ( Screen_Height - texinfo.height ) / 2;
 		
 		GLshort vertices[] = {
-			xOffset, yOffset,
-			xOffset + texinfo.width, yOffset,
-			xOffset + texinfo.width, yOffset + texinfo.height,
-			xOffset, yOffset + texinfo.height,
+			(GLshort) xOffset, (GLshort) yOffset,
+			(GLshort) (xOffset + texinfo.width), (GLshort) yOffset,
+			(GLshort) (xOffset + texinfo.width), (GLshort) (yOffset + texinfo.height),
+			(GLshort) xOffset, (GLshort) (yOffset + texinfo.height),
 		};
 		
 		GLshort texcoords[] = {0, 0, 1, 0, 1, 1, 0, 1};

@@ -70,7 +70,7 @@ int D_DrawSquare( ugrid_t xko, ugrid_t yko, visual_t col, dword siz )
 
 	RO_PointSize( (GLfloat)siz );
 	
-	GLshort vertices[] = {xko, yko};
+	GLshort vertices[] = {(GLshort) xko, (GLshort) yko};
 	
 	RO_ClientState(VTXARRAY_VERTICES);
 	
@@ -113,7 +113,7 @@ int D_DrawSquareZ( ugrid_t xko, ugrid_t yko, visual_t col, dword siz, dword zval
 
 	RO_PointSize( siz );
 	
-	GLshort vertices[] = {xko, yko, 0}; // TODO: zvalue
+	GLshort vertices[] = {(GLshort) xko, (GLshort) yko, 0}; // TODO: zvalue
 	
 	RO_ClientState(VTXARRAY_VERTICES);
 	
@@ -151,7 +151,7 @@ void D_DrawRadarObj( ugrid_t xko, ugrid_t yko, visual_t col )
 
 	RO_PointSize( 2.0f );
 	
-	GLshort vertices[] = {xko, yko};
+	GLshort vertices[] = {(GLshort) xko, (GLshort) yko};
 	
 	RO_ClientState(VTXARRAY_VERTICES);
 	
@@ -181,7 +181,7 @@ void D_DrawHorzBar( ugrid_t xko, ugrid_t yko, visual_t col, dword leng )
 	VisualToRGBA( &colrgba, col );
 	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
-	GLshort vertices[] = {xko, yko, xko + leng, yko};
+	GLshort vertices[] = {(GLshort) xko, (GLshort) yko, (GLshort) (xko + leng), (GLshort) yko};
 	
 	RO_ClientState(VTXARRAY_VERTICES);
 	
@@ -211,7 +211,7 @@ void D_DrawVertBar( ugrid_t xko, ugrid_t yko, visual_t col, dword leng )
 	VisualToRGBA( &colrgba, col );
 	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 	
-	GLshort vertices[] = {xko, yko, xko, yko + leng};
+	GLshort vertices[] = {(GLshort) xko, (GLshort) yko, (GLshort) xko, (GLshort) (yko + leng)};
 	
 	RO_ClientState(VTXARRAY_VERTICES);
 	
@@ -247,7 +247,7 @@ void D_DrawLine( ugrid_t xko1, ugrid_t yko1, ugrid_t xko2, ugrid_t yko2, visual_
 	VisualToRGBA( &colrgba1, col1 );
 	VisualToRGBA( &colrgba2, col2 );
 
-	GLshort vertices[] = {xko1, yko1, xko2, yko2};
+	GLshort vertices[] = {(GLshort) xko1, (GLshort) yko1, (GLshort) xko2, (GLshort) yko2};
 	GLubyte colors[] = {colrgba1.R, colrgba1.G, colrgba2.B, colrgba2.R, colrgba2.G, colrgba2.B};
 	
 	RO_ClientState(VTXARRAY_VERTICES | VTXARRAY_COLORS);

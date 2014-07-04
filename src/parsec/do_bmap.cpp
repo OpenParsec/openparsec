@@ -310,10 +310,10 @@ void D_DrawTrRect( ugrid_t putx, ugrid_t puty, dword width, dword height, dword 
 	glColor4ub( PanelBackColor.R, PanelBackColor.G, PanelBackColor.B, PanelBackColor.A );
 	
 	GLshort vertices[] = {
-		putx, puty,
-		putx, puty + height,
-		putx + width, puty,
-		putx + width, puty + height,
+		(GLshort) putx, (GLshort) puty,
+		(GLshort) putx, (GLshort) (puty + height),
+		(GLshort) (putx + width), (GLshort) puty,
+		(GLshort) (putx + width), (GLshort) (puty + height),
 	};
 	
 	RO_ClientState(VTXARRAY_VERTICES);
