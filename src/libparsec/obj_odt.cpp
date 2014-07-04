@@ -945,22 +945,42 @@ void ODT_ConvertShading( GenObject *gobj, dword faceid, ODT_Face *odtface, shade
 // create (internal) object from (external) odt object ------------------------
 //
 PRIVATE
-size_t ODT_CreateObject( ODT_GenObject *cobj, dword flags, shader_s *shader )
+size_t ODT_CreateObject( ODT_GenObjectdisk *dobj, size_t size, dword flags, shader_s *shader )
 {
-	ASSERT( cobj != NULL );
+	ASSERT( dobj != NULL );
 
 	// default flags may be requested
 	if ( flags == OBJLOAD_DEFAULT ) {
 		flags = ODT_OBJLOAD_DEFAULT;
 	}
+	
+	// ARF's header crap for 64bitification - probably redundant
+	size_t headeroffset = sizeof(ODT_GenObject) - sizeof(ODT_GenObjectdisk);
+	ODT_GenObject *cobj = (ODT_GenObject *) ALLOCMEM( size + headeroffset );
+	memcpy( cobj + headeroffset, dobj, size); // copy pile of data to the end
+	memset( cobj, 0, sizeof(ODT_GenObject) ); // just in case...
 
-	// swap important header fields
-	cobj->InstanceSize	= SWAP_32( cobj->InstanceSize );
-	cobj->NumVerts 		= SWAP_32( cobj->NumVerts );
-	cobj->NumPolyVerts 	= SWAP_32( cobj->NumPolyVerts );
-	cobj->NumNormals 	= SWAP_32( cobj->NumNormals );
-	cobj->NumPolys		= SWAP_32( cobj->NumPolys );
-	cobj->NumFaces		= SWAP_32( cobj->NumFaces );
+	// swap and copy important header fields
+	cobj->InstanceSize	= SWAP_32( dobj->InstanceSize ); // Might need some adjustment...
+	cobj->NumVerts 		= SWAP_32( dobj->NumVerts );
+	cobj->NumPolyVerts 	= SWAP_32( dobj->NumPolyVerts );
+	cobj->NumNormals 	= SWAP_32( dobj->NumNormals );
+	cobj->NumPolys		= SWAP_32( dobj->NumPolys );
+	cobj->NumFaces		= SWAP_32( dobj->NumFaces );
+
+	// just copy less "important" header fields?
+	cobj->ObjectNumber 	= dobj->ObjectNumber;
+	cobj->HostObjNumber	= dobj->HostObjNumber;
+	cobj->ObjectType	= dobj->ObjectType;
+	cobj->ObjectClass	= dobj->ObjectClass;
+	cobj->FarthestZ		= dobj->FarthestZ;
+	cobj->NearestZ		= dobj->NearestZ;
+	cobj->BoundingSphere	= dobj->BoundingSphere; 
+	cobj->BoundingSphere2	= dobj->BoundingSphere2; 
+	cobj->LocalCameraLoc	= dobj->LocalCameraLoc;
+	memcpy( dobj->BoundingBox, cobj->BoundingBox, sizeof(ODT_Vertex3)*8 );
+	memcpy( dobj->PyrNormals, cobj->PyrNormals, sizeof(ODT_Vertex3)*4 );
+	memcpy( dobj->ObjPosition, cobj->ObjPosition, sizeof(ODT_Xmatrx) );
 
 	//NOTE:
 	// some very old ODT files have an invalid InstanceSize field.
@@ -970,17 +990,17 @@ size_t ODT_CreateObject( ODT_GenObject *cobj, dword flags, shader_s *shader )
 	ASSERT( cobj->NumPolys >= cobj->NumFaces );
 
 	// new base address for object data
-	size_t newdatabase = (size_t) cobj;
+	size_t newdatabase = (size_t) (cobj + headeroffset);
 
 	// correct header relative pointers in object header to absolute pointers
-	cobj->VertexList	= (ODT_Vertex3 *)	( SWAP_32( (size_t)cobj->VertexList )   + newdatabase );
-	cobj->X_VertexList	= (ODT_Vertex3 *)	( SWAP_32( (size_t)cobj->X_VertexList ) + newdatabase );
-	cobj->P_VertexList	= (ODT_ProjPoint *)	( SWAP_32( (size_t)cobj->P_VertexList ) + newdatabase );
-	cobj->S_VertexList	= (ODT_SPoint *)	( SWAP_32( (size_t)cobj->S_VertexList ) + newdatabase );
-	cobj->PolyList		= (ODT_Poly *)		( SWAP_32( (size_t)cobj->PolyList )     + newdatabase );
-	cobj->FaceList		= (ODT_Face *)		( SWAP_32( (size_t)cobj->FaceList )     + newdatabase );
-	cobj->VisPolyList	= (ODT_VisPolys *)	( SWAP_32( (size_t)cobj->VisPolyList )  + newdatabase );
-	cobj->BSPTree		= (ODT_BSPNode *)	( SWAP_32( (size_t)cobj->BSPTree )      + newdatabase );
+	cobj->VertexList	= (ODT_Vertex3 *)	(size_t)( SWAP_32( (dword)dobj->VertexList )   + newdatabase );
+	cobj->X_VertexList	= (ODT_Vertex3 *)	(size_t)( SWAP_32( (dword)dobj->X_VertexList ) + newdatabase );
+	cobj->P_VertexList	= (ODT_ProjPoint *)	(size_t)( SWAP_32( (dword)dobj->P_VertexList ) + newdatabase );
+	cobj->S_VertexList	= (ODT_SPoint *)	(size_t)( SWAP_32( (dword)dobj->S_VertexList ) + newdatabase );
+	cobj->PolyList		= (ODT_Poly *)		(size_t)( SWAP_32( (dword)dobj->PolyList )     + newdatabase );
+	cobj->FaceList		= (ODT_Face *)		(size_t)( SWAP_32( (dword)dobj->FaceList )     + newdatabase );
+	cobj->VisPolyList	= (ODT_VisPolys *)	(size_t)( SWAP_32( (dword)dobj->VisPolyList )  + newdatabase );
+	cobj->BSPTree		= (ODT_BSPNode *)	(size_t)( SWAP_32( (dword)dobj->BSPTree )      + newdatabase );
 
 	// size of generic header plus size of type specific header
 	size_t instancesize = OBJ_FetchTypeSize( cobj->ObjectType );
@@ -1247,6 +1267,9 @@ size_t ODT_CreateObject( ODT_GenObject *cobj, dword flags, shader_s *shader )
 
 	// init class and type data of object
 	OBJ_InitClass( gobj->ObjectClass );
+
+	// I think do this here? 
+	FREEMEM( cobj );
 
 	// return mem size of object
 	return objmemsize;
@@ -1964,9 +1987,9 @@ size_t InitClassFromODT( dword classid, dword flags, shader_s *shader )
 
 	// determine file size
 	size_t odtobjsize = SYS_GetFileLength( ObjectInfo[ classid ].file );
-	if ( odtobjsize == (dword)-1 )
+	if ( odtobjsize == (size_t)-1 )
 		FERROR( object_not_found, ObjectInfo[ classid ].file );
-	if ( odtobjsize < sizeof( ODT_GenObject ) )
+	if ( odtobjsize < sizeof( ODT_GenObjectdisk ) )
 		PERROR( corrupt_object );
 
 	// allocate temporary memory for odt object
@@ -2005,7 +2028,7 @@ size_t InitClassFromODT( dword classid, dword flags, shader_s *shader )
 	} else {
 
 		// init important header fields
-		ODT_GenObject *cobj = (ODT_GenObject *) odtobjmem;
+		ODT_GenObjectdisk *cobj = (ODT_GenObjectdisk *) odtobjmem;
 
 		cobj->ObjectNumber	= 0;
 		cobj->HostObjNumber = 0;
@@ -2013,7 +2036,8 @@ size_t InitClassFromODT( dword classid, dword flags, shader_s *shader )
 		cobj->ObjectClass	= classid;
 
 		// convert odt to internal object format
-		objmemsize = ODT_CreateObject( cobj, flags, shader );
+		objmemsize = ODT_CreateObject( cobj, odtobjsize, flags, shader );
+
 	}
 
 	// memory for loaded data is temporary
