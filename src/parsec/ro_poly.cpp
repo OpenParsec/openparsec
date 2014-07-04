@@ -252,7 +252,13 @@ void RO_SolidFillPoly( SVertexExList *svertexlist, GenObject *baseobj, Face *fac
 	}
 
 	// actually draw polygon
+#ifndef GL_POLYGON
+	// GL_POLYGON isn't supported in GLES or modern GL.
+	// FIXME: naive triangle fans can't represent all simple polygons!
+	glDrawArrays( GL_TRIANGLE_FAN, 0, vcount );
+#else
 	glDrawArrays( GL_POLYGON, 0, vcount );
+#endif
 
 	// disable vertex arrays
 //	RO_ClientState( VTXARRAY_NONE );
@@ -611,7 +617,13 @@ void RO_TexMapPoly( SVertexExList *svertexlist, GenObject *baseobj, Face *face, 
 	}
 
 	// actually draw polygon
+#ifndef GL_POLYGON
+	// GL_POLYGON isn't supported in GLES or modern GL.
+	// FIXME: naive triangle fans can't represent all simple polygons!
+	glDrawArrays( GL_TRIANGLE_FAN, 0, vcount );
+#else
 	glDrawArrays( GL_POLYGON, 0, vcount );
+#endif
 
 	// disable vertex arrays
 //	RO_ClientState( VTXARRAY_NONE );

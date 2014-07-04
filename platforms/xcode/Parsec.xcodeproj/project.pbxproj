@@ -430,8 +430,6 @@
 		FAA251AE17647A6600A0756F /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = /Library/Frameworks/SDL2.framework; sourceTree = "<absolute>"; };
 		FAA251B017647A6A00A0756F /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_mixer.framework; path = /Library/Frameworks/SDL2_mixer.framework; sourceTree = "<absolute>"; };
 		FAADE0FC16AB271B005D7250 /* glew.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glew.c; sourceTree = "<group>"; };
-		FAADE0FE16AB271B005D7250 /* glxew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glxew.h; sourceTree = "<group>"; };
-		FAADE0FF16AB271B005D7250 /* wglew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wglew.h; sourceTree = "<group>"; };
 		FAB135B4164DAB73006CBB88 /* aud_sdlmixer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = aud_sdlmixer.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		FAB135B6164DAB97006CBB88 /* inp_keyn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inp_keyn.h; sourceTree = "<group>"; };
 		FAB135B8164DAFA0006CBB88 /* keys_sdl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys_sdl.h; sourceTree = "<group>"; };
@@ -1293,8 +1291,6 @@
 			children = (
 				FAADE0FC16AB271B005D7250 /* glew.c */,
 				FA82524016AD50DD003A9277 /* glew.h */,
-				FAADE0FE16AB271B005D7250 /* glxew.h */,
-				FAADE0FF16AB271B005D7250 /* wglew.h */,
 			);
 			path = glew;
 			sourceTree = "<group>";

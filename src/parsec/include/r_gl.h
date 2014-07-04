@@ -8,8 +8,19 @@
 
 // include OpenGL headers -----------------------------------------------------
 
+// FIXME: use gles header instead of glew when compiling for OpenGL ES.
 #include <glew/glew.h>
 
+
+#ifdef GL_VERSION_ES_CM_1_1
+
+// Ugly hacks to work around trivial incompatibilities between GL and GLES.
+// FIXME: Make this better!
+#define glOrtho glOrthof
+#define glClearDepth glClearDepthf
+#define glDepthRange glDepthRangef
+
+#endif
 
 
 // define basic vertex types --------------------------------------------------

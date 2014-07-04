@@ -463,7 +463,7 @@ void SDL_RCSetup()
 #endif
 
 	// select reversed depth range
-	glDepthRange( 1.0, 0.0 ); // FIXME: glDepthRangef on GLES
+	glDepthRange( 1.0, 0.0 );
 
 	// no transformation
 	glMatrixMode( GL_MODELVIEW );

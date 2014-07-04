@@ -557,10 +557,11 @@ void DO_KillProjection()
 	glLoadIdentity();
 	extern GLfloat gl_orthogonal_params[];
 	//SDL_CalcOrthogonalMatrix();
-	// FIXME: glOrthof on GLES1
+
 	glOrtho( gl_orthogonal_params[ 0 ], gl_orthogonal_params[ 1 ],
 			 gl_orthogonal_params[ 2 ], gl_orthogonal_params[ 3 ],
 			 gl_orthogonal_params[ 4 ], gl_orthogonal_params[ 5 ] );
+
 #else
 	extern GLfloat gl_orthogonal_matrix[];
 	glLoadMatrixf( gl_orthogonal_matrix );
@@ -1147,7 +1148,15 @@ void D_DrawIterPolygon3( IterPolygon3 *itpoly, dword cullmask )
 
 	// draw n-gon
 	INIT_GL_ARRAYS( itpoly, 0, itpoly->NumVerts );
+
+#ifndef GL_POLYGON
+	// GL_POLYGON isn't supported in GLES or modern GL.
+	// FIXME: naive triangle fans can't represent all simple polygons!
+	glDrawArrays( GL_TRIANGLE_FAN, 0, itpoly->NumVerts );
+#else
 	glDrawArrays( GL_POLYGON, 0, itpoly->NumVerts );
+#endif
+
 	DEINIT_GL_ARRAYS( itpoly );
 
 	// set rasterizer state to default

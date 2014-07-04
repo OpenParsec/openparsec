@@ -419,12 +419,18 @@ void RO_CheckTexParams( texmementry_s *texentry )
 	} else {
 		texparams |= TEXPARAMS_WRAPPING_ON;
 	}
-	
+
+#ifndef GL_VERSION_ES_CM_1_1
 	// anisotropic filtering on mipmapped textures, if supported
 	if ( GLEW_EXT_texture_filter_anisotropic && anisotropy != ( mipmappingon ? AUX_ANISOTROPIC_FILTERING : 0 ) ) {
 		anisotropy = mipmappingon ? AUX_ANISOTROPIC_FILTERING : 0;
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, max((GLfloat) anisotropy, 1.0f) );
 	}
+#else
+	// FIXME: anisotropic filtering can be supported by GLES implementations,
+	// we just have to have code to check the extension.
+	anisotropy = 0;
+#endif
 
 	// compare desired state with current state
 	dword statecmp = (texentry->texparams & 0xFF) ^ texparams;
@@ -677,12 +683,15 @@ texmementry_s *RO_CacheTexture( GLTexInfo *texinfo, int expand )
 
 	if ( mipmappingon && texinfo->lodsmall != TEXLOD_1 ) {
 
+#ifndef GL_VERSION_ES_CM_1_1
 		// We have to tell OpenGL if not all mipmap levels are present.
 		int maxlevel = texinfo->lodlarge - texinfo->lodsmall;
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, maxlevel);
-
-		// TODO: This isn't supported on GLES, so we should disable mipmapping
-		// (or let OpenGL generate the mipmaps) for this texture in that case.
+#else
+		// GL_TEXTURE_MAX_LEVEL isn't supported on GLES, so we'll disable
+		// mipmapping for now.
+		mipmappingon = FALSE;
+#endif
 	}
 
 	// set filter params accordingly
@@ -702,11 +711,17 @@ texmementry_s *RO_CacheTexture( GLTexInfo *texinfo, int expand )
 	
 	
 	// set anisotropic filtering levels on mipmapped textures if supported
-	int anisotropy = 1;
+	int anisotropy = 0;
+#ifndef GL_VERSION_ES_CM_1_1
 	if ( GLEW_EXT_texture_filter_anisotropic ) {
 		anisotropy = mipmappingon ? AUX_ANISOTROPIC_FILTERING : 1;
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, max((GLfloat) anisotropy, 1.0f) );
 	}
+#else
+	// FIXME: anisotropic filtering can be supported by GLES implementations,
+	// we just have to have code to check the extension.
+	anisotropy = 0;
+#endif
 
 	// download all mipmap levels
 	RO_DownloadTexture( texinfo, mipmappingon );
