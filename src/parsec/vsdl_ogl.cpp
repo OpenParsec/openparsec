@@ -579,7 +579,7 @@ int VSDL_InitOGLMode()
     const char *driver = SDL_GetCurrentVideoDriver();
 
     // We always want to use OpenGL ES on some video backends.
-    if (driver && strstr(driver, "RPI")) {
+    if (driver && (strstr(driver, "RPI") || strstr(driver, "uikit"))) {
         contextprofile |= SDL_GL_CONTEXT_PROFILE_ES;
 
         // OpenGL ES 1.1 for now...

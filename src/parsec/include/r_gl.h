@@ -5,11 +5,16 @@
 #ifndef _R_GL_H_
 #define _R_GL_H_
 
+#include "platform.h"
 
 // include OpenGL headers -----------------------------------------------------
 
-// FIXME: use gles header instead of glew when compiling for OpenGL ES.
+#if defined(SYSTEM_TARGET_IOS)
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
+#else
 #include <glew/glew.h>
+#endif
 
 
 #ifdef GL_VERSION_ES_CM_1_1

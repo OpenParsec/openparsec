@@ -45,6 +45,8 @@
 	#define SYSTEM_TEXT			"/linux "
 #elif defined( SYSTEM_TARGET_OSX )
 	#define SYSTEM_TEXT			"/osx "
+#elif defined( SYSTEM_TARGET_IOS )
+	#define SYSTEM_TEXT			"/ios "
 #else
 	#define SYSTEM_TEXT			"/unknown "
 #endif

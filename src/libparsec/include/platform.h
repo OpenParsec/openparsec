@@ -19,9 +19,14 @@
 #	define SYSTEM_TARGET_WINDOWS
 // support XP, for some reason...
 #define _WIN32_WINNT _WIN32_WINNT_WS03
-
-#elif defined(__APPLE__) // TODO: check for iOS using TargetConditionals.h
-#	define SYSTEM_TARGET_OSX
+#elif defined(__APPLE__)
+#	include <AvailabilityMacros.h>
+#	include <TargetConditionals.h>
+#	if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+#		define SYSTEM_TARGET_IOS
+#	elif TARGET_OS_MAC
+#		define SYSTEM_TARGET_OSX
+#	endif
 #elif defined(linux) || defined(__linux)
 #	define SYSTEM_TARGET_LINUX
 #endif
