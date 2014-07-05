@@ -279,14 +279,18 @@ static char package_name_3[]	= "pscdata3.dat";
 INLINE
 void SLm_InitFileSystem()
 {
+	bool no_pack=false;
 	// make sure mp3s contained in sound package are converted to wav
 	if ( !SYS_ConvertPackageMP3s( package_name_2, 0 ) ) {
-		FERROR( package_error, package_name_2 );
+		MSGOUT( package_error, package_name_2 );
+		no_pack=true;
 	}
 
 	// register mandatory main data package
 	if ( !SYS_RegisterPackage( DATA_PACKAGE_NAME, DATA_PACKAGE_OFFSET, NULL ) ) {
-		FERROR( package_error, DATA_PACKAGE_NAME );
+		MSGOUT( package_error, DATA_PACKAGE_NAME );
+		no_pack=true;
+
 	}
 
 	// register optional package 1
@@ -298,8 +302,10 @@ void SLm_InitFileSystem()
 	// register third package (new data introduced with build 0196)
 	SYS_RegisterPackage( package_name_3, 0, NULL );
 	
-	//  duplicate files in pscdata2.dat with newer versions in pscdata3.dat
-	SYS_OverridePackage( package_name_2, package_name_3 );
+	if(!no_pack){
+		//  duplicate files in pscdata2.dat with newer versions in pscdata3.dat
+		SYS_OverridePackage( package_name_2, package_name_3 );
+	}
 
 	if(!SYS_CheckDataVersion()){
 		MSGOUT("ERROR: OpenParsec Data File Version Mismatch!");
