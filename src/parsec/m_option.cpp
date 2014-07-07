@@ -87,6 +87,8 @@ bool mod_player_name;
 //
 static char not_available[]			= "not available  ";
 
+bool highlight_locked = false;
+
 
 // options menu configuration and state variables -----------------------------
 //
@@ -315,10 +317,12 @@ void OptionsListSelectDefault()
 //
 void OptionsListCursorUp()
 {
-	if ( --cur_opmenu_selindx < 0 )
-		cur_opmenu_selindx = cur_opmenu_size - 1;
+	if(!highlight_locked) {
+		if ( --cur_opmenu_selindx < 0 )
+			cur_opmenu_selindx = cur_opmenu_size - 1;
 
-	AUD_Select2();
+		AUD_Select2();
+	}
 }
 
 
@@ -326,10 +330,12 @@ void OptionsListCursorUp()
 //
 void OptionsListCursorDown()
 {
-	if ( ++cur_opmenu_selindx >= cur_opmenu_size )
-		cur_opmenu_selindx = 0;
+	if(!highlight_locked) {
+		if ( ++cur_opmenu_selindx >= cur_opmenu_size )
+			cur_opmenu_selindx = 0;
 
-	AUD_Select2();
+		AUD_Select2();
+	}
 }
 
 
@@ -343,39 +349,43 @@ static list_window_metrics_s options_content_metrics = { FALSE };
 //
 int MouseOverOption( int mousex, int mousey )
 {
-	if ( !options_content_metrics.valid )
-		return MOUSE_OVER_NOTHING;
+	if(!highlight_locked){
+		if ( !options_content_metrics.valid )
+			return MOUSE_OVER_NOTHING;
 
-	if ( !SlideFinishedOptions() )
-		return MOUSE_OVER_NOTHING;
+		if ( !SlideFinishedOptions() )
+			return MOUSE_OVER_NOTHING;
 
-	int chwidth   = options_content_metrics.chwidth;
-	int chheight  = options_content_metrics.chheight;
-	int text_x    = options_content_metrics.text_x;
-	int text_y    = options_content_metrics.text_y;
-	int linewidth = options_content_metrics.maxcontwidth * chwidth;
+		int chwidth   = options_content_metrics.chwidth;
+		int chheight  = options_content_metrics.chheight;
+		int	text_x    = options_content_metrics.text_x;
+		int text_y    = options_content_metrics.text_y;
+		int linewidth = options_content_metrics.maxcontwidth * chwidth;
+			
+		// check against options menu items
+		for ( int mid = 0; mid < cur_opmenu_size; mid++ ) {
 
-	// check against options menu items
-	for ( int mid = 0; mid < cur_opmenu_size; mid++ ) {
+			if ( ( mousex >= text_x ) && ( mousex < ( text_x + linewidth ) ) &&
+				 ( mousey >= text_y ) && ( mousey < ( text_y + chheight ) ) ) {
+						
+				// set selected index directly
+				if ( cur_opmenu_selindx != mid )
+					AUD_Select2();
+				cur_opmenu_selindx = mid;
 
-		if ( ( mousex >= text_x ) && ( mousex < ( text_x + linewidth ) ) &&
-			 ( mousey >= text_y ) && ( mousey < ( text_y + chheight ) ) ) {
+				return MOUSE_OVER_OPTION;
+			}
 
-			// set selected index directly
-			if ( cur_opmenu_selindx != mid )
-				AUD_Select2();
-			cur_opmenu_selindx = mid;
-
-			return MOUSE_OVER_OPTION;
-		}
-
-		text_y += chheight;
-		if ( option_spacing[ mid ] != OPT_SPACING_NONE ) {
 			text_y += chheight;
+			if ( option_spacing[ mid ] != OPT_SPACING_NONE ) {
+				text_y += chheight;
+			}
 		}
-	}
 
-	return MOUSE_OVER_NOTHING;
+		return MOUSE_OVER_NOTHING;
+	} else {
+		return MOUSE_OVER_OPTION;
+	}
 }
 
 
@@ -490,6 +500,8 @@ void InitOptionsWindow()
 	enable_dynamic_options = Op_Mouse;
 
 	mode_init_done = TRUE;
+	highlight_locked = false;
+	mod_player_name = false;
 }
 
 
@@ -775,14 +787,17 @@ void ExecOptionSelectCenterSpeed()
 PRIVATE
 void ExecOptionSelectName()
 {
+
 	// toggle the flag to modify the LocalPlayerName
 	mod_player_name = !mod_player_name;
 	if(mod_player_name) {
 		// if we are modifying the player, copy the local player
 		// name to paste_str for editing.
 		strncpy(tmp_name, LocalPlayerName, MAX_PLAYER_NAME + 1);
+		highlight_locked = true;
 	} else {
 		CheckPlayerName(tmp_name);
+		highlight_locked = false;
 		//strncpy(LocalPlayerName, tmp_name, MAX_PLAYER_NAME + 1);
 	}
 		
@@ -1361,7 +1376,9 @@ void OptionsKeyPressed(int key)
 	} else if (key == MKC_ENTER) {
 		ExecOptionSelectName();
 	} else if (key == MKC_ESCAPE) {
+		
 		mod_player_name = false; // exit with no modification
+		highlight_locked = false;
 	}
 }
 
