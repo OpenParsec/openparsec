@@ -539,9 +539,11 @@ void NET_RmEvListUpdateLocations()
 
 		}
 
+		byte relist_sz = NET_RmEvGetSize( relist );
+
 		// advance to next event
 		ASSERT( ( relist->RE_BlockSize == RE_BLOCKSIZE_INVALID ) ||
-				( relist->RE_BlockSize == NET_RmEvGetSize( relist ) ) );
+				( relist->RE_BlockSize == relist_sz ) );
 		relist = (RE_Header *) ( (char *) relist + NET_RmEvGetSize( relist ) );
 	}
 }

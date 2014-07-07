@@ -108,8 +108,8 @@ static size_t re_sizes[] = {
 	sizeof( RE_ServerLinkInfo ),
 	sizeof( RE_MapObject ),
 	sizeof( RE_Stargate ),
-	sizeof( RE_Teleporter),
     sizeof( RE_CreateMine ),
+	sizeof( RE_Teleporter),
 };
 
 
