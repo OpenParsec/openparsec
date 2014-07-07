@@ -64,6 +64,7 @@
 #include "obj_game.h"
 #include "net_glob.h"
 #include "od_class.h"
+#include "g_emp.h"
 
 static int botwait = 0;
 
@@ -354,6 +355,9 @@ int_command_s botchar_int_commands[] = {
 	{ 0x00, NULL, 0,0,NULL, NULL, NULL, 0 },
 };
 
+#define BOT_REPAIR_LEVEL 0.5F
+#define BOT_ENERGY_LEVEL 0.1F
+#define BOT_GMISSL_LEVEL 0.5F
 
 // ctor -----------------------------------------------------------------------
 //
@@ -371,9 +375,10 @@ BOT_Character::BOT_Character()
 //
 void BOT_Character::Reset()
 {
-	m_fPlanInterval			= 1.0f;		
+	m_fPlanInterval			= 100000.f;		
 	m_fGoalCheckInterval	= 0.1f;		// goal checking at 10Hz 
 	m_fInputChangeInterval	= 0.1f;		// input at 10Hz
+	m_emp_delay				= 0.0f;
 }
 
 // select the attack target ---------------------------------------------------
@@ -404,7 +409,11 @@ ShipObject* BOT_Character::SelectAttackTarget( ShipObject* pAttacker )
 		
 		pShip = (ShipObject *) pShip->NextObj;
 	}
+	if(pCurTarget != NULL) {
 
+		// set the target tracking to be the host object we just aquired.
+		TargetObjNumber = pCurTarget->HostObjNumber;
+	}
 	return pCurTarget;
 }
 
@@ -417,10 +426,7 @@ void BOT_AI::DoThink()
         // count down fire disable delay
 	// get the agent position for this frame
 	FetchTVector( m_pShip->ObjPosition, &m_AgentPos );
-	// count down fire disable delay
-	if ( FireDisable > 0 ) {
-		FireDisable -= CurScreenRefFrames;
-	}
+
 
 	// do planning ?
 	if ( m_PlanTimeout.IsTimeout() ) {
@@ -431,17 +437,17 @@ void BOT_AI::DoThink()
 	if ( m_GoalCheckTimeout.IsTimeout() ) {
 		// check goals for completion and define new goals
 		switch ( m_nAgentMode ) {
+			case AGENTMODE_RETREAT:
+				_GoalCheck_AgentMode_Retreat();
+				break;
+			case AGENTMODE_ATTACK:
+				_GoalCheck_AgentMode_Attack();
+				break;
 			case AGENTMODE_IDLE:
 				_GoalCheck_AgentMode_Idle();
 				break;
 			case AGENTMODE_POWERUP:
 				_GoalCheck_AgentMode_Powerup();
-				break;
-			case AGENTMODE_ATTACK:
-				_GoalCheck_AgentMode_Attack();
-				break;
-			case AGENTMODE_RETREAT:
-				_GoalCheck_AgentMode_Retreat();
 				break;
 			default:
 				ASSERT( FALSE );
@@ -456,6 +462,12 @@ void BOT_AI::DoThink()
 		_SteerToPosition( m_State.GetCurGoal()->GetGoalPosition(),  m_State.GetObjectControl() );
 	}
 
+	// maintain counters
+	m_Character.SetEMPDelay(m_Character.GetEMPDelay() - .03);
+	if ( FireRepeat > 0 ) {
+		FireRepeat -= CurScreenRefFrames;
+	}
+
 	// actually control the object
 	OCT_DoControl( m_State.GetObjectControl() );
 }
@@ -465,35 +477,46 @@ void BOT_AI::DoThink()
 // 
 void BOT_AI::_DoPlan()
 {
-      ShipObject*      pTargetObject;
-      BOT_Goal* pGoal	= m_State.GetCurGoal();
-      
-	  if(m_pShip->CurDamage > (m_pShip->MaxDamage * 0.9)) { //90% damage
-	      m_nAgentMode = AGENTMODE_RETREAT;
-	      return;
-	  }
-	  if(m_pShip->CurEnergy < (m_pShip->MaxEnergy * 0.1)) { //10% energy left
-	      m_nAgentMode = AGENTMODE_RETREAT;
-		  return;
-	  }
-	  if(NumRemPlayers > 1)
-          pTargetObject = m_Character.SelectAttackTarget( m_pShip ); //Check for target
-      else 
-	      pTargetObject = NULL;
-      // no target
-      if ( pTargetObject == NULL ) {
-          ExtraObject* pObject = FetchFirstExtra(); //Check for powerups
-	      if(pObject != NULL) {
-	         m_nAgentMode = AGENTMODE_POWERUP;
-           
-	      } else {
-	         m_nAgentMode = AGENTMODE_IDLE;
-	      }
-      } else {
-	     m_nAgentMode = AGENTMODE_ATTACK; 
-      }
-}
+	MSGOUT("BOT_AI::_DoPlan() Execute New Plan, MODE: %i\n", m_nAgentMode);
 
+    ShipObject*      pTargetObject;
+    BOT_Goal* pGoal	= m_State.GetCurGoal();
+	if(m_pShip->CurDamage > (m_pShip->MaxDamage * BOT_REPAIR_LEVEL)) { //90% damage
+		m_nAgentMode = AGENTMODE_RETREAT;
+		MSGOUT("Want Repair in DoPlan");
+	    return;
+	}
+	
+	if(m_pShip->NumHomMissls < (m_pShip->MaxNumHomMissls * BOT_GMISSL_LEVEL)) {
+		m_nAgentMode = AGENTMODE_RETREAT;
+		MSGOUT("Want Missles in DoPlan");
+		return;
+	}
+
+	if(m_pShip->CurEnergy < (m_pShip->MaxEnergy * BOT_ENERGY_LEVEL)) { //10% energy left
+		m_nAgentMode = AGENTMODE_RETREAT;
+		MSGOUT("Want Energy in DoPlan");
+		return;
+	}
+	if(NumRemPlayers > 1){
+		pTargetObject = m_Character.SelectAttackTarget( m_pShip ); //Check for target
+		if(pTargetObject != NULL) {
+			m_nAgentMode = AGENTMODE_ATTACK;
+			return;
+		}	
+	} else {
+
+		if ( pTargetObject == NULL ) {
+			ExtraObject* pObject = FetchFirstExtra(); //Check for powerups
+			if(pObject != NULL) {
+				m_nAgentMode = AGENTMODE_POWERUP;
+           
+			} else {
+				m_nAgentMode = AGENTMODE_IDLE;
+			}
+		} 
+	}
+}
 
 // ----------------------------------------------------------------------------
 //
@@ -505,6 +528,10 @@ void BOT_AI::_GoalCheck_AgentMode_Idle()
 #ifdef BOT_LOGFILES
 		BOT_MsgOut( "new goal position: %f %f %f", pGoalPos->X, pGoalPos->Y, pGoalPos->Z );
 #endif // BOT_LOGFILES
+		// Don't want to sit idle, so...
+		// get a new plan
+	   m_PlanTimeout.Reset();
+	   _DoPlan();
 //	}
 }
 
@@ -543,11 +570,58 @@ void BOT_AI::_GoalCheck_AgentMode_Powerup()
 	if ( len < 100.0f )  {
 #ifdef BOT_LOGFILES
 	   BOT_MsgOut("Clearing Goal");
-	   pGoal->SetTargetObject(NULL);
+	   
 #endif	   
+	   pGoal->SetTargetObject(NULL);
+	   
+	   // get a new plan
+	   m_PlanTimeout.Reset();
+	   _DoPlan();
 	}
   
 }
+
+// check whether the target is in range for weapons ------------------------
+
+int BOT_AI::_TargetInRange( ShipObject *ship, ShipObject *target, geomv_t range )
+{
+
+	//XXX: Taken from other collision detection need to check that it works right.
+
+	ASSERT( target != NULL );
+	ASSERT( ship != NULL );
+
+	
+
+	Vector3 tgtnormal;
+	FetchZVector( target->ObjPosition, &tgtnormal );
+
+	Vertex3 tgtpos;
+	FetchTVector( target->ObjPosition, &tgtpos );
+
+	Vertex3 shippos;
+	FetchTVector( ship->ObjPosition, &shippos );
+
+	geomv_t shipdot  = -DOT_PRODUCT( &tgtnormal, &shippos );
+	geomv_t tgtdot  = -DOT_PRODUCT( &tgtnormal, &tgtpos );
+	geomv_t distance = shipdot - tgtdot;
+
+	// not in range if ship in wrong halfspace ( target behind us )
+	if ( ! GEOMV_NEGATIVE( distance ) ) {
+		return FALSE;
+	}
+
+
+
+	// inside the activation distance/range ?
+	if ( distance < range ) {
+
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
 
 
 
@@ -560,6 +634,26 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 	ASSERT( pGoal != NULL );
 
 	//FIXME: here we should also evaluate whether we pick another target
+
+
+	
+	// check our stats and get a new plan if we are low on energy, damage, or missles.
+	if(m_pShip->NumHomMissls < (m_pShip->MaxNumHomMissls * BOT_GMISSL_LEVEL)) {
+		m_nAgentMode = AGENTMODE_RETREAT;
+		MSGOUT("Want Missles in Attack");
+		return;
+	}
+	if(m_pShip->CurDamage > (m_pShip->MaxDamage * BOT_REPAIR_LEVEL)) { //90% damage
+	     m_nAgentMode = AGENTMODE_RETREAT;
+		 MSGOUT("Want repair in Attack");
+	     return;
+	}
+	if(m_pShip->CurEnergy < (m_pShip->MaxEnergy * BOT_ENERGY_LEVEL)) { //10% energy left
+	    m_nAgentMode = AGENTMODE_RETREAT;
+		MSGOUT("Want Energy in Attack");
+		return;
+	}
+
 
 	// select a target, if none, or no ship selected as target 
 	GenObject*	pTargetObject = pGoal->GetTargetObject();
@@ -606,12 +700,13 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 	BOT_MsgOut( "BOT: distance to target: %f", len );
 #endif
 #define MIN_DISTANCE_TO_TARGET 100.0f
-        if ( len < 500.0F) {
-			    if ( FireRepeat > 0 ) {
-			       FireRepeat -= CurScreenRefFrames;
-        		}
+
+	// TODO: Check to see if we are facing the target.
+	if(_TargetInRange(MyShip, (ShipObject *)pTargetObject, 1000.0F)) {
+        if ( len < 750.0F) {
+
                 if ( ( FireRepeat > 0 ) || ( FireDisable > 0 ) ) {
-		    //do nothing!
+					//do nothing!
                 } else {
       
                 // create laser
@@ -623,8 +718,30 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
                    if ( ( FireDisable += MyShip->FireDisableDelay ) <= 0 ) {
                       FireDisable = 1;
                    }
-		}
+				}
+			}
+
+			// give bots the ability to fire homing missiles?  Evil.
+			if (len > 500.0F ) {
+				SelectedMissile = 1;
+				// check to see if we locked on the target
+				if(TargetLocked ) {
+					// we are locked on, attempt to fire a homing missile.
+					OBJ_LaunchHomingMissile(m_pShip, CurLauncher, TargetObjNumber);
+				}
+			}
+			if(len < 200.0F ) {
+				//: Fire EMP 
+				if ( m_Character.GetEMPDelay() < 0.0f) {
+                   WFX_EmpBlast(m_pShip);
+				   m_Character.SetEMPDelay(1.0f);
+				} 
+					
+
+				
+			}
 	}
+
 	if ( len < MIN_DISTANCE_TO_TARGET )  {
                 		
 		// if nearby goal, we stay where we are
@@ -651,18 +768,14 @@ ExtraObject* BOT_Character::SelectRepairObject()
 	for ( ExtraObject* pSearch = FetchFirstExtra(); pSearch != NULL; ) {
 
 		if ( pCurTarget == NULL ) { //Save what we find first, if it matches great if not, search on
-			pCurTarget = pSearch;
-			if(pCurTarget->ObjectType == EXTRA1TYPE) {
-			   Extra1Obj *extra1po = (Extra1Obj *) pCurTarget;
-			   if( extra1po->ObjectClass == REPAIR_EXTRA_CLASS)
-				   return pCurTarget; //found it first try!
-			}
-		} else {
-			//Find Repair module 
 			if(pSearch->ObjectType == EXTRA1TYPE) {
 			   Extra1Obj *extra1po = (Extra1Obj *) pSearch;
-			   if( extra1po->ObjectClass == REPAIR_EXTRA_CLASS)
-				   return pSearch; //found it first try!
+			   if(extra1po != NULL) {
+					if( extra1po->ObjectClass == REPAIR_EXTRA_CLASS){
+						pCurTarget = pSearch;
+						return pCurTarget; //found it first try!
+					}
+			   }
 			}
 		}
 		pSearch = (ExtraObject *) pSearch->NextObj;
@@ -679,20 +792,43 @@ ExtraObject* BOT_Character::SelectEnergyObject()
 	for ( ExtraObject* pSearch = FetchFirstExtra(); pSearch != NULL; ) {
 
 		if ( pCurTarget == NULL ) { //Save what we find first, if it matches great if not, search on
-			pCurTarget = pSearch;
-			if(pCurTarget->ObjectType == EXTRA1TYPE) {
-			   Extra1Obj *extra1po = (Extra1Obj *) pCurTarget;
-			   if( extra1po->ObjectClass == ENERGY_EXTRA_CLASS)
-				   return pCurTarget; //found it first try!
-			}
-		} else {
-			//Find Repair module 
+			
 			if(pSearch->ObjectType == EXTRA1TYPE) {
 			   Extra1Obj *extra1po = (Extra1Obj *) pSearch;
-			   if( extra1po->ObjectClass == ENERGY_EXTRA_CLASS)
-				   return pSearch; //found it first try!
+			   if(extra1po != NULL) {
+					if( extra1po->ObjectClass == ENERGY_EXTRA_CLASS){
+						pCurTarget = pSearch;
+						return pCurTarget; //found it first try!
+					}
+			   }
 			}
-		}
+		} 
+		pSearch = (ExtraObject *) pSearch->NextObj;
+	}
+	return pCurTarget; //Return Original or NULL search item as we couldnt find the energy module
+}
+
+
+// search for the energy module ---------------------------------------------------
+//
+ExtraObject* BOT_Character::SelectHomingMissileObject()
+{
+	ExtraObject* pCurTarget = NULL;
+	
+	for ( ExtraObject* pSearch = FetchFirstExtra(); pSearch != NULL; ) {
+
+		if ( pCurTarget == NULL ) { //Save what we find first, if it matches great if not, search on
+			
+			if(pSearch->ObjectType == EXTRA2TYPE) {
+			   Extra2Obj *extra2po = (Extra2Obj *) pSearch;
+			   if(extra2po != NULL) {
+					if( extra2po->ObjectClass == GUIDE_PACK_CLASS){
+						pCurTarget = pSearch;
+						return pCurTarget; //found it first try!
+					}
+			   }
+			}
+		} 
 		pSearch = (ExtraObject *) pSearch->NextObj;
 	}
 	return pCurTarget; //Return Original or NULL search item as we couldnt find the energy module
@@ -708,19 +844,49 @@ void BOT_AI::_GoalCheck_AgentMode_Retreat()
 	ASSERT( pGoal != NULL );
     
 	if(pGoal->GetTargetObject() == NULL) {
-        if(m_pShip->CurDamage > (m_pShip->MaxDamage * 0.9)) {
-	       pObject = m_Character.SelectRepairObject();
-	    }
-	    if(m_pShip->CurEnergy < (m_pShip->MaxEnergy * 0.1)) {
+        
+		// third is to get some guided missles.
+		if(m_pShip->NumHomMissls < (m_pShip->MaxNumHomMissls * BOT_GMISSL_LEVEL)) {
+			pObject = m_Character.SelectHomingMissileObject();
+			m_nAgentMode = AGENTMODE_RETREAT;
+			MSGOUT("BOT: Want Guided Missles.");
+		}
+
+
+		// second highest priority is to re-energize
+		if(m_pShip->CurEnergy < (m_pShip->MaxEnergy * BOT_ENERGY_LEVEL)) {
 			pObject = m_Character.SelectEnergyObject();
 			m_nAgentMode = AGENTMODE_RETREAT;
+			MSGOUT("BOT: Want Energy.");
+	    }
+
+		// highest priority is to repair ourself
+		if(m_pShip->CurDamage > (m_pShip->MaxDamage * BOT_REPAIR_LEVEL)){
+	       pObject = m_Character.SelectRepairObject();
+		   m_nAgentMode = AGENTMODE_RETREAT;
+		   MSGOUT("BOT: Want Repair.");
 	    }
 		if(pObject == NULL) {
-            m_nAgentMode = AGENTMODE_IDLE;
+            m_nAgentMode = AGENTMODE_RETREAT;
+			MSGOUT("BOT: Didn't get a powerup.");
+			//TODO: Perhaps force it to do something else for a while.
+			m_PlanTimeout.Reset();
+			_DoPlan();
             return;
          }
-         pGoal->SetTargetObject(pObject);
-         FetchTVector( pObject->ObjPosition, pGoalPos );
+		
+		Vector3 vec2Target_chk;
+		Vector3 GoalPos_chk;
+		FetchTVector( pObject->ObjPosition, &GoalPos_chk );
+		// if the target is greater than 15000 away, get something else.
+		if((VctLenX(&GoalPos_chk) - VctLenX(&m_AgentPos))> 15000.0F){
+			pObject=NULL;
+			//m_nAgentMode = AGENTMODE_IDLE;
+            return;
+		}
+
+		pGoal->SetTargetObject(pObject);
+        FetchTVector( pObject->ObjPosition, pGoalPos );
 #ifdef BOT_LOGFILES
 		 BOT_MsgOut("Retreat: Targetting Extra");
 #endif
@@ -741,7 +907,8 @@ void BOT_AI::_GoalCheck_AgentMode_Retreat()
 	   BOT_MsgOut("Clearing Goal");
 #endif
 	   pGoal->SetTargetObject(NULL);
-	   
+	   m_PlanTimeout.Reset();
+	   _DoPlan();
 	}
 
 }
@@ -864,6 +1031,7 @@ void BOT_ClientSide::DoThink()
 
 	// AI only active if connected & joined & we have the full state received from the server
 	if ( NetConnected && NetJoined & HaveFullPlayerState ) {
+		
 		BOT_AI::DoThink();
 	}
 }
@@ -905,7 +1073,7 @@ int BOT_CallThink( void* param )
 {
 	ASSERT( param != NULL );
 	BOT_ClientSide* pBot = (BOT_ClientSide*) param;
-
+	
 	pBot->DoThink();
 
 	return TRUE;

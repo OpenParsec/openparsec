@@ -153,6 +153,7 @@ protected:
 	float		m_fPlanInterval;			// planning interval in secs 
 	float		m_fGoalCheckInterval;		// goal checking interval in secs
 	float		m_fInputChangeInterval;		// input change interval in secs
+	float		m_emp_delay;
 
 public:
 
@@ -166,11 +167,14 @@ public:
 	ShipObject* SelectAttackTarget( ShipObject* pAttacker );
 	ExtraObject* SelectEnergyObject();
 	ExtraObject* SelectRepairObject();
+	ExtraObject* SelectHomingMissileObject();
 
 	// getters
 	float GetPlanInterval_sec() const			{ return m_fPlanInterval; }
 	float GetGoalCheckInterval_sec() const		{ return m_fGoalCheckInterval; }
 	float GetInputChangeInterval_sec() const	{ return m_fInputChangeInterval; }
+	float GetEMPDelay() { return m_emp_delay; };
+	void  SetEMPDelay(float emp_delay) {m_emp_delay = emp_delay;};
 
 	// friend functions
 	friend void RealizeBotChar();
@@ -304,7 +308,7 @@ protected:
 	void _GoalCheck_AgentMode_Powerup();
 	void _GoalCheck_AgentMode_Attack();
 	void _GoalCheck_AgentMode_Retreat();
-
+	int _TargetInRange( ShipObject *ship, ShipObject *target, geomv_t range );
 	void _SteerToPosition( Vector3* targetPos, object_control_s* pObjctl );
 };
 
