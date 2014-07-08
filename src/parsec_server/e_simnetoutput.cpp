@@ -1041,7 +1041,7 @@ void E_SimNetOutput::RecalcAveragePacketSizes()
 void E_SimNetOutput::BufferForMulticastRE( RE_Header* relist, int nSenderClientID, int reliable )
 {
 	ASSERT( relist != NULL );
-	ASSERT( (( nSenderClientID >= 0 ) && ( nSenderClientID < MAX_NUM_CLIENTS )) || nSenderClientID == PLAYERID_ANONYMOUS );
+	ASSERT( ( nSenderClientID >= 0  ) || nSenderClientID == PLAYERID_ANONYMOUS );
 	//ASSERT( !TheSimulator->IsPlayerDisconnected( nSenderClientID ) || nSenderClientID == PLAYERID_ANONYMOUS );
 
 	// buffer RE to be distributed to all other clients
