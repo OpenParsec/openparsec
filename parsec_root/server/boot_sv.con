@@ -231,10 +231,10 @@ prop laser_2.energy        5
 prop laser_3.hitpoints     7
 prop laser_3.energy        5
 
-nebula.id 5
+nebula.id 3
 ;extras
 
-extras.max                35
+extras.max                3
 
 energy.boost              360
 repair.boost              20
@@ -267,10 +267,10 @@ prob.swarm                2
 ;------------------------------------------------------------------------------
 ; server config
 ;------------------------------------------------------------------------------
-sv.conf 			name 		server1.openparsec.com
-sv.conf				maxplayers 	16
+sv.conf 			name 		pi.openparsec.com
+sv.conf				maxplayers 	8
 sv.conf				simfreq		100
-sv.serverid			10
+sv.serverid			3
 ;sv.fedid			0
 
 
@@ -302,7 +302,7 @@ write loading map
 ;------------------------------------------------------------------------------
 ; Teleporters
 ;------------------------------------------------------------------------------
-;tp.create pos (500 500 500) expos (200 2000 2000) exit_rot_phi 50 exit_rot_theta 180
+tp.create pos (500 500 500) expos (200 2000 2000) exit_rot_phi 50 exit_rot_theta 180
 ;tp.create pos (1500 1500 1000) expos (0 2000 6000) exit_rot_phi 50 exit_rot_theta 180
 ;------------------------------------------------------------------------------
 ; server links

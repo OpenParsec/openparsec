@@ -376,17 +376,21 @@ void VID_SetViewingVolume()
 PRIVATE
 void VID_SetResolutionVars()
 {
-	int xres = GameScreenRes.width;
-	int yres = GameScreenRes.height;
-	
 	int bpp  = GameScreenBPP;
-	
+
 	int modeindx = GetResolutionIndex(GameScreenRes.width, GameScreenRes.height);
+
+	if (!VID_MODE_AVAILABLE(modeindx)) {
+		modeindx = (int) Resolutions.size() - 1;
+		if (VID_MODE_AVAILABLE(modeindx)) {
+			GameScreenRes = Resolutions[modeindx];
+		}
+	}
 
 	// copy basic mode info from table
 	ASSERT( VID_MODE_AVAILABLE( modeindx ) );
-	Screen_Width  = xres;
-	Screen_Height = yres;
+	Screen_Width  = GameScreenRes.width;
+	Screen_Height = GameScreenRes.height;
 	
 	// set variables according to resolution
 	
@@ -456,6 +460,14 @@ void VID_PerformSwitch()
 void VID_SwitchMode( int xres, int yres, int bpp )
 {
 	int resindex = GetResolutionIndex(xres, yres);
+
+	if (!VID_MODE_AVAILABLE(resindex)) {
+		resindex = (int) Resolutions.size() - 1;
+		if (VID_MODE_AVAILABLE(resindex)) {
+			xres = Resolutions[resindex].width;
+			yres = Resolutions[resindex].height;
+		}
+	}
 	
 	ASSERT(VID_MODE_AVAILABLE(resindex));
 

@@ -725,7 +725,7 @@ struct RE_KillObject : RE_Header { //2
 // arbitrary text
 struct RE_SendText : RE_Header { //2
 
-	char		TextStart[1];
+	char		TextStart[2];
 }; //3 - 257
 
 // player name
@@ -789,14 +789,16 @@ struct RE_CreateSwarm : RE_Header { //2
 // emp creation
 struct RE_CreateEmp : RE_Header { //2
 	byte 			Upgradelevel; //1
-	int				SenderId; // 4
-}; //7
+	int			SenderId; // 4
+        char                    pad[1]; //1
+}; //8
 
 // owner section
 struct RE_OwnerSection : RE_Header { //2
 
 	byte		owner; //1
-}; //3
+        char            pad[1]; //1
+}; //4
 
 // playerstate
 struct RE_PlayerStatus : RE_Header { //2
@@ -806,8 +808,8 @@ struct RE_PlayerStatus : RE_Header { //2
 	int		objectindex; //4
 	byte		senderid; //1
 	refframe_t	RefFrame; //4
-
-	// sizeof( RE_PlayerStatus ) = (2) + 2 + 4 + 4 + 4 = 17
+        char            pad[1];
+	// sizeof( RE_PlayerStatus ) 18
 };	
 
 
