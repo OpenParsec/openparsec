@@ -101,8 +101,9 @@ static size_t re_sizes[] = {
 	sizeof( RE_ServerLinkInfo ),
 	sizeof( RE_MapObject ),
 	sizeof( RE_Stargate ),
-	sizeof( RE_Teleporter),
     sizeof( RE_CreateMine),
+	sizeof( RE_Teleporter),
+	sizeof( RE_Generic),
 
 };
 
@@ -138,6 +139,8 @@ static const char* re_names[] = {
 	"RE_MAPOBJECT",
 	"RE_STARGATE",
     "RE_CREATEMINE",
+    "RE_TELEPORTER",
+    "RE_GENERIC"
 	//FIXME: use NET_UTIL::PrInf_* functions and E_REList::Dump
 };
 

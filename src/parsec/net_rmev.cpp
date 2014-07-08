@@ -110,6 +110,7 @@ static size_t re_sizes[] = {
 	sizeof( RE_Stargate ),
     sizeof( RE_CreateMine ),
 	sizeof( RE_Teleporter),
+	sizeof( RE_Generic),
 };
 
 

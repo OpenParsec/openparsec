@@ -604,6 +604,15 @@ struct OldNetGameData {
 #define SHIP_DOWNED 			0x01
 
 
+// flags for RE_Generic things.
+enum re_generic_flags {
+	AFTB_ACTIVE = 1,
+	AFTB_INACTIVE,
+	INVUNERABLE,
+	TELEP_COLLIDE,
+};
+
+
 // remote event control blocks ------------------------------------------------
 //
 enum re_events {
@@ -638,6 +647,7 @@ enum re_events {
 	RE_STARGATE,			// 0x1b		// 27
     RE_CREATEMINE,
     RE_TELEPORTER,
+    RE_GENERIC,
 	RE_NUMEVENTS
 };
 	
@@ -946,6 +956,15 @@ struct RE_Teleporter : RE_Header {
 	// sizeof( RE_Teleporter ) = 40
 };
 
+struct RE_Generic: RE_Header{ //2
+    word        RE_ActionFlags; //2
+    dword       HostObjId; //4  - the object spawning the event
+//  Xmatrx      ObjPos; //48 - probably don't need this, we'll see.
+    dword       TargetId; //4 - can be used for targetting events
+    dword       Padding; //4 - can be used for anything you desire.
+}; //Size: 16 bytes
+
+};
 //NOTE:
 // new remote event structures must ensure proper alignment
 // after the two leading header bytes, which usually means
