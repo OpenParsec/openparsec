@@ -72,7 +72,8 @@
 #include "obj_ctrl.h"
 #include "obj_cust.h"
 #include "obj_xtra.h"
-//#include "g_sfx.h"
+#include "obj_game.h"
+#include "g_sfx.h"
 //#include "g_wfx.h"
 //#include "g_emp.h"
 //#include "g_swarm.h"
@@ -286,7 +287,7 @@ void NET_ProcessRmEvList_GMSV( NetPacket_GMSV* gamepacket )
 				NET_ExecRmEvTeleporter( (RE_Teleporter*)pREList );
 				break;
 			case RE_GENERIC:
-
+				NET_ExecRmEvGeneric( (RE_Generic *)pREList);
 				break;
 			default:
 				MSGOUT( "ProcessRmEvList_GMSV(): unknown remote event (%d).", pREList->RE_Type );
