@@ -1182,7 +1182,7 @@ char* G_ExtraManager::_CollectSpecial( int nSpecial, ShipObject* cur_ship )
 	re_gen->RE_Type = RE_GENERIC;
 
 
-	TheSimNetOutput->BufferRE(re_gen, true);
+	TheSimNetOutput->BufferForMulticastRE(re_gen, PLAYERID_SERVER, true);
 	delete re_gen;
 
 #endif

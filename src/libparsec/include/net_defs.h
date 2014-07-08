@@ -964,7 +964,7 @@ struct RE_Generic: RE_Header{ //2
     dword       Padding; //4 - can be used for anything you desire.
 }; //Size: 16 bytes
 
-};
+
 //NOTE:
 // new remote event structures must ensure proper alignment
 // after the two leading header bytes, which usually means
