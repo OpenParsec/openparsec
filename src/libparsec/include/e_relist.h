@@ -270,6 +270,9 @@ public:
 	// append a RE_ServerLinkInfo event
 	int NET_Append_RE_ServerLinkInfo( word nServerID_1, word nServerID_2, word flags );
 
+	// append a RE_Generic 
+	int NET_Append_RE_Generic( word flags, dword HostObjId, dword TargetId, dword padding );
+
 	// append a RE_MapObject
 	int NET_Append_RE_MapObject( int map_objectid, char* name, int xpos, int ypos, int w, int h, char* texname );
 

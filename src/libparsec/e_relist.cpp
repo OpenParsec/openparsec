@@ -970,6 +970,33 @@ int E_REList::NET_Append_RE_ServerLinkInfo( word nServerID_1, word nServerID_2, 
 	return TRUE;
 }
 
+
+// append a RE_Generic -------------------------------------------
+//
+int E_REList::NET_Append_RE_Generic( word flags, dword HostObjId, dword TargetId, dword padding )
+{
+	if ( m_Avail < sizeof( RE_Generic ) ) {
+		return FALSE;
+	}
+
+	RE_Generic* re_gen	= (RE_Generic*) m_CurPos;
+	re_gen->RE_Type			= RE_GENERIC;
+	re_gen->RE_BlockSize	= sizeof( RE_Generic );
+
+	re_gen->RE_ActionFlags	= flags;
+	re_gen->HostObjId		= HostObjId;
+	re_gen->TargetId		= TargetId;
+	re_gen->Padding			= padding;
+	
+	re_gen++;
+	re_gen->RE_Type			= RE_EMPTY;
+
+	m_CurPos = (char *) re_gen;
+	m_Avail -= sizeof( RE_Generic );
+
+	return TRUE;
+}
+
 // append a RE_MapObject ------------------------------------------------------
 //
 int E_REList::NET_Append_RE_MapObject( int map_objectid, char* name, int xpos, int ypos, int w, int h, char* texname )

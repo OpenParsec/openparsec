@@ -78,6 +78,8 @@
 //#include "g_swarm.h"
 #include "g_stgate.h"
 #include "g_telep.h"
+#include "g_extra.h"
+#include "g_shipobject.h"
 
 
 // process entire remote event list (execute all contained events) coming from the server
@@ -283,7 +285,9 @@ void NET_ProcessRmEvList_GMSV( NetPacket_GMSV* gamepacket )
 			case RE_TELEPORTER:
 				NET_ExecRmEvTeleporter( (RE_Teleporter*)pREList );
 				break;
+			case RE_GENERIC:
 
+				break;
 			default:
 				MSGOUT( "ProcessRmEvList_GMSV(): unknown remote event (%d).", pREList->RE_Type );
 		}
@@ -555,6 +559,43 @@ void NET_ExecRmEvStargate( RE_Stargate* pRE_Stargate )
 		NET_ServerList_Get( Masters[ 0 ], stargate->serverid );
 	}
 }
+// exectue RE for generic actions and such. -------------------------------------------
+//
+void NET_ExecRmEvGeneric( RE_Generic* pRE_Generic) 
+{
+	ASSERT( pRE_Generic != NULL );
+	ASSERT( NetConnected );
+
+
+	// check for afterburner enabled
+	if(pRE_Generic->RE_ActionFlags &  (1 << AFTB_ACTIVE)){
+
+	}
+
+	// check for afterburner disabled
+	if(pRE_Generic->RE_ActionFlags &  (1 << AFTB_INACTIVE)){
+
+	}
+
+	// check for invulnerability
+	if(pRE_Generic->RE_ActionFlags &  (1 << INVUNERABLE)){
+
+		dword ownerid = GetOwnerFromHostOjbNumber(pRE_Generic->HostObjId);			
+		// fetch pointer to remote player's ship
+		ShipObject *invul_ship = NET_FetchOwnersShip( ownerid );
+		((G_ShipObject*)invul_ship)->CollectSpecial( SPMASK_INVULNERABILITY);
+
+	}
+
+	// check for teleporter collision
+	if(pRE_Generic->RE_ActionFlags &  (1 << TELEP_COLLIDE)){
+
+	}
+
+
+
+}
+
 
 
 // execute RE holding newest player & ship state  -----------------------------
