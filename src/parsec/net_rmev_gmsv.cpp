@@ -585,12 +585,24 @@ void NET_ExecRmEvGeneric( RE_Generic* pRE_Generic)
 		// fetch pointer to remote player's ship
 		ShipObject *invul_ship = NET_FetchOwnersShip( ownerid );
 		((G_ShipObject*)invul_ship)->CollectSpecial( SPMASK_INVULNERABILITY);
-
 	}
+
+
 
 	// check for teleporter collision
 	if(pRE_Generic->RE_ActionFlags &  (1 << TELEP_COLLIDE)){
+		dword ownerid = GetOwnerFromHostOjbNumber(pRE_Generic->HostObjId);
+		// fetch pointer to remote player's ship
+		ShipObject *telep_ship = NET_FetchOwnersShip( ownerid );
 
+		// find the teleporter object by id
+		Teleporter *teleporter = NET_FindTeleporter(pRE_Generic->Padding);
+	
+		// do nothing if teleporter inactive
+		if ( !teleporter->active )
+			return;
+	
+		// TODO: Do... something magical to teleport the user....	
 	}
 
 

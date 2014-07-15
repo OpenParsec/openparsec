@@ -80,7 +80,7 @@ void	NET_RemovePlayer( int playerid );
 
 
 // external variables
-
+extern bool player_teleporting[MAX_NET_ALLOC_SLOTS];
 extern node_t			LocalNode;
 extern node_t			LocalBroadcast;
 extern node_t			Server_Node;

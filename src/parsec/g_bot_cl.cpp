@@ -879,11 +879,11 @@ void BOT_AI::_GoalCheck_AgentMode_Retreat()
 		Vector3 GoalPos_chk;
 		FetchTVector( pObject->ObjPosition, &GoalPos_chk );
 		// if the target is greater than 15000 away, get something else.
-		if((VctLenX(&GoalPos_chk) - VctLenX(&m_AgentPos))> 15000.0F){
+		/*if((VctLenX(&GoalPos_chk) - VctLenX(&m_AgentPos))> 15000.0F){
 			pObject=NULL;
 			//m_nAgentMode = AGENTMODE_IDLE;
             return;
-		}
+		}*/
 
 		pGoal->SetTargetObject(pObject);
         FetchTVector( pObject->ObjPosition, pGoalPos );
