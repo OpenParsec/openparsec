@@ -566,8 +566,11 @@ int E_REList::NET_Append_RE_PlayerAndShipStatus( int nClientID, E_SimPlayerInfo*
 	re_pas_status->RE_Type		= RE_PLAYERANDSHIPSTATUS;
 	re_pas_status->RE_BlockSize	= sizeof( RE_PlayerAndShipStatus );
 
-	// update all fields
-	re_pas_status->UpdateFlags  = bUpdatePropsOnly ? UF_PROPERTIES : UF_ALL;
+	// FIXME: probably set up what to update, but for now, since we are seding the
+	// whole pas packet, update all fields
+
+	// FIXME: What the hell?! UF_ALL == 0xFFFF which is a word.  UpdateFlags is a byte member....
+	re_pas_status->UpdateFlags  = 0xFF;  //bUpdatePropsOnly ? UF_PROPERTIES : UF_ALL;
 
 	//FIXME: redesign this !!
 	//FIXME: we should have flags indicating which fields are transmitted in this event
@@ -582,6 +585,11 @@ int E_REList::NET_Append_RE_PlayerAndShipStatus( int nClientID, E_SimPlayerInfo*
 
 	// fill position and speed from sim-state
 	memcpy( &re_pas_status->ObjPosition, &pSimShipState->m_ObjPosition, sizeof( Xmatrx ) );
+	/*MSGOUT("NET_Append_RE_PlayerAndShipStatus: New Coorids: re_pas: x: %f, y: %f, z:%f.",
+			re_pas_status->ObjPosition[0][3],
+			re_pas_status->ObjPosition[1][3],
+			re_pas_status->ObjPosition[2][3]
+			);*/
 	re_pas_status->CurSpeed		= pSimShipState->m_CurSpeed;		
 	re_pas_status->CurYaw		= pSimShipState->m_CurYaw;			
 	re_pas_status->CurPitch		= pSimShipState->m_CurPitch;		

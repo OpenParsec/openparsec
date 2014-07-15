@@ -104,6 +104,8 @@ protected:
 
 	refframe_t					m_LastSwitchToSimRefFrame;
 
+	int 						m_SkipLerp;
+
 	int							m_nClientID;
 
 	enum ClientMovementMode_t { CMM_SIMULATING, CMM_SMOOTHING };
@@ -124,6 +126,7 @@ public:
 		m_ResyncClient			   = FALSE;
 		m_LastSwitchToSimRefFrame  = -1;
         m_ClientHasStateSync       = FALSE;
+        m_SkipLerp					= 0;
 	}
 
 	~E_SimClientState()
@@ -146,6 +149,7 @@ public:
 		m_ResyncClient				= FALSE;
 		m_LastSwitchToSimRefFrame	= -1;
         m_ClientHasStateSync       = FALSE;
+        m_SkipLerp					= 0;
 	}
 
 	// connect a client
@@ -181,6 +185,10 @@ public:
 
 	// clear the client resync flag
 	void ClearClientResync() { m_ResyncClient = FALSE; }
+
+	void SetSkipLerp() { m_SkipLerp++; }
+
+	void ClearSkipLerp();
 
 	// check whether we must resync this client
 	int NeedsResync() { return m_ResyncClient; }

@@ -508,6 +508,41 @@ void G_CollDet::_CollisionResponse_TelepShip( Teleporter *curtelep )
 	ASSERT( curtelep != NULL );
 	ASSERT( cur_ship != NULL );
 
+	// TODO code the server side collision code
+	// walk all ships and check for teleportings
+	dword telep_coll_id = 0;
+	dword ship_hostobjid = 0;
+
+
+	telep_coll_id = (dword) curtelep->id;
+	ship_hostobjid = cur_ship->HostObjNumber;
+
+	// for the server, create and send an RE_Generic saying that this
+	// ship collided with a teleporter.
+	RE_Generic *re_gen = new RE_Generic;
+
+	re_gen->RE_ActionFlags |= 1 << TELEP_COLLIDE ;
+	re_gen->HostObjId = ship_hostobjid;
+	re_gen->TargetId = 0;
+	re_gen->Padding = telep_coll_id;
+	re_gen->RE_BlockSize = sizeof(RE_Generic);
+	re_gen->RE_Type = RE_GENERIC;
+
+
+	TheSimNetOutput->BufferForMulticastRE(re_gen, GetObjectOwner(cur_ship), true);
+	delete re_gen;
+
+
+	// TODO: move the ship
+
+	// XXX: Don't know what to do here, but some examples of stuff I tried are below.... comments are welcome but I am
+	// not sure what I am trying to do or how this lerp code works....
+	/*MSGOUT("_CollisionResponse_TelepShip: Old Coorids: Ship: x: %f, y: %f, z:%f.",
+				cur_ship->ObjPosition[0][3],
+				cur_ship->ObjPosition[1][3],
+				cur_ship->ObjPosition[2][3]
+				);
+	memcpy(cur_ship->ObjPosition, curtelep->child_object->ObjPosition, sizeof(Xmatrx));
 	// TODO: Is there a "response" to a ship colliding with a teleporter?
 	// get the world->object transform
 	Xmatrx World2Telep;
@@ -518,13 +553,37 @@ void G_CollDet::_CollisionResponse_TelepShip( Teleporter *curtelep )
 
 	// transform ship to world space ( using the teleporter exit frame )
 	MtxMtxMUL( curtelep->child_object->ObjPosition, ShipInTelepSpace, cur_ship->ObjPosition );
-    /*
+	MSGOUT("_CollisionResponse_TelepShip: Ship Moved.");
+
+	E_SimClientState *tmpState = TheSimulator->GetSimClientState(GetObjectOwner(cur_ship));
+	tmpState->SetSkipLerp();
+	MSGOUT("_CollisionResponse_TelepShip: Skipping Lerp..");
+	MSGOUT("_CollisionResponse_TelepShip: New Coorids: TelepExit: x: %f, y: %f, z:%f.",
+			curtelep->child_object->ObjPosition[0][3],
+			curtelep->child_object->ObjPosition[1][3],
+			curtelep->child_object->ObjPosition[2][3]
+			);
+	MSGOUT("_CollisionResponse_TelepShip: New Coorids: Ship: x: %f, y: %f, z:%f.",
+			cur_ship->ObjPosition[0][3],
+			cur_ship->ObjPosition[1][3],
+			cur_ship->ObjPosition[2][3]
+			);
+
+
+	E_SimShipState *tmpShipState = TheSimulator->GetLatestSimShipState(GetObjectOwner(cur_ship));
+
+	tmpState->ForceNewState(tmpShipState);
+
+
+
+
+
 	// force a client resync of the colliding client
 	int coll_ship = GetOwnerFromHostOjbNumber( cur_ship->HostObjNumber );
 	TheSimulator->GetSimClientState( coll_ship )->SetClientResync();
-     * This is breaking successful teleport collisions resulting in being synced out of the teleporter
-     */
+     * This is breaking successful teleport collisions resulting in being synced out of the teleporter*/
 }
+
 
 
 /// STOP HERE!!

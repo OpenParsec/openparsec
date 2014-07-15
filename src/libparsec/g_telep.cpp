@@ -88,9 +88,13 @@
 #include "con_info_sv.h"
 #include "con_main_sv.h"
 #include "con_com_sv.h"
+#include "e_global_sv.h"
+#include "e_simnetoutput.h"
 #include "net_game_sv.h"
 #include "net_limits.h"
+#include "net_defs.h"
 #include "e_gameserver.h"
+#include "od_types.h"
 #endif
 
 #include "obj_clas.h"
@@ -2024,22 +2028,9 @@ int TeleporterCollide( CustomObject *base )
 		}
 	}
 #endif // !DONT_MOVE_REMOTE_SHIPS
-/* XXX: remove
+
 #else // !PARSEC_SERVER
-// TODO code the server side collision code
-	// walk all ships and check for teleportings
-	ShipObject *shippo = FetchFirstShip();
-	for ( ; shippo; shippo = (ShipObject *) shippo->NextObj ) {
-			if ( Teleporter_ShipInRange( teleporter, shippo ) ) {
 
-				// transform the ship to (teleporter) object space
-				Xmatrx ShipInTelepSpace;
-				MtxMtxMUL( World2Telep, shippo->ObjPosition, ShipInTelepSpace );
-
-				// transform ship to world space ( using the teleporter exit frame )
-				MtxMtxMUL( teleporter->child_object->ObjPosition, ShipInTelepSpace, shippo->ObjPosition );
-			}
-	}*/
 #endif // !PARSEC_SERVER
 	
 	return TRUE;
