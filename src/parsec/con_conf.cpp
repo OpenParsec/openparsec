@@ -300,9 +300,9 @@ void SetAudioConfiguration()
 	// displays currently audio configuration
 	// if no parameter supplied.
 
-        if ( SoundDisabled ) {
+    if ( SoundDisabled ) {
 	    return;
-        }
+    }
 
 	// fetch first option
 	char *option1 = strtok( NULL, " " );
@@ -335,6 +335,7 @@ void SetAudioConfiguration()
 		}
 		
 		CON_AddLine( paste_str );
+		
 		return;
 	}
 
@@ -350,7 +351,7 @@ void SetAudioConfiguration()
 		
 	} else if ( stricmp( option1, "off" ) == 0 ) {
 
-		cursetting |= 0x00;
+		cursetting = 0x00;
 	} 
 
 	// fetch second option
@@ -367,7 +368,7 @@ void SetAudioConfiguration()
 			
 		} else if ( stricmp( option2, "off" ) == 0 ) {
 	
-			cursetting |= 0x00;
+			cursetting = 0x00;
 		} 
 	}
 	
@@ -386,6 +387,7 @@ void SetAudioConfiguration()
 			//AUDs_CDStop();
 			AUDs_CloseMenuSound();
 			AUDs_StopAudioStream();
+			
 			break;
 
 		case 0x01:
@@ -395,13 +397,13 @@ void SetAudioConfiguration()
 			break;
 
 		case 0x02:
-			if ( aud_do_open_menu_sound_on_aud_conf )
-				AUDs_OpenMenuSound();
+			/*if ( aud_do_open_menu_sound_on_aud_conf )
+				AUDs_OpenMenuSound();*/
 			break;
 
 		case 0x03:
-			if ( aud_do_open_menu_sound_on_aud_conf )
-				AUDs_OpenMenuSound();
+			/*if ( aud_do_open_menu_sound_on_aud_conf )
+				AUDs_OpenMenuSound();*/
 			break;
 
 		default:

@@ -439,7 +439,8 @@ int AUDs_OpenMenuSound()
 {
     if (SoundDisabled)
 		return 1;
-
+	if(!Op_Music) 
+		return 1;
     in_game_mode = FALSE;
 	
     if (Mix_PlayingMusic())

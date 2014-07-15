@@ -355,11 +355,11 @@ int GameBoot()
 	// init input code
 	INP_InitSubsystem();
 
+	// enable AUDs_OpenMenuSound call in AUD.CONF before console files have been loaded
+	aud_do_open_menu_sound_on_aud_conf = TRUE;
+
 	// init console
 	InitConsole();			// *MUST NOT* be called earlier!!!
-
-	// enable AUDs_OpenMenuSound call in AUD.CONF after console files have been loaded
-	aud_do_open_menu_sound_on_aud_conf = TRUE;
 
 	// command line option must override
 	// name set in init script
