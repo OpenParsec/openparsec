@@ -376,15 +376,21 @@ void VID_SetViewingVolume()
 PRIVATE
 void VID_SetResolutionVars()
 {
+	int modeindx = GetResolutionIndex(GameScreenRes.width, GameScreenRes.height);
+
+	// copy basic mode info from table
+	//ASSERT( VID_MODE_AVAILABLE( modeindx ) );
+	if( !VID_MODE_AVAILABLE( modeindx) )
+	{
+		ASSERT( Resolutions.size() > 0 );
+		GameScreenRes.width = Resolutions[0].width;
+		GameScreenRes.height = Resolutions[0].height;
+	}
 	int xres = GameScreenRes.width;
 	int yres = GameScreenRes.height;
 	
 	int bpp  = GameScreenBPP;
 	
-	int modeindx = GetResolutionIndex(GameScreenRes.width, GameScreenRes.height);
-
-	// copy basic mode info from table
-	ASSERT( VID_MODE_AVAILABLE( modeindx ) );
 	Screen_Width  = xres;
 	Screen_Height = yres;
 	
