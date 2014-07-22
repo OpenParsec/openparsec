@@ -178,7 +178,7 @@ struct ShipRemInfo {
 	int         NumHomMissls;       // 4
 	int         NumMines;           // 4
     int         NumPartMissls;      // 4
-};
+}; //92
 
 
 
@@ -666,8 +666,8 @@ struct RE_CreateObject : RE_Header { //2
 
 	word		ObjectClass; //2
 	dword		HostObjId; //4
-	Xmatrx		ObjPosition; //48
 	dword		Flags; //4
+	Xmatrx		ObjPosition; //48
 }; //Size: 60
 
 // laser object creation
@@ -675,8 +675,8 @@ struct RE_CreateLaser : RE_Header { //2
 
 	word		ObjectClass; //2
 	dword		HostObjId; //4
-	Xmatrx		ObjPosition; //48
 	Vertex3 	DirectionVec; //16
+	Xmatrx		ObjPosition; //48
 }; //72
 
 // missile object creation
@@ -684,9 +684,9 @@ struct RE_CreateMissile : RE_Header { //2
 
 	word		ObjectClass; //2
 	dword		HostObjId; //4
-	Xmatrx		ObjPosition; //48
+	dword		TargetHostObjId; //4	
 	Vertex3 	DirectionVec; //16
-	dword		TargetHostObjId; //4
+	Xmatrx		ObjPosition; //48
 }; //76
 
 // extra object creation
@@ -702,9 +702,9 @@ struct RE_CreateExtra2 : RE_Header { //2
 
 	word		ExtraIndex; //2
 	dword		HostObjId; //4
-	Xmatrx		ObjPosition; //48
-	Vector3     DriftVec; //16
 	int			DriftTimeout; //4
+	Vector3     DriftVec; //16
+	Xmatrx		ObjPosition; //48
 }; //76
 
 // Mine object creation
@@ -726,7 +726,7 @@ struct RE_KillObject : RE_Header { //2
 struct RE_SendText : RE_Header { //2
 
 	char		TextStart[2];
-}; //3 - 257
+}; //4 - 257
 
 // player name
 struct RE_PlayerName : RE_Header { //2
@@ -748,8 +748,8 @@ struct RE_PlayerList : RE_Header { //2
 	byte			SyncValNebulaId;
 	byte			Status[ MAX_NET_IPX_PEER_PLAYERS ];
 	node_t			AddressTable[ MAX_NET_IPX_PEER_PLAYERS ];
-	char			NameTable[ MAX_NET_IPX_PEER_PLAYERS ][ MAX_PLAYER_NAME + 1 ];
 	ShipCreateInfo	ShipInfoTable[ MAX_NET_IPX_PEER_PLAYERS ];
+	char			NameTable[MAX_NET_IPX_PEER_PLAYERS][MAX_PLAYER_NAME + 1];
 };
 
 // list of remote players trying to connect
@@ -768,7 +768,7 @@ struct RE_WeaponState : RE_Header { //2
 	dword		WeaponMask; //4
 //	dword		Specials;		// would break demos
 	int 		CurEnergy; //4
-    int          SenderId; //4
+    int         SenderId; //4
 }; //16
 
 // state synchroniziation
@@ -780,35 +780,34 @@ struct RE_StateSync : RE_Header { //2
 
 // swarm missile creation
 struct RE_CreateSwarm : RE_Header { //2
-	Vertex3		Origin; //16
 	dword		TargetHostObjId; //4
 	dword		RandSeed; //4
     byte        SenderId; //4
+	Vertex3		Origin; //16
 }; //30
 
 // emp creation
 struct RE_CreateEmp : RE_Header { //2
 	byte 			Upgradelevel; //1
-	int			SenderId; // 4
-        char                    pad[1]; //1
+	int			    SenderId; // 4
+    char            pad[1]; //1
 }; //8
 
 // owner section
 struct RE_OwnerSection : RE_Header { //2
 
 	byte		owner; //1
-        char            pad[1]; //1
+    char        pad[1]; //1
 }; //4
 
 // playerstate
 struct RE_PlayerStatus : RE_Header { //2
-
+	byte		senderid; //1
 	word		player_status;	//2
 	signed char	params[ 4 ]; //4
-	int		objectindex; //4
-	byte		senderid; //1
+	int		    objectindex; //4
 	refframe_t	RefFrame; //4
-        char            pad[1];
+    char        pad[1];
 	// sizeof( RE_PlayerStatus ) 18
 };	
 
@@ -820,9 +819,14 @@ struct RE_PlayerStatus : RE_Header { //2
 #define UF_ALL				0xFFFF
 
 // full ship & player state 
-struct RE_PlayerAndShipStatus : RE_PlayerStatus //20
+struct RE_PlayerAndShipStatus : RE_PlayerStatus //18
 {
-	Xmatrx 		ObjPosition;	// 48
+	char        pad[1];         // 1
+	byte 		NumMissls;      // 1
+	byte        NumHomMissls;   // 1
+	byte        NumMines;       // 1
+	byte        NumPartMissls;  // 1
+	byte		UpdateFlags;	// 1
 	word   		CurDamage;		// 2
 	word   		CurShield;		// 2
 	fixed_t		CurSpeed;		// 4
@@ -832,13 +836,8 @@ struct RE_PlayerAndShipStatus : RE_PlayerStatus //20
 	geomv_t		CurSlideHorz;	// 4
 	geomv_t		CurSlideVert;	// 4
 	int			CurEnergy;		// 4
-	byte 		NumMissls;      // 1
-    byte        NumHomMissls;   // 1
-    byte        NumMines;       // 1
-    byte        NumPartMissls;  // 1
-    byte		UpdateFlags;	// 1
-
-	// sizeof( RE_PlayerAndShipStatus ) = (17) + 85 = 102
+	Xmatrx 		ObjPosition;	// 48
+	// sizeof( RE_PlayerAndShipStatus ) = (18) + 86 = 104
 };
 
 
@@ -852,7 +851,7 @@ struct RE_KillStats : RE_Header { //2
 struct RE_GameState : RE_Header { //2
 	int		GameTime; //4
 	// 6
-};
+}; //12
 
 // max. length of a command ---------------------------------------------------
 #define MAX_RE_COMMANDINFO_COMMAND_LEN		254 - 1 - 2 /*header*/ - 1 /*code*/

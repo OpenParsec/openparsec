@@ -23,7 +23,7 @@ ifeq ($(config),debug32)
   OBJDIR     = obj/x32/Debug
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/parsec
-  DEFINES   += -DDEBUG -DPARSEC_CLIENT
+  DEFINES   += -DDEBUG -DPARSEC_CLIENT -DGLES
   INCLUDES  += -I../../../../src/libraries -I/usr/include -I/usr/local/include -I/opt/include -I../../../../src/libparsec/include -I../../../../src/parsec/include
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g

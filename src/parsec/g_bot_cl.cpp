@@ -355,9 +355,9 @@ int_command_s botchar_int_commands[] = {
 	{ 0x00, NULL, 0,0,NULL, NULL, NULL, 0 },
 };
 
-#define BOT_REPAIR_LEVEL 0.5F
+#define BOT_REPAIR_LEVEL 0.9F
 #define BOT_ENERGY_LEVEL 0.1F
-#define BOT_GMISSL_LEVEL 0.5F
+#define BOT_GMISSL_LEVEL 0.1F
 
 // ctor -----------------------------------------------------------------------
 //
@@ -487,7 +487,7 @@ void BOT_AI::_DoPlan()
 	    return;
 	}
 	
-	if(m_pShip->NumHomMissls < (m_pShip->MaxNumHomMissls * BOT_GMISSL_LEVEL)) {
+	if(m_pShip->NumHomMissls < 1) {
 		m_nAgentMode = AGENTMODE_RETREAT;
 		MSGOUT("Want Missles in DoPlan");
 		return;
@@ -638,7 +638,7 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 
 	
 	// check our stats and get a new plan if we are low on energy, damage, or missles.
-	if(m_pShip->NumHomMissls < (m_pShip->MaxNumHomMissls * BOT_GMISSL_LEVEL)) {
+	if(m_pShip->NumHomMissls < 1) {
 		m_nAgentMode = AGENTMODE_RETREAT;
 		MSGOUT("Want Missles in Attack");
 		return;
@@ -722,7 +722,7 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 			}
 
 			// give bots the ability to fire homing missiles?  Evil.
-			if (len > 500.0F ) {
+			if (len > 1000.0F ) {
 				SelectedMissile = 1;
 				// check to see if we locked on the target
 				if(TargetLocked ) {
@@ -730,7 +730,7 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 					OBJ_LaunchHomingMissile(m_pShip, CurLauncher, TargetObjNumber);
 				}
 			}
-			if(len < 200.0F ) {
+			if(len < 100.0F ) {
 				//: Fire EMP 
 				if ( m_Character.GetEMPDelay() < 0.0f) {
                    WFX_EmpBlast(m_pShip);

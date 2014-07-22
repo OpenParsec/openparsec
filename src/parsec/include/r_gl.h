@@ -4,12 +4,11 @@
 
 #ifndef _R_GL_H_
 #define _R_GL_H_
-#define RPI 1
 
 // include OpenGL headers -----------------------------------------------------
 
 // FIXME: use gles header instead of glew when compiling for OpenGL ES.
-#ifndef RPI
+#ifndef GLES
 #include <glew/glew.h>
 #else
 #include <GLES/gl.h>
