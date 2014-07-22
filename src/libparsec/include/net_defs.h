@@ -662,54 +662,55 @@ struct RE_Header {
 
 // generic object creation
 struct RE_CreateObject : RE_Header { //2
+        word            ObjectClass;//2
 	Xmatrx		ObjPosition; //48
 	dword		HostObjId; //4
 	dword		Flags; //4
-	word		ObjectClass; //2
 }; //Size: 60
 
 // laser object creation
 struct RE_CreateLaser : RE_Header { //2 
+        word		ObjectClass; //2
 	Xmatrx		ObjPosition; //48
 	Vertex3 	DirectionVec; //16
 	dword		HostObjId; //4
-	word		ObjectClass; //2
 }; //72
 
 // missile object creation
 struct RE_CreateMissile : RE_Header { //2
+        word            ObjectClass; //2
 	Xmatrx		ObjPosition; //48
 	Vertex3 	DirectionVec; //16
 	dword		HostObjId; //4
 	dword		TargetHostObjId; //4	
-	word		ObjectClass; //2
 }; //76
 
 // extra object creation
 struct RE_CreateExtra : RE_Header { //2
+        word            ExtraIndex; //2
 	Xmatrx		ObjPosition; //28
 	dword		HostObjId; //4
-	word		ExtraIndex; //2
 }; //36
 
 // extra object creation
 struct RE_CreateExtra2 : RE_Header { //2
+        word            ExtraIndex; //2
 	Xmatrx		ObjPosition; //48
-	Vector3     DriftVec; //16
+	Vector3         DriftVec; //16
 	dword		HostObjId; //4
-	int			DriftTimeout; //4
-	word		ExtraIndex; //2
+	int		DriftTimeout; //4
 }; //76
 
 // Mine object creation
 struct RE_CreateMine : RE_Header { //2
+        word            ExtraIndex; //2
 	Xmatrx          ObjPosition; //48
 	dword           HostObjId; //4
-	word            ExtraIndex; //2
 }; //56
 
 // object destruction 
 struct RE_KillObject : RE_Header { //2
+        char            pad[2]; //2
 	dword		HostObjId; //4
 	byte		ListId; //1
 	byte		Flags; //1
@@ -727,18 +728,19 @@ struct RE_PlayerName : RE_Header { //2
 
 // particle object creation
 struct RE_ParticleObject : RE_Header { //2
+        word		ObjectType; //2
 	Vertex3 	Origin; //16
-	word		ObjectType; //2
 }; //20
 
 // list of all remote players
 struct RE_PlayerList : RE_Header { //2
+	char		pad[2];
 	ShipCreateInfo	ShipInfoTable[MAX_NET_IPX_PEER_PLAYERS];
-	node_t			AddressTable[MAX_NET_IPX_PEER_PLAYERS];
-	byte			SyncValKillLimit;
-	byte			SyncValNebulaId;
-	byte			Status[ MAX_NET_IPX_PEER_PLAYERS ];
-	char			NameTable[MAX_NET_IPX_PEER_PLAYERS][MAX_PLAYER_NAME + 1];
+	node_t		AddressTable[MAX_NET_IPX_PEER_PLAYERS];
+	byte		SyncValKillLimit;
+	byte		SyncValNebulaId;
+	byte		Status[ MAX_NET_IPX_PEER_PLAYERS ];
+	char		NameTable[MAX_NET_IPX_PEER_PLAYERS][MAX_PLAYER_NAME + 1];
 };
 
 // list of remote players trying to connect
@@ -750,11 +752,12 @@ struct RE_ConnectQueue : RE_Header {
 
 // weapon firing
 struct RE_WeaponState : RE_Header { //2
-	dword		WeaponMask; //4
-	int 		CurEnergy; //4
-	int         SenderId; //4
-	byte		State; //1
-	byte		_dummy; //1
+	char	pad[2];
+	dword	WeaponMask; //4
+	int 	CurEnergy; //4
+	int	SenderId; //4
+	byte	State; //1
+	byte	_dummy; //1
 }; //16
 
 // state synchroniziation
@@ -765,31 +768,33 @@ struct RE_StateSync : RE_Header { //2
 
 // swarm missile creation
 struct RE_CreateSwarm : RE_Header { //2
+	char		pad[2];
 	Vertex3		Origin; //16
 	dword		TargetHostObjId; //4
 	dword		RandSeed; //4
-    byte        SenderId; //4
+	byte		SenderId; //4
 }; //30
 
 // emp creation
 struct RE_CreateEmp : RE_Header { //2
-	int			    SenderId; // 4
-	byte 			Upgradelevel; //1
-    char            pad[1]; //1
+	char	pad[2];
+	int	SenderId; // 4
+	byte 	Upgradelevel; //1
+	char	padd[1]; //1
 }; //8
 
 // owner section
 struct RE_OwnerSection : RE_Header { //2
-	byte		owner; //1
-    char        pad[1]; //1
+	byte	owner; //1
+	char	pad[1]; //1
 }; //4
 
 // playerstate
 struct RE_PlayerStatus : RE_Header { //2
+        word		player_status; //2
 	signed char	params[4]; //4
-	int		    objectindex; //4
+	int		objectindex; //4
 	refframe_t	RefFrame; //4
-	word		player_status;	//2
 	byte		senderid; //1
 	char        pad[1];
 	// sizeof( RE_PlayerStatus ) 18
@@ -805,6 +810,7 @@ struct RE_PlayerStatus : RE_Header { //2
 // full ship & player state 
 struct RE_PlayerAndShipStatus : RE_PlayerStatus //18
 {
+        char		padd[2];
 	Xmatrx 		ObjPosition;	// 48
 	fixed_t		CurSpeed;		// 4
 	bams_t 		CurYaw;		    // 4
@@ -812,15 +818,15 @@ struct RE_PlayerAndShipStatus : RE_PlayerStatus //18
 	bams_t 		CurRoll;		// 4
 	geomv_t		CurSlideHorz;	// 4
 	geomv_t		CurSlideVert;	// 4
-	int			CurEnergy;		// 4
-	word   		CurDamage;		// 2
+	int		CurEnergy;		// 4
+	word		CurDamage	//2
 	word   		CurShield;		// 2
 	byte 		NumMissls;      // 1
-	byte        NumHomMissls;   // 1
-	byte        NumMines;       // 1
-	byte        NumPartMissls;  // 1
+	byte		NumHomMissls;   // 1
+	byte		NumMines;       // 1
+	byte		NumPartMissls;  // 1
 	byte		UpdateFlags;	// 1
-	char        pad[1];
+	char		pad[1];
     // sizeof( RE_PlayerAndShipStatus ) = (18) + 86 = 104
 };
 
@@ -833,7 +839,8 @@ struct RE_KillStats : RE_Header { //2
 
 // gamestate
 struct RE_GameState : RE_Header { //2
-	int		GameTime; //4
+	char	pad[2];
+	int	GameTime; //4
 	// 6
 }; //12
 
@@ -860,9 +867,9 @@ struct RE_ClientInfo : RE_Header {
 
 // serverinfo about a IP4 server 
 struct RE_IPv4ServerInfo : RE_Header {
-	int		xpos;
-	int		ypos;
 	word	flags;
+	int	xpos;
+	int	ypos;
 	word	serverid;
 	byte	node[6];
 	// sizeof( RE_IPv4ServerInfo ) = (2) + 6 + 2 + 2 + 4 + 4 = 20
@@ -889,6 +896,7 @@ struct RE_ServerLinkInfo : RE_Header {
 struct RE_MapObject : RE_Header {
 	char 		texname[MAX_TEXNAME + 1];
 	char		name[ MAX_MAP_OBJ_NAME + 1 ];
+	char		pad[2];
 	int  		xpos;
 	int  		ypos;
 	int	 		w;
@@ -902,6 +910,7 @@ struct RE_MapObject : RE_Header {
 struct RE_Stargate : RE_Header {
 	char	flare_name[MAX_TEXNAME + 1]; // 32
 	char	interior_name[MAX_TEXNAME + 1]; // 32
+	char 	pad[2];
 	float	pos[ 3 ];			// 12
 	float	dir[ 3 ];			// 12
 	bams_t	rotspeed;			// 4
@@ -925,6 +934,7 @@ struct RE_Stargate : RE_Header {
 // teleporter properties --------------------------------------------------------
 //
 struct RE_Teleporter : RE_Header {
+	word	id; //2
 	float	pos[ 3 ];			// 12
 	float	dir[ 3 ];			// 12
 	geomv_t	exit_delta_x; // 4
@@ -932,16 +942,15 @@ struct RE_Teleporter : RE_Header {
 	geomv_t	exit_delta_z; // 4
 	float exit_rot_phi; // 4
 	float exit_rot_theta; // 4
-	word id;			// 2
 	// sizeof( RE_Teleporter ) = 40
 };
 
 struct RE_Generic: RE_Header{ //2
-    dword       HostObjId; //4  - the object spawning the event
+	word	RE_ActionFlags; //2
+	dword	HostObjId; //4  - the object spawning the event
 //  Xmatrx      ObjPos; //48 - probably don't need this, we'll see.
-    dword       TargetId; //4 - can be used for targetting events
-    dword       Padding; //4 - can be used for anything you desire.
-	word        RE_ActionFlags; //2
+	dword	TargetId; //4 - can be used for targetting events
+	dword	Padding; //4 - can be used for anything you desire.
 }; //Size: 16 bytes
 
 
