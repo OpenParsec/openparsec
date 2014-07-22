@@ -1,0 +1,1443 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="libparsec">
+      <UniqueIdentifier>{fef0020f-2af0-4400-8eaf-bacd718e6b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="parsec">
+      <UniqueIdentifier>{8d7ad711-8f18-45c2-b701-fd3d9ede0318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libparsec\include">
+      <UniqueIdentifier>{8f8b878b-a930-4a26-bb7e-5d73a0fb40eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="parsec\include">
+      <UniqueIdentifier>{d1d95f98-3aa0-48c3-84ec-334a77764655}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools">
+      <UniqueIdentifier>{1e1e9c41-0215-4167-b79d-0c2c90349f03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tools\BspLib">
+      <UniqueIdentifier>{9fa990ec-3e43-4f9b-bc47-463c7abdfb62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries">
+      <UniqueIdentifier>{dee7b813-3e8e-49d5-a0dc-fab055895730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\stb_image">
+      <UniqueIdentifier>{fa41731f-1bc7-438e-a1a0-d904fd109a42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries\glew">
+      <UniqueIdentifier>{2ed69592-eb78-48c8-9ed3-cc7907d4bb93}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libparsec\con_arg.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\con_tab.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\con_vald.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\debug.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\e_modulemanager.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\e_relist.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\g_extra.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\net_pckt_gmsv.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\net_stream.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\net_swap.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\net_util.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\net_wrap.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\obj_clas.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\obj_creg.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\obj_cust.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\obj_odt.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\obj_type.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sl_path.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sl_timer.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sw_path.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sys_date.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sys_file.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sys_swap.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_bsp.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_clip.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_clpo.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_cull.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_logfile.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_math.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\utl_math2.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\aud_bkgn.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\aud_comm.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\aud_game.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\aud_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\aud_sdlmixer.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\aud_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_act.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_aux.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_cani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_com.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_conf.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_ext.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_geom.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_info.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_int.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_kmap.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_list.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_load.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_main.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_path.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_rc.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_say.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_shad.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_std.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\con_tani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\d_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\d_misc.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\do_bmap.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\do_font.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\do_iter.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\do_misc.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\do_patch.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_callbk.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_colani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_color.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_demo.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_draw.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_events.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_getopt.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_global.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_level.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_loader.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_mouse.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_record.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_replay.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_shader.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_texani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\e_vtxani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_boot.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_bot_cl.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_camera.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_cloud.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_explod.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_gameloop.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_global.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_laser.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_planet.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_sfx.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_shkwav.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_stars.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_stgate.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_swarm.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_vapor.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\g_wfx.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_cockpt.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_drwhud.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_frmplt.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_global.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_radar.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_strmap.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\h_text.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_3df.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_api.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_conv.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_jpg.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_load.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\img_tga.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\inp_comm.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\inp_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\inp_init.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\inp_sdl.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\inp_user.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\isdl_joy.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\isdl_mouse.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\isdl_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_button.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_list.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_logo.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_main.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_option.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_status.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\m_viewer.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_conn.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_game.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_game_gmsv.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_game_peer.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_gmsv.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_pckt.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_pckt_peer.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_peer.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_prediction.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_rmev.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_rmev_gmsv.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_rmev_peer.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_serv.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_udp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_univ.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\net_util_cl.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\nl_udp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\nw_udp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_ani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_coll.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_comm.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_ctrl.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_expl.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_game.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_iter.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_part.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_vani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\obj_xtra.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\part_ani.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\part_api.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\part_def.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\part_sys.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\r_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_api.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_obj.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_part.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_patch.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_perf.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_poly.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_sfx.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\ro_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sl_err.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sl_main.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sl_msg.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sl_opt.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\snd_api.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\snd_wav.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sys_bind.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sys_conv.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\sys_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\t_pack.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vid_glob.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vid_init.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vid_plug.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vid_supp.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vsdl_buffo.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vsdl_inito.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vsdl_ogl.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\parsec\vsdl_suppo.cpp">
+      <Filter>parsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\sw_timer.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\g_emp.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\glew\glew.c">
+      <Filter>libraries\glew</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\stb_image\stb_image.cpp">
+      <Filter>libraries\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\stb_image\stb_image_write.c">
+      <Filter>libraries\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libparsec\g_telep.cpp">
+      <Filter>libparsec</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\libparsec\include\con_arg.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\con_tab.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\con_vald.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\config.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\debug.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\debugsys.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\def_draw.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\def_papi.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\def_prot.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\def_rend.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\def_vid.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\e_modulemanager.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\e_relist.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\g_extra.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\g_shipobject.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\g_stgate.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_bmap.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_color.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_const.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_font.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_heads.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_help.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_host.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_limit.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_tabs.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\gd_type.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\general.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\globals.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\keycodes.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\keys_sdl.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\keys_server.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\linkinfo.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_conf.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_csdf.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_defs.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_limits.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_pckt.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_pckt_gmsv.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_ports.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_stream.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_swap.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_util.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\net_wrap.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\obj_clas.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\obj_creg.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\obj_cust.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\obj_name.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\obj_odt.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\obj_type.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\objstruc.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_class.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_geomv.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_masks.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_odt.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_prim.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_props.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_rast.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_struc.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_texdf.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_trafo.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\od_types.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\parttype.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\platform.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\platform_sdl.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sl_path.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sl_timer.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sw_path.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sys_date.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sys_defs.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sys_file.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sys_io.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sys_path.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sys_swap.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_bsp.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_clip.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_clpo.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_cull.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_fcos.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_fsin.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_list.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_logfile.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_math.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_math2.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\utl_model.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_bkgn.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_comm.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_defs.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_game.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_subh.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\aud_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_act.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_aux.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_cani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_com.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_conf.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_ext.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_geom.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_info.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_int.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_kmap.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_list.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_load.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_main.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_path.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_rc.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_say.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_shad.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_std.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\con_tani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_bmap.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_font.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_fontt.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_iter.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_misc.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\d_patch.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\do_bmap.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\do_font.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\do_iter.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\do_misc.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\do_patch.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_callbk.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_colani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_color.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_demo.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_draw.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_events.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_evtdef.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_getopt.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_global.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_level.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_loader.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_mouse.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_record.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_replay.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_shader.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_texani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\e_vtxani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_boot.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_bot_cl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_camera.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_cloud.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_explod.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_gameloop.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_global.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_laser.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_main_cl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_planet.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_sfx.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_shkwav.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_stars.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_swarm.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_vapor.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\g_wfx.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_cockpt.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_drwhud.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_frmplt.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_global.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_radar.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_strmap.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\h_text.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\il_joy.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\il_mouse.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\il_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_3df.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_api.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_conv.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_jpg.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_load.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\img_tga.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_comm.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_defs.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_init.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_keyn.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_sdl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_subh.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\inp_user.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\isdl_joy.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\isdl_keydf.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\isdl_keyn.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\isdl_mouse.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\isdl_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_button.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_list.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_logo.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_main.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_option.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_status.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\m_viewer.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_conn.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_game.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_game_gmsv.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_game_peer.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_gmsv.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_pckt_peer.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_peer.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_prediction.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_rmev.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_rmev_gmsv.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_rmev_peer.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_serv.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_subh.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_udp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_udpdf.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_univ.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\net_util_cl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\nl_udp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\nw_udp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_ani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_coll.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_comm.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_ctrl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_expl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_game.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_iter.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_part.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_vani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\obj_xtra.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\part_ani.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\part_api.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\part_def.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\part_sys.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_gl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_obj.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_part.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_patch.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_perf.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_sfx.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\r_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_api.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_obj.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_objmc.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_part.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_patch.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_perf.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_poly.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_sfx.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\ro_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sl_err.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sl_main.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sl_msg.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sl_opt.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\snd_api.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\snd_wav.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sys_bind.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sys_conv.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sys_err.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sys_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sys_msg.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\sys_subh.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\t_pack.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vid_defs.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vid_glob.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vid_init.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vid_plug.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vid_subh.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vid_supp.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vsdl_buffo.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vsdl_inito.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vsdl_ogl.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\parsec\include\vsdl_suppo.h">
+      <Filter>parsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\sw_timer.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\g_emp.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\glew\glew.h">
+      <Filter>libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\glew\glxew.h">
+      <Filter>libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\glew\wglew.h">
+      <Filter>libraries\glew</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\stb_image\stb_image.h">
+      <Filter>libraries\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\stb_image\stb_image_write.h">
+      <Filter>libraries\stb_image</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libparsec\include\g_telep.h">
+      <Filter>libparsec\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
