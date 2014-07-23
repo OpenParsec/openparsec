@@ -154,6 +154,8 @@ protected:
 	float		m_fGoalCheckInterval;		// goal checking interval in secs
 	float		m_fInputChangeInterval;		// input change interval in secs
 	float		m_emp_delay;
+	float       m_fire_delay;
+	float       m_missile_delay;
 
 public:
 
@@ -175,6 +177,10 @@ public:
 	float GetInputChangeInterval_sec() const	{ return m_fInputChangeInterval; }
 	float GetEMPDelay() { return m_emp_delay; };
 	void  SetEMPDelay(float emp_delay) {m_emp_delay = emp_delay;};
+	float GetFireDelay() { return m_fire_delay; };
+	void  SetFireDelay(float fire_delay) { m_fire_delay = fire_delay; };
+	float GetMissleDelay() { return m_fire_delay; };
+	void  SetMissileDelay(float missile_delay) { m_missile_delay = missile_delay; };
 
 	// friend functions
 	friend void RealizeBotChar();

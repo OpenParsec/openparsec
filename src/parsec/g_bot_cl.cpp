@@ -379,6 +379,8 @@ void BOT_Character::Reset()
 	m_fGoalCheckInterval	= 0.1f;		// goal checking at 10Hz 
 	m_fInputChangeInterval	= 0.1f;		// input at 10Hz
 	m_emp_delay				= 0.0f;
+	m_fire_delay			= 0.0f;
+	m_missile_delay			= 0.0f;
 }
 
 // select the attack target ---------------------------------------------------
@@ -464,9 +466,8 @@ void BOT_AI::DoThink()
 
 	// maintain counters
 	m_Character.SetEMPDelay(m_Character.GetEMPDelay() - .03);
-	if ( FireRepeat > 0 ) {
-		FireRepeat -= CurScreenRefFrames;
-	}
+	m_Character.SetFireDelay(m_Character.GetFireDelay() - .03);
+	m_Character.SetMissileDelay(m_Character.GetMissleDelay() - .03);
 
 	// actually control the object
 	OCT_DoControl( m_State.GetObjectControl() );
@@ -479,7 +480,7 @@ void BOT_AI::_DoPlan()
 {
 	MSGOUT("BOT_AI::_DoPlan() Execute New Plan, MODE: %i\n", m_nAgentMode);
 
-    ShipObject*      pTargetObject;
+    ShipObject*      pTargetObject = NULL;
     BOT_Goal* pGoal	= m_State.GetCurGoal();
 	if(m_pShip->CurDamage > (m_pShip->MaxDamage * BOT_REPAIR_LEVEL)) { //90% damage
 		m_nAgentMode = AGENTMODE_RETREAT;
@@ -636,7 +637,7 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 	//FIXME: here we should also evaluate whether we pick another target
 
 
-	
+	/*
 	// check our stats and get a new plan if we are low on energy, damage, or missles.
 	if(m_pShip->NumHomMissls < 1) {
 		m_nAgentMode = AGENTMODE_RETREAT;
@@ -654,7 +655,7 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 		return;
 	}
 
-
+	*/
 	// select a target, if none, or no ship selected as target 
 	GenObject*	pTargetObject = pGoal->GetTargetObject();
 	Vector3*	pGoalPos		 = pGoal->GetGoalPosition();
@@ -703,45 +704,36 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 
 	// TODO: Check to see if we are facing the target.
 	if(_TargetInRange(MyShip, (ShipObject *)pTargetObject, 1000.0F)) {
-        if ( len < 750.0F) {
+		if (len < 600.0F) {
 
-                if ( ( FireRepeat > 0 ) || ( FireDisable > 0 ) ) {
-					//do nothing!
-                } else {
-      
-                // create laser
-                   OBJ_ShootLaser( m_pShip );
 
-                   if ( ( FireRepeat  += MyShip->FireRepeatDelay  ) <= 0 ) {
-                      FireRepeat = 1;
-                   }
-                   if ( ( FireDisable += MyShip->FireDisableDelay ) <= 0 ) {
-                      FireDisable = 1;
-                   }
-				}
+			if (m_Character.GetFireDelay() < 0.0f) {
+				// create laser
+				OBJ_ShootLaser(m_pShip);
+				m_Character.SetFireDelay(1.0f);
 			}
+		
+		}
 
-			// give bots the ability to fire homing missiles?  Evil.
-			if (len > 1000.0F ) {
-				SelectedMissile = 1;
-				// check to see if we locked on the target
-				if(TargetLocked ) {
-					// we are locked on, attempt to fire a homing missile.
-					OBJ_LaunchHomingMissile(m_pShip, CurLauncher, TargetObjNumber);
-				}
+		// give bots the ability to fire homing missiles?  Evil.
+		if (len > 500.0F ) {
+			SelectedMissile = 1;
+			// check to see if we locked on the target
+			if(TargetLocked ) {
+				// we are locked on, attempt to fire a homing missile.
+				OBJ_LaunchHomingMissile(m_pShip, CurLauncher, TargetObjNumber);
+				m_Character.SetMissileDelay(2.0f); //Missile delay is longer than other weaps
 			}
-			if(len < 100.0F ) {
-				//: Fire EMP 
-				if ( m_Character.GetEMPDelay() < 0.0f) {
-                   WFX_EmpBlast(m_pShip);
-				   m_Character.SetEMPDelay(1.0f);
-				} 
-					
-
-				
-			}
+		}
+		if(len < 100.0F ) {
+			//: Fire EMP 
+			if ( m_Character.GetEMPDelay() < 0.0f) {
+				WFX_EmpBlast(m_pShip);
+				m_Character.SetEMPDelay(1.0f);
+			} 
+		}
 	}
-
+	
 	if ( len < MIN_DISTANCE_TO_TARGET )  {
                 		
 		// if nearby goal, we stay where we are
