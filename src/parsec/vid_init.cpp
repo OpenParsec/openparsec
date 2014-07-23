@@ -376,6 +376,7 @@ void VID_SetViewingVolume()
 PRIVATE
 void VID_SetResolutionVars()
 {
+
 	int bpp  = GameScreenBPP;
 
 	int modeindx = GetResolutionIndex(GameScreenRes.width, GameScreenRes.height);
