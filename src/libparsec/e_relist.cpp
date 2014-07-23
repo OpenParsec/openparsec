@@ -570,7 +570,7 @@ int E_REList::NET_Append_RE_PlayerAndShipStatus( int nClientID, E_SimPlayerInfo*
 	// whole pas packet, update all fields
 
 	// FIXME: What the hell?! UF_ALL == 0xFFFF which is a word.  UpdateFlags is a byte member....
-	re_pas_status->UpdateFlags  = 0xFF;  //bUpdatePropsOnly ? UF_PROPERTIES : UF_ALL;
+	re_pas_status->UpdateFlags  = bUpdatePropsOnly ? UF_PROPERTIES : UF_ALL;
 
 	//FIXME: redesign this !!
 	//FIXME: we should have flags indicating which fields are transmitted in this event
