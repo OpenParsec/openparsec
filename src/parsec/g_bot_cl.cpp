@@ -68,6 +68,8 @@
 
 static int botwait = 0;
 
+//#define BOT_LOGFILES 1
+
 // do the desired object control ----------------------------------------------
 //
 int	OCT_DoControl( object_control_s* objctl )
@@ -436,34 +438,34 @@ void BOT_AI::DoThink()
 	}
 
 	// do goal checking ?
-	if ( m_GoalCheckTimeout.IsTimeout() ) {
+	//if ( m_GoalCheckTimeout.IsTimeout() ) {
 		// check goals for completion and define new goals
-		switch ( m_nAgentMode ) {
-			case AGENTMODE_RETREAT:
-				_GoalCheck_AgentMode_Retreat();
-				break;
-			case AGENTMODE_ATTACK:
-				_GoalCheck_AgentMode_Attack();
-				break;
-			case AGENTMODE_IDLE:
-				_GoalCheck_AgentMode_Idle();
-				break;
-			case AGENTMODE_POWERUP:
-				_GoalCheck_AgentMode_Powerup();
-				break;
-			default:
-				ASSERT( FALSE );
-				return;
-		}
+	switch ( m_nAgentMode ) {
+		case AGENTMODE_RETREAT:
+			_GoalCheck_AgentMode_Retreat();
+			break;
+		case AGENTMODE_ATTACK:
+			_GoalCheck_AgentMode_Attack();
+			break;
+		case AGENTMODE_IDLE:
+			_GoalCheck_AgentMode_Idle();
+			break;
+		case AGENTMODE_POWERUP:
+			_GoalCheck_AgentMode_Powerup();
+			break;
+		default:
+			ASSERT( FALSE );
+			return;
 	}
+	//}
 
 	// change steering ?
-	if ( m_InputTimeout.IsTimeout() ) {
+	//if ( m_InputTimeout.IsTimeout() ) {
 
 		// modify ObjectControl to steer to position in current goal
 		_SteerToPosition( m_State.GetCurGoal()->GetGoalPosition(),  m_State.GetObjectControl() );
-	}
-
+	//}
+	
 	// maintain counters
 	m_Character.SetEMPDelay(m_Character.GetEMPDelay() - .03);
 	m_Character.SetFireDelay(m_Character.GetFireDelay() - .03);
@@ -471,6 +473,9 @@ void BOT_AI::DoThink()
 
 	// actually control the object
 	OCT_DoControl( m_State.GetObjectControl() );
+#ifdef BOT_LOGFILES
+	BOT_MsgOut("Goal: %d Plan: %d Input: %d", m_GoalCheckTimeout.IsTimeout(), m_PlanTimeout.IsTimeout(), m_InputTimeout.IsTimeout());
+#endif // BOT_LOGFILES
 }
 
 
@@ -478,7 +483,7 @@ void BOT_AI::DoThink()
 // 
 void BOT_AI::_DoPlan()
 {
-	MSGOUT("BOT_AI::_DoPlan() Execute New Plan, MODE: %i\n", m_nAgentMode);
+	MSGOUT("BOT_AI::_DoPlan() Current Plan, MODE: %i\n", m_nAgentMode);
 
     ShipObject*      pTargetObject = NULL;
     BOT_Goal* pGoal	= m_State.GetCurGoal();
@@ -503,6 +508,7 @@ void BOT_AI::_DoPlan()
 		pTargetObject = m_Character.SelectAttackTarget( m_pShip ); //Check for target
 		if(pTargetObject != NULL) {
 			m_nAgentMode = AGENTMODE_ATTACK;
+			MSGOUT("Want the taste of blood in DoPlan");
 			return;
 		}	
 	} else {
@@ -511,9 +517,10 @@ void BOT_AI::_DoPlan()
 			ExtraObject* pObject = FetchFirstExtra(); //Check for powerups
 			if(pObject != NULL) {
 				m_nAgentMode = AGENTMODE_POWERUP;
-           
+				MSGOUT("Want all powerups in DoPlan");
 			} else {
 				m_nAgentMode = AGENTMODE_IDLE;
+				MSGOUT("Want to idle in DoPlan");
 			}
 		} 
 	}
@@ -524,10 +531,8 @@ void BOT_AI::_DoPlan()
 void BOT_AI::_GoalCheck_AgentMode_Idle()
 {
 
-
-
 #ifdef BOT_LOGFILES
-		BOT_MsgOut( "new goal position: %f %f %f", pGoalPos->X, pGoalPos->Y, pGoalPos->Z );
+	BOT_MsgOut("IDLE, boring");
 #endif // BOT_LOGFILES
 		// Don't want to sit idle, so...
 		// get a new plan
@@ -673,7 +678,8 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 #ifdef BOT_LOGFILES
 			BOT_MsgOut( "switching from ATTACK to IDLE" );
 #endif // BOT_LOGFILES
-
+			m_PlanTimeout.Reset();
+			_DoPlan();
 			return;
 		}
 
@@ -721,8 +727,10 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 			// check to see if we locked on the target
 			if(TargetLocked ) {
 				// we are locked on, attempt to fire a homing missile.
-				OBJ_LaunchHomingMissile(m_pShip, CurLauncher, TargetObjNumber);
-				m_Character.SetMissileDelay(2.0f); //Missile delay is longer than other weaps
+				if (m_Character.GetMissileDelay() < 0.0f) {
+					OBJ_LaunchHomingMissile(m_pShip, CurLauncher, TargetObjNumber);
+					m_Character.SetMissileDelay(2.0f); //Missile delay is longer than other weaps
+				}
 			}
 		}
 		if(len < 100.0F ) {
@@ -992,7 +1000,7 @@ void BOT_ClientSide::_CheckStatus()
 		    // join
 			pGoal->SetTargetObject(NULL);
 			if(botwait == 0) {
-			   MENU_FloatingMenuEnterGame();
+    		   MENU_FloatingMenuEnterGame();
 			} 
 			
 			if(!NetJoined) {
@@ -1015,6 +1023,7 @@ void BOT_ClientSide::_CheckStatus()
 //
 void BOT_ClientSide::DoThink()
 {
+
 	// do status checking ?
 	if ( SYSs_GetRefFrameCount() >= m_NextStatusCheckRefFrame ) {
 		m_NextStatusCheckRefFrame = SYSs_GetRefFrameCount() + BOT_STATUS_CHECK_TIMEOUT;
@@ -1025,6 +1034,7 @@ void BOT_ClientSide::DoThink()
 	if ( NetConnected && NetJoined & HaveFullPlayerState ) {
 		
 		BOT_AI::DoThink();
+
 	}
 }
 
