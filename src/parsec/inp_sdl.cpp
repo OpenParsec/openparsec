@@ -385,6 +385,9 @@ void ISDLm_TextInputHandler(const SDL_Event &event)
 {
 	if (event.type != SDL_TEXTINPUT)
 		return;
+	// Ignore text input unless the console or menu is open.
+	if (!((KeybFlags->ConActive && KeybFlags->ConEnabled)||InFloatingMenu))
+		return;
 
 	ISDLm_ProcessTextInput(event.text.text);
 }

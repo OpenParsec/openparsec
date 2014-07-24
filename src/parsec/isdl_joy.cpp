@@ -67,12 +67,6 @@
 //
 #define				MAX_JOYSTICK_DEVICES	4
 
-
-// joystick device name -------------------------------------------------------
-//
-//#define			JOY_DEVICENAME_STRING	"/dev/js%d"
-
-
 // external variables ---------------------------------------------------------
 //
 extern int			isdl_bHasThrottle;		// indicates, the joystick has a throttle
@@ -119,80 +113,6 @@ void ISDL_JoyInitHandler()
     }
 }
 
-/* //TODO: Remove old ass linux-specific code 
-PRIVATE
-int ILm_JoyInit()
-{
-	if ( il_InitJoyDone )
-		return 1;
-	char szDeviceName[ 64 ];
-
-	// try to open one of the joystick devices
-	int nDevice = 0;
-	for( nDevice = 0; ( il_fd < 0 ) && ( nDevice < MAX_JOYSTICK_DEVICES ); nDevice++ ) {
-		sprintf( szDeviceName, JOY_DEVICENAME_STRING, nDevice );
-
-		il_fd = open( szDeviceName, O_RDONLY );
-	}
-
-	if ( il_fd  < 0 ) {
-		// disable joystick, if no device could be opened
-		il_bDisableJoystick = TRUE;
-	} else {
-		// query number of axes, buttons, driver version and joystick name
-		ioctl( il_fd, JSIOCGVERSION,			&il_version);
-		ioctl( il_fd, JSIOCGAXES,				&isdl_NumAxes);
-		ioctl( il_fd, JSIOCGBUTTONS,			&isdl_NumButtons);
-		ioctl( il_fd, JSIOCGNAME( NAME_LENGTH ),il_JoyName);
-
-		// sanety check, as JoyState _ONLY_ :) has 32 buttons defined
-		if( isdl_NumButtons > 32 )
-			isdl_NumButtons = 32;
-
-		MSGOUT("Using %s with %d axes and %d buttons. (Driver version %d.%d.%d on /dev/js%d)\n",
-			il_JoyName, isdl_NumAxes, isdl_NumButtons, il_version >> 16, (il_version >> 8) & 0xff, il_version & 0xff, nDevice);
-
-		//FIXME: eventually we should also support the 0.x driver version, which uses polling
-
-		// set the number of found joysticks
-		isdl_nJoystickFound = 1;
-
-		// set flags for querying the rudder/throttle
-		il_bHasRudder   = isdl_NumAxes > 2;
-		il_bHasThrottle = isdl_NumAxes > 3;
-
-		// calculate the ranges
-		il_joyRange_X	= JOY_DEVICE_RANGE;
-		il_joyRange_Y	= JOY_DEVICE_RANGE;
-		il_joyRange_Z	= JOY_DEVICE_RANGE;
-		il_joyRange_R   = JOY_DEVICE_RANGE;
-
-		// calculate the dead zones
-		il_joyDeadZone_Min_X = JOY_DEVICE_MIN + ( il_joyRange_X / 2 ) - ( il_joyRange_X / 8 );
-		il_joyDeadZone_Max_X = JOY_DEVICE_MIN + ( il_joyRange_X / 2 ) + ( il_joyRange_X / 8 );
-
-		il_joyDeadZone_Min_Y = JOY_DEVICE_MIN + ( il_joyRange_Y / 2 ) - ( il_joyRange_Y / 8 );
-		il_joyDeadZone_Max_Y = JOY_DEVICE_MIN + ( il_joyRange_Y / 2 ) + ( il_joyRange_Y / 8 );
-
-		il_joyDeadZone_Min_Z = JOY_DEVICE_MIN + ( il_joyRange_Z / 2 ) - ( il_joyRange_Z / 8 );
-		il_joyDeadZone_Max_Z = JOY_DEVICE_MIN + ( il_joyRange_Z / 2 ) + ( il_joyRange_Z / 8 );
-
-		il_joyDeadZone_Min_R = JOY_DEVICE_MIN + ( il_joyRange_R / 2 ) - ( il_joyRange_R / 8 );
-		il_joyDeadZone_Max_R = JOY_DEVICE_MIN + ( il_joyRange_R / 2 ) + ( il_joyRange_R / 8 );
-
-
-		// and set the joystick device in non-blocking mode
-		fcntl(il_fd, F_SETFL, O_NONBLOCK);
-	}
-
-    isdl_nJoystickFound = SDL_NumJoysticks();
-    MSGOUT("isdl_joy: Found %d joysticks.\n", isdl_nJoystickFound);
-
-	il_InitJoyDone = TRUE;
-
-	return 1;
-} 
-*/
 
 // close joystick device ------------------------------------------------------
 //
@@ -206,22 +126,6 @@ void ISDL_JoyKillHandler()
 			SDL_JoystickClose(isdl_joyHandle);
 	}
 }
-
-/* //TODO: Remove old ass linux-specific code 
-PRIVATE
-int ILm_JoyExit()
-{
-	if ( !il_InitJoyDone )
-		return 1;
-
-	il_InitJoyDone = FALSE;
-
-	// close the joystick device
-	close( il_fd );
-
-	return 1;
-}
-*/
 
 // simulate assignable keypresses bound to specific joystick buttons ----------
 //
@@ -275,60 +179,6 @@ void ILm_HandleAssignableButtonKeys( dword joy_button_changed )
 static int isdl_swap_axes01 = FALSE;
 static int isdl_swap_axes23 = FALSE;
 
-
-// set value for joystick axis x ----------------------------------------------
-//
-/*PRIVATE
-void ILm_JoyAxisX( Sint16 value )
-{
-	// check against dead zone
-	if ( ( (dword)value < il_joyDeadZone_Min_X ) || ( (dword)value > il_joyDeadZone_Max_X ) ) {
-		JoyState.X = JOY_X_MIN + int( float( value - JOY_DEVICE_MIN ) /
-						float( il_joyRange_X ) * ( JOY_X_RANGE ) );
-	} else {
-		JoyState.X = JOY_X_ZERO;
-	}
-}
-
-
-// set value for joystick axis y ----------------------------------------------
-//
-PRIVATE
-void ILm_JoyAxisY( Sint16 value )
-{
-	// check against dead zone
-	if ( ( (dword)value < il_joyDeadZone_Min_Y ) || ( (dword)value > il_joyDeadZone_Max_Y ) ) {
-		JoyState.Y = JOY_Y_MIN + int( float( value - JOY_DEVICE_MIN ) /
-						float( il_joyRange_Y ) * ( JOY_Y_RANGE ) );
-	} else {
-		JoyState.Y = JOY_Y_ZERO;
-	}
-}
-
-
-// set value for joystick axis z (throttle) -----------------------------------
-//
-PRIVATE
-void ILm_JoyAxisZ( Sint16 value )
-{
-	// NOTE: no dead zone check for the throttle
-	JoyState.Z = JOY_THROTTLE_MIN + int( float( value - JOY_DEVICE_MIN ) /
-					float( il_joyRange_Z ) * ( JOY_THROTTLE_RANGE ) );
-}
-
-
-// set value for joystick axis r (rudder) -------------------------------------
-//
-PRIVATE
-void ILm_JoyAxisR( Sint16 value )
-{
-	if ( ( (dword)value < il_joyDeadZone_Min_R ) || ( (dword)value > il_joyDeadZone_Max_R ) ) {
-		JoyState.Rz = JOY_RUDDER_MIN   + int( float( value - JOY_DEVICE_MIN ) /
-						float( il_joyRange_R ) * ( JOY_RUDDER_RANGE ) );
-	} else {
-		JoyState.Rz = JOY_RUDDER_ZERO;
-	}
- } */
 
 // apply deadzones ------------------------------------------------------------
 //
@@ -435,109 +285,6 @@ void ISDL_JoyCollect()
 	// Confused yet? Me too...
 }
     
-/* //TODO: Remove ancient Linux-specific joystick code.
-PRIVATE
-int ILm_ReadJoystickData()
-{
-	if ( !QueryJoystick )
-		return FALSE;
-	struct js_event js;
-
-#ifdef JOY_AKC_SUPPORT
-
-	joystate_s _OldJoyState;
-
-	if ( AUX_ENABLE_JOYSTICK_BINDING ) {
-		// copy the previous joystate;
-		memcpy( &_OldJoyState, &JoyState, sizeof( joystate_s ) );
-	}
-
-#endif // JOY_AKC_SUPPORT
-
-	// read in all the pending joystick events
-	while ( read( il_fd, &js, sizeof( struct js_event ) ) == sizeof( struct js_event ) )  {
-
-			switch ( js.type & ~JS_EVENT_INIT ) {
-
-				case JS_EVENT_BUTTON:
-					JoyState.Buttons[ js.number ] = js.value ? 0x80 : 0x00;
-					break;
-
-				case JS_EVENT_AXIS:
-					switch ( js.number ) {
-
-						case 0:
-							if ( !isdl_swap_axes01 ) {
-								ILm_JoyAxisX( js.value );
-							} else {
-								ILm_JoyAxisY( js.value );
-							}
-							break;
-
-						case 1:
-							if ( !isdl_swap_axes01 ) {
-								ILm_JoyAxisY( js.value );
-							} else {
-								ILm_JoyAxisX( js.value );
-							}
-							break;
-
-						case 2:
-							if ( !isdl_swap_axes23 ) {
-								ILm_JoyAxisZ( js.value );
-							} else {
-								ILm_JoyAxisR( js.value );
-							}
-							break;
-
-						case 3:
-							if ( !isdl_swap_axes23 ) {
-								ILm_JoyAxisR( js.value );
-							} else {
-								ILm_JoyAxisZ( js.value );
-							}
-							break;
-					}
-					break;
-			}
-
-//			MSGOUT( "Event: type %d, time %d, number %d, value %d\n",
-//					js.type, js.time, js.number, js.value);
-	}
-
-#ifdef JOY_AKC_SUPPORT
-
-	if ( AUX_ENABLE_JOYSTICK_BINDING ) {
-
-		int mask			   = 0x0001;
-		int joy_button_changed = 0x0000;
-
-		// check which buttons have changed
-		for ( int nButton = 0; nButton < isdl_NumButtons; nButton++ ) {
-
-			// check for button changed
-			joy_button_changed |= ( _OldJoyState.Buttons[ nButton ] != JoyState.Buttons[ nButton ] ) ? mask : 0;
-
-			mask = mask << 1;
-		}
-
-		ILm_HandleAssignableButtonKeys( joy_button_changed );
-	}
-
-#endif // JOY_AKC_SUPPORT
-
-	// check for error condition while reading
-	if ( errno != EAGAIN ) {
-		MSGOUT( "error reading from joystick." );
-		return FALSE;
-	}
-
-	return TRUE;
-}
-*/
-
-
-
 // registration table for joystick config flags -------------------------------
 //
 int_command_s il_joy_int_commands[] = {
