@@ -469,7 +469,7 @@ void BOT_AI::DoThink()
 	// maintain counters
 	m_Character.SetEMPDelay(m_Character.GetEMPDelay() - .03);
 	m_Character.SetFireDelay(m_Character.GetFireDelay() - .03);
-	m_Character.SetMissileDelay(m_Character.GetMissleDelay() - .03);
+	m_Character.SetMissileDelay(m_Character.GetMissileDelay() - .03);
 
 	// actually control the object
 	OCT_DoControl( m_State.GetObjectControl() );

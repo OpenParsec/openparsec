@@ -819,7 +819,7 @@ struct RE_PlayerAndShipStatus : RE_PlayerStatus //18
 	geomv_t		CurSlideHorz;	// 4
 	geomv_t		CurSlideVert;	// 4
 	int		CurEnergy;		// 4
-	word		CurDamage	//2
+	word		CurDamage;	//2
 	word   		CurShield;		// 2
 	byte 		NumMissls;      // 1
 	byte		NumHomMissls;   // 1
