@@ -570,7 +570,7 @@ void NET_RmEvList_Swap( RE_Header* relist, int incoming )
 		}
 
 		// advance to next event in list
-		MSGOUT("%d, %d ", NET_RmEvGetSize( relist ), relist->RE_BlockSize);
+		//MSGOUT("%d, %d ", NET_RmEvGetSize( relist ), relist->RE_BlockSize);
 		ASSERT( ( relist->RE_BlockSize == RE_BLOCKSIZE_INVALID ) ||
 				( relist->RE_BlockSize == NET_RmEvGetSize( relist ) ) );
 		relist = (RE_Header *) ( (char *) relist + NET_RmEvGetSize( relist ) );
