@@ -12,18 +12,18 @@ On Linux:
 - To build both targets: make
 
 On Wintendo:
--Visual studio 2012 express and up supported
--Open the solution file in platforms\vs2012
--Build solution
--You will need to get the runtime dll libraries for SDL2 and SDL2_mixer from http://libsdl.org
+- Visual studio 2012 express and up supported
+- Open the solution file in platforms\vs2012
+- Build solution
+- You will need to get the runtime dll libraries for SDL2 and SDL2_mixer from http://libsdl.org
 
-On Mac OS X
--You will need XCode
--Open the project in platforms\xcode
--Select your target as either parsec or parsec_server
--Build the project
+On Mac OS X:
+- You will need XCode
+- Open the project in platforms\xcode
+- Select your target as either parsec or parsec_server
+- Build the project
 
-NOTES:
+Notes:
 - There is no install script yet
 - premake binaries get copied into parsec_root/{client,server}
 - You will need a copy of the openparsec-assets to run the client (https://github.com/OpenParsec/openparsec-assets)
