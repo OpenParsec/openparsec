@@ -179,7 +179,7 @@ public:
 	void  SetEMPDelay(float emp_delay) {m_emp_delay = emp_delay;};
 	float GetFireDelay() { return m_fire_delay; };
 	void  SetFireDelay(float fire_delay) { m_fire_delay = fire_delay; };
-	float GetMissileDelay() { return m_fire_delay; };
+	float GetMissileDelay() { return m_missile_delay; };
 	void  SetMissileDelay(float missile_delay) { m_missile_delay = missile_delay; };
 
 	// friend functions

@@ -709,7 +709,7 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 #define MIN_DISTANCE_TO_TARGET 100.0f
 
 	// TODO: Check to see if we are facing the target.
-	if(_TargetInRange(MyShip, (ShipObject *)pTargetObject, 1000.0F)) {
+	if(_TargetInRange(MyShip, (ShipObject *)pTargetObject, 1500.0F)) {
 		if (len < 600.0F) {
 
 
