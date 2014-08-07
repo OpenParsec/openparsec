@@ -31,6 +31,7 @@
       + Removed initialization of the old GSI sound server. OpenAL does not require
         it
 */ 
+
 // compilation flags/debug support
 #include "config.h"
 
@@ -400,8 +401,9 @@ int main( int argc, char **argv )
 	SLm_InitFileSystem();
 
 	// init video subsystem
+#ifndef SYSTEM_TARGET_BOT
 	VID_InitSubsystem();
-
+#endif
 	// read objects and other data into memory
 	LoadData( FetchCtrlFileName(), TRUE );
 
@@ -409,17 +411,20 @@ int main( int argc, char **argv )
 	NETs_InitAPI();
 
 	// init sound system
+#ifndef SYSTEM_TARGET_BOT
 	SLm_InitSound();
-
+#endif
 	// calibrate joystick
+#ifndef SYSTEM_TARGET_BOT
 	SLm_InitJoystickCode();
-
+#endif
 	// init game and start gameloop
 	SLm_StartUpGame();
 
 	// restore original display mode
+#ifndef SYSTEM_TARGET_BOT
 	VIDs_RestoreDisplay();
-
+#endif
 	// clean up and exit
 	SL_CleanUp();
 

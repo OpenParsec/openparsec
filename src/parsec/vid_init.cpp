@@ -460,6 +460,7 @@ void VID_PerformSwitch()
 //
 void VID_SwitchMode( int xres, int yres, int bpp )
 {
+#ifndef SYSTEM_TARGET_BOT
 	int resindex = GetResolutionIndex(xres, yres);
 
 	if (!VID_MODE_AVAILABLE(resindex)) {
@@ -510,6 +511,7 @@ void VID_SwitchMode( int xres, int yres, int bpp )
 			}
 //		}
 	}
+#endif
 }
 
 
