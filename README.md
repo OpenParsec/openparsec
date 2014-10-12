@@ -1,5 +1,10 @@
 OpenParsec
 ==========
+Gameplay demonstration:
+
+This is the latest gameplay video it's a bit old but contains all the 0.2 features. Expect an updated video before or after 0.3 release
+
+http://youtu.be/plak2rPU5S0
 
 To build OpenParsec:
 
