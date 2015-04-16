@@ -138,7 +138,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="getopt.c">
+			RelativePath="getopt.cpp">
 			<FileConfiguration
 				Name="Debug|Win32">
 				<Tool
@@ -164,7 +164,7 @@
 			RelativePath="getopt.h">
 		</File>
 		<File
-			RelativePath="makeodt.c">
+			RelativePath="makeodt.cpp">
 			<FileConfiguration
 				Name="Debug|Win32">
 				<Tool
