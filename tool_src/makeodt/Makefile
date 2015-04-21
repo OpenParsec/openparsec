@@ -1,4 +1,4 @@
-CFILES = makeodt.c getopt.c
+CFILES = makeodt.cpp getopt.cpp
 
 CFLAGS = -g -O2 -x c++ -fno-for-scope -I../BspLib -I../QvLib
 
