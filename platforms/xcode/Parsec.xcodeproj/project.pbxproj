@@ -73,7 +73,7 @@
 		FA3716CF164DEE8D00230CE8 /* utl_math.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF8F5163BE1CF0056CECD /* utl_math.cpp */; };
 		FA3716D0164DEE8D00230CE8 /* utl_math2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAFEF8F6163BE1CF0056CECD /* utl_math2.cpp */; };
 		FA3716DA164DFC9800230CE8 /* libncurses.5.4.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */; };
-		FA3716DC164E07A300230CE8 /* libncurses.5.4.dylib in Copy Libraries */ = {isa = PBXBuildFile; fileRef = FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */; };
+		FA3716DC164E07A300230CE8 /* libncurses.5.4.dylib in Copy Libraries */ = {isa = PBXBuildFile; fileRef = FA3716D9164DFC9800230CE8 /* libncurses.5.4.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FA72A2BE16E8209C00997EBE /* init.con in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15B16E8209B00997EBE /* init.con */; };
 		FA72A2C016E8209C00997EBE /* pscdata0.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15D16E8209B00997EBE /* pscdata0.dat */; };
 		FA72A2C116E8209C00997EBE /* pscdata1.dat in Resources */ = {isa = PBXBuildFile; fileRef = FA72A15E16E8209B00997EBE /* pscdata1.dat */; };
@@ -85,8 +85,8 @@
 		FA84A68016A7B59F005F649F /* stb_image_write.c in Sources */ = {isa = PBXBuildFile; fileRef = FA84A67F16A7B59F005F649F /* stb_image_write.c */; };
 		FAA251AF17647A6600A0756F /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251AE17647A6600A0756F /* SDL2.framework */; };
 		FAA251B117647A6A00A0756F /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251B017647A6A00A0756F /* SDL2_mixer.framework */; };
-		FAA251B217647AAD00A0756F /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251AE17647A6600A0756F /* SDL2.framework */; };
-		FAA251B317647AAF00A0756F /* SDL2_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251B017647A6A00A0756F /* SDL2_mixer.framework */; };
+		FAA251B217647AAD00A0756F /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251AE17647A6600A0756F /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		FAA251B317647AAF00A0756F /* SDL2_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = FAA251B017647A6A00A0756F /* SDL2_mixer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		FAADE10016AB271B005D7250 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FAADE0FC16AB271B005D7250 /* glew.c */; };
 		FAB135B5164DAB73006CBB88 /* aud_sdlmixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB135B4164DAB73006CBB88 /* aud_sdlmixer.cpp */; };
 		FAB135BF164DB2CE006CBB88 /* parsec.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135BE164DB2CE006CBB88 /* parsec.icns */; };
@@ -2170,7 +2170,7 @@
 		FAFEE689163BDA5E0056CECD /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = OpenParsec;
 			};
 			buildConfigurationList = FAFEE68C163BDA5E0056CECD /* Build configuration list for PBXProject "Parsec" */;
