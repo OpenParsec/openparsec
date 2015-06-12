@@ -480,10 +480,10 @@ void SDL_RCSetup()
 //
 int VSDL_InitOGLMode()
 {
-	Uint32 mode_flags = SDL_WINDOW_OPENGL;
+	Uint32 mode_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI;
 
 	if ( !Op_WindowedMode ) {
-		mode_flags |= SDL_WINDOW_FULLSCREEN;
+		mode_flags |= SDL_WINDOW_FULLSCREEN_DESKTOP;
 	}
 
 	// set the SDL GL Attributes

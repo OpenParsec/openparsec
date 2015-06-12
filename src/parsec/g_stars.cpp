@@ -459,13 +459,12 @@ int DrawPseudoStar_( int x, int y, geomv_t z )
 
 // temp storage for pseudo star drawing ---------------------------------------
 //
-#define MAX_PSEUDO_STAR_SIZES	40
+#define MAX_PSEUDO_STAR_SIZES	5
 
 static int			num_scheduled_pseudo_stars[ MAX_PSEUDO_STAR_SIZES ];
 static IterPoint2*	scheduled_pseudo_stars[ MAX_PSEUDO_STAR_SIZES ];
 
-float pseudo_stars_size_tab[] = { 1.4f, 2.0f, 2.8f, 3.4f };
-
+float pseudo_stars_size_tab[] = { 1.4f, 2.0f, 2.8f, 3.4f, 4.0f };
 
 // determine gray level of pseudo star according to distance ------------------
 //
@@ -519,6 +518,10 @@ int GetPseudoStarSize( geomv_t z )
 		starsize = 1;
 	}
 
+	if ( starsize > 5 ) {
+		starsize = 5;
+	}
+	
 	ASSERT( starsize >= 1 );
 	ASSERT( starsize <= MAX_PSEUDO_STAR_SIZES );
 
@@ -564,8 +567,7 @@ int DrawPseudoStarLine( int x1, int y1, int x2, int y2, geomv_t z )
 	byte graylvl = GetPseudoStarGrayLevel( z );
 
 	// determine discrete size
-	int starsize = GetPseudoStarSize( z );
-
+	
 	IterLine2 itline;
 	itline.NumVerts  = 2;
 	itline.flags	 = ITERFLAG_LS_ANTIALIASED;
@@ -614,8 +616,6 @@ void DrawPseudoStars()
 		return;
 	}
 
-#ifdef USE_ITER_PSEUDO_STARS
-
 	// use lines from previous position to current position instead
 	// of points if the afterburner is currently active
 	int uselines = MyShip->afterburner_active;
@@ -646,8 +646,6 @@ void DrawPseudoStars()
 			itpoint->pointsize	= pseudo_stars_size_tab[ csiz ];
 		}
 	}
-
-#endif
 
 	// process all pseudo stars
 	for ( int psno = 0; psno < NumPseudoStars; psno++ ) {
@@ -701,7 +699,6 @@ void DrawPseudoStars()
 			if ( ( curloc.X >= 0 ) && ( curloc.X < Screen_Width ) &&
 				 ( curloc.Y >= 0 ) && ( curloc.Y < Screen_Height ) ) {
 
-#ifdef USE_ITER_PSEUDO_STARS
 				if ( uselines ) {
 					if ( ( curloc.X == prvloc.X ) && ( curloc.Y == prvloc.Y ) ) {
 						prvloc.X++;
@@ -711,9 +708,6 @@ void DrawPseudoStars()
 				} else {
 					starvisible = SchedulePseudoStar( curloc.X, curloc.Y, tempvert.Z );
 				}
-#else
-				starvisible = DrawPseudoStar_( curloc.X, curloc.Y, tempvert.Z );
-#endif
 			}
 		}
 
@@ -722,8 +716,6 @@ void DrawPseudoStars()
 			CalcPseudoStarPosition( psno );
 		}
 	}
-
-#ifdef USE_ITER_PSEUDO_STARS
 
 	if ( !uselines ) {
 
@@ -745,8 +737,6 @@ void DrawPseudoStars()
 		FREEMEM( itpmem );
 		itpmem = NULL;
 	}
-
-#endif
 
 	// reset matrix
 	MakeIdMatrx( PseudoStarMovement );
