@@ -70,24 +70,23 @@ void VIDs_ClearRenderBuffer()
 	// the driver when clearing the buffer. however, this
 	// is not the case on a Rage128, for instance.
 
-	if ( !AUX_DISABLE_BUFFER_CLEAR && !AUX_DISABLE_ZBUFFER_CLEAR ) {
+	GLbitfield clearmask = 0;
 
-		// simultaneously clear color and depth buffers
-		RO_DepthMask( GL_TRUE );
-		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-		RO_DepthMask( GL_FALSE );
+	if (!AUX_DISABLE_BUFFER_CLEAR) {
+		clearmask |= GL_COLOR_BUFFER_BIT;
+	}
 
-	} else if ( !AUX_DISABLE_BUFFER_CLEAR ) {
+	if (!AUX_DISABLE_ZBUFFER_CLEAR) {
+		clearmask |= GL_DEPTH_BUFFER_BIT;
+		RO_DepthMask(GL_TRUE);
+	}
 
-		// clear color buffer only
-		glClear( GL_COLOR_BUFFER_BIT );
+	if (clearmask != 0) {
+		glClear(clearmask);
+	}
 
-	} else if ( !AUX_DISABLE_ZBUFFER_CLEAR ) {
-
-		// clear depth buffer only
-		RO_DepthMask( GL_TRUE );
-		glClear( GL_DEPTH_BUFFER_BIT );
-		RO_DepthMask( GL_FALSE );
+	if (!AUX_DISABLE_ZBUFFER_CLEAR) {
+		RO_DepthMask(GL_FALSE);
 	}
 }
 

@@ -87,33 +87,6 @@ GLfloat gl_orthogonal_matrix[] = {
 
 GLfloat gl_orthogonal_params[ 6 ];
 
-
-// special opengl flag values -------------------------------------------------
-//
-enum {
-
-	GL_FLAG_EXTCTRL_GLEXTS_OFF	= 0,	// don't use extensions
-	GL_FLAG_EXTCTRL_GLEXTS_ON	= 1,	// use available extensions
-
-	GL_FLAG_SWAPCTRL_NONE		= 0,	// no explicit synchronization
-	GL_FLAG_SWAPCTRL_GLFLUSH	= 1,	// glFlush() prior to SwapBuffers()
-	GL_FLAG_SWAPCTRL_GLFINISH	= 2,	// glFinish() prior to SwapBuffers()
-
-	GL_FLAG_BPPCTRL_OFF			= 0,	// never switch colordepth
-	GL_FLAG_BPPCTRL_ON			= 1		// colordepth switching allowed
-};
-
-
-// user-specifiable opengl flags (will be registered as int commands) ---------
-//
-int	gl_flag_swapctrl	= GL_FLAG_SWAPCTRL_NONE;
-int gl_flag_bppctrl		= GL_FLAG_BPPCTRL_ON;
-
-
-int						oldpixdepth		= 0;
-
-int						sdl_win_bpp;
-
 GLint 					sdl_wsz_x;
 GLint 					sdl_wsz_y;
 GLsizei 				sdl_wsz_w;
@@ -503,32 +476,19 @@ void SDL_RCSetup()
 }
 
 
-// ----------------------------------------------------------------------------
-//
-static int fullscreen_mode	= TRUE;
-
-
-
 // set opengl graphics mode ---------------------------------------------------
 //
 int VSDL_InitOGLMode()
 {
-	// set our mode index
-	ASSERT(VID_MODE_AVAILABLE(GetResolutionIndex(GameScreenRes.width, GameScreenRes.height)));
-
-	fullscreen_mode	= !Op_WindowedMode;
-
 	Uint32 mode_flags = SDL_WINDOW_OPENGL;
-	
-	sdl_win_bpp = GameScreenBPP;
 
-	if ( fullscreen_mode ) {
+	if ( !Op_WindowedMode ) {
 		mode_flags |= SDL_WINDOW_FULLSCREEN;
 	}
-	
+
 	// set the SDL GL Attributes
 
-	if ( sdl_win_bpp == 32 ) {
+	if ( GameScreenBPP == 32 ) {
 
 	    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,    	    8);
 	    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,  	    8);
@@ -536,7 +496,7 @@ int VSDL_InitOGLMode()
 	    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,  	    8);
 	    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,  	    24);
 
-	} else if ( sdl_win_bpp == 16 ) {
+	} else if ( GameScreenBPP == 16 ) {
 	
 	    SDL_GL_SetAttribute(SDL_GL_RED_SIZE,    	    5);
 	    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,  	    6);
@@ -577,9 +537,6 @@ int VSDL_InitOGLMode()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, gl_majorversion);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, gl_minorversion);
 
-	// change the video mode.
-	printf("Changing vid mode to %ix%i, bpp: %i, vsync: %d, aa: %dx\n", GameScreenRes.width, GameScreenRes.height, sdl_win_bpp, FlipSynched, AUX_MSAA);
-
 	if (curwindow != NULL) {
 		SDL_DestroyWindow(curwindow);
 		curwindow = NULL;
@@ -608,8 +565,12 @@ int VSDL_InitOGLMode()
 	sdl_wsz_y = 0;
 	SDL_GetWindowSize(curwindow, &sdl_wsz_w, &sdl_wsz_h);
 
+	GameScreenRes.set(sdl_wsz_w, sdl_wsz_h);
+
 	// set vertical synchronization
 	SDL_GL_SetSwapInterval(FlipSynched ? 1 : 0);
+
+	printf("Vid mode changed to %ix%i, bpp: %i, vsync: %d, aa: %dx\n", GameScreenRes.width, GameScreenRes.height, GameScreenBPP, FlipSynched, AUX_MSAA);
 
 	// setup current rendering context
 	SDL_RCSetup();
@@ -644,23 +605,9 @@ void VSDL_ShutDownOGL()
 	}
 }
 
-
-// registration table for opengl int commands (user-specifiable flags) --------
-//
-int_command_s gl_int_commands[] = {
-	{ 0x00,	"gl.swapctrl",	0, 2,	&gl_flag_swapctrl,	NULL,	NULL },
-	{ 0x00,	"gl.bppctrl",	0, 1,	&gl_flag_bppctrl,	NULL,	NULL },
-};
-
-#define NUM_GL_INT_COMMANDS		CALC_NUM_ARRAY_ENTRIES( gl_int_commands )
-
-
 // module registration function -----------------------------------------------
 //
 REGISTER_MODULE( VSDL_OGL )
 {
-	// register opengl int commands (flags)
-	for ( int curcmd = 0; curcmd < NUM_GL_INT_COMMANDS; curcmd++ ) {
-		CON_RegisterIntCommand( &gl_int_commands[ curcmd ] );
-	}
+
 }

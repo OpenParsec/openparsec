@@ -425,6 +425,9 @@ void VID_InitMode()
 {
 	// set video mode
 	VIDs_InitDisplay();
+
+	// make sure code knows about the new resolution
+	VID_SetResolutionVars();
 	
 	// notify other parts of the game about current video mode
 	// by walking the corresponding callback list
