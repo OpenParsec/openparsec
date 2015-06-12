@@ -90,7 +90,6 @@
 		FAADE10016AB271B005D7250 /* glew.c in Sources */ = {isa = PBXBuildFile; fileRef = FAADE0FC16AB271B005D7250 /* glew.c */; };
 		FAB135B5164DAB73006CBB88 /* aud_sdlmixer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FAB135B4164DAB73006CBB88 /* aud_sdlmixer.cpp */; };
 		FAB135BF164DB2CE006CBB88 /* parsec.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135BE164DB2CE006CBB88 /* parsec.icns */; };
-		FAB135C2164DB2D4006CBB88 /* con.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135C0164DB2D4006CBB88 /* con.icns */; };
 		FAB135C3164DB2D4006CBB88 /* dat.icns in Resources */ = {isa = PBXBuildFile; fileRef = FAB135C1164DB2D4006CBB88 /* dat.icns */; };
 		FAB42EDA16F819B40017E7FD /* CREDITS in Resources */ = {isa = PBXBuildFile; fileRef = FAB42ED916F819B40017E7FD /* CREDITS */; };
 		FAB42EDC16F819B80017E7FD /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = FAB42EDB16F819B80017E7FD /* LICENSE */; };
@@ -435,7 +434,6 @@
 		FAB135B8164DAFA0006CBB88 /* keys_sdl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys_sdl.h; sourceTree = "<group>"; };
 		FAB135B9164DAFA0006CBB88 /* keys_server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keys_server.h; sourceTree = "<group>"; };
 		FAB135BE164DB2CE006CBB88 /* parsec.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = parsec.icns; sourceTree = SOURCE_ROOT; };
-		FAB135C0164DB2D4006CBB88 /* con.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = con.icns; sourceTree = SOURCE_ROOT; };
 		FAB135C1164DB2D4006CBB88 /* dat.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = dat.icns; sourceTree = SOURCE_ROOT; };
 		FAB42ED916F819B40017E7FD /* CREDITS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CREDITS; path = ../CREDITS; sourceTree = "<group>"; };
 		FAB42EDB16F819B80017E7FD /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -1615,7 +1613,6 @@
 		FAFEE69F163BDA5E0056CECD /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				FAB135C0164DB2D4006CBB88 /* con.icns */,
 				FAB135C1164DB2D4006CBB88 /* dat.icns */,
 				FAB135BE164DB2CE006CBB88 /* parsec.icns */,
 				FAFEE6A0163BDA5E0056CECD /* Parsec-Info.plist */,
@@ -2197,7 +2194,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAB135BF164DB2CE006CBB88 /* parsec.icns in Resources */,
-				FAB135C2164DB2D4006CBB88 /* con.icns in Resources */,
 				FAB135C3164DB2D4006CBB88 /* dat.icns in Resources */,
 				FA72A2BE16E8209C00997EBE /* init.con in Resources */,
 				FAC8E8D816F3FDDC004DADF3 /* LICENSE.artwork_sound in Resources */,
