@@ -518,7 +518,7 @@ int VSDL_InitOGLMode()
 
 	fullscreen_mode	= !Op_WindowedMode;
 
-	Uint32 mode_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI;
+	Uint32 mode_flags = SDL_WINDOW_OPENGL;
 	
 	sdl_win_bpp = GameScreenBPP;
 
