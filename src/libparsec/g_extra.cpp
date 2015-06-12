@@ -1172,19 +1172,18 @@ char* G_ExtraManager::_CollectSpecial( int nSpecial, ShipObject* cur_ship )
 #ifdef PARSEC_SERVER
 	// for the server, create and send an RE_Generic saying that we picked up 
 	// the invulnerability device.
-	RE_Generic *re_gen = new RE_Generic;
+	if(nSpecial == INVISIBILITY_DEVICE) {
+		RE_Generic *re_gen = new RE_Generic;
+		re_gen->RE_ActionFlags |= 1 << INVUNERABLE;
+		re_gen->HostObjId = cur_ship->HostObjNumber;
+		re_gen->TargetId = 0;
+		re_gen->Padding = 0;
+		re_gen->RE_BlockSize = sizeof(RE_Generic);
+		re_gen->RE_Type = RE_GENERIC;
 
-	re_gen->RE_ActionFlags |= 1 << INVUNERABLE;
-	re_gen->HostObjId = cur_ship->HostObjNumber;
-	re_gen->TargetId = 0;
-	re_gen->Padding = 0;
-	re_gen->RE_BlockSize = sizeof(RE_Generic);
-	re_gen->RE_Type = RE_GENERIC;
-
-
-	TheSimNetOutput->BufferForMulticastRE(re_gen, PLAYERID_SERVER, true);
-	delete re_gen;
-
+		TheSimNetOutput->BufferForMulticastRE(re_gen, PLAYERID_SERVER, true);
+		delete re_gen;
+	}
 #endif
 	if ( ((G_ShipObject*)cur_ship)->CollectSpecial( collect_info[ nSpecial ].mask ) ) {
 		text = collect_info[ nSpecial ].success_string;
