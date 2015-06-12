@@ -207,12 +207,12 @@ void R_DrawLensFlare()
 			// "draw" the bounding box of the sun, with just depth testing & querying enabled
 			
 			GLfloat vertices[] = {
-				loc.X - w/2, loc.Y - h/2, 1.0f / tempvert.Z,
-				loc.X + w/2, loc.Y - h/2, 1.0f / tempvert.Z,
-				loc.X + w/2, loc.Y + h/2, 1.0f / tempvert.Z,
-				loc.X - w/2, loc.Y + h/2, 1.0f / tempvert.Z,
+				(GLfloat) (loc.X - w/2), (GLfloat) (loc.Y - h/2), 1.0f / tempvert.Z,
+				(GLfloat) (loc.X + w/2), (GLfloat) (loc.Y - h/2), 1.0f / tempvert.Z,
+				(GLfloat) (loc.X + w/2), (GLfloat) (loc.Y + h/2), 1.0f / tempvert.Z,
+				(GLfloat) (loc.X - w/2), (GLfloat) (loc.Y + h/2), 1.0f / tempvert.Z,
 			};
-			
+
 			RO_ClientState(VTXARRAY_VERTICES);
 			RO_ArrayMakeCurrent(VTXPTRS_NONE, NULL);
 			
