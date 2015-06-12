@@ -54,6 +54,8 @@
 #include "img_api.h"
 
 // image file loader
+#define STB_IMAGE_IMPLEMENTATION
+#define STBI_PARSEC
 #include <stb_image/stb_image.h>
 
 
