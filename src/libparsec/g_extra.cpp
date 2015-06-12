@@ -1172,7 +1172,7 @@ char* G_ExtraManager::_CollectSpecial( int nSpecial, ShipObject* cur_ship )
 #ifdef PARSEC_SERVER
 	// for the server, create and send an RE_Generic saying that we picked up 
 	// the invulnerability device.
-	if(nSpecial == INVISIBILITY_DEVICE) {
+	if(nSpecial == INVULNERABILITY_DEVICE) {
 		RE_Generic *re_gen = new RE_Generic;
 		re_gen->RE_ActionFlags |= 1 << INVUNERABLE;
 		re_gen->HostObjId = cur_ship->HostObjNumber;
