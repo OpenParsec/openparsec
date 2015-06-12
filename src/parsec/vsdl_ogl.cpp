@@ -112,8 +112,6 @@ int gl_flag_bppctrl		= GL_FLAG_BPPCTRL_ON;
 
 int						oldpixdepth		= 0;
 
-int 					sdl_win_width;
-int 					sdl_win_height;
 int						sdl_win_bpp;
 
 GLint 					sdl_wsz_x;
@@ -440,7 +438,6 @@ void SDL_RCSetup()
 
 	// set projection to screen coordinate identity
 	glMatrixMode( GL_PROJECTION );
-	GLint rc = glGetError();
 	/*
 	glLoadIdentity();
 	glOrtho( sdl_wsz_x, sdl_wsz_x + sdl_wsz_w,
@@ -469,13 +466,11 @@ void SDL_RCSetup()
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
 
-	// set viewport
-	glViewport( sdl_wsz_x, sdl_wsz_y, sdl_wsz_w, sdl_wsz_h );
-	rc = glGetError();
-	if (rc == GL_INVALID_VALUE) {
-		MSGOUT("Error: Invalid GL Viewport values");
-		exit(1);
-	}
+	// set viewport using the window's pixel backing size, rather than its
+	// "dpi-independent" size.
+	int drawable_w, drawable_h;
+	SDL_GL_GetDrawableSize(curwindow, &drawable_w, &drawable_h);
+	glViewport( 0, 0, drawable_w, drawable_h );
 
 	//glFrontFace( GL_CW ); //FIXME: ?? why was this labelled FIXME?
 
@@ -523,22 +518,13 @@ int VSDL_InitOGLMode()
 
 	fullscreen_mode	= !Op_WindowedMode;
 
-	Uint32 mode_flags = SDL_WINDOW_OPENGL;
+	Uint32 mode_flags = SDL_WINDOW_OPENGL | SDL_WINDOW_ALLOW_HIGHDPI;
 	
 	sdl_win_bpp = GameScreenBPP;
-
-	sdl_win_width = GameScreenRes.width;
-	sdl_win_height = GameScreenRes.height;
 
 	if ( fullscreen_mode ) {
 		mode_flags |= SDL_WINDOW_FULLSCREEN;
 	}
-
-	sdl_wsz_x = 0;
-	sdl_wsz_y = 0;
-	sdl_wsz_w = sdl_win_width;
-	sdl_wsz_h = sdl_win_height;
-
 	
 	// set the SDL GL Attributes
 
@@ -592,7 +578,7 @@ int VSDL_InitOGLMode()
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, gl_minorversion);
 
 	// change the video mode.
-	printf("Changing vid mode to %ix%i, bpp: %i, vsync: %d, aa: %dx\n", sdl_win_width, sdl_win_height, sdl_win_bpp, FlipSynched, AUX_MSAA);
+	printf("Changing vid mode to %ix%i, bpp: %i, vsync: %d, aa: %dx\n", GameScreenRes.width, GameScreenRes.height, sdl_win_bpp, FlipSynched, AUX_MSAA);
 
 	if (curwindow != NULL) {
 		SDL_DestroyWindow(curwindow);
@@ -604,7 +590,7 @@ int VSDL_InitOGLMode()
         curcontext = NULL;
     }
 
-	curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, sdl_win_width, sdl_win_height, mode_flags);
+	curwindow = SDL_CreateWindow("Parsec", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_UNDEFINED, GameScreenRes.width, GameScreenRes.height, mode_flags);
 
 	if (curwindow == NULL) {
 		MSGOUT("Could not create SDL window: %s\n", SDL_GetError());
@@ -617,6 +603,10 @@ int VSDL_InitOGLMode()
         MSGOUT("Could not create OpenGL context: %s\n", SDL_GetError());
         return FALSE;
     }
+
+	sdl_wsz_x = 0;
+	sdl_wsz_y = 0;
+	SDL_GetWindowSize(curwindow, &sdl_wsz_w, &sdl_wsz_h);
 
 	// set vertical synchronization
 	SDL_GL_SetSwapInterval(FlipSynched ? 1 : 0);
