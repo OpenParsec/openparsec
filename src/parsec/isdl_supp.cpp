@@ -322,18 +322,18 @@ void ISDLm_ProcessMotionMouse()
 	mappedxpos = ( mappedxpos - last_xpos ) * ( inp_mouse_sensitivity / 100.0f ) + 0.5f;
 	mappedypos = ( mappedypos - last_ypos ) * ( inp_mouse_sensitivity / 100.0f ) + 0.5f;
 
-	if ( mappedxpos < 0.0f ) {
-		mappedxpos = 0.0f;
+	if ( mappedxpos < -3.0f ) {
+		mappedxpos = -3.0f;
 	}
-	if ( mappedxpos > 1.0f ) {
-		mappedxpos = 1.0f;
+	if ( mappedxpos > 3.0f ) {
+		mappedxpos = 3.0f;
 	}
 
-	if ( mappedypos < 0.0f ) {
-		mappedypos = 0.0f;
+	if ( mappedypos < -3.0f ) {
+		mappedypos = -3.0f;
 	}
-	if ( mappedypos > 1.0f ) {
-		mappedypos = 1.0f;
+	if ( mappedypos > 3.0f ) {
+		mappedypos = 3.0f;
 	}
 
 	bams_t	c_angle;
