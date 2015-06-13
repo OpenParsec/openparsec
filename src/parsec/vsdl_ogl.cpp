@@ -102,6 +102,15 @@ void VSDL_CommitOGLBuff()
 {
 	// Tell SDL to swap the GL Buffers
 	SDL_GL_SwapWindow(curwindow);
+
+	// FIXME: Find a better location to put this...
+	// Sleep for a few milliseconds every frame if the window isn't in focus.
+	// Makes sure CPU usage stays sane if the window manager decides to avoid
+	// vsync when the app is in the background.
+	Uint32 flags = SDL_GetWindowFlags(curwindow);
+	if ((flags & (SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_MOUSE_FOCUS)) == 0) {
+		SDL_Delay(10);
+	}
 }
 
 
@@ -112,7 +121,7 @@ int VSDL_InitOGLInterface( int printmodelistflags )
 	MSGOUT( "Using the OpenGL subsystem as rendering device." );
 
 	int displayCount = 0;
-	if ( SDL_Init(SDL_INIT_VIDEO) < 0 ) {
+	if ( SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0 ) {
 		MSGOUT("[VIDEO]: ERROR: Trouble initializing video subsystem.");
 		return FALSE;
 	}

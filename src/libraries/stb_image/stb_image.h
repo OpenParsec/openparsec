@@ -1021,7 +1021,7 @@ static FILE *stbi__fopen(char const *filename, char const *mode)
 {
   FILE *f;
 #ifdef STBI_PARSEC
-   f = SYS_fopen(filename, "rb");
+   f = SYS_fopen(filename, mode);
 #else
 
 #if defined(_MSC_VER) && _MSC_VER >= 1400
@@ -1037,9 +1037,9 @@ static FILE *stbi__fopen(char const *filename, char const *mode)
 static int stbi__fclose(FILE *f)
 {
 #ifdef STBI_PARSEC
-   SYS_fclose(f);
+   return SYS_fclose(f);
 #else
-   fclose(f);
+   return fclose(f);
 #endif
 }
 
