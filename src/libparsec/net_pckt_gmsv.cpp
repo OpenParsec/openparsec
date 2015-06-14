@@ -59,6 +59,7 @@
 #if defined ( PARSEC_SERVER ) || defined ( PARSEC_MASTER )
 	#include "con_aux_sv.h"
 	#include "net_game_sv.h"
+	#include "e_gameserver.h"
 #elif defined PARSEC_CLIENT
 	#include "con_aux.h"
 	#include "net_stream.h"
@@ -435,16 +436,20 @@ int NETs_HandleInPacket( const NetPacketExternal* ext_gamepacket, const int ext_
 	
 	// check for correct protocol version
 #ifndef PARSEC_SERVER
-	// for client and MASTER server.
+	// for client
 	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion < clsv_protocol_minor_internal ) ) {
 		DBGTXT( MSGOUT( "NETs_HandleInPacket(): dropped packet [incompatible protocol version]." ); );
 		return FALSE;
 	}
 #else
-	if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion != CLSV_PROTOCOL_MINOR ) ) {
+	// server build
+	if(!TheServer->GetServerIsMaster()){
+		// only do this chekc if we are not the master.  Master should be able to handle any protocol
+		if ( ( ext_gamepacket_GMSV->MajorVersion != CLSV_PROTOCOL_MAJOR ) || ( ext_gamepacket_GMSV->MinorVersion != CLSV_PROTOCOL_MINOR ) ) {
 			DBGTXT( MSGOUT( "NETs_HandleInPacket(): dropped packet [incompatible protocol version]." ); );
 			return FALSE;
 		}
+	}
 #endif
 
 	// unpack external packet data to internal packet
