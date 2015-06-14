@@ -597,12 +597,6 @@
     <ClCompile Include="..\..\src\libraries\glew\glew.c">
       <Filter>libraries\glew</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\stb_image\stb_image.cpp">
-      <Filter>libraries\stb_image</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\stb_image\stb_image_write.c">
-      <Filter>libraries\stb_image</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libparsec\g_telep.cpp">
       <Filter>libparsec</Filter>
     </ClCompile>

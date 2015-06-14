@@ -45,8 +45,6 @@
     <ClCompile Include="..\..\src\libparsec\utl_math.cpp" />
     <ClCompile Include="..\..\src\libparsec\utl_math2.cpp" />
     <ClCompile Include="..\..\src\libraries\glew\glew.c" />
-    <ClCompile Include="..\..\src\libraries\stb_image\stb_image.cpp" />
-    <ClCompile Include="..\..\src\libraries\stb_image\stb_image_write.c" />
     <ClCompile Include="..\..\src\parsec\aud_bkgn.cpp" />
     <ClCompile Include="..\..\src\parsec\aud_comm.cpp" />
     <ClCompile Include="..\..\src\parsec\aud_game.cpp" />
