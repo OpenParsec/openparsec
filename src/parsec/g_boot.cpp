@@ -74,6 +74,7 @@
 #include "part_sys.h"
 #include "sys_bind.h"
 #include "vid_init.h"
+#include "g_bot_cl.h"
 
 
 // flags
@@ -489,17 +490,19 @@ int GameInit( int use_net )
 	// handle network game entry
 	if ( !HandleEntryMode() )
 		return FALSE;
-
-	// handle init of graphics mode
-	HandleGraphicsModeSwitch();
-
+	if(!headless_bot){
+		// handle init of graphics mode
+		HandleGraphicsModeSwitch();
+	}
 	// create default objects
 	CreateDefaultObjects();
 
-	// init game sound
-//RAM	AUDs_OpenMenuSound();
-	AUDs_OpenGameSound();
-	AUDs_OpenMenuSound();
+	if(!headless_bot){
+		// init game sound
+		//RAM	AUDs_OpenMenuSound();
+		AUDs_OpenGameSound();
+		AUDs_OpenMenuSound();
+	}
 
 	return TRUE;
 }

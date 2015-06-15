@@ -67,7 +67,7 @@
 #include "g_emp.h"
 
 static int botwait = 0;
-
+int headless_bot = 0;
 //#define BOT_LOGFILES 1
 
 // do the desired object control ----------------------------------------------

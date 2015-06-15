@@ -127,7 +127,8 @@ void _AlignedFree( void *mem )
 	}
 
 #endif
-
+	if(mem==NULL)
+		return;
 	HEAP_FREE( (void*) ( *(size_t*)( (size_t)mem - ( MEMBLOCK_ALIGNMENT_VAL + 1 ) ) ) );
 }
 

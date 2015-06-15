@@ -70,7 +70,7 @@
 #include "net_conn.h"
 #include "net_csdf.h"
 #include "obj_creg.h"
-
+#include "g_bot_cl.h"
 
 // flags
 #define PLAY_DEMO_BEHIND_MENU
@@ -832,6 +832,8 @@ void DrawMenuItems()
 //
 void DrawFloatingMenu()
 {
+	if(headless_bot)
+		return;
 	ASSERT( InFloatingMenu );
 /*
 	// automatic disabling of game status window

@@ -52,6 +52,7 @@
 #include "e_supp.h"
 #include "h_cockpt.h"
 #include "m_button.h"
+#include "g_bot_cl.h"
 
 
 
@@ -316,7 +317,12 @@ void MaintainMessages()
 	// messages should not cover left and right panel if on
 	int pwidth = AUX_DONT_DRAW_BLUEPRINTS ?
 					16 : BitmapInfo[ BM_SHIP1_BLUEPRINT ].width * 2 + 16;
-	int maxlen = ( ( Screen_Width - pwidth ) / CharsetInfo[ msgfont ].width );
+	int maxlen = 0;
+	if(headless_bot) {
+		maxlen = 80;
+	} else {
+		maxlen = ( ( Screen_Width - pwidth ) / CharsetInfo[ msgfont ].width );
+	}
 	if ( maxlen > MAX_MESSAGELEN )
 		maxlen = MAX_MESSAGELEN;
 	ASSERT( maxlen > 0 );
@@ -479,6 +485,9 @@ void WriteGameTime()
 
 	if ( GAME_NO_SERVER() )
 		return;
+	if(headless_bot)
+		return;
+
 
 	char str[ 10 ];
 	int  pos = 9;

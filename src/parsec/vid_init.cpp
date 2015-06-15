@@ -43,6 +43,7 @@
 #include "inp_defs.h"
 #include "sys_defs.h"
 #include "vid_defs.h"
+#include "net_defs.h"
 
 // patching headers
 #include "d_patch.h"
@@ -69,6 +70,8 @@
 #include "h_drwhud.h"
 #include "h_supp.h"
 #include "part_sys.h"
+
+#include "g_bot_cl.h"
 
 
 // names of control files depending on desired resolution and detail level ----
@@ -463,48 +466,48 @@ void VID_PerformSwitch()
 //
 void VID_SwitchMode( int xres, int yres, int bpp )
 {
-#ifndef SYSTEM_TARGET_BOT
-	int resindex = GetResolutionIndex(xres, yres);
+	if(!headless_bot){
+		int resindex = GetResolutionIndex(xres, yres);
 
-	if (!VID_MODE_AVAILABLE(resindex)) {
-		resindex = (int) Resolutions.size() - 1;
-		if (VID_MODE_AVAILABLE(resindex)) {
-			xres = Resolutions[resindex].width;
-			yres = Resolutions[resindex].height;
+		if (!VID_MODE_AVAILABLE(resindex)) {
+			resindex = (int) Resolutions.size() - 1;
+			if (VID_MODE_AVAILABLE(resindex)) {
+				xres = Resolutions[resindex].width;
+				yres = Resolutions[resindex].height;
+			}
 		}
-	}
-	
-	ASSERT(VID_MODE_AVAILABLE(resindex));
 
-	//NOTE:
-	// this function is used to switch the currently active
-	// graphics mode. it is not used to switch between text mode
-	// and graphics mode. it performs mode switching only if
-	// something (resolution, color depth, windowed/full-screen)
-	// has indeed changed.
+		ASSERT(VID_MODE_AVAILABLE(resindex));
 
-	//NOTE:
-	// this function is used by VID_INIT::VID_ApplyOptions() and
-	// to switch from game mode back to menu mode.
+		//NOTE:
+		// this function is used to switch the currently active
+		// graphics mode. it is not used to switch between text mode
+		// and graphics mode. it performs mode switching only if
+		// something (resolution, color depth, windowed/full-screen)
+		// has indeed changed.
 
-	// filter mode-switch if nothing has changed
-	if (xres != GameScreenRes.width || yres != GameScreenRes.height || bpp != GameScreenBPP) {
+		//NOTE:
+		// this function is used by VID_INIT::VID_ApplyOptions() and
+		// to switch from game mode back to menu mode.
 
-		printf("Resolution change.\n");
-		GameScreenRes.set(xres, yres);
-		GameScreenBPP  = bpp;
-		GameScreenWindowed = Op_WindowedMode;
+		// filter mode-switch if nothing has changed
+		if (xres != GameScreenRes.width || yres != GameScreenRes.height || bpp != GameScreenBPP) {
 
-		// perform actual mode switch
-		VID_PerformSwitch();
+			printf("Resolution change.\n");
+			GameScreenRes.set(xres, yres);
+			GameScreenBPP  = bpp;
+			GameScreenWindowed = Op_WindowedMode;
 
-	} else {
+			// perform actual mode switch
+			VID_PerformSwitch();
 
-		// even if same mode with respect to resolution and color depth
-		// allow switching between full-screen and windowed mode
-		printf("No Resolution change.\n");
-//		if ( GameScreenWindowed != Op_WindowedMode ) { // disabled so vsync switching will work
-				
+		} else {
+
+			// even if same mode with respect to resolution and color depth
+			// allow switching between full-screen and windowed mode
+			printf("No Resolution change.\n");
+			//		if ( GameScreenWindowed != Op_WindowedMode ) { // disabled so vsync switching will work
+
 			GameScreenWindowed = Op_WindowedMode;
 
 			// re-init same mode
@@ -512,9 +515,9 @@ void VID_SwitchMode( int xres, int yres, int bpp )
 				// perform actual mode switch
 				VID_PerformSwitch();
 			}
-//		}
+			//		}
+		}
 	}
-#endif
 }
 
 

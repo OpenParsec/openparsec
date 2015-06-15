@@ -75,6 +75,7 @@
 #include "sys_conv.h"
 #include "sys_file.h"
 #include "vid_init.h"
+#include "g_bot_cl.h"
 
 #ifdef SYSTEM_TARGET_LINUX
 	#include <SDL2/SDL.h>
@@ -382,6 +383,9 @@ int main( int argc, char **argv )
 	// this is the first thing we must do in order to resemble the old module registration
 	TheModuleManager->InitAllModules();
 
+	// set the headless bot to 0 by default
+	headless_bot = 0;
+
 	// check command line options
 	SYSs_CheckCommandLine( argc, argv );
 
@@ -401,9 +405,9 @@ int main( int argc, char **argv )
 	SLm_InitFileSystem();
 
 	// init video subsystem
-#ifndef SYSTEM_TARGET_BOT
-	VID_InitSubsystem();
-#endif
+	if(!headless_bot){
+		VID_InitSubsystem();
+	}
 	// read objects and other data into memory
 	LoadData( FetchCtrlFileName(), TRUE );
 
@@ -411,20 +415,23 @@ int main( int argc, char **argv )
 	NETs_InitAPI();
 
 	// init sound system
-#ifndef SYSTEM_TARGET_BOT
-	SLm_InitSound();
-#endif
+	if(!headless_bot){
+		SLm_InitSound();
+	}
+
 	// calibrate joystick
-#ifndef SYSTEM_TARGET_BOT
-	SLm_InitJoystickCode();
-#endif
+	if(!headless_bot){
+		SLm_InitJoystickCode();
+	}
+
 	// init game and start gameloop
 	SLm_StartUpGame();
 
 	// restore original display mode
-#ifndef SYSTEM_TARGET_BOT
-	VIDs_RestoreDisplay();
-#endif
+	if(!headless_bot){
+		VIDs_RestoreDisplay();
+	}
+
 	// clean up and exit
 	SL_CleanUp();
 

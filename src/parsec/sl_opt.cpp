@@ -41,6 +41,8 @@
 
 // subsystem headers
 #include "vid_defs.h"
+#include "net_defs.h"
+#include "sys_defs.h"
 
 // local module header
 #include "sl_opt.h"
@@ -54,6 +56,7 @@
 #include "sys_file.h"
 #include "vid_init.h"
 #include "vid_plug.h"
+#include "g_bot_cl.h"
 
 
 // flags
@@ -231,6 +234,15 @@ int SLm_EnableFlipSync()
 	return TRUE;
 }
 
+// enable headless operation
+PRIVATE
+int SLm_EnableHeadlessBot()
+{
+	headless_bot = 1;
+	return TRUE;
+
+}
+
 
 // set flipsync to off --------------------------------------------------------
 //
@@ -405,7 +417,7 @@ void RegisterDefaultOptions()
 	OPT_RegisterSetOption( NULL, "fullscreen",		SLm_SetFullscreenMode );
 	OPT_RegisterSetOption( NULL, "flipsync",		SLm_EnableFlipSync );
 	OPT_RegisterSetOption( NULL, "noflipsync",		SLm_DisableFlipSync );
-
+	OPT_RegisterSetOption( "b",  "headlessbot",		SLm_EnableHeadlessBot );
 #ifndef DISABLE_DEMO_OPTION
 	OPT_RegisterSetOption( "x", "startdemo",		SLm_StartDemo );
 #endif
@@ -417,6 +429,7 @@ void RegisterDefaultOptions()
 	OPT_RegisterStringOption( "p",  "pack",			SLm_RegisterPackage );
 	OPT_RegisterStringOption( "m",  "mod",			SLm_RegisterMod );
 	OPT_RegisterStringOption( "f",  "modforce",		SLm_RegisterModForce );
+	
 }
 
 

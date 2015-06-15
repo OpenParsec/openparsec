@@ -1,6 +1,6 @@
 #ifndef G_BOT_CL_H_
 #define G_BOT_CL_H_
-
+extern int headless_bot;
 // simple timeout handling ----------------------------------------------------
 // 
 class UTL_RefFrameTimeout
@@ -389,6 +389,11 @@ public:
 
 	// stop the bot
 	void Stop();
+
+	int IsStarted(){
+		return m_Started;
+	}
+
 
 	// get the servername the client bot should connect to
 	char* GetConnectServer()

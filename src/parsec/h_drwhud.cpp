@@ -72,6 +72,7 @@
 #include "h_supp.h"
 #include "obj_ctrl.h"
 #include "obj_game.h"
+#include "g_bot_cl.h"
 
 
 // flags
@@ -705,6 +706,8 @@ void HUD_DrawBitmaps()
 PUBLIC
 void HUD_DrawTrackingText( int targetvisible )
 {
+	if(headless_bot)
+		return;
 	//NOTE:
 	// also used by H_COCKPT::COCKPIT_DrawDisplay().
 

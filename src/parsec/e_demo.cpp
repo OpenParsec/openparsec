@@ -1052,6 +1052,9 @@ void DEMO_BinaryStartDemo( int interactive, int enablenet )
 			// set maximum number of players to peer-to-peer by default.
 			// should be set correctly by "ac.remotemaxplayers" later on.
 			CurMaxPlayers = MAX_NET_UDP_PEER_PLAYERS;
+
+			// simulated, so set LocalPlayer to 0
+			LocalPlayerId =0 ;
 		}
 
 		// remove dangling virtual packets
