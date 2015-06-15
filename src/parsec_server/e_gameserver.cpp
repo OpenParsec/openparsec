@@ -401,7 +401,7 @@ int	E_GameServer::ParseCommandLine( int argc, char** argv )
 int	E_GameServer::PrintCopyRight()
 {
 	MSGOUT( "\n" );
-	MSGOUT( " PARSEC SERVER V0.20 build " SERVER_BUILD_NUMBER "." );
+	MSGOUT( " PARSEC SERVER build " SERVER_BUILD_NUMBER );
 	MSGOUT( "\n" );
 	MSGOUT( "See LICENSE file for licensing information.         ");
 	/*MSGOUT( " Copyright (c) 1996-2002 by Alex Mastny, Andreas Varga," );
