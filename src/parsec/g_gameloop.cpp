@@ -93,7 +93,7 @@
 #include "obj_expl.h"
 #include "obj_xtra.h"
 #include "g_wfx.h"
-
+#include "g_bot_cl.h"
 
 
 // strings displayed at game end ----------------------------------------------
@@ -1041,7 +1041,8 @@ void GameLoop()
 	do {
 
 		InitLocalShipStatus( LocalShipClass );
-		InitHudDisplay(); //FIXME: second time; (because of MyShip)
+		if(!headless_bot)
+			InitHudDisplay(); //FIXME: second time; (because of MyShip)
 
 		// loop while neither exit desired nor ship downed --------------
 		ExitGameLoop = 0;
@@ -1054,14 +1055,16 @@ void GameLoop()
 			CHECKMEMINTEGRITY();
 			CHECKLISTINTEGRITY();
 
-			// maintain sound
-			AUDs_MaintainSound();
+			if(!headless_bot)
+				// maintain sound
+				AUDs_MaintainSound();
 
 			// check selected keypresses
 			Gm_SpecialKeyFunctions();
-
-			// start rendering of next buffer
-			Gm_BeginFrame();
+			
+			if(!headless_bot)
+				// start rendering of next buffer
+				Gm_BeginFrame();
 
 			// do frame measurement
 			DoFrameTimeCalculations();
@@ -1169,90 +1172,91 @@ void GameLoop()
 			// do network stuff
 			NETs_MaintainNet();
 
-			if ( InStarMap ) {
+			if(!headless_bot){
+				if ( InStarMap ) {
 
-				///int flag = AUX_DISABLE_BUFFER_CLEAR;
-				//AUX_DISABLE_BUFFER_CLEAR = FALSE;
-				//VIDs_ClearRenderBuffer();
-				//AUX_DISABLE_BUFFER_CLEAR = flag;
+					///int flag = AUX_DISABLE_BUFFER_CLEAR;
+					//AUX_DISABLE_BUFFER_CLEAR = FALSE;
+					//VIDs_ClearRenderBuffer();
+					//AUX_DISABLE_BUFFER_CLEAR = flag;
 
-				// next visframe
-				/*CurVisibleFrame++;
-				if ( CurVisibleFrame == VISFRAME_NEVER ) {
-					CurVisibleFrame = VISFRAME_START;
-				}*/
+					// next visframe
+					/*CurVisibleFrame++;
+					if ( CurVisibleFrame == VISFRAME_NEVER ) {
+						CurVisibleFrame = VISFRAME_START;
+					}*/
 
-				//NOTE:
-				// CurVisibleFrame is usually increased in Gm_RenderFrame(), but it
-				// must also be updated here. mouse position updates on Linux and Win32
-				// depend on this, for example.
+					//NOTE:
+					// CurVisibleFrame is usually increased in Gm_RenderFrame(), but it
+					// must also be updated here. mouse position updates on Linux and Win32
+					// depend on this, for example.
 
-				// render 3-D part of frame
-				Gm_RenderFrame();
+					// render 3-D part of frame
+					Gm_RenderFrame();
 
-				// draw screen displays
-				Gm_DrawDisplays();
+					// draw screen displays
+					Gm_DrawDisplays();
 
-				// maintain on-screen message area
-				MaintainMessages();
+					// maintain on-screen message area
+					MaintainMessages();
 
-				// render the starmap
-				MAP_ShowStarmap( NULL );
+					// render the starmap
+					MAP_ShowStarmap( NULL );
 
-			} else {
+				} else {
 
-				// render 3-D part of frame
-				Gm_RenderFrame();
+					// render 3-D part of frame
+					Gm_RenderFrame();
 
-				// draw screen displays
-				Gm_DrawDisplays();
+					// draw screen displays
+					Gm_DrawDisplays();
 
-				// maintain on-screen message area
-				MaintainMessages();
+					// maintain on-screen message area
+					MaintainMessages();
 
-				// switch to game status window on end of game
-				Gm_HandleGameOver();
+					// switch to game status window on end of game
+					Gm_HandleGameOver();
 
-				// draw floating menu
-				if ( InFloatingMenu ) {
+					// draw floating menu
+					if ( InFloatingMenu ) {
 
-					DrawFloatingMenu();
+						DrawFloatingMenu();
 
-				} else if ( EntryMode ) {
+					} else if ( EntryMode ) {
 
-					// draw entry mode text
-					NET_DrawEntryModeText();
+						// draw entry mode text
+						NET_DrawEntryModeText();
+					}
+
+					// display current game time
+					WriteGameTime();
+
+					// display current server ping
+					WriteServerPing();
+
+					// draw on-line help
+					if ( GAME_MODE_ACTIVE() && HelpActive ) {
+						DrawOnlineHelp();
+					}
+
+					// draw translucent player list
+					if ( GAME_MODE_ACTIVE() && AUX_HUD_ADVANCED_KILLSTATS ) {
+						DrawRemotePlayerListWindow();
+					}
+
+					// display current frame rate
+					if ( ShowFrameRate ) {
+						WriteFrameRate();
+					}
+
+					// walk callbacks after drawing everything
+					// except the console
+					CALLBACK_WalkCallbacks( CBTYPE_DRAW_OVERLAYS );
 				}
 
-				// display current game time
-				WriteGameTime();
-
-				// display current server ping
-				WriteServerPing();
-
-				// draw on-line help
-				if ( GAME_MODE_ACTIVE() && HelpActive ) {
-					DrawOnlineHelp();
-				}
-
-				// draw translucent player list
-				if ( GAME_MODE_ACTIVE() && AUX_HUD_ADVANCED_KILLSTATS ) {
-					DrawRemotePlayerListWindow();
-				}
-
-				// display current frame rate
-				if ( ShowFrameRate ) {
-					WriteFrameRate();
-				}
-
-				// walk callbacks after drawing everything
-				// except the console
-				CALLBACK_WalkCallbacks( CBTYPE_DRAW_OVERLAYS );
+				// draw mouse cursor
+				DrawMouseCursor();
 			}
-
-			// draw mouse cursor
-			DrawMouseCursor();
-
 			// increment frame counter
 			++FrameCounter;
 
