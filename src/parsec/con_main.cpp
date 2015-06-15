@@ -309,51 +309,48 @@ void ExecStartupScript( int echo )
 {
 	// exec startup command script
 	char *startupscript = NULL;
+	char *botscript = NULL;
 	// if we are in bot mode, run bot.con
-	if(headless_bot){
-		startupscript = bot_script_name;
-		ExecConsoleFile(startupscript, echo);
-	} else {
-		// start normal or mod boot scripts
-		if ( mod_numnames > 0 ) {
+	if(headless_bot){ //Put your bot commands in it!
+		botscript = bot_script_name;
+		ExecConsoleFile(botscript, echo);
+	}
+	// start normal or mod boot scripts
+	if ( mod_numnames > 0 ) {
 
-			ASSERT( mod_names[ 0 ] != NULL );
-
-			// if mod doesn't override our own packages, execute our boot.con too
-			if ( !mod_override ) {
-				startupscript = PlayDemo ? demo_script_name : boot_script_name;
-				ExecConsoleFile( startupscript, echo );
-			}
-
-			// afterwards, exec <modname>/boot.con for each registered mod
-			for ( int curmod = 0; curmod < mod_numnames; curmod++ ) {
-
-				ASSERT( mod_names[ curmod ] != NULL );
-				startupscript = (char *) ALLOCMEM(
-					strlen( mod_names[ curmod ] ) + 1 + strlen( boot_script_name ) );
-				if ( startupscript == NULL ) {
-					OUTOFMEM( 0 );
-				}
-				strcpy( startupscript, mod_names[ curmod ] );
-				strcat( startupscript, "/" );
-				strcat( startupscript, boot_script_name );
-
-				// must be done to ensure the file can be found independently of
-				// whether it is read from a package or from a real directory
-				char *path = SYSs_ProcessPathString( startupscript );
-
-				ExecConsoleFile( path, echo );
-
-				FREEMEM( startupscript );
-				startupscript = NULL;
-			}
-
-		} else {
-
-			// if no mod is active, we just exec boot.con
+		ASSERT( mod_names[ 0 ] != NULL );
+		// if mod doesn't override our own packages, execute our boot.con too
+		if ( !mod_override ) {
 			startupscript = PlayDemo ? demo_script_name : boot_script_name;
 			ExecConsoleFile( startupscript, echo );
 		}
+		// afterwards, exec <modname>/boot.con for each registered mod
+		for ( int curmod = 0; curmod < mod_numnames; curmod++ ) {
+			ASSERT( mod_names[ curmod ] != NULL );
+			startupscript = (char *) ALLOCMEM(
+			strlen( mod_names[ curmod ] ) + 1 + strlen( boot_script_name ) );
+			if ( startupscript == NULL ) {
+				OUTOFMEM( 0 );
+			}
+			strcpy( startupscript, mod_names[ curmod ] );
+			strcat( startupscript, "/" );
+			strcat( startupscript, boot_script_name );
+
+			// must be done to ensure the file can be found independently of
+			// whether it is read from a package or from a real directory
+			char *path = SYSs_ProcessPathString( startupscript );
+
+			ExecConsoleFile( path, echo );
+
+			FREEMEM( startupscript );
+			startupscript = NULL;
+		}
+
+	} else {
+
+		// if no mod is active, we just exec boot.con
+		startupscript = PlayDemo ? demo_script_name : boot_script_name;
+		ExecConsoleFile( startupscript, echo );
 	}
 }
 

@@ -72,7 +72,7 @@
 #include "part_sys.h"
 
 
-
+extern int headless_bot;
 // generic string paste area --------------------------------------------------
 //
 #define PASTE_STR_LEN 255
@@ -472,7 +472,8 @@ void ShockWaveDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	ASSERT( numremoved <= 1 );
+	if(!headless_bot)
+		ASSERT( numremoved <= 1 );
 }
 
 

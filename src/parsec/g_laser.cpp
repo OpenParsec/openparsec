@@ -92,8 +92,7 @@ static char laserbeam_downed_ship_str[] = "laserbeam downed ship";
 static char no_target_selected_str[]	= "no target selected";
 static char low_energy_str[]			= "low energy";
 
-
-
+extern int headless_bot;
 // laserbeam custom type structure --------------------------------------------
 //
 struct LaserBeam : CustomObject {
@@ -187,6 +186,8 @@ static LaserBeam *laserbeam_type_template = NULL;
 PRIVATE
 int LaserBeam_Draw( void* param )
 {
+	if(headless_bot)
+		return true;
 	ASSERT( param != NULL );
 	LaserBeam *laserbeam = (LaserBeam *) param;
 
@@ -563,7 +564,8 @@ void LaserBeamDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	ASSERT( numremoved <= 1 );
+	if(!headless_bot)
+		ASSERT( numremoved <= 1 );
 }
 
 

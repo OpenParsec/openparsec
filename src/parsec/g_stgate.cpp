@@ -78,7 +78,6 @@
 #include "obj_cust.h"
 #include "part_api.h"
 
-
 // flags
 //#define _VISUALIZE_BBOX
 //#define _VISUALIZE_BRECT
@@ -179,6 +178,7 @@ proplist_s Stargate_PropList[] = {
 	{ NULL,				0,				0,			0,							0,					NULL	},
 };
 
+extern int headless_bot;
 
 // type fields init function for stargate -------------------------------------
 //
@@ -1350,7 +1350,8 @@ void StargateDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	ASSERT( numremoved <= 1 );
+	if(!headless_bot) 
+		ASSERT( numremoved <= 1 );
 }
 
 

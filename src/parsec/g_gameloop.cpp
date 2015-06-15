@@ -333,66 +333,82 @@ void Gm_DrawPseudoStars()
 INLINE
 void Gm_RenderFrame()
 {
-	// maintain sound
-	AUDs_MaintainSound();
+	if(!headless_bot) {
+		
+		// maintain sound
+		AUDs_MaintainSound();
 
-	// reset polygon count
-	NumRenderedPolygons = 0;
+		// reset polygon count
+		NumRenderedPolygons = 0;
 
-	// next visframe
-	CurVisibleFrame++;
-	if ( CurVisibleFrame == VISFRAME_NEVER ) {
-		CurVisibleFrame = VISFRAME_START;
+		// next visframe
+		CurVisibleFrame++;
+		if ( CurVisibleFrame == VISFRAME_NEVER ) {
+			CurVisibleFrame = VISFRAME_START;
+		}
+
+		// viewcam for 3-D frame
+		CAMERA_BeginFrameView();
+
+		// transform frustum into world-space
+		BackTransformVolume( ViewCamera, View_Volume, World_ViewVolume, 0x3f );
+		CULL_MakeVolumeCullVolume( World_ViewVolume, World_CullVolume, 0x3f );
+
+		// draw fixed stars/panorama
+		Gm_DrawFixedStars();
+
+		// draw pseudo stars
+		Gm_DrawPseudoStars();
+
+		// local ship always considered visible
+		MyShip->VisibleFrame = CurVisibleFrame;
+
+		// determine visible polygonal objects
+		ScanActiveObjects( ViewCamera );
+
+		CHECKMEMINTEGRITY();
+		CHECKLISTINTEGRITY();
+
+		// walk callbacks before drawing world objects
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_OBJECTS );
+
+		// draw visible polygonal objects
+		R_DrawWorld( ViewCamera );
+
+		// walk callbacks before drawing particles
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_PARTICLES );
+
+		// draw visible particles
+		R_DrawParticles();
+
+		// walk callbacks for custom iter objects
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_CUSTOM_ITER );
+
+		// walk callbacks before drawing effects
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_EFFECTS );
+
+		// draw lens flare
+		R_DrawLensFlare();
+
+		// standard viewcam
+		CAMERA_EndFrameView();
+
+		// maintain sound
+		AUDs_MaintainSound();
+	} else {
+		//Headless bot frame
+		
+		// next visframe
+		CurVisibleFrame++;
+		if ( CurVisibleFrame == VISFRAME_NEVER ) {
+			CurVisibleFrame = VISFRAME_START;
+		}
+		//Lets still walk the callbacks maybe it'll fix that assert I avoid in botmode
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_OBJECTS );
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_PARTICLES );
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_CUSTOM_ITER );
+		CALLBACK_WalkCallbacks( CBTYPE_DRAW_EFFECTS );
 	}
-
-	// viewcam for 3-D frame
-	CAMERA_BeginFrameView();
-
-	// transform frustum into world-space
-	BackTransformVolume( ViewCamera, View_Volume, World_ViewVolume, 0x3f );
-	CULL_MakeVolumeCullVolume( World_ViewVolume, World_CullVolume, 0x3f );
-
-	// draw fixed stars/panorama
-	Gm_DrawFixedStars();
-
-	// draw pseudo stars
-	Gm_DrawPseudoStars();
-
-	// local ship always considered visible
-	MyShip->VisibleFrame = CurVisibleFrame;
-
-	// determine visible polygonal objects
-	ScanActiveObjects( ViewCamera );
-
-	CHECKMEMINTEGRITY();
-	CHECKLISTINTEGRITY();
-
-	// walk callbacks before drawing world objects
-	CALLBACK_WalkCallbacks( CBTYPE_DRAW_OBJECTS );
-
-	// draw visible polygonal objects
-	R_DrawWorld( ViewCamera );
-
-	// walk callbacks before drawing particles
-	CALLBACK_WalkCallbacks( CBTYPE_DRAW_PARTICLES );
-
-	// draw visible particles
-	R_DrawParticles();
-
-	// walk callbacks for custom iter objects
-	CALLBACK_WalkCallbacks( CBTYPE_DRAW_CUSTOM_ITER );
-
-	// walk callbacks before drawing effects
-	CALLBACK_WalkCallbacks( CBTYPE_DRAW_EFFECTS );
-
-	// draw lens flare
-	R_DrawLensFlare();
-
-	// standard viewcam
-	CAMERA_EndFrameView();
-
-	// maintain sound
-	AUDs_MaintainSound();
 }
 
 
@@ -620,7 +636,6 @@ int Gm_InitGameLoop()
 	// exec game core script
 	ExecConsoleFile( gamecore_script, FALSE );
 	MSGOUT( "starting up game core." );
-
 	// init game palette
 	if ( !AUX_DISABLE_FLASHWHITE_ON_GAMEENTRY ) {
 
@@ -632,7 +647,8 @@ int Gm_InitGameLoop()
 		} else {
 			// set screen white (to fade in from white later on)
 			colrgba_s scol = COLRGBA_WHITE;
-			VIDs_SetScreenToColor( scol );
+			if(!headless_bot)
+			   VIDs_SetScreenToColor( scol );
 		}
 	}
 
@@ -1256,6 +1272,8 @@ void GameLoop()
 
 				// draw mouse cursor
 				DrawMouseCursor();
+			} else {
+				Gm_RenderFrame(); //Stripped down to callbacks and framecounter in bot mode
 			}
 			// increment frame counter
 			++FrameCounter;
@@ -1265,10 +1283,11 @@ void GameLoop()
 
 			// check console input and draw its window
 			ConsoleControl();
-
-			// finish frame; mainly blitting to screen
-			Gm_FinishFrame();
-
+			
+			if(!headless_bot) {
+				// finish frame; mainly blitting to screen
+				Gm_FinishFrame();
+			}
 		} // end gameloop
 
 	} while ( !Gm_CancelGameLoop() );

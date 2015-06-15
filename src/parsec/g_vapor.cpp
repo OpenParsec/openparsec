@@ -152,6 +152,7 @@ proplist_s VaporTrail_PropList[] = {
 //
 static dword vapor_type_id;
 
+extern int headless_bot;
 
 // macro to set the properties of an itervertex -------------------------------
 //
@@ -173,6 +174,9 @@ static dword vapor_type_id;
 PRIVATE
 int VaporTrail_Draw( void* param )
 {
+	if(headless_bot)
+		return TRUE;
+	
 	ASSERT( param != NULL );
 	VaporTrail *vapor = (VaporTrail *) param;
 
@@ -568,7 +572,8 @@ void VaporTrailDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	ASSERT( numremoved <= 1 );
+	if(!headless_bot)
+	   ASSERT( numremoved <= 1 );
 }
 
 

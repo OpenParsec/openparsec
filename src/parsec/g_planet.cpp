@@ -77,6 +77,7 @@
 #include "obj_xtra.h"
 #include "part_api.h"
 
+extern int headless_bot;
 
 // flags
 //#define ORBIT_ANIMATION
@@ -279,6 +280,8 @@ void PlanetDraw_Rings( Planet *planet )
 //
 int PlanetDraw( void *param )
 {
+	if(headless_bot)
+		return true;
 	ASSERT( param != NULL );
 	Planet *planet = (Planet *) param;
 
@@ -397,7 +400,8 @@ void PlanetDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	ASSERT( numremoved <= 1 );
+	if(!headless_bot)
+		ASSERT( numremoved <= 1 );
 }
 
 

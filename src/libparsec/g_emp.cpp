@@ -82,6 +82,7 @@
 
 #include "obj_cust.h"
 
+extern int headless_bot;
 
 // assigned type id for emp type ----------------------------------------------
 //
@@ -172,6 +173,8 @@ PRIVATE
 int EmpDraw( void* param )
 {
 #ifndef PARSEC_SERVER
+	if(headless_bot)
+		return true;
 	ASSERT( param != NULL );
 	Emp *emp = (Emp *) param;
 
@@ -673,7 +676,8 @@ void EmpDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	ASSERT( numremoved <= 1 );
+	if(!headless_bot)
+		ASSERT( numremoved <= 1 );
 #endif
 
 	// free object structure memory

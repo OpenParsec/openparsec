@@ -105,6 +105,7 @@
 #include "sys_date.h"
 #include "sys_path.h"
 
+extern int headless_bot;
 // assigned type id for teleporter
 dword teleporter_type;
 
@@ -940,6 +941,8 @@ PRIVATE
 int Teleporter_Draw( void *param )
 {
 #ifndef PARSEC_SERVER
+	if(headless_bot)
+		return true;
 	ASSERT( param != NULL );
 	Teleporter *teleporter = (Teleporter *) param;
 
@@ -1726,7 +1729,8 @@ void TeleporterDestroy( CustomObject *base )
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );
-	//ASSERT( numremoved <= 1 );
+	if(!headless_bot)
+		ASSERT( numremoved <= 1 );
 #endif
 }
 

@@ -1058,7 +1058,8 @@ void BOT_ClientSide::Stop()
 {
 	if ( m_Started ) {
 		int numremoved = CALLBACK_DestroyCallback( CBTYPE_USER_INPUT | CBFLAG_PERSISTENT, (void *) this );
-		ASSERT( numremoved <= 1 );
+		if(!headless_bot)
+			ASSERT( numremoved <= 1 );
 		m_Started = FALSE;
 
 #ifdef BOT_LOGFILES
