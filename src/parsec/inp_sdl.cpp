@@ -304,8 +304,14 @@ void ISDLm_ConfigureHandler(  )
 //
 void INPs_InitGeneral()
 {
+	extern int headless_bot;
+	int rc;
 	// by the time we get here, we should want everything else up
-	int rc = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
+	if(headless_bot) {
+			rc = SDL_Init(SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
+	} else {
+		rc = SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_JOYSTICK);
+	}
 	if (rc < 0) {
 		MSGOUT("Error: SDL_Init() error in INPs_InitGeneral() in inp_sdl.cpp: %s", SDL_GetError());
 		return;

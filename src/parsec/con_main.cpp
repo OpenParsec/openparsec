@@ -310,11 +310,7 @@ void ExecStartupScript( int echo )
 	// exec startup command script
 	char *startupscript = NULL;
 	char *botscript = NULL;
-	// if we are in bot mode, run bot.con
-	if(headless_bot){ //Put your bot commands in it!
-		botscript = bot_script_name;
-		ExecConsoleFile(botscript, echo);
-	}
+	
 	// start normal or mod boot scripts
 	if ( mod_numnames > 0 ) {
 
@@ -351,6 +347,12 @@ void ExecStartupScript( int echo )
 		// if no mod is active, we just exec boot.con
 		startupscript = PlayDemo ? demo_script_name : boot_script_name;
 		ExecConsoleFile( startupscript, echo );
+	}
+	
+	// if we are in bot mode, run bot.con
+	if(headless_bot){ //Put your bot commands in it!
+		botscript = bot_script_name;
+		ExecConsoleFile(botscript, echo);
 	}
 }
 

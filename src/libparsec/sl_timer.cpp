@@ -223,11 +223,12 @@ void SYSs_Wait( refframe_t refframes )
 //
 int SYSs_Yield()
 {
-	
+	extern int headless_bot;
 #ifdef PARSEC_CLIENT
 
-	// yield to sound driver
-	AUDs_MaintainSound();
+	if(!headless_bot)
+		// yield to sound driver
+		AUDs_MaintainSound();
 
 	// must be called to retrieve key strokes from buffer
 	INPs_Collect();
