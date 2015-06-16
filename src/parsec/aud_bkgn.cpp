@@ -68,7 +68,7 @@ August 10, 2003
 #include "sys_file.h"
 
 
-#define NUM_AUDIO_CD_TRACKS 9
+#define NUM_AUDIO_CD_TRACKS 12
 #define NUM_GAMESFX_STREAMS 9
 
 
