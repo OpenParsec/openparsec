@@ -1,0 +1,28 @@
+load object (firebird)   	type Ship_1        	file extra1.odt
+load object (laser_1a)   	type Laser_1       	file extra1.odt
+load object (laser_1b)   	type Laser_1       	file extra1.odt
+load object (miss_dumb)  	type Missile_1     	file extra1.odt
+load object (miss_guide) 	type Missile_4     	file extra1.odt
+load object (miss_swarm) 	type Missile_2     	file extra1.odt
+load object (ex_energy)  	type Extra_1       	file extra1.odt
+load object (ex_dumb)    	type Extra_2       	file extra1.odt
+load object (cormoran)   	type Ship_2        	file extra1.odt
+load object (bluespire)  	type Ship_1        	file extra1.odt
+load object (ex_guide)   	type Extra_2       	file extra1.odt
+load object (ex_helix)   	type Extra_3       	file extra1.odt
+load object (ex_light)   	type Extra_3       	file extra1.odt
+load object (ex_mine)    	type Extra_2       	file extra1.odt
+load object (mine_proxy) 	type Mine_1        	file extra1.odt
+load object (laser_2)    	type Laser_2       	file extra1.odt
+load object (laser_3)    	type Laser_3       	file extra1.odt
+load object (ex_repair)  	type Extra_1       	file extra1.odt
+load object (ex_aburn)   	type Extra_3       	file extra1.odt
+load object (ex_flare)   	type Extra_2            file extra1.odt
+load object (ex_invis)		type Extra_3       	file extra1.odt
+load object (ex_x2)		type Extra_3       	file extra1.odt
+load object (ex_x3)		type Extra_3       	file extra1.odt
+load object (ex_laser2)		type Extra_2       	file extra1.odt
+load object (ex_laser3)		type Extra_2       	file extra1.odt
+load object (ex_invul)		type Extra_3       	file extra1.odt
+
+;eof

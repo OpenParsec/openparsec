@@ -1,11 +1,12 @@
 
 write loading claymore
+write
 
-load texture fi5_top2.3df file fi5_top2.3df
-load texture fi5_bot.3df  file fi5_bot.3df
-load texture fi5_blue.3df file fi5_blue.3df
-load texture fi5_caps.3df file fi5_caps.3df
-load texture mon_f5       file mon_f5.3df
+;load texture fi5_top2.3df file fi5_top2.3df
+;load texture fi5_bot.3df  file fi5_bot.3df
+;load texture fi5_blue.3df file fi5_blue.3df
+;load texture fi5_caps.3df file fi5_caps.3df
+;load texture mon_f5       file mon_f5.3df
 
 ;load object (claymore)    file (fi05a00a.od2 fi05_00a.od2) normth 0.2 lodmag (350) lodmin (400) type ship_2
 aux_enable_object_overloading 1
@@ -13,7 +14,7 @@ load object (claymore)    file (fi05_00a.od2) normth 0.2 type ship_2
 aux_enable_object_overloading 0
 
 ;shader.set class claymore lod -1 shader iter_texonly texture fi5_blue.3df
-shader.set class claymore shader iter_texonly texture fi5_blue.3df
+;shader.set class claymore shader iter_texonly texture fi5_blue.3df
 
 ; should be before shipdesc commands
 shipclass class (claymore)

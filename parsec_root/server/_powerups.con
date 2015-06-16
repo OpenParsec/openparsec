@@ -1,0 +1,158 @@
+write loading power-ups
+write 
+
+aux_enable_object_overloading 1
+;-- EX_ENERGY --------------------------------------------------
+load object (ex_energy) file (lgdev_02.od2 lgdev_01.od2 lgdev.od2 lgdev_00.od2) lodmag (110 340 1200) lodmin (160 400 1300) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_energy).rotx 30
+propc (ex_energy).roty 20
+propc (ex_energy).rotz  0
+;propc (ex_energy).lifetime 100000
+
+;-- EX_DUMB ----------------------------------------------------
+load object (ex_dumb) file mpack.od2 flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_dumb).rotx 30
+propc (ex_dumb).roty 20
+propc (ex_dumb).rotz  0
+;propc (ex_dumb).lifetime 100000
+
+;-- EX_GUIDE ---------------------------------------------------
+load object (ex_guide) file mpack.od2 flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_guide).rotx 30
+propc (ex_guide).roty 20
+propc (ex_guide).rotz  0
+;propc (ex_guide).lifetime 100000
+
+;-- EX_SWARM ---------------------------------------------------
+load object (ex_flare) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims)
+
+propc (ex_flare).rotx 30
+propc (ex_flare).roty 20
+propc (ex_flare).rotz  0
+;propc (ex_flare).lifetime 100000
+
+
+;-- EX_HELIX ---------------------------------------------------
+load object (ex_helix) file (hc01_00a.od2 hc01a00a.od2 hc01b00a.od2 hc01c00a.od2 ) lodmag (60 200 800) lodmin (80 250 850) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_helix).rotx 30
+propc (ex_helix).roty 20
+propc (ex_helix).rotz  0
+;propc (ex_helix).lifetime 100000
+
+
+;-- EX_LIGHT ---------------------------------------------------
+load object (ex_light) file (ld01_00a.od2 ld01a00a.od2 ld01b00a.od2 ld01c00a.od2) lodmag (120 370 800) lodmin (150 400 850) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_light).rotx 18
+propc (ex_light).roty 24
+propc (ex_light).rotz  5
+;propc (ex_light).lifetime 100000
+
+
+;-- EX_INVUL ---------------------------------------------------
+load object (ex_invul) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims) type extra_3
+
+propc (ex_invul).rotx 25
+propc (ex_invul).roty 20
+propc (ex_invul).rotz  5
+;propc (ex_invul).lifetime 100000
+
+;-- EX_REPAIR --------------------------------------------------
+load object (ex_repair) file (re01_00a.od2) flags (f_anims p_wedges w_normals w_lighted) maxfanims 2
+
+propc (ex_repair).rotx 30
+propc (ex_repair).roty 20
+propc (ex_repair).rotz  0
+;propc (ex_repair).lifetime 100000
+
+
+;-- MINE_PROXY --------------------------------------------------
+load object (mine_proxy) file (mi01_00a.od2 mi01a00a.od2) lodmag 400 lodmin 450 flags (f_anims v_anims) maxfanims 3
+
+propc (mine_proxy).rotx 15
+propc (mine_proxy).roty  8
+propc (mine_proxy).rotz 24
+;propc (mine_proxy).lifetime 100000
+
+
+;-- EX_MINE -----------------------------------------------------
+load object (ex_mine) file mi01a00a.od2 flags (f_anims v_anims)
+
+propc (ex_mine).rotx 30
+propc (ex_mine).roty 20
+propc (ex_mine).rotz  0
+;propc (ex_mine).lifetime 100000
+
+
+;-- EX_ABURN ----------------------------------------------------
+load object (ex_aburn) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims)
+
+propc (ex_aburn).rotx 25
+propc (ex_aburn).roty 20
+propc (ex_aburn).rotz  5
+;propc (ex_aburn).lifetime 100000
+
+;-- EX_LASER2 ---------------------------------------------------
+load object (ex_laser2) type extra_3 file (lc03_00a.od2 lc03a00a.od2 lc03b00a.od2) lodmag (400 800) lodmin (450 900) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_laser2).rotx 25
+propc (ex_laser2).roty 20
+propc (ex_laser2).rotz  5
+;propc (ex_laser2).lifetime 100000
+
+;-- EX_LASER3 ---------------------------------------------------
+load object (ex_laser3) type extra_3 file (lc02_00a.od2 lc02a00a.od2 lc02b00a.od2) lodmag (400 800) lodmin (450 900) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_laser3).rotx 25
+propc (ex_laser3).roty 20
+propc (ex_laser3).rotz  5
+;propc (ex_laser3).lifetime 100000
+
+
+;-- EX_PHOTON --------------------------------------------------
+load object (ex_x2) type extra_3 file (pc01_00a.od2 pc01a00a.od2 pc01b00a.od2 pc01e00a.od2) lodmag (60 200 800) lodmin (80 250 850) flags (f_anims p_wedges w_normals w_lighted)
+
+propc (ex_x2).rotx 30
+propc (ex_x2).roty 20
+propc (ex_x2).rotz  0
+;propc (ex_x2).lifetime 100000
+
+
+;-- EX_DECOY ----------------------------------------------------
+load object (ex_x3) file (in01b00a.od2 in01c00a.od2 in01d00a.od2 in01e00a.od2) lodmag (60 200 900) lodmin (80 250 950) flags (f_anims v_anims) type extra_3
+
+propc (ex_x3).rotx 25
+propc (ex_x3).roty 20
+propc (ex_x3).rotz  5
+;propc (ex_x3).lifetime 100000
+
+
+;-- EX_EMP ---------------------------------------------------
+load object (ex_emp) file (em01_00a.od2) flags (f_anims p_wedges w_normals w_lighted) type extra_3
+
+propc (ex_emp).rotx 30
+propc (ex_emp).roty 20
+propc (ex_emp).rotz  0
+;propc (ex_emp).lifetime 100000
+
+extraclass class (ex_emp)
+
+;-- EX_EMP2 --------------------------------------------------
+load object (ex_emp2) file (em01_00a.od2) flags (f_anims p_wedges w_normals w_lighted) type extra_3
+
+propc (ex_emp2).rotx 30
+propc (ex_emp2).roty 20
+propc (ex_emp2).rotz  0
+propc (ex_emp2).lifetime 100000
+
+extraclass class (ex_emp2)
+
+;---------------------------------------------------------------
+
+;load object (laser_1a)		type Laser_1		file phaser1.bin
+
+;eof

@@ -1,5 +1,6 @@
 
 write loading silverhawk
+write 
 
 ;load texture fi08_01a.3df  file fi08_01a.3df
 ;load texture fi08_02a.3df  file fi08_02a.3df
@@ -10,11 +11,11 @@ write loading silverhawk
 ;load texture fi08_02a.3df  file fi08_02a.tga format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
 ;load texture fi08_03a.3df  file fi08_03a.tga format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
 ;load texture fi08_04a.3df  file fi08_04a.tga format (map_width 256 map_height  64 texfmt_gr rgb565 flags compress)
-load texture fi08_01a.3df  file fi08_01a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
-load texture fi08_02a.3df  file fi08_02a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
-load texture fi08_03a.3df  file fi08_03a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
-load texture fi08_04a.3df  file fi08_04a.jpg format (map_width 256 map_height  64 texfmt_gr rgb565 flags compress)
-load texture mon_f8     file mon_f8.3df
+;load texture fi08_01a.3df  file fi08_01a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi08_02a.3df  file fi08_02a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi08_03a.3df  file fi08_03a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+;load texture fi08_04a.3df  file fi08_04a.jpg format (map_width 256 map_height  64 texfmt_gr rgb565 flags compress)
+;load texture mon_f8     file mon_f8.3df
 
 aux_enable_object_overloading 1
 load object (silverhawk) type ship_1 file fi08_00a.od2 normth 0.8

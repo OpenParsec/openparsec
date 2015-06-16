@@ -1,12 +1,13 @@
 
 write loading hurricane
+write 
 
 ;load texture fi06_01a.3df file fi06_01a.3df
 ;load texture fi06_02a.3df file fi06_02a.3df
 ;load texture fi06_03a.3df file fi06_03a.3df
 ;load texture fi06_04a.3df file fi06_04a.3df
 ;load texture fi06_05a.3df file fi06_05a.3df
-load texture fi06_06a.3df file fi06_06a.3df
+;load texture fi06_06a.3df file fi06_06a.3df
 ;load texture fi06_07a.3df file fi06_07a.3df
 ;load texture fi06_08a.3df file fi06_08a.3df
 ;load texture fi06_09a.3df file fi06_09a.3df
@@ -19,26 +20,26 @@ load texture fi06_06a.3df file fi06_06a.3df
 ;load texture fi06_16a.3df file fi06_16a.3df
 ;load texture fi06_17a.3df file fi06_17a.3df
 ;load texture fi06_18a.3df file fi06_18a.3df
-load texture fi06_01a.3df file fi06_01a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress )
-load texture fi06_02a.3df file fi06_02a.jpg format (map_width  64 map_height  64 texfmt_gr rgb565 flags compress )
-load texture fi06_03a.3df file fi06_03a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
-load texture fi06_04a.3df file fi06_04a.jpg format (map_width  16 map_height  32 texfmt_gr rgb565 flags compress )
-load texture fi06_05a.3df file fi06_05a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_01a.3df file fi06_01a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress )
+;load texture fi06_02a.3df file fi06_02a.jpg format (map_width  64 map_height  64 texfmt_gr rgb565 flags compress )
+;load texture fi06_03a.3df file fi06_03a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_04a.3df file fi06_04a.jpg format (map_width  16 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_05a.3df file fi06_05a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
 ;load texture fi06_06a.3df file fi06_06a.jpg format (map_width  32 map_height  64 texfmt_gr rgb565 flags compress )
-load texture fi06_07a.3df file fi06_07a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
-load texture fi06_08a.3df file fi06_08a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress )
-load texture fi06_09a.3df file fi06_09a.jpg format (map_width  64 map_height 128 texfmt_gr rgb565 flags compress )
-load texture fi06_10a.3df file fi06_10a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress )
-load texture fi06_11a.3df file fi06_11a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress )
-load texture fi06_12a.3df file fi06_12a.jpg format (map_width  16 map_height  16 texfmt_gr rgb565 flags compress )
-load texture fi06_13a.3df file fi06_13a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress )
-load texture fi06_14a.3df file fi06_14a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
-load texture fi06_15a.3df file fi06_15a.jpg format (map_width  16 map_height  32 texfmt_gr rgb565 flags compress )
-load texture fi06_16a.3df file fi06_16a.jpg format (map_width  16 map_height  16 texfmt_gr rgb565 flags compress )
-load texture fi06_17a.3df file fi06_17a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress )
-load texture fi06_18a.3df file fi06_18a.tga format (map_width 128 map_height 128 texfmt_gr argb4444 flags compress )
+;load texture fi06_07a.3df file fi06_07a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_08a.3df file fi06_08a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress )
+;load texture fi06_09a.3df file fi06_09a.jpg format (map_width  64 map_height 128 texfmt_gr rgb565 flags compress )
+;load texture fi06_10a.3df file fi06_10a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress )
+;load texture fi06_11a.3df file fi06_11a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress )
+;load texture fi06_12a.3df file fi06_12a.jpg format (map_width  16 map_height  16 texfmt_gr rgb565 flags compress )
+;load texture fi06_13a.3df file fi06_13a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress )
+;load texture fi06_14a.3df file fi06_14a.jpg format (map_width  64 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_15a.3df file fi06_15a.jpg format (map_width  16 map_height  32 texfmt_gr rgb565 flags compress )
+;load texture fi06_16a.3df file fi06_16a.jpg format (map_width  16 map_height  16 texfmt_gr rgb565 flags compress )
+;load texture fi06_17a.3df file fi06_17a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress )
+;load texture fi06_18a.3df file fi06_18a.tga format (map_width 128 map_height 128 texfmt_gr argb4444 flags compress )
 ;load texture fi06_20a.3df file fi06_20a.jpg format (map_width  64 map_height  64 texfmt_gr rgb565 flags compress )
-load texture mon_f6       file mon_f6.3df
+;load texture mon_f6       file mon_f6.3df
 
 aux_enable_object_overloading 1
 load object (hurricane)   file fi06_00a.od2 type ship_2 flags (v_anims p_wedges w_normals w_lighted)

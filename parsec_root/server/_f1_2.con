@@ -1,15 +1,16 @@
 
 write loading firebird
+write
 
-load texture ea_mat1.3df      file ea_mat1.3df
-load texture ea_mat2.3df      file ea_mat2.3df
-load texture ea_mat3.3df      file ea_mat3.3df
-load texture ea_mat5.3df      file ea_mat5.3df
-load texture ea_mat7.3df      file ea_mat7.3df
-load texture ea_mat11.3df     file ea_mat11.3df
-load texture ea_mat13.3df     file ea_mat13.3df
-load texture ea_mat14.3df     file ea_mat14.3df
-load texture mon_f1           file mon_f1.3df
+;load texture ea_mat1.3df      file ea_mat1.3df
+;load texture ea_mat2.3df      file ea_mat2.3df
+;load texture ea_mat3.3df      file ea_mat3.3df
+;load texture ea_mat5.3df      file ea_mat5.3df
+;load texture ea_mat7.3df      file ea_mat7.3df
+;load texture ea_mat11.3df     file ea_mat11.3df
+;load texture ea_mat13.3df     file ea_mat13.3df
+;load texture ea_mat14.3df     file ea_mat14.3df
+;load texture mon_f1           file mon_f1.3df
 
 aux_enable_object_overloading 1
 load object (firebird)    file fighter1.od2

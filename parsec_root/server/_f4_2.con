@@ -1,12 +1,13 @@
 
 write loading stingray
+write
 
-load texture top_tex.3df  file top_tex.3df
-load texture bot_tex.3df  file bot_tex.3df
-load texture backmid.3df  file backmid.3df
-load texture inle1.3df    file inle1.3df
-load texture endlef.3df   file endlef.3df
-load texture mon_f4       file mon_f4.3df
+;load texture top_tex.3df  file top_tex.3df
+;load texture bot_tex.3df  file bot_tex.3df
+;load texture backmid.3df  file backmid.3df
+;load texture inle1.3df    file inle1.3df
+;load texture endlef.3df   file endlef.3df
+;load texture mon_f4       file mon_f4.3df
 
 aux_enable_object_overloading 1
 load object (stingray)    file fighter4.od2 type ship_2

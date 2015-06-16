@@ -1,0 +1,39 @@
+;------------------------------------------------------------------------------
+; server config
+;------------------------------------------------------------------------------
+
+nebula.id                       3
+sv.conf 			name 		changeme
+sv.conf				maxplayers 	8
+sv.conf				simfreq		100
+sv.serverid			3
+;sv.fedid			0
+
+
+;------------------------------------------------------------------------------
+; server network config
+;------------------------------------------------------------------------------
+
+;sv.netconf.port		7777
+
+;------------------------------------------------------------------------------
+; game settings
+;------------------------------------------------------------------------------
+
+sv.game.killlimit		15
+sv.game.timelimit		600
+sv.game.restart.timeout		10
+sv.game.extras.autocreate	1
+sv.game.extras.max		25
+;sv.game.extras.testplace	0
+
+;------------------------------------------------------------------------------
+; masterserver settings
+;------------------------------------------------------------------------------
+
+;sv.masterserver.conf 		name master.openparsec.com interval 5
+;sv.masterserver.conf 		name 192.168.1.103 interval 5
+;sv.masterserver.sendheartbeat	1
+;sv.masterserver.sendheartbeat	1
+
+;eof

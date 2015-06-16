@@ -1,22 +1,23 @@
 
 write loading bluespire
+write
 
-load texture f5_01.3df      file f5_01.3df
-load texture f5_02.3df      file f5_02.3df
-load texture f5_03.3df      file f5_03.3df
-load texture f5_04.3df      file f5_04.3df
-load texture f5_05.3df      file f5_05.3df
-load texture f5_06.3df      file f5_06.3df
-load texture f5_08.3df      file f5_08.3df
-load texture f5_09.3df      file f5_09.3df
-load texture f5_10.3df      file f5_10.3df
-load texture f5_11.3df      file f5_11.3df
-load texture f5_12.3df      file f5_12.3df
-load texture f5_13.3df      file f5_13.3df
-load texture f5_14.3df      file f5_14.3df
-load texture f5_15.3df      file f5_15.3df
-load texture f5_16.3df      file f5_16.3df
-load texture mon_f2         file mon_f2.3df
+;load texture f5_01.3df      file f5_01.3df
+;load texture f5_02.3df      file f5_02.3df
+;load texture f5_03.3df      file f5_03.3df
+;load texture f5_04.3df      file f5_04.3df
+;load texture f5_05.3df      file f5_05.3df
+;load texture f5_06.3df      file f5_06.3df
+;load texture f5_08.3df      file f5_08.3df
+;load texture f5_09.3df      file f5_09.3df
+;load texture f5_10.3df      file f5_10.3df
+;load texture f5_11.3df      file f5_11.3df
+;load texture f5_12.3df      file f5_12.3df
+;load texture f5_13.3df      file f5_13.3df
+;load texture f5_14.3df      file f5_14.3df
+;load texture f5_15.3df      file f5_15.3df
+;load texture f5_16.3df      file f5_16.3df
+;load texture mon_f2         file mon_f2.3df
 
 aux_enable_object_overloading 1
 load object (bluespire)    file fighter2.od2 normth 0.3

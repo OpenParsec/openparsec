@@ -1,5 +1,6 @@
 
 write loading assassin
+write 
 
 ;load texture fi07_01a.3df  file fi07_01a.3df
 ;load texture fi07_02a.3df  file fi07_02a.3df
@@ -19,16 +20,16 @@ write loading assassin
 ;load texture fi07_07a.3df  file fi07_07a.tga format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
 ;load texture fi07_08a.3df  file fi07_08a.tga format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
 ;load texture fi07_09a.3df  file fi07_09a.tga format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
-load texture fi07_01a.3df  file fi07_01a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress)
-load texture fi07_02a.3df  file fi07_02a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
-load texture fi07_03a.3df  file fi07_03a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
-load texture fi07_04a.3df  file fi07_04a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
-load texture fi07_05a.3df  file fi07_05a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
-load texture fi07_06a.3df  file fi07_06a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
-load texture fi07_07a.3df  file fi07_07a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
-load texture fi07_08a.3df  file fi07_08a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
-load texture fi07_09a.3df  file fi07_09a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
-load texture mon_f7     file mon_f7.3df
+;load texture fi07_01a.3df  file fi07_01a.jpg format (map_width 128 map_height 128 texfmt_gr rgb565 flags compress)
+;load texture fi07_02a.3df  file fi07_02a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi07_03a.3df  file fi07_03a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+;load texture fi07_04a.3df  file fi07_04a.jpg format (map_width 128 map_height 256 texfmt_gr rgb565 flags compress)
+;load texture fi07_05a.3df  file fi07_05a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_06a.3df  file fi07_06a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_07a.3df  file fi07_07a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_08a.3df  file fi07_08a.jpg format (map_width 256 map_height  32 texfmt_gr rgb565 flags compress)
+;load texture fi07_09a.3df  file fi07_09a.jpg format (map_width 128 map_height  64 texfmt_gr rgb565 flags compress)
+;load texture mon_f7     file mon_f7.3df
 
 aux_enable_object_overloading 1
 load object (assassin) type ship_1 file fi07_00a.od2

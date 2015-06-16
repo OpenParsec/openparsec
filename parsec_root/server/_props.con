@@ -1,0 +1,51 @@
+;projectiles
+
+propc missl1.hitpoints    14
+propc missl2.hitpoints     7
+propc mine1.hitpoints     35
+
+prop laser_1.hitpoints     4
+prop laser_1.energy        4
+prop laser_2.hitpoints     6
+prop laser_2.energy        5
+prop laser_3.hitpoints     5
+prop laser_3.energy        7
+
+
+;extras
+
+extras.max                3
+
+energy.boost             360
+repair.boost              20
+
+pack.dumb.size             2
+pack.guide.size            4
+pack.mine.size             7
+pack.swarm.size            2
+
+
+;probabilities
+
+prob.energyfield           6
+prob.helix                 4
+prob.lightning             4
+prob.photon                3
+prob.mine                  4
+prob.lupgrade             24
+prob.misspack             20
+prob.repair                7
+prob.aburner               2
+prob.invulnerable          1
+
+prob.lupgrade1            60
+prob.lupgrade2            40
+
+prob.dumb                 42
+prob.guide                56
+prob.swarm                 2
+
+prob.empupgrade1	   3
+prob.empupgrade2	   3
+
+;eof

@@ -1,0 +1,4 @@
+load object (teleporter) type teleporter file telep4.od2
+load object (telep_exit) type geometry   file telep4.od2
+
+;eof

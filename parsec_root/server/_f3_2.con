@@ -1,13 +1,14 @@
 
 write loading cormoran
+write
 
-load texture fi3_1n4.3df   file fi3_1n4.3df
-load texture fi3_2n.3df    file fi3_2n.3df
-load texture fi3_3.3df     file fi3_3.3df
-load texture fi3_4n.3df    file fi3_4n.3df
-load texture fi3_5n1.3df   file fi3_5n1.3df
-load texture fi3_6n.3df    file fi3_6n.3df
-load texture mon_f3        file mon_f3.3df
+;load texture fi3_1n4.3df   file fi3_1n4.3df
+;load texture fi3_2n.3df    file fi3_2n.3df
+;load texture fi3_3.3df     file fi3_3.3df
+;load texture fi3_4n.3df    file fi3_4n.3df
+;load texture fi3_5n1.3df   file fi3_5n1.3df
+;load texture fi3_6n.3df    file fi3_6n.3df
+;load texture mon_f3        file mon_f3.3df
 
 aux_enable_object_overloading 1
 load object (cormoran)    file fighter3.od2
