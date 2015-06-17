@@ -753,7 +753,14 @@ void BOT_AI::_GoalCheck_AgentMode_Attack()
 		ASSERT( pTargetObject != NULL );
 		FetchTVector( pTargetObject->ObjPosition, pGoalPos );
 	}
-
+	
+	if (len > 20000.0F) {
+		//Give up, chase something else
+		MSGOUT("Target too far, abandon");
+		m_nAgentMode = AGENTMODE_IDLE;
+		pGoal->SetTargetObject(NULL);
+		m_PlanTimeout.Reset();
+	}
 #ifdef BOT_LOGFILES
 	BOT_MsgOut( "ATTACK goal is at %f %f %f", pGoalPos->X, pGoalPos->Y, pGoalPos->Z );
 #endif // BOT_LOGFILES

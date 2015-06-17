@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <SDL2/SDL.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -408,6 +409,7 @@ void Gm_RenderFrame()
 		CALLBACK_WalkCallbacks( CBTYPE_DRAW_PARTICLES );
 		CALLBACK_WalkCallbacks( CBTYPE_DRAW_CUSTOM_ITER );
 		CALLBACK_WalkCallbacks( CBTYPE_DRAW_EFFECTS );
+		SDL_Delay(20);
 	}
 }
 
