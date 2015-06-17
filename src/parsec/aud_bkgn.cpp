@@ -104,7 +104,7 @@ static int				BKGN_nVoice;
 static int				BKGN_nNumItems;
 static int				BKGN_nCurrentItem;
 static int				BKGN_Started;
-static int				BKGN_shuffle = TRUE;
+static int				BKGN_shuffle = 1;
 
 
 
@@ -1178,12 +1178,13 @@ REGISTER_MODULE( AUD_BKGN )
 	int_command_s intregcom;
 	memset( &intregcom, 0, sizeof( int_command_s ) );
 
-	intregcom.command	= "bkgn.shuffle";
-	intregcom.bmin	 	= 0;
-	intregcom.bmax	 	= 1;
-	intregcom.intref	= &BKGN_shuffle;
-	intregcom.realize 	= NULL;
-	intregcom.fetch 	= NULL;
+	intregcom.command	  = "bkgn.shuffle";
+	intregcom.bmin	 	  = 0;
+	intregcom.bmax	 	  = 1;
+	intregcom.intref	  = &BKGN_shuffle;
+	intregcom.realize 	  = NULL;
+	intregcom.fetch 	  = NULL;
+	intregcom.default_val = 1; //Shuffle should be default!
 	CON_RegisterIntCommand( &intregcom );
 }
 
