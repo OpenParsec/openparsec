@@ -1451,7 +1451,7 @@ void CheckShipExtraCollision()
 
 		if ( curextra->LifeTimeCount < 0 ) {
 
-#ifdef INTERNAL_VERSION
+#ifdef PARSEC_DEBUG
 			if ( NET_ConnectedGMSV() ) {
 				//ASSERT( FALSE );
 				MSGOUT( "OBJ_COLL::CheckShipExtraCollision(): predicted freeing of extra object" );
@@ -1467,13 +1467,15 @@ void CheckShipExtraCollision()
 			curextra->VisibleFrame_Reset_Frames -= CurScreenRefFrames;
 
 			//FIXME: 
+#ifdef PARSEC_DEBUG
 			MSGOUT( "OBJ_COLL::CheckShipExtraCollision(): checkin curextra->VisibleFrame_Reset_Frames %d ( type %d ) ", curextra->VisibleFrame_Reset_Frames, curextra->ObjectType );
-
+#endif
 			if ( curextra->VisibleFrame_Reset_Frames <= 0 ) {
 
 				//FIXME: 
+#ifdef PARSEC_DEBUG
 				MSGOUT( "OBJ_COLL::CheckShipExtraCollision(): RESET predicted collision with extra object" );
-
+#endif
 				curextra->VisibleFrame = CurVisibleFrame;
 				//FIXME: better audio sample
 				AUD_SkillAmazing();
@@ -1543,8 +1545,10 @@ void CheckShipExtraCollision()
 			curextra->VisibleFrame = VISFRAME_NEVER;
 
 			//FIXME:
+#ifdef PARSEC_DEBUG
 			MSGOUT( "OBJ_COLL::CheckShipExtraCollision(): predict collision with extra object" );
-            if ( ((MineObject * )curextra)->Owner == OWNER_LOCAL_PLAYER ) { //Players own objects are not send by the RE list for cleanup
+#endif
+			if ( ((MineObject * )curextra)->Owner == OWNER_LOCAL_PLAYER ) { //Players own objects are not send by the RE list for cleanup
                   OBJ_KillExtra( precnode, TRUE );     
             }
 		} else { 

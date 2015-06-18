@@ -87,7 +87,7 @@ void WalkLaserObjects()
 
 #ifdef LINKED_PROTOCOL_GAMESERVER
 
-#ifdef INTERNAL_VERSION
+#ifdef PARSEC_DEBUG
 			if ( NET_ConnectedGMSV() ) {
 				ASSERT( FALSE );
 				MSGOUT( "OBJ_Ani::WalkLaserObjects(): predicted freeing of laser object" );
@@ -380,7 +380,7 @@ void OBJ_BackgroundAnimateExtras()
 		curextra->LifeTimeCount -= CurScreenRefFrames;
 		if ( curextra->LifeTimeCount < 0 ) {
 
-#ifdef INTERNAL_VERSION
+#ifdef PARSEC_DEBUG
 			if ( NET_ConnectedGMSV() ) {
 				//ASSERT( FALSE );
 				MSGOUT( "OBJ_ANI::OBJ_BackgroundAnimateExtras(): predicted freeing of extra object" );

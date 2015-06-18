@@ -1,6 +1,7 @@
 #ifndef G_BOT_CL_H_
 #define G_BOT_CL_H_
 extern int headless_bot;
+
 // simple timeout handling ----------------------------------------------------
 // 
 class UTL_RefFrameTimeout

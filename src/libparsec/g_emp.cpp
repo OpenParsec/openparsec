@@ -381,17 +381,21 @@ int EmpAnimate( CustomObject *base )
 	// check emp expired
 	if ( emp->alive >= ( emp_lifetime[ emp->upgradelevel ] + emp->delay ) ) {
 		// returning FALSE deletes the object
+#ifdef PARSEC_DEBUG
 		MSGOUT("alive is %d, lifetime is %d, delay is %d,  lifetime - delay is %d, delete object",
 				emp->alive,
 				emp_lifetime[emp->upgradelevel],
 				emp->delay,
-				( emp_lifetime[ emp->upgradelevel ] + emp->delay ));
+	    		( emp_lifetime[ emp->upgradelevel ] + emp->delay ));
+#endif
 		return FALSE;
 	}
 
 	// check emp delay
 	if ( emp->alive < emp->delay ) {
+#ifdef PARSEC_DEBUG
 		MSGOUT("alive is %d, delay is %d, no show, return", emp->alive, emp->delay);
+#endif
 		// do not show yet
 		return TRUE;
 	}

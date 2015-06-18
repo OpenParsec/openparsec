@@ -648,12 +648,18 @@ void G_CollDet::_CollisionResponse_EmpShip( Emp *curemp )
 
 	// apply damage
 	if ( cur_ship->CurDamage <= cur_ship->MaxDamage ) {
+#ifdef PARSEC_DEBUG
 		MSGOUT("Hitpoints deduction is %d", hitpoints);
 		MSGOUT("Damage Calc Ref Frames is %d",TheSimulator->GetThisFrameRefFrames()*2);
+#endif
 		cur_ship->CurDamageFrac +=  (TheSimulator->GetThisFrameRefFrames()*2) * hitpoints;
+#ifdef PARSEC_DEBUG
 		MSGOUT("Damage Fractional is %d",cur_ship->CurDamageFrac);
+#endif
 		cur_ship->CurDamage += cur_ship->CurDamageFrac >> 16;
+#ifdef PARSEC_DEBUG
 		MSGOUT("Doing %d damage to ship", cur_ship->CurDamageFrac >> 16);
+#endif
 		cur_ship->CurDamageFrac &= 0xffff;
 
 

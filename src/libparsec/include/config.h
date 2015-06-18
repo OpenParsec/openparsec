@@ -62,7 +62,8 @@
 
 // determine that this is an internal only ( testing ) version ----------------
 //
-#define INTERNAL_VERSION
+//put this back after the release
+//#define INTERNAL_VERSION
 
 
 // enable/disable dynamic function binding ------------------------------------

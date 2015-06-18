@@ -12,7 +12,7 @@
 
 // debug control --------------------------------------------------------------
 //
-#define PARSEC_DEBUG
+//#define PARSEC_DEBUG
 
 
 // memory allocation control (also used in non-debug mode) --------------------
@@ -39,7 +39,7 @@
 
 
 
-#ifdef PARSEC_DEBUG
+//#ifdef PARSEC_DEBUG
 
 	// debug only statement encapsulation (pass through)
 	#define DBG(x) x
@@ -51,7 +51,7 @@
 	#define PRIVATE
 	#define PUBLIC
 
-#else // PARSEC_DEBUG
+/*#else // PARSEC_DEBUG
 
 	// debug only statement encapsulation (eliminate)
 	#define DBG(x)
@@ -71,7 +71,7 @@
 	#endif // ENABLE_CHEAT_COMMANDS
 
 #endif // PARSEC_DEBUG
-
+*/
 
 
 // define heap functions to use

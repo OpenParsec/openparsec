@@ -371,7 +371,7 @@ int NET_Stream::InPacket( NetPacket_GMSV* gamepacket_GMSV )
 #endif // _FORCED_RELIABLE_DROPPING
 
 	// debug output 
-#ifdef INTERNAL_VERSION
+#ifdef PARSEC_DEBUG
 	if ( AUX_DEBUG_NETSTREAM_DUMP & 1 ) {
 		LOGOUT(( "-------------------------------------------------------------------------------" ));
 		LOGOUT(( "(%2d), InPacket from %2d, MessageId %5d, ReliableMessageId %5d, AckMessageId %5d, AckReliableMessageId %5d", 
@@ -395,7 +395,9 @@ int NET_Stream::InPacket( NetPacket_GMSV* gamepacket_GMSV )
 	// do not process older messages ( I already sent an ACK )
 	//FIXME: what do we do with reliable remote events here ? -> SOLUTION: we remove them as well, as they must already have been retransmitted in later packets
 	if ( I_ACK_MessageId >= gamepacket_GMSV->MessageId ) {
+#ifdef PARSEC_DEBUG
 		MSGOUT( "NET_Stream::InPacket(): ignoring msgid %d ( already got %d )", gamepacket_GMSV->MessageId, I_ACK_MessageId );
+#endif
 		return FALSE;
 	}
 
@@ -431,7 +433,9 @@ int NET_Stream::InPacket( NetPacket_GMSV* gamepacket_GMSV )
 		// check whether we got a reliable message 
 		if ( gamepacket_GMSV->ReliableMessageId != NO_RELIABLE ) {
 			ASSERT( FALSE );
+#ifdef PARSEC_DEBUG
 			MSGOUT( "NET_Stream::InPacket(): received reliable message on UNRELIABLE stream !" );
+#endif
 			return FALSE;
 		}
 	}
@@ -477,7 +481,7 @@ void NET_Stream::OutPacket( NetPacket_GMSV* gamepacket_GMSV, int reliable /*= FA
 	// increase message counter ( wrap-around, check for MSGID_DATAGRAM )
 	Out_MessageId = ( Out_MessageId == ( MSGID_DATAGRAM - 1 ) ) ? 1 : Out_MessageId + 1;
 
-#ifdef INTERNAL_VERSION
+#ifdef PARSEC_DEBUG
 	// debug output 
 	if ( AUX_DEBUG_NETSTREAM_DUMP & 2 ) {
 

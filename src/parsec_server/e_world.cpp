@@ -1316,7 +1316,9 @@ void E_World::PRT_DeleteCluster (pcluster_s* cluster)
 	// free storage (cluster header and particle storage)
 	FREEMEM( cluster->rep );
 	FREEMEM( cluster );
-    MSGOUT("E_World::PRT_DeleteCluster(): Free'd particle cluster");
+#ifdef PARSEC_DEBUG
+	MSGOUT("E_World::PRT_DeleteCluster(): Free'd particle cluster");
+#endif
 }
 
 // remove cluster from its attachment list if contained in any ----------------

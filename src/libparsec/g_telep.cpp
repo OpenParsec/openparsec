@@ -1949,7 +1949,9 @@ int Teleporter_ShipInRange( Teleporter *teleporter, ShipObject *ship )
 		shipdot = DOT_PRODUCT( &telepnormal, &shipnormal );
 		sincosval_s sincosv;
 		GetSinCos( DEG_TO_BAMS( teleporter->act_cone_angle ), &sincosv );
+#ifdef PARSEC_DEBUG
 		MSGOUT("%d %f %f",( shipdot >= sincosv.cosval ),shipdot,sincosv.cosval); //CrazySpence Debug
+#endif
 		return ( shipdot >= sincosv.cosval );
 		
 	} else {
