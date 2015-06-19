@@ -56,6 +56,15 @@
 //#define NEW_JOYBUTTON_CODE // Wtf is this crap?
 
 
+extern int                 isdl_FireGun;
+extern int                 isdl_FireMissile;
+extern int                 isdl_Accelerate;
+extern int                 isdl_Deccelerate;
+extern int                 isdl_Rollleft;
+extern int                 isdl_RollRight;
+extern int                 isdl_NextGun;
+extern int                 isdl_NextMissile;
+
 
 // joystick globals -----------------------------------------------------------
 //
@@ -77,7 +86,7 @@ int ISDL_ActivateGun()
 	// joystick
 	if ( QueryJoystick && Op_Joystick ) {
 
-		if ( JoyState.Buttons[ 0 ] ) {
+		if ( JoyState.Buttons[ isdl_FireGun ] ) {
 			return TRUE;
 		}
 
@@ -108,7 +117,7 @@ int ISDL_ActivateMissile()
 	// joystick
 	if ( QueryJoystick && Op_Joystick ) {
 
-		if ( JoyState.Buttons[ 1 ] ) {
+		if ( JoyState.Buttons[ isdl_FireMissile	] ) {
 			return TRUE;
 		}
 
@@ -256,6 +265,28 @@ void ISDLm_ProcessMotionJoystick()
 		c_speed = (int)(c_speed * joy_acc_corr_refframe);
 
 		INP_UserAcceleration( c_speed );
+	}
+	if(JoyState.Buttons[ isdl_RollRight]) {
+		bams_t c_angle = MyShip->RollPerRefFrame * CurScreenRefFrames;
+		INP_UserRotZ( -c_angle );
+	}
+	if(JoyState.Buttons[ isdl_Rollleft	]) {
+		bams_t c_angle = MyShip->RollPerRefFrame * CurScreenRefFrames;
+		INP_UserRotZ( c_angle );
+	}
+	if(JoyState.Buttons[isdl_Accelerate ]) {
+		int c_speed = MyShip->SpeedIncPerRefFrame * CurScreenRefFrames;
+		INP_UserAcceleration( c_speed );
+	}
+	if(JoyState.Buttons[isdl_Deccelerate]) {
+		int c_speed = MyShip->SpeedDecPerRefFrame * CurScreenRefFrames;
+		INP_UserAcceleration( -c_speed );
+	}
+	if(JoyState.Buttons[isdl_NextGun]) {
+		INP_UserCycleGuns(); //Tired right now, fix this tommorow cause they hilariously cycle through at impossible speeds
+	}
+	if(JoyState.Buttons[isdl_NextMissile]) {
+		INP_UserCycleMissiles();
 	}
 }
 
