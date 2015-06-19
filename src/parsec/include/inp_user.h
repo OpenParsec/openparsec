@@ -36,6 +36,11 @@ void	INP_UserResetActivityChecking();
 void	INP_UserProcessInput();
 void	INP_UserCheckFiring();
 
+void	INP_UserActivateAfterBurner();
+void	INP_UserDeactivateAfterBurner();
+
+void	INP_UserFiredEMP();
+
 
 #endif // _INP_USER_H_
 

@@ -92,6 +92,12 @@ static dword curvisframe_user_rotx = VISFRAME_NEVER;
 static dword curvisframe_user_roty = VISFRAME_NEVER;
 static dword curvisframe_user_rotz = VISFRAME_NEVER;
 
+// remember whether cannons are active ----------------------------------------
+//
+static int user_activated_helix		= FALSE;
+static int user_activated_lightning	= FALSE;
+static int user_activated_photon	= FALSE;
+static int user_activated_emp		= FALSE;
 
 // user rotates around x axis -------------------------------------------------
 //
@@ -455,6 +461,33 @@ void INP_UserDeactivateAfterBurner()
 	OBJ_DeactivateAfterBurner( MyShip );
 }
 
+//EMP proper Inp style
+//
+void INP_UserFiredEMP() {
+#ifdef EMP_FIRE_CONTINUOUSLY
+	
+	if ( ( MyShip->WeaponsActive & WPMASK_DEVICE_EMP ) == 0 ) {
+		user_activated_emp = WFX_ActivateEmp( MyShip );
+	}
+	
+#else // EMP_FIRE_CONTINUOUSLY
+	
+	if ( ( FireRepeat > 0 ) || ( FireDisable > 0 ) ) {
+		return;
+	}
+	
+	// create emp blast
+	WFX_EmpBlast( MyShip );
+	
+	if ( ( FireRepeat  += MyShip->FireRepeatDelay  ) <= 0 ) {
+		FireRepeat = 1;
+	}
+	if ( ( FireDisable += MyShip->FireDisableDelay ) <= 0 ) {
+		FireDisable = 1;
+	}
+	
+#endif // EMP_FIRE_CONTINUOUSLY
+}
 
 // cycle gun types ------------------------------------------------------------
 //
@@ -641,15 +674,6 @@ void User_SpeedControl()
 	}
 }
 
-
-// remember whether cannons are active ----------------------------------------
-//
-static int user_activated_helix		= FALSE;
-static int user_activated_lightning	= FALSE;
-static int user_activated_photon	= FALSE;
-static int user_activated_emp		= FALSE;
-
-
 // user fired laser -----------------------------------------------------------
 //
 INLINE
@@ -703,37 +727,12 @@ void User_FirePhoton()
 	}
 }
 
-
 // user fired emp device ------------------------------------------------------
 //
 INLINE
 void User_FireEmp()
 {
-
-#ifdef EMP_FIRE_CONTINUOUSLY
-
-	if ( ( MyShip->WeaponsActive & WPMASK_DEVICE_EMP ) == 0 ) {
-		user_activated_emp = WFX_ActivateEmp( MyShip );
-	}
-
-#else // EMP_FIRE_CONTINUOUSLY
-
-	if ( ( FireRepeat > 0 ) || ( FireDisable > 0 ) ) {
-		return;
-	}
-
-	// create emp blast
-	WFX_EmpBlast( MyShip );
-
-	if ( ( FireRepeat  += MyShip->FireRepeatDelay  ) <= 0 ) {
-		FireRepeat = 1;
-	}
-	if ( ( FireDisable += MyShip->FireDisableDelay ) <= 0 ) {
-		FireDisable = 1;
-	}
-
-#endif // EMP_FIRE_CONTINUOUSLY
-
+	INP_UserFiredEMP();
 }
 
 
@@ -909,7 +908,6 @@ void User_ViewKillStats()
 
 // check if afterburner should be activated -----------------------------------
 //
-INLINE
 void User_AfterBurner()
 {
 	if ( DepressedKeys->key_AfterBurner ) {

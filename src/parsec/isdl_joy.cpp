@@ -76,7 +76,7 @@ extern joystate_s	JoyState;				// generic joystick data
 
 // string constants -----------------------------------------------------------
 //
-static char joystick_disabled[]		= "Joystick code is disabled.\n";
+//static char joystick_disabled[]		= "Joystick code is disabled.\n";
 
 
 // module local variables -----------------------------------------------------
@@ -95,6 +95,13 @@ int                 isdl_NextGun;
 int                 isdl_NextMissile;
 int                 isdl_RudderToggle;
 int                 isdl_ThrottleToggle;
+int					isdl_Aburn;
+int					isdl_Emp;
+int					isdl_StraffeLeft;
+int					isdl_StraffeRight;
+int					isdl_StraffeUp;
+int					isdl_StraffeDown;
+int					isdl_Stop;
 int					isdl_nJoystickFound;	// number of joysticks found
 
 // Joystick deadzones, in terms of SDL joystick range (-32768..32768)
@@ -340,9 +347,15 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_rollright"    , -1,     64,&isdl_RollRight          , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_nextgun"      , -1,     64,&isdl_NextGun            , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_nextmissile"  , -1,     64,&isdl_NextMissile        , NULL, NULL,-1 },
-	{ 0x01, "isdl.analogthrottle"     , -1,      1, &isdl_RudderToggle      , NULL, NULL,0  }, //default off
-	{ 0x01, "isdl.analogrudder"       , -1,      1, &isdl_ThrottleToggle    , NULL, NULL,0  },
-
+	{ 0x01, "isdl.analogthrottle"     , 0,      1, &isdl_RudderToggle       , NULL, NULL,0  }, //default off
+	{ 0x01, "isdl.analogrudder"       , 0,      1, &isdl_ThrottleToggle     , NULL, NULL,0  },
+    { 0x01, "isdl.jbind_aburn"        , -1,     64,&isdl_Aburn              , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_emp"          , -1,     64,&isdl_Emp                , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_straffelft"   , -1,     64,&isdl_StraffeLeft        , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_straffergt"   , -1,     64,&isdl_StraffeRight       , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_straffeup"    , -1,     64,&isdl_StraffeUp          , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_straffedown"  , -1,     64,&isdl_StraffeDown        , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_stop"         , -1,     64,&isdl_Stop               , NULL, NULL,-1 },
 };
 
 #define NUM_IL_JOY_INT_COMMANDS CALC_NUM_ARRAY_ENTRIES( il_joy_int_commands )

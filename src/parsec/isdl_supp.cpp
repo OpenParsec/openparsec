@@ -56,15 +56,21 @@
 //#define NEW_JOYBUTTON_CODE // Wtf is this crap?
 
 
-extern int                 isdl_FireGun;
-extern int                 isdl_FireMissile;
-extern int                 isdl_Accelerate;
-extern int                 isdl_Deccelerate;
-extern int                 isdl_Rollleft;
-extern int                 isdl_RollRight;
-extern int                 isdl_NextGun;
-extern int                 isdl_NextMissile;
-
+extern int                  isdl_FireGun;
+extern int                  isdl_FireMissile;
+extern int                  isdl_Accelerate;
+extern int                  isdl_Deccelerate;
+extern int                  isdl_Rollleft;
+extern int                  isdl_RollRight;
+extern int                  isdl_NextGun;
+extern int                  isdl_NextMissile;
+extern int					isdl_Aburn;
+extern int					isdl_Emp;
+extern int					isdl_StraffeLeft;
+extern int					isdl_StraffeRight;
+extern int					isdl_StraffeUp;
+extern int					isdl_StraffeDown;
+extern int					isdl_Stop;
 
 // joystick globals -----------------------------------------------------------
 //
@@ -266,6 +272,16 @@ void ISDLm_ProcessMotionJoystick()
 
 		INP_UserAcceleration( c_speed );
 	}
+}
+
+PRIVATE
+void ISDLm_ProcessJoystickBinds() {
+	if(JoyState.Buttons[isdl_NextGun]) {
+		INP_UserCycleGuns(); //Tired right now, fix this tommorow cause they hilariously cycle through at impossible speeds
+	}
+	if(JoyState.Buttons[isdl_NextMissile]) {
+		INP_UserCycleMissiles();
+	}
 	if(JoyState.Buttons[ isdl_RollRight]) {
 		bams_t c_angle = MyShip->RollPerRefFrame * CurScreenRefFrames;
 		INP_UserRotZ( -c_angle );
@@ -282,15 +298,35 @@ void ISDLm_ProcessMotionJoystick()
 		int c_speed = MyShip->SpeedDecPerRefFrame * CurScreenRefFrames;
 		INP_UserAcceleration( -c_speed );
 	}
-	if(JoyState.Buttons[isdl_NextGun]) {
-		INP_UserCycleGuns(); //Tired right now, fix this tommorow cause they hilariously cycle through at impossible speeds
+	if(JoyState.Buttons[isdl_Stop]) {
+		INP_UserZeroSpeed();
 	}
-	if(JoyState.Buttons[isdl_NextMissile]) {
-		INP_UserCycleMissiles();
+	if(JoyState.Buttons[isdl_StraffeLeft]) {
+		geomv_t slideval = MyShip->XSlidePerRefFrame * CurScreenRefFrames;
+		INP_UserSlideX( slideval );
+	}
+	if(JoyState.Buttons[isdl_StraffeRight]) {
+		geomv_t slideval = MyShip->XSlidePerRefFrame * CurScreenRefFrames;
+		INP_UserSlideX( -slideval );
+	}
+	if(JoyState.Buttons[isdl_StraffeUp]) {
+		geomv_t slideval = MyShip->YSlidePerRefFrame * CurScreenRefFrames;
+		INP_UserSlideY( slideval );
+	}
+	if(JoyState.Buttons[isdl_StraffeDown]) {
+		geomv_t slideval = MyShip->YSlidePerRefFrame * CurScreenRefFrames;
+		INP_UserSlideY( -slideval );
+	}
+	if(JoyState.Buttons[isdl_Aburn]) {
+		INP_UserActivateAfterBurner();
+	} else {
+		INP_UserDeactivateAfterBurner();
+		
+	}
+	if(JoyState.Buttons[isdl_Emp]) {
+		INP_UserFiredEMP();
 	}
 }
-
-
 #define MOUSE_EDGE_EPS  0.1f
 
 // process mouse input for spacecraft motion ----------------------------------
@@ -458,6 +494,7 @@ void ISDL_UserProcessAuxInput()
 {
 #ifndef DISABLE_JOYSTICK_CODE
 	ISDLm_ProcessMotionJoystick();
+	ISDLm_ProcessJoystickBinds();
 #endif
 	ISDLm_ProcessMotionMouse();
 }
