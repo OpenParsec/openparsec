@@ -102,6 +102,13 @@ int					isdl_StraffeRight;
 int					isdl_StraffeUp;
 int					isdl_StraffeDown;
 int					isdl_Stop;
+int					isdl_Dup;
+int					isdl_Ddown;
+int					isdl_Dleft;
+int					isdl_Dright;
+int					isdl_Shift;
+int					isdl_Target;
+int					isdl_TargetFront;
 int					isdl_nJoystickFound;	// number of joysticks found
 
 // Joystick deadzones, in terms of SDL joystick range (-32768..32768)
@@ -328,8 +335,8 @@ void ISDL_JoyCollect()
 //
 int_command_s il_joy_int_commands[] = {
 
-	{ 0x01,	"isdl.swap_joyaxes_01"    ,      0, 1, &isdl_swap_axes01,	     NULL, NULL     },
-	{ 0x01,	"isdl.swap_joyaxes_23"    ,      0, 1, &isdl_swap_axes23,	     NULL, NULL     },
+	{ 0x01,	"isdl.swap_joyaxes_01"    ,      0, 1, &isdl_swap_axes01        , NULL, NULL    },
+	{ 0x01,	"isdl.swap_joyaxes_23"    ,      0, 1, &isdl_swap_axes23        , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_min_axis_0", -32768, 0, &isdl_joyDeadZone_Min[0] , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_min_axis_1", -32768, 0, &isdl_joyDeadZone_Min[1] , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_min_axis_2", -32768, 0, &isdl_joyDeadZone_Min[2] , NULL, NULL    },
@@ -356,6 +363,14 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_straffeup"    , -1,     64,&isdl_StraffeUp          , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_straffedown"  , -1,     64,&isdl_StraffeDown        , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_stop"         , -1,     64,&isdl_Stop               , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_dup"          , -1,     64,&isdl_Dup                , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_ddown"        , -1,     64,&isdl_Ddown              , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_dleft"        , -1,     64,&isdl_Dleft              , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_dright"       , -1,     64,&isdl_Dright             , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_shift"        , -1,     64,&isdl_Shift              , NULL, NULL,1  }, //button 2 default
+	{ 0x01, "isdl.jbind_target"       , -1,     64,&isdl_Target             , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_targetfront"  , -1,     64,&isdl_TargetFront        , NULL, NULL,-1 },
+	
 };
 
 #define NUM_IL_JOY_INT_COMMANDS CALC_NUM_ARRAY_ENTRIES( il_joy_int_commands )
