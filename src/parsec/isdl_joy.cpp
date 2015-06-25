@@ -346,8 +346,8 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_shift"        , -1,     64,&isdl_Shift              , NULL, NULL,1  }, //button 2 default
 	{ 0x01, "isdl.jbind_target"       , -1,     64,&isdl_Target             , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_targetfront"  , -1,     64,&isdl_TargetFront        , NULL, NULL,-1 },
-	{ 0x01, "isdl.jbind_axisx"        , -1,     64,&isdl_AxisX              , NULL, NULL,1  }, //default 1
-	{ 0x01, "isdl.jbind_axisy"        , -1,     64,&isdl_AxisY              , NULL, NULL,0  }, //default 0
+	{ 0x01, "isdl.jbind_axisx"        ,  0,     64,&isdl_AxisX              , NULL, NULL,0  }, //default 0
+	{ 0x01, "isdl.jbind_axisy"        ,  0,     64,&isdl_AxisY              , NULL, NULL,1  }, //default 1
 	{ 0x01, "isdl.jbind_axisthrottle" , -1,     64,&isdl_AxisThrottle       , NULL, NULL,2  }, //default 2
 	{ 0x01, "isdl.jbind_axisrudder"   , -1,     64,&isdl_AxisRudder         , NULL, NULL,3  }, //default 3
 	
