@@ -63,7 +63,7 @@
 #ifndef PARSEC_SERVER
 // proprietary module headers
 #include "aud_defs.h"
-
+#include "inp_user.h"
 #include "con_com.h"
 #include "con_info.h"
 #include "con_main.h"
@@ -1393,7 +1393,7 @@ int Cmd_EMP( char *argstr )
 	ASSERT( argstr != NULL );
 	HANDLE_COMMAND_DOMAIN( argstr );
 #ifndef PARSEC_SERVER
-	WFX_EmpBlast( MyShip );
+	INP_UserFiredEMP();
 #endif
 	return TRUE;
 }

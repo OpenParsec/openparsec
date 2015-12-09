@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -75,6 +76,10 @@
 #define OBJCAM_ROLL_PER_REFFRAME			25
 #define OBJCAM_ZOOM_SPEED					FIXED_TO_GEOMV( 0x06000 )
 
+
+// Lets try something Crazy here and do a cooldown in time instead of frames!
+#define EMPTIME 2 //time in seconds
+static int empCoolDown;
 
 // inverse of object camera ---------------------------------------------------
 //
@@ -471,20 +476,13 @@ void INP_UserFiredEMP() {
 	}
 	
 #else // EMP_FIRE_CONTINUOUSLY
-	
-	if ( ( FireRepeat > 0 ) || ( FireDisable > 0 ) ) {
+		
+	if((time(NULL) - empCoolDown) < EMPTIME)
 		return;
-	}
-	
 	// create emp blast
 	WFX_EmpBlast( MyShip );
+	empCoolDown = time(NULL);
 	
-	if ( ( FireRepeat  += MyShip->FireRepeatDelay  ) <= 0 ) {
-		FireRepeat = 1;
-	}
-	if ( ( FireDisable += MyShip->FireDisableDelay ) <= 0 ) {
-		FireDisable = 1;
-	}
 	
 #endif // EMP_FIRE_CONTINUOUSLY
 }
