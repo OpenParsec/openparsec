@@ -24,7 +24,7 @@ ifeq ($(config),debug32)
   TARGETDIR  = .
   TARGET     = $(TARGETDIR)/parsec
   DEFINES   += -DDEBUG -DPARSEC_CLIENT -DGLES
-  INCLUDES  += -I../../../../src/libraries -I/usr/include -I/usr/local/include -I/opt/include -I../../../../src/libparsec/include -I../../../../src/parsec/include
+  INCLUDES  += -I../../../../src/libraries -I/usr/include -I/usr/local/include -I/opt/vc/include -I../../../../src/libparsec/include -I../../../../src/parsec/include
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g
   CXXFLAGS  += $(CFLAGS) 
@@ -68,8 +68,6 @@ ifeq ($(config),release32)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/stb_image.o \
-	$(OBJDIR)/stb_image_write.o \
 	$(OBJDIR)/net_swap.o \
 	$(OBJDIR)/sw_path.o \
 	$(OBJDIR)/sys_date.o \
