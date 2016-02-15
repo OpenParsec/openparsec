@@ -908,7 +908,7 @@ void G_Main::_WalkMissileObjects()
 
 			                     // lock lost due to position
 			                     tmissilepo->TargetObjNumber = TARGETID_NO_TARGET;
-                                 MSGOUT("G_Main::_WalkMissileObjects(): Target lost: Out of position");
+                                 //MSGOUT("G_Main::_WalkMissileObjects(): Target lost: Out of position");
                                 
 
 		                    } else {

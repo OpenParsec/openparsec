@@ -908,7 +908,7 @@ void User_ViewKillStats()
 //
 void User_AfterBurner()
 {
-	if ( DepressedKeys->key_AfterBurner ) {
+	if (INPs_ActivateAfterBurner()) {
 		INP_UserActivateAfterBurner();
 	} else {
 		INP_UserDeactivateAfterBurner();

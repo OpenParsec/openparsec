@@ -10,6 +10,7 @@
 
 int     ISDL_ActivateGun();
 int  	ISDL_ActivateMissile();
+int		ISDL_ActivateAfterBurner();
 void	ISDL_UserProcessAuxInput();
 
 
