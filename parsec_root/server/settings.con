@@ -3,7 +3,7 @@
 ;------------------------------------------------------------------------------
 
 nebula.id                       3
-sv.conf 			name 		Mac
+sv.conf 			name 		changeme
 sv.conf				maxplayers 	8
 sv.conf				simfreq		100
 sv.serverid			3
