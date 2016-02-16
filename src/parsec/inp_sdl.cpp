@@ -645,6 +645,10 @@ int INPs_ActivateGun()
 	return ISDL_ActivateGun();
 }
 
+int INPs_ActivateAfterBurner()
+{
+	return ISDL_ActivateAfterBurner();
+}
 
 // launch missile if activated ------------------------------------------------
 //

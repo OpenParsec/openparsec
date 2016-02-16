@@ -9,7 +9,7 @@
 
 
 // use emp as duration weapon
-#define EMP_FIRE_CONTINUOUSLY
+//#define EMP_FIRE_CONTINUOUSLY
 
 
 

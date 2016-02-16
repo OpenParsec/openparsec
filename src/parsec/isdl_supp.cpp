@@ -31,6 +31,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "debug.h"
 
 
@@ -51,11 +52,6 @@
 #include "con_int.h"
 #include "inp_user.h"
 
-
-// flags
-//#define NEW_JOYBUTTON_CODE // Wtf is this crap?
-
-
 extern int                  isdl_FireGun;
 extern int                  isdl_FireMissile;
 extern int                  isdl_Accelerate;
@@ -71,14 +67,22 @@ extern int					isdl_StraffeRight;
 extern int					isdl_StraffeUp;
 extern int					isdl_StraffeDown;
 extern int					isdl_Stop;
+extern int					isdl_Dup;
+extern int					isdl_Ddown;
+extern int					isdl_Dleft;
+extern int					isdl_Dright;
+extern int					isdl_Shift;
+extern int					isdl_Target;
+extern int					isdl_TargetFront;
 
 // joystick globals -----------------------------------------------------------
 //
-//int			isdl_bDisableJoystick = TRUE;	// joystick disabled
+#define     UI_DELAY 1
 joystate_s	JoyState;						// generic joystick data
-int			isdl_bHasThrottle = 0;			// indicates, the joystick has a throttle
-int			isdl_bHasRudder   = 0;			// indicates, the joystick has a rudder
-
+int			isdl_bHasThrottle   = 0;			// indicates, the joystick has a throttle
+int			isdl_bHasRudder     = 0;			// indicates, the joystick has a rudder
+static int  gun_ui_cooldown     = 0;
+static int  missile_ui_cooldown = 0;
 
 // shoot gun if activated -----------------------------------------------------
 //
@@ -110,6 +114,24 @@ int ISDL_ActivateGun()
 	return FALSE;
 }
 
+int ISDL_ActivateAfterBurner()
+{
+	//Keyboard
+	if ( DepressedKeys->key_AfterBurner ) {
+		return TRUE;
+	}
+	//Joystick
+	if ( QueryJoystick && Op_Joystick ) {
+		
+		if ( JoyState.Buttons[ isdl_Aburn ] ) {
+			return TRUE;
+		}
+		
+	}
+	
+	return FALSE;
+
+}
 
 // launch missile if activated ------------------------------------------------
 //
@@ -199,9 +221,9 @@ void ISDLm_ProcessMotionJoystick()
 	bams_t	c_angle;
 	int	c_speed;
 
-	if ( ( ( JoyState.Buttons[ 1 ] & 0x80 ) == 0 ) || ( isdl_bHasRudder && isdl_bHasThrottle && !ObjCameraActive ) ) {
+	if ( ( ( JoyState.Buttons[ isdl_Shift ] & 0x80 ) == 0 ) || ( isdl_bHasRudder && isdl_bHasThrottle && !ObjCameraActive ) ) {
 
-		// button 2 not pressed + up/down -> pitch
+		// shift button not pressed + up/down -> pitch
 		c_angle  = (bams_t) -JoyState.Y;
 		c_angle *= MyShip->PitchPerRefFrame * CurScreenRefFrames;
 		c_angle = (bams_t)(c_angle * joy_pitch_corr_refframe);
@@ -210,7 +232,7 @@ void ISDLm_ProcessMotionJoystick()
 			INP_UserRotX( c_angle );
 		}
 
-		// button 2 not pressed + left/right -> yaw
+		// shift not pressed + left/right -> yaw
 		c_angle  = (bams_t) -JoyState.X;
 		c_angle *= MyShip->YawPerRefFrame * CurScreenRefFrames;
 		c_angle = (bams_t)(c_angle * joy_yaw_corr_refframe);
@@ -256,7 +278,7 @@ void ISDLm_ProcessMotionJoystick()
 
 	} else {
 
-		// button2 + left/right -> roll
+		// shift button + left/right -> roll
 		c_angle  = (bams_t) -JoyState.X;
 		c_angle *= MyShip->RollPerRefFrame * CurScreenRefFrames;
 		c_angle = (bams_t)(c_angle * joy_roll_corr_refframe);
@@ -265,7 +287,7 @@ void ISDLm_ProcessMotionJoystick()
 			INP_UserRotZ( c_angle );
 		}
 
-		// button2 + up/down -> accelerate/decelerate
+		// shift button + up/down -> accelerate/decelerate
 		c_speed  = (bams_t) -JoyState.Y;
 		c_speed *= MyShip->SpeedIncPerRefFrame * CurScreenRefFrames;
 		c_speed = (int)(c_speed * joy_acc_corr_refframe);
@@ -277,10 +299,16 @@ void ISDLm_ProcessMotionJoystick()
 PRIVATE
 void ISDLm_ProcessJoystickBinds() {
 	if(JoyState.Buttons[isdl_NextGun]) {
-		INP_UserCycleGuns(); //Tired right now, fix this tommorow cause they hilariously cycle through at impossible speeds
+		if((time(NULL) - gun_ui_cooldown) >= UI_DELAY) {
+			INP_UserCycleGuns();
+			gun_ui_cooldown	= time(NULL);
+		}
 	}
 	if(JoyState.Buttons[isdl_NextMissile]) {
-		INP_UserCycleMissiles();
+		if((time(NULL) - missile_ui_cooldown) >= UI_DELAY) {
+		    INP_UserCycleMissiles();
+			missile_ui_cooldown	= time(NULL);
+		}
 	}
 	if(JoyState.Buttons[ isdl_RollRight]) {
 		bams_t c_angle = MyShip->RollPerRefFrame * CurScreenRefFrames;
@@ -321,10 +349,31 @@ void ISDLm_ProcessJoystickBinds() {
 		INP_UserActivateAfterBurner();
 	} else {
 		INP_UserDeactivateAfterBurner();
-		
 	}
 	if(JoyState.Buttons[isdl_Emp]) {
 		INP_UserFiredEMP();
+	}
+	if(JoyState.Buttons[isdl_Target]) {
+		INP_UserCycleTargets();	
+	}
+	if(JoyState.Buttons[isdl_TargetFront]) {
+		INP_UserSelectFrontTarget();
+	}
+	if(JoyState.Buttons[isdl_Dup]) {
+		bams_t c_angle = MyShip->PitchPerRefFrame * CurScreenRefFrames;
+		INP_UserRotX( -c_angle );
+	}
+	if(JoyState.Buttons[isdl_Ddown]) {
+		bams_t c_angle = MyShip->PitchPerRefFrame * CurScreenRefFrames;
+		INP_UserRotX( c_angle );
+	}
+	if(JoyState.Buttons[isdl_Dright]) {
+		bams_t c_angle = MyShip->YawPerRefFrame * CurScreenRefFrames;
+		INP_UserRotY( -c_angle );
+	}
+	if(JoyState.Buttons[isdl_Dleft]) {
+		bams_t c_angle = MyShip->YawPerRefFrame * CurScreenRefFrames;
+		INP_UserRotY( c_angle );
 	}
 }
 #define MOUSE_EDGE_EPS  0.1f

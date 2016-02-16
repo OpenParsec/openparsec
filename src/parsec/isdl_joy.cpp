@@ -102,6 +102,17 @@ int					isdl_StraffeRight;
 int					isdl_StraffeUp;
 int					isdl_StraffeDown;
 int					isdl_Stop;
+int					isdl_Dup;
+int					isdl_Ddown;
+int					isdl_Dleft;
+int					isdl_Dright;
+int					isdl_Shift;
+int					isdl_Target;
+int					isdl_TargetFront;
+int					isdl_AxisX;
+int					isdl_AxisY;
+int					isdl_AxisThrottle;
+int					isdl_AxisRudder;
 int					isdl_nJoystickFound;	// number of joysticks found
 
 // Joystick deadzones, in terms of SDL joystick range (-32768..32768)
@@ -228,60 +239,35 @@ void ISDL_JoyCollect()
 	{
 		if(isdl_swap_axes01)
 		{
-			JoyState.X = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 1), 1) / JOY_Y_DIV;
-			JoyState.Y = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 0), 0) / JOY_X_DIV;
+			JoyState.X = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, isdl_AxisY), isdl_AxisY) / JOY_Y_DIV;
+			JoyState.Y = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, isdl_AxisX), isdl_AxisX) / JOY_X_DIV;
 		}
 		else
 		{
-			JoyState.X = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 0), 0) / JOY_X_DIV;
-			JoyState.Y = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 1), 1) / JOY_Y_DIV;
+			JoyState.X = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, isdl_AxisX), isdl_AxisX) / JOY_X_DIV;
+			JoyState.Y = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, isdl_AxisY), isdl_AxisY) / JOY_Y_DIV;
 		}
 	}
 	if (isdl_NumAxes >= 3)
 	{
-		if(isdl_swap_axes23)
-		{
-			if(isdl_RudderToggle) {
-				JoyState.Rz = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 2), 2) / JOY_RUDDER_DIV;
-				isdl_bHasRudder = TRUE;
-			} else {
-				isdl_bHasRudder = FALSE;
-			}
-		}
-		else
-		{
-			if(isdl_ThrottleToggle) {
-				// Do not apply deadzones to throttle
-				JoyState.Z = SDL_JoystickGetAxis(isdl_joyHandle, 2) / JOY_THROTTLE_DIV + JOY_THROTTLE_OFF;
-				isdl_bHasThrottle = TRUE;
-			} else {
-				isdl_bHasThrottle = FALSE;
-			}
+		if(isdl_ThrottleToggle) {
+			// Do not apply deadzones to throttle
+			JoyState.Z = SDL_JoystickGetAxis(isdl_joyHandle, isdl_AxisThrottle) / JOY_THROTTLE_DIV + JOY_THROTTLE_OFF;
+			isdl_bHasThrottle = TRUE;
+		} else {
+			isdl_bHasThrottle = FALSE;
 		}
 	}
 	if (isdl_NumAxes >= 4)
 	{
-		if(isdl_swap_axes23)
-		{
-			if(isdl_ThrottleToggle) {
-				// Do not apply deadzones to throttle
-				JoyState.Z = SDL_JoystickGetAxis(isdl_joyHandle, 3) / JOY_THROTTLE_DIV + JOY_THROTTLE_OFF;
-				isdl_bHasThrottle = TRUE;
-			} else {
-				isdl_bHasThrottle = FALSE;
-			}
+		if(isdl_RudderToggle) {
+			JoyState.Rz = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, isdl_AxisRudder), isdl_AxisRudder) / JOY_RUDDER_DIV;
+			isdl_bHasRudder = TRUE;
+		} else {
+			isdl_bHasRudder = FALSE;
 		}
-		else
-		{
-			if(isdl_RudderToggle) {
-				JoyState.Rz = ISDL_ApplyDZ(SDL_JoystickGetAxis(isdl_joyHandle, 3), 3) / JOY_RUDDER_DIV;
-				isdl_bHasRudder = TRUE;
-			} else {
-				isdl_bHasRudder = FALSE;
-			}
-		}
+		
 	}
-
 	// Read buttons
 	keyaddition_s *kap = KeyAdditional->table;
 	ASSERT( KeyAdditional->size >= 0 );
@@ -327,9 +313,6 @@ void ISDL_JoyCollect()
 // registration table for joystick config flags -------------------------------
 //
 int_command_s il_joy_int_commands[] = {
-
-	{ 0x01,	"isdl.swap_joyaxes_01"    ,      0, 1, &isdl_swap_axes01,	     NULL, NULL     },
-	{ 0x01,	"isdl.swap_joyaxes_23"    ,      0, 1, &isdl_swap_axes23,	     NULL, NULL     },
 	{ 0x01, "isdl.deadzone_min_axis_0", -32768, 0, &isdl_joyDeadZone_Min[0] , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_min_axis_1", -32768, 0, &isdl_joyDeadZone_Min[1] , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_min_axis_2", -32768, 0, &isdl_joyDeadZone_Min[2] , NULL, NULL    },
@@ -356,6 +339,18 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_straffeup"    , -1,     64,&isdl_StraffeUp          , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_straffedown"  , -1,     64,&isdl_StraffeDown        , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_stop"         , -1,     64,&isdl_Stop               , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_dup"          , -1,     64,&isdl_Dup                , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_ddown"        , -1,     64,&isdl_Ddown              , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_dleft"        , -1,     64,&isdl_Dleft              , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_dright"       , -1,     64,&isdl_Dright             , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_shift"        , -1,     64,&isdl_Shift              , NULL, NULL,1  }, //button 2 default
+	{ 0x01, "isdl.jbind_target"       , -1,     64,&isdl_Target             , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_targetfront"  , -1,     64,&isdl_TargetFront        , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_axisx"        ,  0,     64,&isdl_AxisX              , NULL, NULL,0  }, //default 0
+	{ 0x01, "isdl.jbind_axisy"        ,  0,     64,&isdl_AxisY              , NULL, NULL,1  }, //default 1
+	{ 0x01, "isdl.jbind_axisthrottle" , -1,     64,&isdl_AxisThrottle       , NULL, NULL,2  }, //default 2
+	{ 0x01, "isdl.jbind_axisrudder"   , -1,     64,&isdl_AxisRudder         , NULL, NULL,3  }, //default 3
+	
 };
 
 #define NUM_IL_JOY_INT_COMMANDS CALC_NUM_ARRAY_ENTRIES( il_joy_int_commands )

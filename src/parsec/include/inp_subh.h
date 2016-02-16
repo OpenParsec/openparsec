@@ -27,6 +27,7 @@ int   INPs_MouseGetState( mousestate_s *state );
 
 int			INPs_ActivateGun();
 int			INPs_ActivateMissile();
+int			INPs_ActivateAfterBurner();
 
 void		INPs_Collect();
 void		INPs_UserProcessAuxInput();
