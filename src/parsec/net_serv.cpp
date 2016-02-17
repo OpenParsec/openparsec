@@ -83,10 +83,6 @@
 //
 static char invalid_ping[]	 			= "invalid or missing maximum ping value.";
 static char invalid_players[] 			= "invalid or missing minimum players value.";
-static char no_server[]					= "you are not connected to a gameserver.";
-static char no_command_specified[]		= "server command missing.";
-static char no_default_masterserver[]	= "no default masterserver set";
-
 
 // time in seconds after which connect attempt ends ---------------------------
 //
@@ -141,7 +137,6 @@ int	GMSV_disconnect_state = DISCONNECT_NOT_ENTERED;
 
 static char				local_ip[ MAX_IPADDR_LEN + 1 ];			// our local IP (as seen from the server)
 static word				local_port;								// our local port (as seen from the server)
-static char				j_resolved_name[ MAX_IPADDR_LEN + 1 ];	// tempory servername during transition
 static char				server_name[ MAX_SERVER_NAME + 1 ];
 
 static int				num_clients_connected = 0;
@@ -150,21 +145,6 @@ client_s				client_list[ MAX_NET_ALLOC_SLOTS ];
 static const char		challline1[] = GIVECHALLSTRING1;
 static const char		connline2[]	 = CONNSTRING2;
 static const char		rmvline1[]	 = RMVSTRING1;
-
-//static char			recvline1[]	 = RECVSTR_ACCEPTED;
-//static char			recvline2[]	 = RECVSTR_SERVER_FULL;
-//static char			recvline3[]	 = RECVSTR_REQUEST_INVALID;
-//static char			recvline4[]	 = RECVSTR_REMOVE_OK;
-//static char			recvline5[]	 = RECVSTR_NOT_CONNECTED;
-//static char			recvline6[]	 = RECVSTR_SERVER_INCOMP;
-//static char			recvline7[]	 = RECVSTR_CLIENT_BANNED;
-//static char			recvline8[]	 = RECVSTR_NAME_OK;
-//static char			recvline9[]	 = RECVSTR_NAME_INVALID;
-//static char			recvline10[] = RECVSTR_LINK_SERVER;
-
-static const char		listline1[]  = LISTSTR_ADDED_IN_SLOT;
-static const char		listline2[]  = LISTSTR_REMOVED_FROM_SLOT;
-static const char		listline3[]  = LISTSTR_NAME_UPDATED;
 
 static const char		nameline1[]  = NAMESTRING1;
 

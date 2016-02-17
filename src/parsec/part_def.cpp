@@ -54,8 +54,6 @@
 
 // generic string paste area
 #define PASTE_STR_LEN 255
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
 
 // names of available particle definitions ------------------------------------
 //

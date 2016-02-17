@@ -111,10 +111,7 @@ dword teleporter_type;
 
 // string constants -----------------------------------------------------------
 //
-static char telep_level_inval_level_spec[]	  = "invalid level specified";
-static char telep_level_inval_filename_spec[] = "invalid filename specified";
 static char telep_exit_class_not_found[] 	  = "object class for teleporter exit not found.";
-static char telep_texture_not_found[]		  = "texture '%s' was not found.";
 
 // flags ----------------------------------------------------------------------
 //
@@ -576,7 +573,6 @@ void StripQuotations( char* str2modify )
 {
 	ASSERT( str2modify != NULL );
 
-	char szBuffer[ 128 ];
 	size_t len = strlen( str2modify );
 	ASSERT( len < 128 );
 
@@ -602,13 +598,10 @@ PRIVATE
 int TeleporterModify_TexPropsChanged( GenObject* base )
 {
 	ASSERT( base != NULL );
-	Teleporter *teleporter = (Teleporter *) base;
 	
-	// eventually remove leadin/trainling quotations from the texture names
-	//StripQuotations( teleporter->tex_name_interior );
-	//StripQuotations( teleporter->tex_name_tunnel   );
 #ifndef PARSEC_SERVER
 	// get pointer to texture map
+	Teleporter *teleporter = (Teleporter *) base;
 	teleporter->start_texmap = FetchTextureMap( teleporter->tex_name_interior );
 	if ( teleporter->start_texmap == NULL ) {
 		MSGOUT( telep_texture_not_found, teleporter->tex_name_interior );
@@ -1056,11 +1049,11 @@ void Teleporter_Draw_Tunnel( Teleporter* teleporter )
 	Vector3 last_seg_vtxs [ 4 ];
 	
 	// calculate the interstep 
-	geomv_t cur_interseg = ( num_total_spline_segs - 1 ) * teleporter->tunnel_t;
+	//geomv_t cur_interseg = ( num_total_spline_segs - 1 ) * teleporter->tunnel_t;
 
 	// clamp to the max
-	if ( cur_interseg > ( num_total_spline_segs - 1 ) )
-		cur_interseg = ( num_total_spline_segs - 1 );
+	//if ( cur_interseg > ( num_total_spline_segs - 1 ) )
+	//	cur_interseg = ( num_total_spline_segs - 1 );
 	
 	// calculate the interstep fraction ( that is the fraction between 2 spline points )
 	//geomv_t cur_interseg_frac	= cur_interseg - (geomv_t)start_seg;
@@ -2282,11 +2275,8 @@ int Cmd_TP_MODIFY( char* tp_mod_command )
 	int tp_id = 0;
 	Vector3 pos_spec;
 	Vector3 expos_spec;
-	Vector3 dir_spec;
-	Vector3 exdir_spec;
-
-	Vector3 *pos, *expos, *dir, *exdir;
-
+	Vector3 *pos, *expos;
+	
 	bool pos_ch, expos_ch, start_phi_ch, start_theta_ch,exit_phi_ch, exit_theta_ch;
 
 	// scan out all values to keys

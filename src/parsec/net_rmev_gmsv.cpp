@@ -591,10 +591,6 @@ void NET_ExecRmEvGeneric( RE_Generic* pRE_Generic)
 
 	// check for teleporter collision
 	if(pRE_Generic->RE_ActionFlags &  (1 << TELEP_COLLIDE)){
-		dword ownerid = GetOwnerFromHostOjbNumber(pRE_Generic->HostObjId);
-		// fetch pointer to remote player's ship
-		ShipObject *telep_ship = NET_FetchOwnersShip( ownerid );
-
 		// find the teleporter object by id
 		Teleporter *teleporter = NET_FindTeleporter(pRE_Generic->Padding);
 	

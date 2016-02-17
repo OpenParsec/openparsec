@@ -82,11 +82,6 @@ static char objectinfo_syntax[]	= "syntax: objectinfo <object_id>";
 static char class_not_loaded[]	= "class is not loaded.";
 static char no_objs_of_type[]	= "there are no objects of this type.";
 static char not_accessible[]	= "properties of this type are not accessible.";
-static char face_id_invalid[]	= "face id invalid.";
-static char no_texture_found[]	= "texture invalid.";
-static char no_face_selected[]	= "no face selection specified.";
-static char base_object_empty[]	= "base object is empty.";
-
 
 // property access type specification -----------------------------------------
 //

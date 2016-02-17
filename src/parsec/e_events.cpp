@@ -254,7 +254,7 @@ void EVT_Maintain()
 
 		// check whether the event depends on another event that must be triggered
 		if ( event->flags & EVENT_PARAM_DEPENDENT ) {
-			event_s* parentevent = (event_s*)event->dependent_on;
+			event_s* parentevent = (event_s*)event->dependent_on; //Unused but I think someday it was meant to be?
 
 			//FIXME: in order to have this work properly we must first
 			//       go through all the events, resolve all dependencies

@@ -101,25 +101,6 @@ struct myship_int_s {
 	int MaxNumMines;
 };
 
-static myship_int_s myship_int;
-
-/*
-
-//FIXME:
-
-#define DEF_MYSHIP_INT( f ) \
-int GetMSInt##f() \
-{ \
-	return (int)MyShip->f; \
-} \
-void SetMSInt##f() \
-{ \
-	MyShip->f = myship_int.f; \
-	Record_MyShipState##f(); \
-}
-
-*/
-
 #define DEF_MYSHIP_INT( f ) \
 int GetMSInt##f() \
 { \

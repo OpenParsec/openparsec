@@ -109,12 +109,6 @@ static const char pfg_sig_invalid[]		= "pfg signature invalid.";
 static const char pfg_ver_invalid[]		= "pfg version not recognized.";
 static const char pfg_corrupted[]		= "font geometry invalid.";
 
-static const char sample_not_found[]	= "sample \"%s\" not found";
-static const char sample_readerror[]	= "sample \"%s\" readerror";
-static const char song_not_found[]		= "song \"%s\" not found";
-static const char song_readerror[]		= "song \"%s\" readerror";
-static const char no_sample_mem[]		= "not enough mem for sound data.";
-
 static const char palette_not_found[]	= "palette \"%s\" not found";
 static const char palette_readerror[]	= "palette \"%s\" readerror";
 static const char no_palette_mem[]		= "not enough mem for palettes.";

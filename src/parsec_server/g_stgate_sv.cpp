@@ -69,16 +69,6 @@
 #include "obj_cust.h"
 #include "e_simulator.h"
 
-// flags
-
-
-
-// generic string paste area --------------------------------------------------
-//
-#define PASTE_STR_LEN 255
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
-
 // stargate limits and constants ----------------------------------------------
 //
 #define STARGATE_RADIUS						50.0f
@@ -287,7 +277,7 @@ PRIVATE
 void StargateInstantiate( CustomObject *base )
 {
 	ASSERT( base != NULL );
-	Stargate *stargate = (Stargate *) base;
+	//Stargate *stargate = (Stargate *) base;
 }
 
 /*
@@ -375,7 +365,7 @@ PRIVATE
 void StargateDestroy( CustomObject *base )
 {
 	ASSERT( base != NULL );
-	Stargate *stargate = (Stargate *) base;
+//	Stargate *stargate = (Stargate *) base;
 }
 
 

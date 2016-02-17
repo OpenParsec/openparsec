@@ -692,7 +692,6 @@ void RO_DetermineObjVisibility( GenObject *objectp )
 #define MAX_SCHEDULED_POLYGON_EDGES		( MAX_SCHEDULED_POLYGONS * 8 )
 #define MAX_SCHEDULED_NORMALS			512
 
-static int    scheduled_polygons[ MAX_SCHEDULED_POLYGONS ][ 2 ];
 static SPoint scheduled_polygons_edges[ MAX_SCHEDULED_POLYGON_EDGES ][ 2 ];
 static int    scheduled_polygons_next		= 0;
 static int    scheduled_polygons_next_edge	= 0;

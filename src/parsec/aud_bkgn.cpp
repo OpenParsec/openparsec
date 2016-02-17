@@ -111,7 +111,6 @@ static int				BKGN_shuffle = 1;
 
 // console texts --------------------------------------------------------------
 //
-static char invalid_command[]          = "invalid command.";
 static char invalid_sample_specified[] = "invalid sample specified.";
 static char invalid_stream_specified[] = "invalid stream specified.";
 static char invalid_parameter[]		   = "invalid parameter.";
@@ -301,7 +300,7 @@ int AUD_BackGroundPlayer_AddSample( const char *name )
 		sampleinfo_s* pSampleInfo = AUD_FetchSampleByName( name, &sampleid );
 
 		if ( pSampleInfo != NULL ) {
-			BKGN_Item_s* item = BKGNm_AddItem( sampleid, NULL, BKGN_ITEM_TYPE_SAMPLE );
+			BKGNm_AddItem( sampleid, NULL, BKGN_ITEM_TYPE_SAMPLE );
 		}
 		return TRUE;
 	}
@@ -350,7 +349,7 @@ int	AUD_BackGroundPlayer_RemoveSample( char *name )
 //
 int	AUD_BackGroundPlayer_AddTrack( int track )
 {
-	BKGN_Item_s* item = BKGNm_AddItem( track, NULL, BKGN_ITEM_TYPE_CDTRACK );
+	BKGNm_AddItem( track, NULL, BKGN_ITEM_TYPE_CDTRACK );
 
 	return TRUE;
 }
@@ -386,7 +385,7 @@ int AUD_BackGroundPlayer_AddStream( const char *name )
 {
 	if ( name != NULL ) {
 
-		BKGN_Item_s* item = BKGNm_AddItem( 0, name, BKGN_ITEM_TYPE_STREAM );
+		BKGNm_AddItem( 0, name, BKGN_ITEM_TYPE_STREAM );
 
 		return TRUE;
 	}
@@ -399,7 +398,7 @@ int AUD_BackGroundPlayer_AddStream( const char *name )
 //
 int AUD_BackGroundPlayer_AddSilence( int seconds )
 {
-	BKGN_Item_s* item = BKGNm_AddItem( seconds, NULL, BKGN_ITEM_TYPE_SILENCE );
+	BKGNm_AddItem( seconds, NULL, BKGN_ITEM_TYPE_SILENCE );
 
 	return TRUE;
 }

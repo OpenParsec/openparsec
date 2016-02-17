@@ -122,14 +122,13 @@ void CompleteCommand()
 {
 	// skip prompt
 	char* curinput = &con_lines[ con_bottom ][ PROMPT_SIZE ];
-	int   skiplen  = PROMPT_SIZE;
-
+	
 	// only complete commands starting in first column
 	if ( ( curinput[ 0 ] == ' ' ) || ( curinput[ 0 ] == 0 ) )
 		return;
 
 #ifdef PARSEC_CLIENT
-
+	int   skiplen  = PROMPT_SIZE;
 	// handle talkmode
 	if ( con_in_talk_mode ) {
 

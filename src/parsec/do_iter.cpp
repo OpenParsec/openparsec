@@ -102,7 +102,6 @@ void D_BiasIterDepth( int bias )
 //
 static Xmatrx	_iter_matrix;
 static Xmatrx	*iter_matrix = NULL;	// NULL means identity matrix
-static Xmatrx	*prev_matrix;
 static GLfloat	gl_cur_matrix[ 16 ];
 
 
@@ -1643,7 +1642,6 @@ void D_UnlockIterArray()
 
 	if ( gl_array_current != NULL ) {
 
-		IterArray3 *itarray = gl_array_current;
 		gl_array_current = NULL;
 
 		// disable gl arrays

@@ -559,8 +559,7 @@ PRIVATE
 void LaserBeamDestroy( CustomObject *base )
 {
 	ASSERT( base != NULL );
-	LaserBeam *laserbeam = (LaserBeam *) base;
-
+	
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );

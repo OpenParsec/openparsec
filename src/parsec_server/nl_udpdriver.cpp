@@ -61,17 +61,7 @@
 // string constants -----------------------------------------------------------
 //
 static const char node_address_str[]			= "IP address: %s:%d";
-static const char api_detected[]  			= "TCP/IP networking support found.";
-static const char no_api_detected[]			= "ERROR: TCP/IP networking support not found.";
 static const char open_socket_error[]			= "ERROR: opening UDP socket.\n";
-static const char pchain_alloc_error[]		= "ERROR: allocating packet chain.\n";
-static const char queue_alloc_error[]			= "ERROR: allocating request queue.\n";
-static const char cannot_get_local_hostname[] = "ERROR: cannot get local host name\n";
-static const char dns_error[]					= "ERROR: DNS error: %s %s.\n";
-static const char illegal_adress_type_dns[]   = "ERROR: cannot resolve local hostname: illegal address type in DNS entry.\n";
-static const char no_network_interface_found[]= "ERROR: no network interface found.";
-static const char selected_interface_invalid[]= "WARNING: selected interface not found - using default interface.";
-
 
 // ----------------------------------------------------------------------------
 // public methods

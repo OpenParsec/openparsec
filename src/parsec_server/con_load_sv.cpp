@@ -90,28 +90,11 @@ static char name_invalid[]			= "name invalid.";
 static char name_already_used[]		= "name must be unique.";
 static char filename_missing[]		= "filename missing.";
 static char filename_invalid[]		= "filename invalid.";
-static char too_many_textures[]		= "too many textures.";
-static char too_many_texfonts[]		= "too many texfonts.";
 static char too_many_objects[]		= "too many objects.";
 static char type_missing[]			= "type missing.";
 static char type_invalid[]			= "type invalid.";
 static char type_reused[]			= "type invalid. using old type.";
-static char no_myship_subst[]		= "cannot substitute player ship object.";
-static char too_many_bitmaps[]		= "too many bitmaps.";
-static char too_many_samples[]		= "too many samples.";
 static char object_not_found[]  	= "object data file not found.";
-static char texture_invalid_file[]	= "texture file invalid or not found.";
-static char bitmap_invalid_file[]	= "bitmap file invalid or not found.";
-static char bitmap_geom_inval[]		= "bitmap geometry invalid.";
-static char bitmap_geom_miss[]		= "bitmap geometry missing.";
-static char bitmap_geom_over[]		= "geometry in file overrides specified geometry.";
-static char bitmap_range_error[]	= "bitmap geometry out of range.";
-static char bitmap_out_of_mem[]		= "not enough memory for bitmap.";
-static char sample_invalid_file[]	= "sample file invalid or not found.";
-static char volume_invalid[]		= "volume invalid.";
-static char volume_range_error[]	= "volume out of range.";
-static char stdfreq_invalid[]		= "standard frequency invalid.";
-static char stereolevel_invalid[]	= "stereo priority level invalid.";
 static char odt_invalid_file[]		= "odt file invalid.";
 static char odt_invalid_overwrite[]	= "invalid file used to overwrite existing object.";
 static char too_many_lod_fnames[]	= "stripping excessive lods.";
@@ -119,8 +102,6 @@ static char ignore_lodmags[]		= "ignoring lodmag spec.";
 static char ignore_lodmins[]		= "ignoring lodmin spec.";
 static char invalid_lodmags[]		= "lodmag spec missing or invalid.";
 static char invalid_lodmins[]		= "lodmin spec missing or invalid.";
-
-
 
 // set object's name ----------------------------------------------------------
 //

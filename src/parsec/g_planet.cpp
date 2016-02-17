@@ -87,8 +87,6 @@ extern int headless_bot;
 // generic string paste area --------------------------------------------------
 //
 #define PASTE_STR_LEN 255
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
 
 // offset definitions into the Planet -----------------------------------------
 //
@@ -247,8 +245,7 @@ void PlanetDraw_Rings( Planet *planet )
 	vindxs[ dstindx + 0 ] = srcindx;
 	vindxs[ dstindx + 1 ] = 0;
 	vindxs[ dstindx + 2 ] = 1;
-	dstindx += 3;
-
+	
 	// calculate transformation matrix
 	MtxMtxMUL( ViewCamera, planet->ObjPosition, DestXmatrx );
 

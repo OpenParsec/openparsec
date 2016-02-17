@@ -109,7 +109,7 @@ static size_t re_sizes[] = {
 
 // table of remote event sizes ------------------------------------------------
 //
-static const char* re_names[] = {
+static const char* re_names[] = { //Used by server
 	"RE_EMPTY",			
 	"RE_DELETED",			
 	"RE_CREATEOBJECT", 	

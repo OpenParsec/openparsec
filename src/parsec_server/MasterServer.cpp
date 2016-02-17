@@ -97,7 +97,6 @@ MasterServer::~MasterServer() {
 int MasterServer::RemoveStaleEntries(){
 	// TODO: remove stale entries from the list.
 
-	int i = 0;
 	int curr_check=(int)time(NULL);
 	int entry_time=(int)time(NULL);
 	if(last_check + 60 < curr_check){

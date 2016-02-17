@@ -109,13 +109,10 @@ int		start_timecode			= 0;
 //
 static const char node_address_str[]	= "IP address: %s";
 static const char api_detected[]  	= "TCP/IP networking support found.";
-static const char no_api_detected[]	= "TCP/IP networking support not found.";
 static const char open_socket_error[] = "Error opening UDP socket.\n";
 static const char net_game_avail[]	= "Network game will be available.\n";
 static const char net_game_unavail[]	= "Network game not available.\n";
 static const char pchain_alloc_error[]= "Error allocating packet chain.\n";
-static const char queue_alloc_error[] = "Error allocating request queue.\n";
-
 
 // send and listen buffers ----------------------------------------------------
 //

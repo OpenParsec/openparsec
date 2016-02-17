@@ -68,29 +68,6 @@ struct menuitem_s {
 
 // menu definition ------------------------------------------------------------
 //
-#ifdef CLIENT_BUILD_SELF_RUNNING_DEMO
-
-static menuitem_s game_menu[ NUM_MENU_ITEMS ];  // dummy
-static menuitem_s serv_menu[ NUM_MENU_ITEMS ];  // dummy
-
-static menuitem_s conf_menu[ NUM_MENU_ITEMS ] = {
-
-	{ M_SPACECRAFT,	NULL,		FALSE	},
-	{ M_CONTROLS,	NULL,		TRUE	},
-	{ M_OPTIONS,	NULL,		FALSE	},
-	{ M_BACK,		NULL,		FALSE	},
-};
-
-static menuitem_s root_menu[ NUM_MENU_ITEMS ] = {
-
-	{ M_PLAY_DEMO,	NULL,		FALSE	},
-	{ M_STARMAP,	NULL,		TRUE	},
-	{ M_CONFIG,		conf_menu,	FALSE	},
-	{ M_QUIT,		NULL,		FALSE	},
-};
-
-#else // CLIENT_BUILD_SELF_RUNNING_DEMO
-
 static menuitem_s game_menu[ NUM_MENU_ITEMS ] = {
 
 	{ M_CONNECT,	NULL,		FALSE	},
@@ -122,24 +99,12 @@ static menuitem_s conf_menu[ NUM_MENU_ITEMS ] = {
 static menuitem_s root_menu[ NUM_MENU_ITEMS ] = {
 
 	{ M_CONNECT,	NULL	    ,	FALSE	},
-
-#ifdef CLIENT_BUILD_LAN_ONLY_VERSION
-
-	{ M_SERVER,		serv_menu,	TRUE	},
-
-#else // CLIENT_BUILD_LAN_ONLY_VERSION
-
-//	{ M_SERVER,		serv_menu,	FALSE	},
-
-#endif // CLIENT_BUILD_LAN_ONLY_VERSION
+//	{ M_SERVER,		serv_menu,	FALSE	}, //how to do sub menus see above examples incase ever needed
 	{ M_STARMAP, NULL, FALSE },
     { M_SPACECRAFT,         NULL,           FALSE   },
 	{ M_OPTIONS,		NULL,	        FALSE	},
 	{ M_QUIT,		NULL,		FALSE	},
 };
-
-#endif // CLIENT_BUILD_SELF_RUNNING_DEMO
-
 
 // button info structures -----------------------------------------------------
 //

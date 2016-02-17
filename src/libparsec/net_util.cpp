@@ -288,7 +288,8 @@ void PrInf_CREATEMINE( RE_Header *relist )
 //
 void PrInf_IPV4SERVERINFO( RE_Header *relist )
 {
-	RE_IPv4ServerInfo* re_si = (RE_IPv4ServerInfo *) relist;
+    //useless?
+	//	RE_IPv4ServerInfo* re_si = (RE_IPv4ServerInfo *) relist;
 
 	//FIXME: include "net_util_sv.h"
 	//NET_PacketInfo( ";-- node: %s\n", NODE_Print( (node_t*)re_ipsi->node ) );

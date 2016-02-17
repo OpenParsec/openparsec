@@ -99,10 +99,7 @@ static char info_sep_line[]			= "-----------------------------------------------
 PUBLIC char dont_use_params[]		= "this command takes no parameters.";
 static char server_name_missing[]	= "server must be supplied.";
 static char mode_number_invalid[]	= "invalid mode number.";
-static char mode_spec_invalid[]		= "invalid mode specifier. use something like \"640x480x32\".";
-static char mode_spec_unavail[]		= "this mode is not available in the current video subsystem.";
 static char mode_modifier_invalid[]	= "invalid mode modifier. use \"fullscreen\" or \"windowed\".";
-static char only_alpha_chars[]		= "name must not contain non-alphabetic characters.";
 static char name_change_preempted[]	= "name change preempted. please try again.";
 
 
@@ -1036,7 +1033,6 @@ int CheckCmdsCustomString( const char *command )
 			return (*cmd_customstring[ tid ].commandfunc)( (char *) command + cmdlen );
 		}
 	}
-	num_custcommstr = 0;
 	return FALSE;
 }
 

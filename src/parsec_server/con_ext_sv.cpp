@@ -74,11 +74,7 @@ static char con_extension[]		= CON_FILE_EXTENSION;
 static char invalid_batch_name[]= "invalid name specifier.";
 static char recursion_canceled[]= "command canceled due to recursion.";
 static char recursion_maxdepth[]= "maximum recursion depth reached.";
-static char replaying_script[]	= "replay in progress (script).";
-static char replaying_binary[]	= "replay in progress (binary).";
 static char no_replay[]			= "no replay in progress.";
-static char stopped_replay[]	= "replay has been stopped.";
-static char record_disallowed[]	= "recording not allowed (object camera is active).";
 
 static char con_file_wldcard1[]	= "*" CON_FILE_EXTENSION;
 static char con_file_wldcard2[] = REFCON_COMMANDS_DIR "*" CON_FILE_EXTENSION;

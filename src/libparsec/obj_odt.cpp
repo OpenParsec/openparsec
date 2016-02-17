@@ -77,9 +77,7 @@
 static char object_not_found[]	= "object \"%s\" not found";
 static char object_readerror[]	= "object \"%s\" readerror";
 static char corrupt_object[]	= "corrupt object file.";
-static char corrupt_type[]		= "corrupt type definition.";
 static char no_object_mem[] 	= "not enough mem for object class-data.";
-
 
 // alignment to enforce for object geometry data ------------------------------
 //

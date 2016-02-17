@@ -104,9 +104,10 @@ static char emp_inval_fadeout_spec[]	= "fadeout invalid";
 static char emp_inval_waves_spec[]		= "waves invalid";
 static char emp_inval_delay_spec[]		= "delay invalid";
 static char emp_inval_energy_spec[]		= "energy invalid";
+#ifdef PARSEC_CLIENT
 static char no_emp_str[]				= "no emp device";
 static char low_energy_str[]			= "low energy";
-
+#endif
 
 // list of console-accessible properties --------------------------------------
 //
@@ -328,9 +329,10 @@ PRIVATE
 int CheckEmpCollision( CustomObject *base )
 {
 	ASSERT( base != NULL );
+	
+#ifndef PARSEC_SERVER
 	Emp *emp = (Emp *) base;
 
-#ifndef PARSEC_SERVER
 	// check local ship
 	if ( ( emp->Owner != OWNER_LOCAL_PLAYER ) && NetJoined &&
 			EmpShipCollision( emp, MyShip ) ) {
@@ -661,7 +663,7 @@ PRIVATE
 void EmpInstantiate( CustomObject *base )
 {
 	ASSERT( base != NULL );
-	Emp *emp = (Emp *) base;
+//	Emp *emp = (Emp *) base; Again! does this actually do anything?
 
 	// dynamic mem allocated in CreateEmp()
 	// (LOD is set there)

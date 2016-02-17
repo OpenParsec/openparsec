@@ -83,13 +83,6 @@
 #define PLANET_RADAR_OBJ_COL		102		// green
 #define TELEPORTER_RADAR_OBJ_COL 	102		// green  // FIXME: use this for now
 
-
-// generic string paste area --------------------------------------------------
-//
-#define PASTE_STR_LEN 255
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
-
 // geometry of radar ----------------------------------------------------------
 //
 int hud_radar_w;
@@ -194,9 +187,7 @@ void CalcDrawEliteRadarObj( GenObject *objpo, int col )
 	float oy = GEOMV_TO_FLOAT( objpo->CurrentXmatrx[ 1 ][ 3 ] );
 	float oz = GEOMV_TO_FLOAT( objpo->CurrentXmatrx[ 2 ][ 3 ] );
 
-	int radar_width 	= 200;
 	int radar_width_2 	= 200 / 2;
-	int radar_height 	= 32;
 	int radar_height_2 	= 32 / 2;
 	int radar_centerx 	= Screen_XOfs + 2;
 	int radar_centery 	= Screen_Height - 100 + 68;
@@ -204,9 +195,7 @@ void CalcDrawEliteRadarObj( GenObject *objpo, int col )
 	if ( AUX_DRAW_COCKPIT && AUX_DRAW_COCKPIT_RADAR ) {
 		radar_centerx = (int)(Screen_Width - 0.4953f * Scaled_Screen_Width + 1);
 		radar_centery = (int)(Screen_Height - 0.1187f * Scaled_Screen_Height);
-		radar_width 	= (int)(130 * scale_tab[ cp_scale ]);
 		radar_width_2 	= (int)(( 130 / 2 ) * scale_tab[ cp_scale ]);
-		radar_height 	= (int)(32 * scale_tab[ cp_scale ]);
 		radar_height_2 	= (int)(( 32 / 2 ) * scale_tab[ cp_scale ]);
 	}
 

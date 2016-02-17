@@ -452,7 +452,6 @@ void CollisionLaserRemoteShip( LaserObject *curlaser )
 	ASSERT( curlaser != NULL );
 
 	int hitpoints = curlaser->HitPoints;
-	int lasertype = curlaser->ObjectType;
 
 	// RE only in PEER mode
 	if ( NET_ConnectedPEER() ) {

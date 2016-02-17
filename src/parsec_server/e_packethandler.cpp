@@ -1227,7 +1227,6 @@ void E_PacketHandler::_Handle_STREAM_MASTER(NetPacket_GMSV* gamepacket, int bufi
 		return;
 	}
 
-	int nNumEventsAppended = 0;
 	RE_CommandInfo * re_commandinfo = NULL;
 	node_t*			clientnode		= ThePacketDriver->GetPktSender( bufid );
 
@@ -1462,10 +1461,6 @@ void E_PacketHandler::_Handle_COMMAND_MASTER( NetPacket_GMSV* gamepacket, int bu
 
 	// temporary storage for client connection info
 	E_ClientConnectInfo _ClientConnectInfo;
-	char playername[ MAX_PLAYER_NAME + 1 ];
-
-	refframe_t client_ping_send_frame;
-
 	int serverid = 0;
 	if ( _ParseListRequest_MASTER( re_commandinfo->command, &serverid ) ) {
 

@@ -440,7 +440,6 @@ void DrawDemoListCaption( WSFP wstrfp )
 	int text_x		  = demolist_content_metrics.text_x;
 	int text_y		  = demolist_content_metrics.text_y;
 	unsigned int maxcontwidth  = demolist_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = demolist_content_metrics.maxcontheight;
 
 	// draw caption
 	ASSERT( maxcontwidth >= strlen( demolist_caption_str ) );
@@ -635,8 +634,7 @@ void DrawPlayerListCaption( WSFP wstrfp )
 	int text_x		  = playerlist_content_metrics.text_x;
 	int text_y		  = playerlist_content_metrics.text_y;
 	unsigned int maxcontwidth  = playerlist_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = playerlist_content_metrics.maxcontheight;
-
+	
 	// draw list caption
 	ASSERT( maxcontwidth >= strlen( playerlist_caption ) );
 	int xofs = ( ( maxcontwidth - strlen( playerlist_caption ) ) * chwidth ) / 2;
@@ -667,8 +665,7 @@ void DrawPlayerListItems( WSFP wstrfp )
 	int text_x		  = playerlist_content_metrics.text_x;
 	int text_y		  = playerlist_content_metrics.text_y;
 	unsigned int maxcontwidth  = playerlist_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = playerlist_content_metrics.maxcontheight;
-
+	
 	//FIXME: this function is EXACT the same as M_STATUS::DrawStatusWindowItems
 	const char *voidstr = "-";
 
@@ -878,8 +875,7 @@ void DrawServerListCaption( WSFP wstrfp )
 	int text_x		  = serverlist_content_metrics.text_x;
 	int text_y		  = serverlist_content_metrics.text_y;
 	unsigned int maxcontwidth  = serverlist_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = serverlist_content_metrics.maxcontheight;
-
+	
 	// draw caption
 	ASSERT( maxcontwidth >= strlen( serverlist_caption_str ) );
 	int xofs = ( ( maxcontwidth - strlen( serverlist_caption_str ) ) * chwidth ) / 2;
@@ -904,8 +900,7 @@ void DrawServerListItems( WSFP wstrfp )
 	int text_x		  = serverlist_content_metrics.text_x;
 	int text_y		  = serverlist_content_metrics.text_y;
 	unsigned int maxcontwidth  = serverlist_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = serverlist_content_metrics.maxcontheight;
-
+	
 	// print serverlist
 	int xofs = ( ( maxcontwidth - strlen( serverlist_peertopeer ) ) * chwidth ) / 2;
 	wstrfp( serverlist_peertopeer, text_x + xofs, text_y, TRTAB_PANELTEXT );

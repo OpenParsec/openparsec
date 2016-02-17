@@ -75,14 +75,6 @@
 // flags
 #define PLAY_DEMO_BEHIND_MENU
 
-
-
-// generic string paste area --------------------------------------------------
-//
-#define PASTE_STR_LEN 2047
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
-
 // demo playback behind menu --------------------------------------------------
 //
 #define DEMO_FILE		"menudemo"

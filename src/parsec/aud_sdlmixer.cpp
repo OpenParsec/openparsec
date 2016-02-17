@@ -152,9 +152,6 @@ int AUDs_LoadWaveFile( int num )
 
 	SND_ConvertRate( pSample, aud_sample_quality );
 
-	// numframes are number of individual samples
-	dword numframes = pSample->samplebytes / pSample->alignment;
-
 	// because SDL_RWFromFP doesn't work cross platform, we need
 	// to get a little bit kinky
 

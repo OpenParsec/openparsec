@@ -288,13 +288,9 @@ void CreateFontTextureData8( int fontid, int numvalid, char *texdata, word *uvta
 	int		fontw = CharsetInfo[ fontid ].width;
 	int		fonth = CharsetInfo[ fontid ].height;
 	int		fsrcw = CharsetInfo[ fontid ].srcwidth;
-	size_t	ftsiz = CharsetInfo[ fontid ].datasize;
-
+	
 	int texwidth  = fonttex_info[ fontid ].width;
-	int texheight = fonttex_info[ fontid ].height;
-
-	size_t datasize = texwidth * texheight * 1;
-
+	
 	// convert data
 	dword  destofs = 0;
 	dword  curu    = 0;
@@ -348,13 +344,9 @@ void CreateFontTextureData32( int fontid, int numvalid, char *texdata, word *uvt
 	int		fontw = CharsetInfo[ fontid ].width;
 	int		fonth = CharsetInfo[ fontid ].height;
 	int		fsrcw = CharsetInfo[ fontid ].srcwidth;
-	size_t	ftsiz = CharsetInfo[ fontid ].datasize;
-
+	
 	int texwidth  = fonttex_info[ fontid ].width;
-	int texheight = fonttex_info[ fontid ].height;
-
-	size_t datasize = texwidth * texheight * 4;
-
+	
 	// convert data
 	dword  destofs = 0;
 	dword  curu    = 0;

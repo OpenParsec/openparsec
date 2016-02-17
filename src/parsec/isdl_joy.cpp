@@ -209,8 +209,6 @@ void ILm_HandleAssignableButtonKeys( dword joy_button_changed )
 // axes swapping flags --------------------------------------------------------
 //
 static int isdl_swap_axes01 = FALSE;
-static int isdl_swap_axes23 = FALSE;
-
 
 // apply deadzones ------------------------------------------------------------
 //

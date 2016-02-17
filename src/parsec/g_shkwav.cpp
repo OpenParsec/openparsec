@@ -455,7 +455,7 @@ PRIVATE
 void ShockWaveInstantiate( CustomObject *base )
 {
 	ASSERT( base != NULL );
-	ShockWave *shockwave = (ShockWave *) base;
+	//ShockWave *shockwave = (ShockWave *) base; this literally does nothing?
 
 	// no dynamic mem
 }
@@ -467,8 +467,7 @@ PRIVATE
 void ShockWaveDestroy( CustomObject *base )
 {
 	ASSERT( base != NULL );
-	ShockWave *shockwave = (ShockWave *) base;
-
+	
 	// ensure pending callbacks are destroyed to avoid
 	// calling them with invalid pointers
 	int numremoved = CALLBACK_DestroyCallback( callback_type, (void *) base );

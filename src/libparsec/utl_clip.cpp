@@ -1094,8 +1094,6 @@ IterPolygon3 *CLIP_PlaneIterPolygon3_RGBA( IterPolygon3 *poly, Plane3 *plane )
 // static storage for clipped output lines ------------------------------------
 //
 static IterLine2 clip_lines2[ 2 ][ MAX_ITERLINE_VERTICES ];	// excessive
-static IterLine3 clip_lines3[ 2 ][ MAX_ITERLINE_VERTICES ];	// excessive
-
 
 // attribute clipping macros --------------------------------------------------
 //

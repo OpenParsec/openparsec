@@ -344,7 +344,7 @@ int NET_PacketDriver::SendDatagram( NetPacket_GMSV* gamepacket, node_t* node, in
 	SendAddress.sin_port = htons( NODE_GetPort( node ) );
 	memcpy ( &SendAddress.sin_addr, node, IP_ADR_LENGTH );
 
-	int rc = TheUDPDriver->SendPacket( (char *) SendNetPacketExternal, pktsize, (SA*) &SendAddress );
+	TheUDPDriver->SendPacket( (char *) SendNetPacketExternal, pktsize, (SA*) &SendAddress );
 	
 	return pktsize;
 }
@@ -843,7 +843,7 @@ int NET_PacketDriver::_CheckIncompatibleChallenge(node_t *node){
 		}
 
 		// send the packet
-		int rc = SendDatagram( gamepacket, node, PLAYERID_SERVER, pUnreliable, RecvNetPacketExternal->MajorVersion, RecvNetPacketExternal->MinorVersion );
+		SendDatagram( gamepacket, node, PLAYERID_SERVER, pUnreliable, RecvNetPacketExternal->MajorVersion, RecvNetPacketExternal->MinorVersion );
 
 		// release the RE list from here
 		pUnreliable->Release();

@@ -252,15 +252,7 @@ enum {
 	MAPSEL_LIST
 };
 
-static float sel_leftedge   	= 488.0f / 640.0f;
-static float sel_rightedge  	= 608.0f / 640.0f;
-static float sel_topedge    	= 186.0f / 480.0f;
-static float sel_buttonoffs 	=  16.0f / 480.0f;
-static float sel_buttonheight	=  64.0f / 480.0f;
-
-
 #define NUM_NAV_BUTTONS 9
-
 
 enum {
 	MAPNAV_ZOOMIN,
@@ -273,11 +265,6 @@ enum {
 	MAPNAV_PANDOWN,
 	MAPNAV_NULL2
 };
-
-static float nav_leftedge 	= 496.0f / 640.0f;
-static float nav_topedge  	=  16.0f / 480.0f;
-static float nav_buttonwidth  =  64.0f / 640.0f;
-static float nav_buttonheight =  64.0f / 480.0f;
 
 static float infopanel_height = 128.0f / 480.0f;
 static float navpanel_leftx   = 480.0f / 640.0f;
@@ -508,8 +495,6 @@ void gdImageArc( void *dummy, int cx, int cy, int w, int h, int s, int e, int co
 		GetSinCos( angle, &sincosv );
 		float	sinus   = GEOMV_TO_FLOAT( sincosv.sinval );
 		float	cosinus = GEOMV_TO_FLOAT( sincosv.cosval );
-
-		Vertex3	c_point;
 
 		// draw circle in xy plane
 		float x = sinus * w / 2;
@@ -1010,9 +995,6 @@ int MAP_DrawStarmap()
 			gdImageLine( image, xarr1, yarr1, xarr2, yarr2, greyramp[ 6 ] );
 		}
 
-		float xoffs2 = ( xpos - xpos2 ) * ( ( (float) STAR_RADIUS + 1 ) / dist );
-		float yoffs2 = ( ypos - ypos2 ) * ( ( (float) STAR_RADIUS + 1 ) / dist );
-		 
 		// actual link line
 		gdImageLine( image, (int)(xpos + xoffs1), (int)(ypos + yoffs1), (int)(xpos2 - xoffs1), (int)(ypos2 - yoffs1), greyramp[ 6 ] );
 	}
@@ -1116,8 +1098,6 @@ void MAP_DrawButtonCaptions()
 	for ( int bid = 0; bid < NUM_SELECT_BUTTONS; bid++ ) {
 
 		int butstart = (Screen_Width - 150);
-		int strwidth = chwidth * strlen( select_button_text[ bid ] );
-		
 		int xpos = (int)((butstart ));
 
 		topedge = 292 + bid * 64 ;
@@ -1246,11 +1226,6 @@ void MAP_DrawBackground()
 
 	dword itertype = iter_texrgba | iter_premulblend;
 	rect.alpha     = map_fadepos;
-
-
-	int tid = 0;
-
-
 
 	// draw info box
 	int ib_x=  0, ib_y = 0, ib_w = 0, ib_h = 0;

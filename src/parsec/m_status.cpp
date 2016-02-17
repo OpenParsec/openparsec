@@ -221,7 +221,6 @@ void DrawStatusWindowCaption( WSFP wstrfp )
 	int text_x		  = statuswindow_content_metrics.text_x;
 	int text_y		  = statuswindow_content_metrics.text_y;
 	unsigned int maxcontwidth  = statuswindow_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = statuswindow_content_metrics.maxcontheight;
 
 	// draw list caption
 	ASSERT( maxcontwidth >= strlen( statuswindow_caption ) );
@@ -253,7 +252,6 @@ void DrawStatusWindowItems( WSFP wstrfp )
 	int text_x		  = statuswindow_content_metrics.text_x;
 	int text_y		  = statuswindow_content_metrics.text_y;
 	unsigned int maxcontwidth  = statuswindow_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = statuswindow_content_metrics.maxcontheight;
 
 	//FIXME: this function is EXACT the same as M_LIST::DrawPlayerListItems
 	const char *voidstr = "-";
@@ -306,7 +304,7 @@ void DrawStatusWindowItems( WSFP wstrfp )
 
 		// write name
 		ASSERT( maxcontwidth >= strlen( strp ) );
-		int xofs = ( ( maxcontwidth - strlen( strp ) ) * chwidth ) / 2;
+		int xofs;
 		wstrfp( strp, text_x, text_y, TRTAB_PANELTEXT );
 
 		// get kills to be displayed

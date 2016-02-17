@@ -65,8 +65,9 @@ static char no_ship_class[]			= "object class is no ship.";
 static char too_many_ships[]		= "no more ships allowed.";
 static char no_extra_class[]		= "object class is no extra.";
 static char too_many_extras[]		= "no more extras allowed.";
+#ifdef PARSEC_CLIENT
 static char invalid_texture[]		= "invalid texture specified.";
-
+#endif
 
 // class registration entry ---------------------------------------------------
 //

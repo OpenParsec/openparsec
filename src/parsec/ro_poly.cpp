@@ -312,8 +312,6 @@ TextureMap *RO_TexMapPolyFaceAnims( GenObject *baseobj, Face *face, colrgba_s *f
 
 		ASSERT( texanim->tex_table != NULL );
 		texfrm_s *curtexframe = &texanim->tex_table[ animstate->tex_pos ];
-		xfofrm_s *curxfoframe = texanim->xfo_table ?
-			&texanim->xfo_table[ animstate->xfo_pos ] : NULL;
 
 		texmap = curtexframe->texmap;
 	}

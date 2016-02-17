@@ -283,14 +283,6 @@ struct user_names_s {
 	const char *visible_name;
 };
 
-static user_names_s user_names[] = {
-
-	{ "glx", 	"opengl"		},
-	{ "udp", 	"tcp/ip"		},
-
-	{ NULL,		NULL			},
-};
-
 // number of option menu entries and currently selected entry -----------------
 //
 static int cur_opmenu_size		= NUM_OPTIONS;
@@ -1548,7 +1540,6 @@ void DrawOptionsCaption( WSFP wstrfp )
 	int text_x		  = options_content_metrics.text_x;
 	int text_y		  = options_content_metrics.text_y;
 	unsigned int maxcontwidth  = options_content_metrics.maxcontwidth;
-	unsigned int maxcontheight = options_content_metrics.maxcontheight;
 
 	// display options menu caption
 	ASSERT( maxcontwidth >= strlen( opt_caption_str ) );

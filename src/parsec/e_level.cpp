@@ -189,7 +189,7 @@ int LVL_LoadLevel( const char* levelname )
 				
 				dword objclass = OBJ_FetchObjectClassId( level_objclasses[ objclassnameindex ].classname );
 				if ( ( objclass != CLASS_ID_INVALID ) && ( objclass < (dword)NumObjClasses ) ) {
-					int killcount = KillClassInstances( objclass );
+					KillClassInstances( objclass );
 				}
 			}
 		}

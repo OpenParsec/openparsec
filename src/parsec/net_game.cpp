@@ -230,8 +230,6 @@ void NET_RemoveRemotePlayers()
 
 			DBGTXT( MSGOUT( "NET_RemoveRemotePlayers(): removing remote ship." ); );
 
-			ShipObject *shippo = (ShipObject *) Player_Ship[ id ];
-			ASSERT( shippo != NULL );
 			ASSERT( Player_ShipId[ id ] != SHIPID_LOCALPLAYER );
 			ASSERT( Player_ShipId[ id ] != SHIPID_NOSHIP );
 			KillSpecificObject( Player_ShipId[ id ], PShipObjects );
@@ -1277,8 +1275,6 @@ void NET_RemovePlayer( int playerid )
 
 		DBGTXT( MSGOUT( "NET_RemovePlayer(): removing remote ship." ); );
 
-		ShipObject *shippo = (ShipObject *) Player_Ship[ playerid ];
-		ASSERT( shippo != NULL );
 		ASSERT( Player_ShipId[ playerid ] != SHIPID_LOCALPLAYER );
 		ASSERT( Player_ShipId[ playerid ] != SHIPID_NOSHIP );
 		KillSpecificObject( Player_ShipId[ playerid ], PShipObjects );

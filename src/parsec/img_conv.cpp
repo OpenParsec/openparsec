@@ -49,13 +49,6 @@
 #include "img_3df.h"
 #include "img_supp.h"
 
-
-
-// string constants -----------------------------------------------------------
-//
-static char no_tex_conv_mem[]		= "not enough mem for data conversion.";
-
-
 // input image mirroring flag (usage depends on type of image file) -----------
 //
 PUBLIC int image_mirror_vertically = TRUE;
@@ -254,22 +247,6 @@ static int texfmt_to_pixsiz[] = {
 	1,			// TEXFMT_INTENSITY_8
 	1,			// TEXFMT_LUMINANCE_8
 };
-
-
-// default glide conversion targets for non-glide texture formats--------------
-//
-static dword texfmt_to_fmtgr[] = {
-
-	(dword)~0,					// TEXFMT_STANDARD
-	TEXFMT_GR_RGB_565,			// TEXFMT_RGB_565
-	TEXFMT_GR_ARGB_1555,		// TEXFMT_RGBA_1555
-	TEXFMT_GR_RGB_565,			// TEXFMT_RGB_888
-	TEXFMT_GR_ARGB_4444,		// TEXFMT_RGBA_8888
-	TEXFMT_GR_ALPHA_8,			// TEXFMT_ALPHA_8
-	TEXFMT_GR_INTENSITY_8,		// TEXFMT_INTENSITY_8
-	TEXFMT_GR_INTENSITY_8,		// TEXFMT_LUMINANCE_8
-};
-
 
 // check format of texture; convert if it cannot be used as is ----------------
 //

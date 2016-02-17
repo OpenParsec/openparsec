@@ -884,7 +884,7 @@ int DispTextureEntry( int *cnt, int num )
 			 TextureInfo[ num ].width,
 			 TextureInfo[ num ].height );
 	ProcessExternalLine( paste_str );
-	int rc = PrintListLine( cnt, paste_str );
+	int rc = PrintListLine( cnt, paste_str ); //Flagged as dead store but used for an ASSERT, if theres a return code something broke.
 	ASSERT( rc );
 
 	sprintf( paste_str, "   %d file %s", num, TextureInfo[ num ].file );

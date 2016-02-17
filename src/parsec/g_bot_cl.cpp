@@ -486,7 +486,7 @@ void BOT_AI::_DoPlan()
 	MSGOUT("BOT_AI::_DoPlan() Current Plan, MODE: %i\n", m_nAgentMode);
 
     ShipObject*      pTargetObject = NULL;
-    BOT_Goal* pGoal	= m_State.GetCurGoal();
+    //BOT_Goal* pGoal	= m_State.GetCurGoal();
 	if(m_pShip->CurDamage > (m_pShip->MaxDamage * BOT_REPAIR_LEVEL)) { //90% damage
 		m_nAgentMode = AGENTMODE_RETREAT;
 		MSGOUT("Want Repair in DoPlan");
@@ -882,7 +882,7 @@ void BOT_AI::_GoalCheck_AgentMode_Retreat()
             return;
          }
 		
-		Vector3 vec2Target_chk;
+		//Vector3 vec2Target_chk;
 		Vector3 GoalPos_chk;
 		FetchTVector( pObject->ObjPosition, &GoalPos_chk );
 		// if the target is greater than 15000 away, get something else.
@@ -1064,7 +1064,7 @@ void BOT_ClientSide::Start()
 void BOT_ClientSide::Stop()
 {
 	if ( m_Started ) {
-		int numremoved = CALLBACK_DestroyCallback( CBTYPE_USER_INPUT | CBFLAG_PERSISTENT, (void *) this );
+		CALLBACK_DestroyCallback( CBTYPE_USER_INPUT | CBFLAG_PERSISTENT, (void *) this );
 		if(!headless_bot)
 			ASSERT( numremoved <= 1 );
 		m_Started = FALSE;

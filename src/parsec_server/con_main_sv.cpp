@@ -126,7 +126,6 @@ PUBLIC int HistoryForBatchEntry		= TRUE;
 // startup script file names (normal boot/demo boot)
 PUBLIC char boot_script_name[]		= "boot_sv" CON_FILE_EXTENSION;
 PUBLIC char boot_script_master_name[]		= "boot_ms" CON_FILE_EXTENSION;
-static char demo_script_name[]		= "demo_sv" CON_FILE_EXTENSION;
 
 // various string constants
 PUBLIC char con_prompt[]			= "::";
@@ -146,15 +145,8 @@ static char compile_open_failed[]	= "cannot open output file.";
 
 PUBLIC int	press_space_curs_x		= strlen( press_space ) - PROMPT_SIZE;
 
-static char console_caption[]		= "parsec command console";
 static char console_ready[] 		= "console ready...";
-
 static char auxflag_array_name[]	= ".aux";
-static char auxdata_array_name[]	= ".auxd";
-
-static char insert_cursor[]			= "_";	// will be a underline cursor
-static char overwrite_cursor[]		= "^";	// will be a block cursor
-
 static char console_lock_done[]		= "console is now locked.";
 static char console_unlock_done[]	= "console is now unlocked.";
 static char console_is_locked[]		= "console locked.";
@@ -176,9 +168,6 @@ PRIVATE int console_frame_top  = 5;
 // current console contents
 PUBLIC char con_lines[ NUM_CONSOLE_LINES ][ MAX_CONSOLE_LINE_LENGTH + 1 ];
 
-// temporary line from which actual drawing will be done
-static char draw_line[ MAX_CONSOLE_LINE_LENGTH + 1 ];
-
 // temporary line for current command (from console input line or file)
 static char command_line[ MAX_CONSOLE_LINE_LENGTH + 1 ];
 
@@ -198,7 +187,6 @@ PUBLIC int con_bottom	= 0;	// current line in console buffer (0..)
 static int last_con_content;	// old state
 static int last_con_bottom;		// (used in lists to overwrite space prompt)
 
-static int cursor_state = CURSOR_BLINK_SPEED;
 PUBLIC int cursor_x		= 0;	// current cursor position (0==behind prompt)
 
 static int edit_ofs_x	= 0;	// x offset for viewing the edit line
@@ -709,12 +697,6 @@ int ExecGetSetInteger( const char *scan )
 
 	return FALSE;
 }
-
-
-// temporary storage in which user can alter their name -----------------------
-//
-static char temp_playername[ MAX_PLAYER_NAME + 1 ];
-
 
 // exec command with a single optional parameter ------------------------------
 //

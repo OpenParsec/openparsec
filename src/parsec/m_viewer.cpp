@@ -901,7 +901,6 @@ void DrawViewerTexts()
 	unsigned int max_text_y = (unsigned int)(( SCV_TEXT_Y + SCV_TEXT_H ) * Screen_Height);
 
 	char 	**text;
-	int 	ship_id = 0;
 	char 	*text_ptr = paste_str;
 
 	// select text source

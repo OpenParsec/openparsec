@@ -78,8 +78,6 @@
 // generic string paste area --------------------------------------------------
 //
 #define PASTE_STR_LEN 255
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
 
 // keyboard tables and buffers ------------------------------------------------
 //
@@ -108,8 +106,6 @@ SDL_Surface*	x_pixmap;				// pixmap of splash screen
 //
 static int sdl_general_init_done	= FALSE;
 static int sdl_keyb_init_done		= FALSE;
-static int sdl_keyb_grab_active	= FALSE;
-
 
 // determine bit shift from bit mask ------------------------------------------
 //

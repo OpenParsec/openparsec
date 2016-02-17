@@ -176,8 +176,7 @@ void SFX_ParticleExplosion( ShipObject *shippo )
 	drawinfo.extinfo = pextinfo;
 	drawinfo.sizebnd = sizebound;
 
-	pcluster_s *cluster =
-		PRT_CreateParticleSphereObject( origin,
+	PRT_CreateParticleSphereObject( origin,
 										PARTICLE_EXPLOSION_STARTRADIUS,
 										SAT_EXPLODING,
 										PARTICLE_EXPLOSION_NUMPARTICLES,
@@ -225,8 +224,7 @@ extern float sphere_ref_z;
 	drawinfo.extinfo = pextinfo;
 	drawinfo.sizebnd = sizebound;
 
-	pcluster_s *cluster =
-		PRT_CreateParticleSphereObject( origin,
+	PRT_CreateParticleSphereObject( origin,
 										ENERGY_FIELD_INITIAL_RADIUS,
 										SAT_ENERGYFIELD_SPHERE,
 										SPHERE_PARTICLES,
@@ -283,8 +281,7 @@ void SFX_FlashProtectiveShield( ShipObject *shippo )
 	drawinfo.sizebnd = sizebound;
 
 	// create ship centered particle sphere without animation
-	basesphere_pcluster_s *cluster =
-		PRT_CreateObjectCenteredSphere( shippo, shippo->BoundingSphere,
+	PRT_CreateObjectCenteredSphere( shippo, shippo->BoundingSphere,
 										SAT_NO_ANIMATION,
 										SPHERE_PARTICLES,
 								    	lifetime, &drawinfo,

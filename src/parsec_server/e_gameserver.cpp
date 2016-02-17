@@ -793,12 +793,6 @@ refframe_t E_GameServer::ServerFrame()
 //
 int	E_GameServer::MainLoop()
 {
-	//LARGE_INTEGER pfc_freq;
-	//QueryPerformanceFrequency( &pfc_freq );
-	//LOGOUT(( "QPFC-Frequency:%I64d", pfc_freq.QuadPart ));
-
-	refframe_t now = SYSs_GetRefFrameCount();
-
 	for( ; !m_bQuit ; ) {
 
 		//LOGOUT(( "Before select()." ));
@@ -808,29 +802,11 @@ int	E_GameServer::MainLoop()
 		if ( netInput < 0 ) {
 			MSGOUT( "E_GameServer: error checking for network input" );
 		}
+		// check input
+		INP_HandleInput();
 
-		//LOGOUT(( "Before ServerFrame(). NETINPUT:%d", netInput ));
-
-		// run one server frame
-		refframe_t duration = ServerFrame();
-
-		// just print "TICK" every second
-		//if ( ( SYSs_GetRefFrameCount() - now ) > ( FRAME_MEASURE_TIMEBASE * 0.2 ) ) {
-
-			// check input
-			INP_HandleInput();
-
-			// process console input
-			CON_ConsoleMain();
-
-		//	now = SYSs_GetRefFrameCount();
-		//}
-
-		//LOGOUT(( "After ServerFrame(). NETINPUT:%d", netInput ));
-
-		//SYSTEMTIME st;
-		//GetLocalTime( &st );
-		//LOGOUT(( "The time is %02d:%02d:%02d.%03d. NETINPUT:%d", st.wHour, st.wMinute, st.wSecond, st.wMilliseconds, netInput ));
+		// process console input
+		CON_ConsoleMain();
 	}
 
 	return TRUE;

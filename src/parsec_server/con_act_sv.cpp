@@ -86,38 +86,18 @@
 #define REINIT_LOCAL_SHIP_ON_PREP_RESTORE
 #define RECOVER_TARGET_ON_MISSILE_CREATION
 
-
-
-// generic string paste area --------------------------------------------------
-//
-#define PASTE_STR_LEN 255
-static char paste_str[ PASTE_STR_LEN + 1 ];
-
-
 // string constants -----------------------------------------------------------
 //
-static char invalid_key_id[]	= "invalid key identifier.";
-static char no_batch_open[] 	= "no script open.";
-static char too_many_pseudos[]	= "too many pseudo stars.";
-static char no_objcam_allowed[] = "object camera must not be active.";
 static char invalid_list[]		= "invalid list identifier.";
 static char invalid_class[] 	= "invalid object class identifier.";
 static char invalid_action[]	= "invalid action.";
 static char invalid_id_range[]	= "object class id out of range.";
 static char no_action_found[]	= "no action specified.";
 static char non_batch_use[] 	= "only valid if called from command script.";
-static char stream_name_inval[]	= "stream name is invalid.";
-static char no_stream_started[] = "stream could not be started.";
-static char no_stream_stopped[] = "no stream has been stopped.";
 static char action_preempted[]	= "action command not allowed.";
 static char compile_write_err[]	= "write error during compilation.";
 static char compile_arg_inval[]	= "invalid argument found during compilation.";
 static char compile_non_comp[]	= "non-compilable command found during compilation.";
-static char compile_pkt_inval[]	= "packet not found during compilation.";
-static char only_for_compile[]	= "command is only for compilation.";
-static char invalid_bin_wait[]	= "invalid binary wait argument encountered.";
-static char maxplayers_diff[]	= "netplayers limit is different from recording.";
-
 
 // pointer to binary parameters -----------------------------------------------
 //
@@ -450,12 +430,6 @@ void AcIdleCommand()
 	}*/
 }
 
-
-// flag for view camera filter reset after matrix init ------------------------
-//
-static int reset_viewcam_filter_on_update = FALSE;
-
-
 // set single column of camera matrix -----------------------------------------
 //
 INLINE
@@ -673,7 +647,6 @@ GenObject *CreateRecordedObject( dword objclass, Xmatrx startmatrx )
 //
 static int		delayed_object_creation = FALSE;
 static dword	delayed_object_class;
-static dword	delayed_object_id;
 static dword	delayed_object_hostid;
 static Xmatrx	delayed_object_matrix;
 
@@ -930,12 +903,6 @@ void AcRemoteMaxPlayers()
 	}*/
 }
 
-
-// remember id of remote player whose state was set last ----------------------
-//
-static int last_remote_playerid = 0;
-
-
 // create remote player with specified state ----------------------------------
 //
 PRIVATE
@@ -1084,12 +1051,6 @@ void AcRemoteWeaponsActive()
 	}
 	*/
 }
-
-
-// should a join be performed on the next "ac.remotename" ? -------------------
-//
-static int join_on_setname = FALSE;
-
 
 // perform recorded join ------------------------------------------------------
 //
@@ -3006,8 +2967,6 @@ struct scheduled_command_s {
 
 #define MAX_SCHEDULED_COMMANDS	64
 static int						num_scheduled_commands = 0;
-static scheduled_command_s		scheduled_commands[ MAX_SCHEDULED_COMMANDS ];
-
 
 // remainder of a wait interval split by a scheduled command ------------------
 //

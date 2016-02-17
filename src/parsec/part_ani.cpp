@@ -645,8 +645,7 @@ void VisualizeLightningImpact( ShipObject *shippo, Vertex3& impactpoint )
 	drawinfo.extinfo = NULL;
 	drawinfo.sizebnd = partbitmap_size_bound;
 
-	sphereobj_pcluster_s *cluster =
-		PRT_CreateParticleSphereObject( impactpoint,
+	PRT_CreateParticleSphereObject( impactpoint,
 										FLOAT_TO_GEOMV( 2.5 ),
 										SAT_STOCHASTIC_MOTION,
 										30, 20,
@@ -772,8 +771,6 @@ void CalcLightningAnimation( lightning_pcluster_s *cluster )
 	if ( ( cluster->framecount -= CurScreenRefFrames ) < 0 ) {
 		cluster->framecount = cluster->sizzlespeed;
 
-		GenObject *shippo = cluster->baseobject;
-		ASSERT( shippo != NULL );
 		ASSERT( OBJECT_TYPE_SHIP( shippo ) );
 
 		Xmatrx tmatrx;

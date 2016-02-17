@@ -154,12 +154,10 @@ void SaveScreenShot()
 	static char shotnum[] 		= "00";
 	static char message[] 		= "screenshot 00 written";
 	static char write_error[]	= "disk write error";
-	static char not_available[]	= "screenshot function not available";
 	static char too_many_shots[]= "too many screenshots";
 
 	static char fext_raw[]		= ".raw";
 	static char fext_tga[]		= ".tga";
-	static char fext_jpg[]		= ".jpg";
 	static char fext_png[]		= ".png";
 	static char fext_bmp[]		= ".bmp";
 

@@ -106,10 +106,6 @@
 //FIXME: centralize ?
 static char got_energy_str[]	        	= "energy boosted";
 static char max_energy_str[]	        	= "energy maxed out";
-static char no_decoy_str[]					= "no holo decoy device";
-static char decoy_activated_str[]			= "holo decoy activated";
-static char no_invisibility_str[]			= "no invisibility device";
-static char invisibility_activated_str[]	= "invisibility activated";
 
 // strings for extra collections ----------------------------------------------
 //
@@ -132,8 +128,10 @@ static char unknown_dev_str[]	        	= "got unknown device";
 static char unknown_extra_str[]	        	= "got unknown extra";
 static char no_damage_str[]		        	= "no damage to repair";
 static char damage_repaired[]	        	= "damage repaired";
+#ifdef PARSEC_CLIENT
 static char mine_killed_str[]	        	= "killed by mine";
 static char mine_hit_str[]		        	= "mine hit";
+#endif
 static char got_afterburner_str[]       	= "got afterburner";
 static char max_afterburner_str[]       	= "already got afterburner";
 static char got_cloak_str[]		        	= "got cloaking device";
@@ -147,8 +145,6 @@ static char max_laser_upgrade_1_str[]   	= "already got laser upgrade 1";
 static char got_laser_upgrade_2_str[]   	= "got laser upgrade 2";
 static char max_laser_upgrade_2_str[]   	= "already got laser upgrade 2";
 static char need_laser_upgrade_1_str[]		= "need laser upgrade 1 first";
-static char got_emp_str[]					= "got emp device";
-static char max_emp_str[]					= "already got emp device";
 static char got_emp_upgrade_1_str[]			= "got emp upgrade 1";
 static char max_emp_upgrade_1_str[]			= "already got emp upgrade 1";
 static char got_emp_upgrade_2_str[]			= "got emp upgrade 2";

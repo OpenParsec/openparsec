@@ -55,15 +55,10 @@
 
 // string constants -----------------------------------------------------------
 //
-static const char err_read_header[]		= "error reading tga header.";
-static const char err_read_data[]		= "error reading tga image data.";
-static const char err_header_invalid[]	= "tga header invalid.";
 static const char err_write_header[]	= "error writing tga header.";
 static const char err_write_raw_image[]	= "error writing raw tga image data.";
 static const char err_write_raw_frame[]	= "error writing tga raw frame.";
 static const char err_write_rep_frame[]	= "error writing tga rep frame.";
-static const char no_tex_file_mem[]		= "texture file too big.";
-
 
 // tga file types -------------------------------------------------------------
 //

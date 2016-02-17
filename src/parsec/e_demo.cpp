@@ -82,7 +82,6 @@ static char paste_str[ PASTE_STR_LEN + 1 ];
 static char dem_extension[]		= CON_FILE_COMPILED_EXTENSION;
 static char cut_open_error[]	= "cut demo open error.";
 static char cut_write_error[]	= "cut demo write error.";
-static char cut_compile_error[]	= "cut state header compilation failed.";
 
 static char dem_file_wldcard1[]	= "*" CON_FILE_COMPILED_EXTENSION;
 static char dem_file_wldcard2[] = REFCON_COMMANDS_DIR "*" CON_FILE_COMPILED_EXTENSION;
