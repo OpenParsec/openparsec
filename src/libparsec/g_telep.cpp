@@ -112,6 +112,7 @@ dword teleporter_type;
 // string constants -----------------------------------------------------------
 //
 static char telep_exit_class_not_found[] 	  = "object class for teleporter exit not found.";
+static char telep_texture_not_found[]		  = "texture '%s' was not found.";
 
 // flags ----------------------------------------------------------------------
 //
