@@ -805,6 +805,9 @@ int	E_GameServer::MainLoop()
 		// check input
 		INP_HandleInput();
 
+		//Run Server Frame
+		ServerFrame();
+		
 		// process console input
 		CON_ConsoleMain();
 	}
