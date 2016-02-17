@@ -44,6 +44,8 @@ protected:
 	NetPacketExternal_GMSV* SendNetPacketExternal;
 	NetPacketExternal_GMSV* RecvNetPacketExternal;
 	int						ListenStatus		[ NUM_LISTEN_BUFFERS ];
+	int						ListenVersionMajor	[ NUM_LISTEN_BUFFERS ];
+	int						ListenVersionMinor	[ NUM_LISTEN_BUFFERS ];
 	sockaddr_in				ListenAddress		[ NUM_LISTEN_BUFFERS ];
 	node_t					ListenSenderStorage	[ NUM_LISTEN_BUFFERS ];
 	NetPacket_GMSV*			NetPacketsInternal	[ NUM_LISTEN_BUFFERS ];
@@ -112,6 +114,10 @@ public:
 
 	// retrieve sender's node address from listen header
 	node_t* GetPktSender( int bufid );
+
+	// get the sender's protocol version
+	int GetSenderVersionMajor( int bufid );
+	int GetSenderVersionMinor( int bufid );
 
 	// send a packet to a node
 	int SendPacket( NetPacket_GMSV* gamepacket, node_t* node, int nClientID, E_REList* pReliable, E_REList* pUnreliable );

@@ -257,6 +257,28 @@ node_t* NET_PacketDriver::GetPktSender( int bufid )
 	return node;
 }
 
+// retrieve sender's node major version from listen header --------------------------
+//
+int NET_PacketDriver::GetSenderVersionMajor( int bufid )
+{
+	ASSERT( bufid >= 0 );
+	ASSERT( bufid < NUM_LISTEN_BUFFERS );
+
+
+	return ListenVersionMajor[ bufid ];
+}
+
+// retrieve sender's node major version from listen header --------------------------
+//
+int NET_PacketDriver::GetSenderVersionMinor( int bufid )
+{
+	ASSERT( bufid >= 0 );
+	ASSERT( bufid < NUM_LISTEN_BUFFERS );
+
+
+	return ListenVersionMinor[ bufid ];
+}
+
 // return the message id used in the next packet that is sent -----------------
 //
 int NET_PacketDriver::GetNextOutMessageId( int nClientID )
@@ -725,6 +747,9 @@ int NET_PacketDriver::_UDP_FetchPacket( int bufid )
 		// copy from adress
 		memcpy( &ListenAddress[ bufid ], &from_adress, sizeof( sockaddr_in ) );
 
+		ListenVersionMajor[ bufid ] = RecvNetPacketExternal->MajorVersion;
+		ListenVersionMinor[ bufid ] = RecvNetPacketExternal->MinorVersion;
+
 		// filter broadcast packets that are looping back
 		if ( NODE_Compare( TheUDPDriver->GetNode(), GetPktSender( bufid ) ) == NODECMP_EQUAL ) {
 			//DBGTXT(
@@ -746,7 +771,14 @@ int NET_PacketDriver::_UDP_FetchPacket( int bufid )
 			DBGTXT( MSGOUT( "NET_PacketDriver::_UDP_FetchPacket(): dropped packet [conversion error]." ); );
 			return FALSE;
 		} else {
-
+			if(TheServer->GetServerIsMaster()){
+				// if we are the master server, we need to double check the protocol version here.
+				if((RecvNetPacketExternal->MajorVersion != CLSV_PROTOCOL_MAJOR) ||
+									(RecvNetPacketExternal->MinorVersion != CLSV_PROTOCOL_MINOR)) {
+					_SendClientIncompatible(GetPktSender(bufid), PLAYERID_SERVER, RecvNetPacketExternal->MajorVersion, RecvNetPacketExternal->MinorVersion);
+				}
+				return FALSE;
+			}
 			UPDTXT2(MSGOUT( "NET_PacketDriver::_UDP_FetchPacket(): received packet msg: %d.", RecvNetPacketExternal->MessageId ));
 
 			// indicate that buffer now contains received packet
