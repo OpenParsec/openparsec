@@ -776,8 +776,8 @@ int NET_PacketDriver::_UDP_FetchPacket( int bufid )
 				if((RecvNetPacketExternal->MajorVersion != CLSV_PROTOCOL_MAJOR) ||
 									(RecvNetPacketExternal->MinorVersion != CLSV_PROTOCOL_MINOR)) {
 					_SendClientIncompatible(GetPktSender(bufid), PLAYERID_SERVER, RecvNetPacketExternal->MajorVersion, RecvNetPacketExternal->MinorVersion);
+					return FALSE;
 				}
-				return FALSE;
 			}
 			UPDTXT2(MSGOUT( "NET_PacketDriver::_UDP_FetchPacket(): received packet msg: %d.", RecvNetPacketExternal->MessageId ));
 
