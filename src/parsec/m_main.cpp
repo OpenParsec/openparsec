@@ -101,7 +101,7 @@ static int itemvis_optionsmenu	= FALSE;
 static int itemvis_viewer		= FALSE;
 static int itemvis_gamestatus	= FALSE;
 
-static int  joy_cooldown     = 0;
+int	joy_cooldown				= time(NULL);
 
 PUBLIC int itemvis_loading		= FALSE;
 
@@ -1987,13 +1987,15 @@ void FloatingMenuJoyStandard()
 		} else if (FloatingMenuJoyRight()) {
 			FloatingMenuKeyCursorRight();
 			joy_cooldown = time(NULL);
+		} else if (FloatingMenuJoyFire()) {
+			FloatingMenuKeyEnter();
+			joy_cooldown = time(NULL);
+		} else if (FloatingMenuJoyMissile()) {
+			FloatingMenuKeyEscape();
+			joy_cooldown = time(NULL);
 		}
 	}
-	if (FloatingMenuJoyFire()) {
-		FloatingMenuKeyEnter();
-	} else if (FloatingMenuJoyMissile()) {
-		FloatingMenuKeyEscape();
-	}
+	
 }
 
 // handle keyboard input for menu ---------------------------------------------

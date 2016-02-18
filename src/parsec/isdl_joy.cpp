@@ -109,6 +109,7 @@ int					isdl_Dright;
 int					isdl_Shift;
 int					isdl_Target;
 int					isdl_TargetFront;
+int					isdl_Exit; //mimic keyboard escape in flight
 int					isdl_AxisX;
 int					isdl_AxisY;
 int					isdl_AxisThrottle;
@@ -344,6 +345,7 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_shift"        , -1,     64,&isdl_Shift              , NULL, NULL,1  }, //button 2 default
 	{ 0x01, "isdl.jbind_target"       , -1,     64,&isdl_Target             , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_targetfront"  , -1,     64,&isdl_TargetFront        , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_exit"         , -1,     64,&isdl_Exit               , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_axisx"        ,  0,     64,&isdl_AxisX              , NULL, NULL,0  }, //default 0
 	{ 0x01, "isdl.jbind_axisy"        ,  0,     64,&isdl_AxisY              , NULL, NULL,1  }, //default 1
 	{ 0x01, "isdl.jbind_axisthrottle" , -1,     64,&isdl_AxisThrottle       , NULL, NULL,2  }, //default 2

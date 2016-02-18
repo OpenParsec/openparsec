@@ -51,6 +51,7 @@
 // proprietary headers
 #include "con_int.h"
 #include "inp_user.h"
+#include "m_main.h"
 
 extern int                  isdl_FireGun;
 extern int                  isdl_FireMissile;
@@ -74,6 +75,7 @@ extern int					isdl_Dright;
 extern int					isdl_Shift;
 extern int					isdl_Target;
 extern int					isdl_TargetFront;
+extern int					isdl_Exit;
 
 // joystick globals -----------------------------------------------------------
 //
@@ -374,6 +376,14 @@ void ISDLm_ProcessJoystickBinds() {
 	if(JoyState.Buttons[isdl_Dleft]) {
 		bams_t c_angle = MyShip->YawPerRefFrame * CurScreenRefFrames;
 		INP_UserRotY( c_angle );
+	}
+	if(JoyState.Buttons[isdl_Exit]) {
+		// show floating menu
+		if ( FloatingMenu && !InFloatingMenu && ( ExitGameLoop != 3 ) ) {
+			DepressedKeys->key_ShootWeapon = 0;
+			InFloatingMenu = FloatingMenu;
+			ActivateFloatingMenu( TRUE );
+		}
 	}
 }
 #define MOUSE_EDGE_EPS  0.1f

@@ -13,7 +13,7 @@ void 	MAP_FadeOutStarmap();
 void 	MAP_ActivateStarmap();
 int 	MAP_ShowStarmap( void *param );
 void 	MAP_KeyHandler();
-
+void    MAP_JoyHandler();
 
 // ----------------------------------------------------------------------------
 //

@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -302,6 +303,9 @@ static int map_dragorigin_y = 0;
 static int map_animate_in = 255; 
 static int map_animate_out = 255;
 #define MAP_OVERLAY_ANI_SPEED	40
+
+// Joystick stuff;
+extern int joy_cooldown;
 
 // fading control variables ---------------------------------------------------
 //
@@ -1944,7 +1948,9 @@ void MAP_KeyHandler()
 	ASSERT( InStarMap );
 
 	MAP_MouseHandler();
-
+	if ( QueryJoystick && Op_Joystick )
+		MAP_JoyHandler();
+	
 	if ( ExitGameLoop ) {
 
 		//NOTE:
@@ -1986,7 +1992,77 @@ void MAP_KeyHandler()
 		MAP_ExecZoomOut();
 	}
 }
+int server = -1;
 
+void MAP_JoyHandler()
+{
+	//Basic joy handler for star map it will go through the servers (in order recieved from gameserver not as displayed)
+	
+	extern joystate_s JoyState;
+	extern int        isdl_FireGun;
+	extern int        isdl_FireMissile;
+
+	if((time(NULL) - joy_cooldown) >= 1) {
+		if(JoyState.X < 0) {
+			if(server == -1)
+				server = 0;
+			else
+				server++;
+			if(server_list[server].serverid <= 0)
+				server = -1;
+			joy_cooldown = time(NULL);
+		} else if(JoyState.X > 0) {
+			if(server == -1)
+				server = 0;
+			else
+				server++;
+			if(server_list[server].serverid <= 0)
+				server = -1;
+			if(server < 0)
+				server = -1;
+			joy_cooldown = time(NULL);
+		}
+		
+		   map_srv_hilite = server;
+		   map_srv_pressed	= server;
+		
+	
+		if(JoyState.Buttons[isdl_FireGun]) {
+			//took this from MapExecSelect
+			if(map_srv_pressed != -1) {
+				MSGOUT("We want to connect to server %d", map_srv_pressed);
+				// make a copy of the node_t structure for this server.
+				// Server_Node is a special global that NET_ServerConnect() will use.
+				memcpy(&Server_Node, &server_list[map_srv_pressed].node, sizeof( node_t ) );
+			
+				// because we are bypassing the resolver at this point....
+				// set maximum number of players according to protocol
+				CurMaxPlayers = MAX_NET_GMSV_PLAYERS;
+			
+				// (re)init tables
+				NET_InitRemotePlayerTables();
+			
+				// discard old packets
+				NETs_FlushListenBuffers();
+				NumRemPlayers = 1;
+			
+				// try to establish connection
+				int connect_success = NET_ServerConnect();
+				if(connect_success) {
+					//FREEMEM(CurServerToResolve);
+					//CurServerToResolve = NULL;
+					MenuNotifyConnect();
+					MAP_ExecExit();
+				}
+			}
+			joy_cooldown = time(NULL);
+		}
+		if(JoyState.Buttons[isdl_FireMissile]) {
+			MAP_ExecExit();
+			joy_cooldown = time(NULL);
+		}
+	}
+}
 
 // ----------------------------------------------------------------------------
 //
