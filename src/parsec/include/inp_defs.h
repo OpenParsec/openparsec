@@ -131,7 +131,7 @@ extern keyfunc_s *		DepressedKeys;
 extern keyfunc_s *		KeyAssignments;
 extern keyaddctrl_s *	KeyAdditional;
 extern keybflags_s *	KeybFlags;
-
+extern joystate_s	    JoyState;
 
 // joystick resolution --------------------------------------------------------
 //

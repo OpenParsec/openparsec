@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // compilation flags/debug support
 #include "config.h"
@@ -99,6 +100,8 @@ static int itemvis_optionsmenu	= FALSE;
 
 static int itemvis_viewer		= FALSE;
 static int itemvis_gamestatus	= FALSE;
+
+static int  joy_cooldown     = 0;
 
 PUBLIC int itemvis_loading		= FALSE;
 
@@ -1882,6 +1885,57 @@ int FloatingMenuKeyPressedCursorRight()
 	return ( keypressed || FloatingMenuMousePressedCursorRight() );
 }
 
+INLINE
+int FloatingMenuJoyUp()
+{
+	if(JoyState.Y < 0)
+		return 1;
+	return 0;
+}
+
+INLINE
+int FloatingMenuJoyDown()
+{
+	if(JoyState.Y > 0)
+		return 1;
+	return 0;
+}
+
+INLINE
+int FloatingMenuJoyLeft()
+{
+	if(JoyState.X < 0)
+		return 1;
+	return 0;
+}
+
+INLINE
+int FloatingMenuJoyRight()
+{
+	if(JoyState.X > 0)
+		return 1;
+	return 0;
+}
+
+INLINE
+int FloatingMenuJoyFire()
+{
+	extern int	isdl_FireGun;
+	
+	if(JoyState.Buttons[ isdl_FireGun ])
+		return 1;
+	return 0;
+}
+
+INLINE
+int FloatingMenuJoyMissile()
+{
+	extern int  isdl_FireMissile;
+
+	if(JoyState.Buttons[isdl_FireMissile])
+		return 1;
+	return 0;
+}
 
 // handle standard keys in floating menu --------------------------------------
 //
@@ -1913,7 +1967,34 @@ void FloatingMenuKeyStandard()
 		FloatingMenuKeyCursorRight();
 	}
 }
-
+//Handle joystick in the menu
+PRIVATE
+void FloatingMenuJoyStandard()
+{
+	// standard checking only if no transition in progress
+	if ( menu_state_transition != MENUTRANS_NONE )
+		return;
+	if((time(NULL) - joy_cooldown) >= 1) {
+		if (FloatingMenuJoyUp()) {
+			FloatingMenuKeyCursorUp();
+			joy_cooldown = time(NULL);
+		} else if (FloatingMenuJoyDown()) {
+			FloatingMenuKeyCursorDown();
+			joy_cooldown = time(NULL);
+		} else if (FloatingMenuJoyLeft()) {
+			FloatingMenuKeyCursorLeft();
+			joy_cooldown = time(NULL);
+		} else if (FloatingMenuJoyRight()) {
+			FloatingMenuKeyCursorRight();
+			joy_cooldown = time(NULL);
+		}
+	}
+	if (FloatingMenuJoyFire()) {
+		FloatingMenuKeyEnter();
+	} else if (FloatingMenuJoyMissile()) {
+		FloatingMenuKeyEscape();
+	}
+}
 
 // handle keyboard input for menu ---------------------------------------------
 //
@@ -1943,6 +2024,9 @@ void FloatingMenuKeyHandler()
 	} else {
 
 		FloatingMenuKeyStandard();
+		// joystick
+		if ( QueryJoystick && Op_Joystick )
+			FloatingMenuJoyStandard(); //Lets see what happens, probably something terrible
 	}
 
 	// reset sticky object rotation if necessary
