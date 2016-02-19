@@ -141,6 +141,7 @@ struct game_proxy_int_s {
 	int SwarmPackNumMissls;
 	int ProxPackNumMines;
     int m_NebulaID;
+	int opt_fraglog;
 };
 
 // proxy structure for G_Extra data members modifiable through the console ---
@@ -194,6 +195,7 @@ DEF_PROXY_INT( Game, HomPackNumMissls )
 DEF_PROXY_INT( Game, SwarmPackNumMissls )
 DEF_PROXY_INT( Game, ProxPackNumMines )
 DEF_PROXY_INT( Game, m_NebulaID)
+DEF_PROXY_INT( Game, opt_fraglog)
 DEF_PROXY_INT( GameExtraManager, ExtraProbability )
 DEF_PROXY_INT( GameExtraManager, ProbHelixCannon )
 DEF_PROXY_INT( GameExtraManager, ProbLightningDevice )
@@ -294,7 +296,8 @@ int_command_s int_commands_default[] = {
 { 0x00, "extras.dist",			50,	1000,   &GameExtraManager_proxy.MinExtraDist,           SetGameExtraManagerIntMinExtraDist,			GetGameExtraManagerIntMinExtraDist		},	
 
 { 0x00, "nebula.id",            2,     5,   &Game_proxy.m_NebulaID,             SetGameIntm_NebulaID,                       GetGameIntm_NebulaID        },
-{ 0x00, "energy.boost",			0,	1000,   &Game_proxy.EnergyExtraBoost,       SetGameIntEnergyExtraBoost,					GetGameIntEnergyExtraBoost	},	
+{ 0x00, "fraglog.on",           0,     1,   &Game_proxy.opt_fraglog,            SetGameIntopt_fraglog,                      GetGameIntopt_fraglog       },
+{ 0x00, "energy.boost",			0,	1000,   &Game_proxy.EnergyExtraBoost,       SetGameIntEnergyExtraBoost,					GetGameIntEnergyExtraBoost	},
 { 0x00, "repair.boost",			0,	1000,   &Game_proxy.RepairExtraBoost,		SetGameIntRepairExtraBoost,					GetGameIntRepairExtraBoost	},	
 																															
 { 0x00, "pack.dumb.size",		0,	100,    &Game_proxy.DumbPackNumMissls,      SetGameIntDumbPackNumMissls,				GetGameIntDumbPackNumMissls	},	
@@ -326,6 +329,7 @@ int_command_s int_commands_default[] = {
 																															
 { 0x00, "prob.empupgrade1",		0,	100,    &GameExtraManager_proxy.ProbEmpUpgrade1,        SetGameExtraManagerIntProbEmpUpgrade1,		GetGameExtraManagerIntProbEmpUpgrade1	},	
 { 0x00, "prob.empupgrade2",		0,	100,    &GameExtraManager_proxy.ProbEmpUpgrade2,        SetGameExtraManagerIntProbEmpUpgrade2,		GetGameExtraManagerIntProbEmpUpgrade2	},	
+
 };
 
 #define NUM_INT_COMMANDS	CALC_NUM_ARRAY_ENTRIES( int_commands_default )

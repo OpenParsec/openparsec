@@ -96,11 +96,11 @@ public:
 	int 					HomPackNumMissls;
 	int 					SwarmPackNumMissls;
 	int 					ProxPackNumMines;
-
 	int 					MegaShieldStrength;
-
 	int						m_NebulaID;
-
+	int						opt_fraglog; //log frags to file
+	char					fragfile[255] = "frag_1.log";
+	
 	G_Player*				m_Players;
 	UTL_List<G_Player*>*	m_CurConnectedPlayerList;		// linked list of all currently connected players
 	UTL_List<G_Player*>*	m_CurJoinedPlayerList;			// linked list of all currently joined players

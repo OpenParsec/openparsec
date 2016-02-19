@@ -522,12 +522,24 @@ void G_Main::RecordKill( int nClientID )
 
 // record a death -------------------------------------------------------------
 //
+
 void G_Main::RecordDeath( int nClientID, int nClientID_Killer )
 {
 	ASSERT( ( nClientID >= 0 ) && ( nClientID < MAX_NUM_CLIENTS ) );
 	m_Players[ nClientID ].RecordDeath( nClientID_Killer );
+	if (opt_fraglog) {
+		FILE *fp;
+		char buffer[255];
+		
+		if((fp = fopen(fragfile,"a")) == NULL) {
+			MSGOUT("Failed to open Fraglog %s",fragfile);
+			return;
+		}
+		sprintf(buffer,"\\%s\\%s\n",TheConnManager->GetClientName(nClientID_Killer),TheConnManager->GetClientName(nClientID));
+		fputs(buffer, fp);
+		fclose(fp);
+	}
 }
-
 
 // reset the death info of the client -----------------------------------------
 //
@@ -536,7 +548,6 @@ void G_Main::ResetDeathInfo( int nClientID )
 	ASSERT( ( nClientID >= 0 ) && ( nClientID < MAX_NUM_CLIENTS ) );
 	m_Players[ nClientID ].ResetDeathInfo();
 }
-
 
 // get the player -------------------------------------------------------------
 //
