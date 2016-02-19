@@ -535,7 +535,7 @@ void G_Main::RecordDeath( int nClientID, int nClientID_Killer )
 			MSGOUT("Failed to open Fraglog %s",fragfile);
 			return;
 		}
-		sprintf(buffer,"\\%s\\%s\n",TheConnManager->GetClientName(nClientID_Killer),TheConnManager->GetClientName(nClientID));
+		sprintf(buffer,"\\%s\\%s",TheConnManager->GetClientName(nClientID_Killer),TheConnManager->GetClientName(nClientID));
 		fputs(buffer, fp);
 		fclose(fp);
 	}
