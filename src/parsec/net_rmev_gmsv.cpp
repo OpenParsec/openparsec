@@ -593,12 +593,13 @@ void NET_ExecRmEvGeneric( RE_Generic* pRE_Generic)
 	if(pRE_Generic->RE_ActionFlags &  (1 << TELEP_COLLIDE)){
 		// find the teleporter object by id
 		Teleporter *teleporter = NET_FindTeleporter(pRE_Generic->Padding);
+		if(teleporter != NULL) { //If no teleporters were in system it crashed all clients, even though nothing happens in this block below and it is meaningless
+			// do nothing if teleporter inactive
+			if ( !teleporter->active )
+				return;
 	
-		// do nothing if teleporter inactive
-		if ( !teleporter->active )
-			return;
-	
-		// TODO: Do... something magical to teleport the user....	
+			// TODO: Do... something magical to teleport the user....
+		}
 	}
 
 

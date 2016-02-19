@@ -1076,7 +1076,10 @@ void GameLoop()
 			if(!headless_bot)
 				// maintain sound
 				AUDs_MaintainSound();
-
+			
+			
+			INPs_Collect(); //Why was this in SYSs_Yield?
+			
 			// check selected keypresses
 			Gm_SpecialKeyFunctions();
 			

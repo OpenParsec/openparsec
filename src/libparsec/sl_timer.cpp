@@ -222,19 +222,7 @@ void SYSs_Wait( refframe_t refframes )
 // use yield function to calculate frame rate ---------------------------------
 //
 int SYSs_Yield()
-{
-	extern int headless_bot;
-#ifdef PARSEC_CLIENT
-
-	if(!headless_bot)
-		// yield to sound driver
-		AUDs_MaintainSound();
-
-	// must be called to retrieve key strokes from buffer
-	INPs_Collect();
-
-#endif // PARSEC_CLIENT
-	
+{	
 	// get high-precision time
 	struct timeval  time_timeval;
 	struct timezone time_timezone;
