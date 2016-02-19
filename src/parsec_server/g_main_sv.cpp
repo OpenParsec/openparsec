@@ -391,7 +391,7 @@ void G_Main::Init()
 	MegaShieldStrength 			= MEGASHIELD_STRENGTH * FRAME_MEASURE_TIMEBASE;
 
 	m_nKillLimit				= DEFAULT_KILL_LIMIT;
-    
+    strcpy(fragfile,"frag_1.log");
     if(m_NebulaID == 0) //Wasn't set with nebula.id command
         m_NebulaID = 3; //Default Red system
 }
