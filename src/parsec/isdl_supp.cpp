@@ -347,11 +347,6 @@ void ISDLm_ProcessJoystickBinds() {
 		geomv_t slideval = MyShip->YSlidePerRefFrame * CurScreenRefFrames;
 		INP_UserSlideY( -slideval );
 	}
-	if(JoyState.Buttons[isdl_Aburn]) {
-		INP_UserActivateAfterBurner();
-	} else {
-		INP_UserDeactivateAfterBurner();
-	}
 	if(JoyState.Buttons[isdl_Emp]) {
 		INP_UserFiredEMP();
 	}
@@ -378,12 +373,7 @@ void ISDLm_ProcessJoystickBinds() {
 		INP_UserRotY( c_angle );
 	}
 	if(JoyState.Buttons[isdl_Exit]) {
-		// show floating menu
-		if ( FloatingMenu && !InFloatingMenu && ( ExitGameLoop != 3 ) ) {
-			DepressedKeys->key_ShootWeapon = 0;
-			InFloatingMenu = FloatingMenu;
-			ActivateFloatingMenu( TRUE );
-		}
+		ExitGameLoop = 2;
 	}
 }
 #define MOUSE_EDGE_EPS  0.1f
