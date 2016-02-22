@@ -349,13 +349,14 @@ int E_SimClientNetOutput::_PrepareClientUpdateInfo()
 	if(!pSimClientState->HasState()) {
         size_t state_size = E_REList::RmEvGetSizeFromType(RE_STATESYNC) * 7; //We current send 7 states to the client
         if(_ReserveForOutput( state_size )) {
-            m_bIncludeStateSync = SEND_MODE_UNRELIABLE;
+            m_bIncludeStateSync = SEND_MODE_RELIABLE;
         }
         
     }
     
     // check whether to include the gamestate ( RE_GameState ) in a heartbeat packet
 	//FIXME: why only if NeedsResync() == FALSE ?
+	//Because we can soft send it as a blanket UDP packet with the Heartbeat (if there is room) whereas a NeedsResync sends as reliable.
 	if ( !pSimClientState->NeedsResync() && _ShouldSendHeartbeat() ) {
 
 		size_t size = E_REList::RmEvGetSizeFromType( RE_KILLSTATS ) + 

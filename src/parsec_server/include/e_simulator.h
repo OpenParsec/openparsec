@@ -123,7 +123,7 @@ public:
 		m_nInputStateMessageID	   = 0;
 		m_nLastInputStateMessageId = 0;
 		m_ClientMovementMode	   = CMM_SIMULATING;
-		m_ResyncClient			   = FALSE;
+		m_ResyncClient			   = TRUE;
 		m_LastSwitchToSimRefFrame  = -1;
         m_ClientHasStateSync       = FALSE;
         m_SkipLerp					= 0;
@@ -146,7 +146,7 @@ public:
 		m_nLastInputStateMessageId	= 0;
 		m_InputState.Reset();
 		m_ClientMovementMode		= CMM_SIMULATING;
-		m_ResyncClient				= FALSE;
+		m_ResyncClient				= TRUE;
 		m_LastSwitchToSimRefFrame	= -1;
         m_ClientHasStateSync       = FALSE;
         m_SkipLerp					= 0;
