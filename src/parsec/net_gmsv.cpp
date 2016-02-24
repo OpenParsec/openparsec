@@ -220,7 +220,10 @@ int NETs_Join()
 
 		// set global flags
 		NetJoined = TRUE;
-		HaveFullPlayerState = FALSE;
+		//HaveFullPlayerState = FALSE;
+		//FIXME Put this back one day when the server actually verifies this stuff (which it currently doesn't)
+		//but for now this fixes/works around stargate jump sync issues
+		HaveFullPlayerState = TRUE;
 		
 		// open stargate
 		if ( !AUX_DISABLE_LOCAL_STARGATE ) {
@@ -580,7 +583,8 @@ void JumpToCurJumpServer()
 	} else {
 		//This lets you open the starmap again instead of being stuck in menu limbo if Jump fails
 		NetConnected = NETWORK_GAME_OFF;
-		ExitGameLoop = 2; //pop up the menu so the user knows something happened
+		ExitGameLoop = 1;
+		MenuNotifyDisconnect();
 	}
 }
 
