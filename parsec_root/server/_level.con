@@ -5,8 +5,8 @@ write
 ; Teleporters
 ;------------------------------------------------------------------------------
 
-tp.create pos (500 500 500) expos (200 2000 2000) exit_rot_phi 50 exit_rot_theta 180
-tp.create pos (1500 1500 1000) expos (0 2000 6000) exit_rot_phi 50 exit_rot_theta 180
+;tp.create pos (500 500 500) expos (200 2000 2000) exit_rot_phi 50 exit_rot_theta 180
+;tp.create pos (1500 1500 1000) expos (0 2000 6000) exit_rot_phi 50 exit_rot_theta 180
 
 ;------------------------------------------------------------------------------
 ; Stargates (server links)
@@ -17,7 +17,7 @@ tp.create pos (1500 1500 1000) expos (0 2000 6000) exit_rot_phi 50 exit_rot_thet
 ;sv.link 			serverid 1  	pos ( 1000 0 -1000 ) 	dir ( 0 0 1 )
 ;sv.link 			serverid 2  	pos ( 2000 0 -1000 ) 	dir ( 0 0 1 )
 ;sv.link 			serverid 3  	pos ( 2000 0 -2000 ) 	dir ( 0 0 1 )
-sv.link 			serverid 12  	pos ( 1000 0 -2000 ) 	dir ( 0 0 1 )
+;sv.link 			serverid 12  	pos ( 1000 0 -2000 ) 	dir ( 0 0 1 )
 ;sv.link 			serverid 4  pos ( 0   0   600 ) dir ( 0 0 1 )
 
 ;eof
