@@ -3,7 +3,7 @@
 ;------------------------------------------------------------------------------
 
 nebula.id                       3
-sv.conf 			name 		changeme
+sv.conf 			name 		macdev.openparsec.com
 sv.conf				maxplayers 	8
 sv.conf				simfreq		100
 sv.serverid			3
@@ -31,7 +31,7 @@ sv.game.extras.max		25
 ; masterserver settings
 ;------------------------------------------------------------------------------
 
-;sv.masterserver.conf 		name master.openparsec.com interval 5
+sv.masterserver.conf 		name master.openparsec.com interval 5
 ;sv.masterserver.conf 		name 192.168.1.103 interval 5
 ;sv.masterserver.sendheartbeat	1
 ;sv.masterserver.sendheartbeat	1

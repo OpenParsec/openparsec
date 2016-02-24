@@ -540,43 +540,48 @@ void JumpToCurJumpServer()
 	}
 
 	// try to jump to server
-	NET_ServerJump();
+	if(NET_ServerJump()) {
 
-	// if the jump succeeded the jump target has already been deleted.
-	// if not, we delete it here to avoid retrying the jump endlessly.
-	if ( CurJumpServerNode != NULL ) {
-		FREEMEM( CurJumpServerNode );
-		CurJumpServerNode = NULL;
-	}
-
-	if ( NetConnected ) {
-
-		// auto-join game if we were joined before jump
-		if ( oldjoinedstate ) {
-			NETs_Join();
+		// if the jump succeeded the jump target has already been deleted.
+		// if not, we delete it here to avoid retrying the jump endlessly.
+		if ( CurJumpServerNode != NULL ) {
+			FREEMEM( CurJumpServerNode );
+			CurJumpServerNode = NULL;
 		}
 
-		// attach static particles that are part of the object instance
-		// since they have been killed during the disconnect
+		if ( NetConnected ) {
+
+			// auto-join game if we were joined before jump
+			if ( oldjoinedstate ) {
+				NETs_Join();
+			}
+
+			// attach static particles that are part of the object instance
+			// since they have been killed during the disconnect
+			//FIXME: ????????
+			if ( AUX_ATTACH_OBJECT_PARTICLES ) {
+				OBJ_AttachClassParticles( MyShip );
+			}
+		}
+
+		// insert local player's ship into ship objects list if object camera is
+		// active, since it had to be removed beforehand.
+		if ( ObjCameraActive ) {
+			ASSERT( PShipObjects->NextObj != MyShip );
+			ASSERT( MyShip->NextObj == NULL );
+			MyShip->NextObj		  = PShipObjects->NextObj;
+			PShipObjects->NextObj = MyShip;
+		}
+
+		// do new random placement of pseudo stars
 		//FIXME: ????????
-		if ( AUX_ATTACH_OBJECT_PARTICLES ) {
-			OBJ_AttachClassParticles( MyShip );
-		}
+		NumPseudoStars = 0;
+		InitPseudoStars();
+	} else {
+		//This lets you open the starmap again instead of being stuck in menu limbo if Jump fails
+		NetConnected = NETWORK_GAME_OFF;
+		ExitGameLoop = 2; //pop up the menu so the user knows something happened
 	}
-
-	// insert local player's ship into ship objects list if object camera is
-	// active, since it had to be removed beforehand.
-	if ( ObjCameraActive ) {
-		ASSERT( PShipObjects->NextObj != MyShip );
-		ASSERT( MyShip->NextObj == NULL );
-		MyShip->NextObj		  = PShipObjects->NextObj;
-		PShipObjects->NextObj = MyShip;
-	}
-
-	// do new random placement of pseudo stars
-	//FIXME: ????????
-	NumPseudoStars = 0;
-	InitPseudoStars();
 }
 
 
