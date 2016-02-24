@@ -2011,6 +2011,8 @@ void MAP_JoyHandler()
 			if(server_list[server].serverid <= 0)
 				server = -1;
 			joy_cooldown = time(NULL);
+			map_srv_hilite = server;
+			map_srv_pressed	= server;
 		} else if(JoyState.X > 0) {
 			if(server == -1)
 				server = 0;
@@ -2021,11 +2023,9 @@ void MAP_JoyHandler()
 			if(server < 0)
 				server = -1;
 			joy_cooldown = time(NULL);
+			map_srv_hilite = server;
+			map_srv_pressed	= server;
 		}
-		
-		   map_srv_hilite = server;
-		   map_srv_pressed	= server;
-		
 	
 		if(JoyState.Buttons[isdl_FireGun]) {
 			//took this from MapExecSelect

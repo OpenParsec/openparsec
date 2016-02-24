@@ -209,12 +209,6 @@ int SYSs_Yield()
 {
 #ifdef PARSEC_CLIENT
 
-	// yield to sound driver
-	AUDs_MaintainSound();
-
-	// must be called to retrieve key strokes from buffer
-	INPs_Collect();
-
 #endif // PARSEC_CLIENT
 
 	return 1;

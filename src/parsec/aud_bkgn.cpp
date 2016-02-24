@@ -596,13 +596,13 @@ int AUD_BackGroundPlayer_Start( int fromevent )
 
 	if ( BKGN_nNumItems > 0 ) {
 		if(fromevent!=42){
-		if ( BKGN_Started ) {
-			AUD_BackGroundPlayer_Stop();
-			if ( !fromevent ) {
-				EVT_RemoveEventType( EVT_TYPE_BKGN_SAMPLE_END );
-				EVT_RemoveEventType( EVT_TYPE_BKGN_CDTRACK_END );
+			if ( BKGN_Started ) {
+				AUD_BackGroundPlayer_Stop();
+				if ( !fromevent ) {
+					EVT_RemoveEventType( EVT_TYPE_BKGN_SAMPLE_END );
+					EVT_RemoveEventType( EVT_TYPE_BKGN_CDTRACK_END );
+				}
 			}
-		}
 		}
 
 		if ( BKGN_nNumItems == 1 ) {

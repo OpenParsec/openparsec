@@ -85,6 +85,7 @@ int			isdl_bHasThrottle   = 0;			// indicates, the joystick has a throttle
 int			isdl_bHasRudder     = 0;			// indicates, the joystick has a rudder
 static int  gun_ui_cooldown     = 0;
 static int  missile_ui_cooldown = 0;
+static int  target_ui_cooldown  = 0;
 
 // shoot gun if activated -----------------------------------------------------
 //
@@ -351,10 +352,16 @@ void ISDLm_ProcessJoystickBinds() {
 		INP_UserFiredEMP();
 	}
 	if(JoyState.Buttons[isdl_Target]) {
-		INP_UserCycleTargets();	
+		if((time(NULL) - target_ui_cooldown) >= UI_DELAY) {
+			INP_UserCycleTargets();
+			target_ui_cooldown = time(NULL);
+		}
 	}
 	if(JoyState.Buttons[isdl_TargetFront]) {
-		INP_UserSelectFrontTarget();
+		if((time(NULL) - target_ui_cooldown) >= UI_DELAY) {
+			INP_UserSelectFrontTarget();
+			target_ui_cooldown = time(NULL);
+		}
 	}
 	if(JoyState.Buttons[isdl_Dup]) {
 		bams_t c_angle = MyShip->PitchPerRefFrame * CurScreenRefFrames;

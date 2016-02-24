@@ -336,9 +336,6 @@ void Gm_RenderFrame()
 {
 	if(!headless_bot) {
 		
-		// maintain sound
-		AUDs_MaintainSound();
-
 		// reset polygon count
 		NumRenderedPolygons = 0;
 
@@ -838,9 +835,6 @@ void Gm_EventExpiration()
 INLINE
 void Gm_FinishFrame()
 {
-	// maintain sound
-	AUDs_MaintainSound();
-
 	// wait for vertical retrace
 	if ( AUX_AWAITRETRACE_ON_FRAMEFINISH )
 		AwaitVertSync();

@@ -888,9 +888,6 @@ void MENU_FloatingMenuEnterGame()
 	HideFloatingMenu();
 	HideStatusWindow();
 
-	// close menu sound
-	AUDs_CloseMenuSound();
-
 	// play sample for booting the on-board computer
 	AUD_BootOnBoardComputer();
 
@@ -1058,7 +1055,9 @@ void MenuItemSelectJoinGame()
 {
 	if ( AUX_DISABLE_JOIN_GAME_BUTTON || disable_join_game )
 		return;
-
+	
+	// close menu sound
+	AUDs_CloseMenuSound();
 	MENU_FloatingMenuEnterGame();
 }
 
