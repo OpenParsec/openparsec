@@ -154,6 +154,24 @@ proplist_s LaserBeam_PropList[] = {
 	{ NULL,			0,			0,		0,				0				}
 };
 
+LaserBeam *proplist_Laser;
+ proplist_s_new LaserBeam_PropList_new[] = {
+ //	{ "lifetime",	OFS_LIFETIME,	0,	0xffff,		PROPTYPE_INT	},
+	{ "width",		&proplist_Laser->width,	 -0x7fffffff,	0x7fffffff,	PROPTYPE_GEOMV	},
+	{ "texname",	&proplist_Laser->texname,	0,		MAX_TEX_NAME,   PROPTYPE_STRING	},
+	{ "delta.x",	&proplist_Laser->delta_x, -0x7fffffff,	0x7fffffff,	PROPTYPE_GEOMV	},
+	{ "delta.y",	&proplist_Laser->delta_y, -0x7fffffff,	0x7fffffff,	PROPTYPE_GEOMV	},
+	{ "delta.z",	&proplist_Laser->delta_z, -0x7fffffff,	0x7fffffff,	PROPTYPE_GEOMV	},
+	{ "range",		&proplist_Laser->range,		0x0,	0x300000,		PROPTYPE_FLOAT	},
+	{ "energyconsumption",	&proplist_Laser->energy_consumption,		0,	0xffff,		PROPTYPE_INT	},
+	{ "hitpoints",	&proplist_Laser->hitpoints_per_frame,	0,	0xffff,	PROPTYPE_INT	},
+	{ "red",		&proplist_Laser->red,		0,	0xff,		PROPTYPE_INT	},
+	{ "green",		&proplist_Laser->green,		0,	0xff,		PROPTYPE_INT	},
+	{ "blue",		&proplist_Laser->blue,		0,	0xff,		PROPTYPE_INT	},
+	{ "alpha",		&proplist_Laser->alpha,		0,	0xff,		PROPTYPE_INT	},
+ 
+	{ NULL,			0,			0,		0,				0				}
+ };
 
 // assigned type id for laserbeam type ----------------------------------------
 //
