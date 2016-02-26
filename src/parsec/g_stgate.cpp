@@ -178,6 +178,33 @@ proplist_s Stargate_PropList[] = {
 	{ NULL,				0,				0,			0,							0,					NULL	},
 };
 
+Stargate *proplist_stargate;
+
+PRIVATE
+proplist_s_new Stargate_PropList_new[] = {
+	
+	{ "rotspeed",		&proplist_stargate->rotspeed,		0,			0xffff,						PROPTYPE_INT,		NULL	},
+	{ "radius",			&proplist_stargate->radius,			0x10000,	0x4000000,					PROPTYPE_FLOAT,		NULL	},
+	//{ "destname",		OFS_DESTNAME,		0,			MAX_SERVER_NAME,			PROPTYPE_STRING,	NULL	},
+	//{ "destip",			OFS_DESTIP,			0,			STARGATE_MAX_DEST_IP,		PROPTYPE_STRING,	StargateModify_RealizeNode	},
+	//{ "destport",		OFS_DESTPORT,		1024,		65535,						PROPTYPE_INT,		StargateModify_RealizeNode	},
+	{ "actdistance",	&proplist_stargate->actdistance,	0x10000,    0x4000000,					PROPTYPE_FLOAT,		NULL	},
+	{ "dormant",		&proplist_stargate->dormant,		0x0,		0x1,						PROPTYPE_INT,		NULL	},
+	{ "active",			&proplist_stargate->active,			0x0,		0x1,						PROPTYPE_INT,		StargateModify_ActiveChanged		},
+	{ "autoactivate",	&proplist_stargate->autoactivate,	0x0,		0x1,						PROPTYPE_INT,		StargateModify_AutoactivateChanged	},
+	{ "numpartactive",	&proplist_stargate->numpartactive,	1,			2048,						PROPTYPE_INT,		NULL	},
+	{ "actcyllen",		&proplist_stargate->actcyllen,		0,			2048,						PROPTYPE_INT,		NULL	},
+	{ "partvel",		&proplist_stargate->partvel,		0x10000,    0x4000000,					PROPTYPE_FLOAT,		NULL	},
+	{ "modulspeed",		&proplist_stargate->modulspeed,		0,			0xffff,						PROPTYPE_INT,		NULL	},
+	{ "modulrad1",		&proplist_stargate->modulrad1,		0x10000,    0x4000000,					PROPTYPE_FLOAT,		NULL	},
+	{ "modulrad2",		&proplist_stargate->modulrad2,		0x10000,    0x4000000,					PROPTYPE_FLOAT,		NULL	},
+	{ "acttime",		&proplist_stargate->acttime,		0,			FRAME_MEASURE_TIMEBASE*10,	PROPTYPE_INT,		NULL	},
+	{ "flare_name",		&proplist_stargate->flare_name,		0,			MAX_TEXNAME,				PROPTYPE_STRING,	NULL	},
+	{ "interior_name",	&proplist_stargate->interior_name,	0,			MAX_TEXNAME,				PROPTYPE_STRING,	NULL	},
+	
+	{ NULL,				0,				0,			0,							0,					NULL	},
+};
+
 extern int headless_bot;
 
 // type fields init function for stargate -------------------------------------
@@ -222,6 +249,8 @@ void StargateInitType( CustomObject *base )
 
 	stargate->ping				= -1;
 	stargate->lastpinged		= 0;
+	
+	proplist_stargate = stargate;
 }
 
 /*
@@ -1641,6 +1670,14 @@ void StargateRegisterCustomType()
 	CON_RegisterCustomType( info.type_id, Stargate_PropList );
 }
 
+#include "con_com.h"
+
+int Cmd_sg_test(char *dummy_str)
+{
+	if(proplist_stargate != NULL)
+		proplist_stargate->radius = 60;
+	return TRUE;
+}
 
 // module registration function -----------------------------------------------
 //
@@ -1648,6 +1685,16 @@ REGISTER_MODULE( G_STGATE )
 {
 	// register type
 	StargateRegisterCustomType();
+	user_command_s regcom;
+	memset( &regcom, 0, sizeof( user_command_s ) );
+	
+	// register "clbot.start" command
+	regcom.command	 = "stargatetest";
+	regcom.numparams = 0;
+	regcom.execute	 = Cmd_sg_test;
+	regcom.statedump = NULL;
+	CON_RegisterUserCommand( &regcom );
+
 }
 
 

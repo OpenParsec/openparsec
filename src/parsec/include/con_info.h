@@ -22,6 +22,15 @@ struct proplist_s {
 	notify_callback_fpt notify_callback; // callback on field value changes
 };
 
+struct proplist_s_new {
+	const char*			propname;		// name property can be accessed by
+	void *				proppo;		    // Pointer to value
+	int 				bmin;			// minimum value of property
+	int 				bmax;			// maximum value of property
+	int					fieldtype;		// field's data type
+	notify_callback_fpt notify_callback; // callback on field value changes
+	
+};
 //NOTE:
 // bmin and bmax (value bounds) for all types other than
 // PROPTYPE_INT have to be specified in fixed-point!
