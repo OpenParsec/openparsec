@@ -11,7 +11,7 @@ typedef int (*notify_callback_fpt)( GenObject *base );
 
 
 // access information for single object property (type/class field)
-
+//FIXME: Zillions of offsetof warnings start here
 struct proplist_s {
 
 	const char*			propname;		// name property can be accessed by
