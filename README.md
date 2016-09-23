@@ -16,7 +16,7 @@ On Linux:
 - To build the server: make server
 - To build both targets: make
 
-On Wintendo:
+On Windows:
 - Visual studio 2012 express and up supported
 - Open the solution file in platforms\vs2012
 - Build solution
