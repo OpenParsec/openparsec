@@ -2149,7 +2149,7 @@
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
 				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = app;
@@ -2182,7 +2182,7 @@
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
 				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
