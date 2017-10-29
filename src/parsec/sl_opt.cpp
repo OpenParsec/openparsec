@@ -438,7 +438,11 @@ void RegisterDefaultOptions()
 void SYSs_CheckCommandLine( int argc, char **argv )
 {
 	// set default name of local player
-	strncpy( LocalPlayerName, default_player_name, MAX_PLAYER_NAME );
+	srand(time(NULL));
+	int playerRand = rand() % 999 + 1;
+	
+	strncpy( LocalPlayerName,default_player_name,MAX_PLAYER_NAME );
+	sprintf(LocalPlayerName,"%s%d",LocalPlayerName,playerRand);
 	LocalPlayerName[ MAX_PLAYER_NAME ] = 0;
 
 	// register default command line options
