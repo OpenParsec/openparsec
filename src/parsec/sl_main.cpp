@@ -234,28 +234,6 @@ int SLm_StartUpGame()
 	return TRUE;
 }
 
-
-// calibrate and init joystick ------------------------------------------------
-//
-INLINE
-void SLm_InitJoystickCode()
-{
-	if ( !SkipCalibrationCode ) {
-
-//		IL_CalibrateJoystick();
-		Op_Joystick 	 = QueryJoystick;
-		JoystickDisabled = !QueryJoystick;
-
-	} else {
-
-		QueryJoystick	 = 0;
-		Op_Joystick 	 = 0;
-		JoystickDisabled = 1;
-		MSGOUT( joystick_disabled );
-	}
-}
-
-
 // init sound -----------------------------------------------------------------
 //
 INLINE
@@ -417,11 +395,6 @@ int main( int argc, char **argv )
 	// init sound system
 	if(!headless_bot){
 		SLm_InitSound();
-	}
-
-	// calibrate joystick
-	if(!headless_bot){
-		SLm_InitJoystickCode();
 	}
 
 	// init game and start gameloop
