@@ -321,14 +321,14 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.deadzone_max_axis_2", 0,  32767, &isdl_joyDeadZone_Max[2] , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_max_axis_3", 0,  32767, &isdl_joyDeadZone_Max[3] , NULL, NULL    },
 	{ 0x01, "isdl.showjoy_input"      , 0,      1, &isdl_joyOutput          , NULL, NULL,0  }, //default off
-	{ 0x01, "isdl.jbind_gun"          , -1,     64,&isdl_FireGun            , NULL, NULL,0  }, //button 0 default
+	{ 0x01, "isdl.jbind_gun"          , -1,     64,&isdl_FireGun            , NULL, NULL,2  }, //button 2 default
 	{ 0x01, "isdl.jbind_missile"      , -1,     64,&isdl_FireMissile        , NULL, NULL,1  }, //button 1 default
-	{ 0x01, "isdl.jbind_accel"        , -1,     64,&isdl_Accelerate         , NULL, NULL,-1 }, //disabled until bound
-	{ 0x01, "isdl.jbind_decel"        , -1,     64,&isdl_Deccelerate        , NULL, NULL,-1 },
-	{ 0x01, "isdl.jbind_rollleft"     , -1,     64,&isdl_Rollleft           , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_accel"        , -1,     64,&isdl_Accelerate         , NULL, NULL,0  }, //button 0 default
+	{ 0x01, "isdl.jbind_decel"        , -1,     64,&isdl_Deccelerate        , NULL, NULL,3  }, //button 3 default
+	{ 0x01, "isdl.jbind_rollleft"     , -1,     64,&isdl_Rollleft           , NULL, NULL,-1 }, //disabled until bound
 	{ 0x01, "isdl.jbind_rollright"    , -1,     64,&isdl_RollRight          , NULL, NULL,-1 },
-	{ 0x01, "isdl.jbind_nextgun"      , -1,     64,&isdl_NextGun            , NULL, NULL,-1 },
-	{ 0x01, "isdl.jbind_nextmissile"  , -1,     64,&isdl_NextMissile        , NULL, NULL,-1 },
+	{ 0x01, "isdl.jbind_nextgun"      , -1,     64,&isdl_NextGun            , NULL, NULL,4  }, //button 4 default
+	{ 0x01, "isdl.jbind_nextmissile"  , -1,     64,&isdl_NextMissile        , NULL, NULL,5  }, //button 5 default
 	{ 0x01, "isdl.analogthrottle"     , 0,      1, &isdl_RudderToggle       , NULL, NULL,0  }, //default off
 	{ 0x01, "isdl.analogrudder"       , 0,      1, &isdl_ThrottleToggle     , NULL, NULL,0  },
     { 0x01, "isdl.jbind_aburn"        , -1,     64,&isdl_Aburn              , NULL, NULL,-1 },
@@ -342,7 +342,7 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_ddown"        , -1,     64,&isdl_Ddown              , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_dleft"        , -1,     64,&isdl_Dleft              , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_dright"       , -1,     64,&isdl_Dright             , NULL, NULL,-1 },
-	{ 0x01, "isdl.jbind_shift"        , -1,     64,&isdl_Shift              , NULL, NULL,1  }, //button 2 default
+	{ 0x01, "isdl.jbind_shift"        , -1,     64,&isdl_Shift              , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_target"       , -1,     64,&isdl_Target             , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_targetfront"  , -1,     64,&isdl_TargetFront        , NULL, NULL,-1 },
 	{ 0x01, "isdl.jbind_exit"         , -1,     64,&isdl_Exit               , NULL, NULL,-1 },
