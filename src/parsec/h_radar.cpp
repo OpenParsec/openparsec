@@ -76,12 +76,16 @@
 //
 #define TARGET_RADAR_OBJ_COL 		255		// white
 #define NORMAL_RADAR_OBJ_COL1 		80		// red
-#define NORMAL_RADAR_OBJ_COL2 		87
-#define NORMAL_RADAR_OBJ_COL3 		91
+#define NORMAL_RADAR_OBJ_COL2 		87      // still red
+#define NORMAL_RADAR_OBJ_COL3 		91      // also red
 #define MISSILE_RADAR_OBJ_COL 		167		// yellow
 #define STARGATE_RADAR_OBJ_COL 		225		// blue
 #define PLANET_RADAR_OBJ_COL		102		// green
 #define TELEPORTER_RADAR_OBJ_COL 	102		// green  // FIXME: use this for now
+//150 dark blue
+//50 light gray
+//75 dark gray
+#define EXTRA_RADAR_COLOR                75
 
 // geometry of radar ----------------------------------------------------------
 //
@@ -438,6 +442,32 @@ void RadarScanPlanetObjects()
 	}
 }
 
+// scan extra objects for radar -----------------------------------------------
+//
+INLINE
+void RadarScanExtraObjects()
+{
+	GenObject *walkobjs = FetchFirstExtra();
+	for ( ; walkobjs; walkobjs = walkobjs->NextObj ) {
+		
+		
+		
+		//if ( walkobjs->ObjectClass != REPAIR_EXTRA_CLASS ) {
+		//	continue;
+		//}
+		
+		// set color for extra objects
+		int rocolor = EXTRA_RADAR_COLOR;
+		
+		// depict extra's position on radar
+		if ( AUX_ENABLE_ELITE_RADAR ) {
+			CalcDrawEliteRadarObj( walkobjs, rocolor );
+		} else {
+			CalcDrawRadarObj( walkobjs, rocolor );
+		}
+	}
+}
+
 
 // draw radar display (contents): dots denoting spacecrafts -------------------
 //
@@ -488,6 +518,9 @@ void HUD_DrawHUDRadar()
 	if ( AUX_DRAW_TELEPORTERS_ON_RADAR ) {
 		RadarScanTeleporterObjects();
 	}
+	
+	//extra dots
+	RadarScanExtraObjects();
 	
 }
 
