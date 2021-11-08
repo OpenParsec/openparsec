@@ -1,5 +1,8 @@
 OpenParsec
 ==========
+
+Hit us up on discord!!! https://discord.gg/G7ZejM5N5h
+
 Gameplay demonstration:
 
 This is the latest gameplay video it's a bit old but contains all the 0.2 features. Expect an updated video before or after 0.3 release
