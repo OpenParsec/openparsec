@@ -29,7 +29,7 @@
 #include <math.h>
 #include <limits.h>
 
-#ifndef isnan
+#ifdef SYSTEM_TARGET_WINDOWS
 #define isnan(x) _isnan(x)
 #endif
 
