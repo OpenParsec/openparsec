@@ -106,10 +106,16 @@ PRIVATE
 int SL_MsgOut( const char *format, va_list ap )
 {
 	int rc;
-
+	extern int headless_bot;
 	// check if string is terminated by new line
 	int newlinemissing = ( format[ strlen( format ) - 1 ] != '\n' );
-
+	if(headless_bot) {
+		// compose string
+		rc = vsprintf( paste_str, format, ap );
+		//Dump to STDOUT
+		printf("%s",paste_str);
+		
+	}
 	if ( TextModeActive ) {
 
 		//NOTE:
@@ -137,6 +143,7 @@ int SL_MsgOut( const char *format, va_list ap )
 
 		// output string
 		ISDL_LogWinTextLine( paste_str );
+			
 
 	} else {
 
