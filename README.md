@@ -26,7 +26,8 @@ On Windows:
 - You will need to get the runtime dll libraries for SDL2 and SDL2_mixer from http://libsdl.org
 
 On Mac OS X:
-- You will need XCode
+- Mac OS 10.7-10.14
+- You will need XCode 9.3
 - Open the project in platforms\xcode
 - Select your target as either parsec or parsec_server
 - Build the project
