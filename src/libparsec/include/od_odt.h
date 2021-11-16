@@ -72,17 +72,33 @@ enum ODT_shadingtype_t {
 // defines a single object-face (size is 128 bytes)
 struct ODT_Face {
 
-	char*			TexMap;			// pointer to texture name
-	ODT_UPoint*		TexEqui;		// (u,v) correspondences (texture placement)
-	dword			ColorRGB;		// RGB color for direct color display
-	dword			ColorIndx;		// colorindex for palette mapped display
-	dword			FaceNormalIndx; // index of vertex which is the surface normal
-	ODT_Xmatrx		TexXmatrx;		// matrix for texture placement
-	dword			_mtxscratch1;	// scratchpad for matrix code
-	ODT_Xmatrx		CurTexXmatrx;	// current transformation screen -> texture
-	dword			Shading;		// shading type to apply to this face
-	dword			_padto_128;
+	char*			TexMap;			// 4 pointer to texture name
+	ODT_UPoint*		TexEqui;		// 4 (u,v) correspondences (texture placement)
+	dword			ColorRGB;		// 4 RGB color for direct color display
+	dword			ColorIndx;		// 4 colorindex for palette mapped display
+	dword			FaceNormalIndx; // 4 index of vertex which is the surface normal
+	ODT_Xmatrx		TexXmatrx;		// 48 matrix for texture placement
+	dword			_mtxscratch1;	// 4 scratchpad for matrix code
+	ODT_Xmatrx		CurTexXmatrx;	// 48 current transformation screen -> texture
+	dword			Shading;		// 4 shading type to apply to this face
+	dword			_padto_128;		// 4
 };
+
+// defines a single object-face (size is 128 bytes)
+struct ODT_Face_Hdr {
+
+	dword			TexMap;			// 4 pointer to texture name
+	dword			TexEqui;		// 4 (u,v) correspondences (texture placement)
+	dword			ColorRGB;		// 4 RGB color for direct color display
+	dword			ColorIndx;		// 4 colorindex for palette mapped display
+	dword			FaceNormalIndx; // 4 index of vertex which is the surface normal
+	ODT_Xmatrx		TexXmatrx;		// 48 matrix for texture placement
+	dword			_mtxscratch1;	// 4 scratchpad for matrix code
+	ODT_Xmatrx		CurTexXmatrx;	// 48 current transformation screen -> texture
+	dword			Shading;		// 4 shading type to apply to this face
+	dword			_padto_128;		// 4
+};
+
 
 
 // defines a single object-polygon (size is 16 bytes)
@@ -91,6 +107,13 @@ struct ODT_Poly {
 	dword		NumVerts;		// number of vertices (no surface normal!)
 	dword		FaceIndx;		// index of face this polygon belongs to
 	dword*		VertIndxs; 		// list of vertexindexes comprising the polygon
+	dword		_padto_16;
+};
+
+struct ODT_Poly_Hdr {
+	dword		NumVerts;		// number of vertices (no surface normal!)
+	dword		FaceIndx;		// index of face this polygon belongs to
+	dword		VertIndxs; 		// list of vertexindexes comprising the polygon
 	dword		_padto_16;
 };
 
@@ -115,9 +138,57 @@ struct ODT_BSPNode {
 
 // structure of graphical object contained in ODT file ------------------------
 //
-struct ODT_GenObject {
+struct ODT_GenObject_Hdr {
+	// this structure is used as a "header" to the file and describes
+	// the data contained within via 32-bit offset variables.  In previous
+	// code, the members listed as offset were pointers.  Here they will
+	// be used to calculate the offset in the data to get the value from.
+	// offsets are forced to dword to force a 32 bit value.
+	
+	dword			NextObj;			// 4 bytes: offset, should be 0 in the file
+	dword			PrevObj;			// 4 bytes: offset, should be 0 in the file
+	dword			NextVisObj;			// 4 bytes: offset, should be 0 in the file
+	dword			ObjectNumber;		// 4 bytes: value, unique number of this objectinstance
+	dword			HostObjNumber;		// 4 bytes: value, number this object has on its host
+	dword			ObjectType; 		// 4 bytes: value, type this object belongs to
+	dword			ObjectClass;		// 4 bytes: value, class this object belongs to
+	dword			InstanceSize;		// 4 bytes: value, size of instance of this object class
+	dword			NumVerts;			// 4 bytes: value, number of vertices w/ normals
+	dword			NumPolyVerts;		// 4 bytes: value, number of vertices w/o normals
+	dword			NumNormals; 		// 4 bytes: value, number of face normals
+	dword			VertexList;			// 4 bytes: offset, list of all vertices in object space
+	dword			X_VertexList;		// 4 bytes: offset, vertices transformed into view space
+	dword			P_VertexList;		// 4 bytes: offset, vtxs projected onto view plane
+	dword			S_VertexList;		// 4 bytes: offset, vtxs converted to screen coordinates
+	dword			NumPolys;			// 4 bytes: value, number of polygons in this object
+	dword			PolyList;			// 4 bytes: offset, list of polygons in this object
+	dword			NumFaces;			// 4 bytes: value, number of faces in this object
+	dword			FaceList;			// 4 bytes: offset, list of all faces
+	dword			VisPolyList;		// 4 bytes: offset, indexes of currently visible polys
+	fixed_t			FarthestZ;			// 4 bytes: value, currently farthest z of all vertices
+	fixed_t			NearestZ;			// 4 bytes: value, currently nearest z of all vertices
+	fixed_t			BoundingSphere; 	// 4 bytes: value, radius of bounding sphere
+	fixed_t			BoundingSphere2;	// 4 bytes: value, radius squared of bounding sphere
+	ODT_Vertex3 	BoundingBox[8]; 	// 128 bytes: value, vertices of bounding box in objectspace ???
+	dword			BSPTree;			// 4 bytes: offset, pointer to root of bsp tree
+	ODT_Vertex3 	LocalCameraLoc; 	// 16 bytes: value, location of camera in object space
+	ODT_Vertex3 	PyrNormals[4];		// 64 bytes: value, normals of view pyramid in obj space
+	dword			_mtxscratch1;		// 4 bytes: value, scratchpad for matrix code
+	ODT_Xmatrx		ObjPosition;		// 48 bytes: value, location and orientation in worldsp.
+	dword			_mtxscratch2;		// 4 bytes: value, scratchpad for matrix code
+	ODT_Xmatrx		CurrentXmatrx;		// 48 bytes: value, current objspace -> viewspace xform
 
-	ODT_GenObject*	NextObj;			// pointers to next and previous obj in
+};
+
+
+// structure of graphical object contained in ODT file ------------------------
+//
+struct ODT_GenObject {
+	// this structure is used as a "header" to the file and describes
+	// the data contained within via 32-bit offset variables.  In previous
+	// code, these were pointers.
+	// marking up with sizes in 32 bit land, for 64-bit conversion
+	ODT_GenObject*	NextObj;			//  pointers to next and previous obj in
 	ODT_GenObject*	PrevObj;			//	doubly linked objectinstance list
 	ODT_GenObject*	NextVisObj;			// pointer to next obj in visible list
 	dword			ObjectNumber;		// unique number of this objectinstance
