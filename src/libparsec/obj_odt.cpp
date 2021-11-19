@@ -1211,33 +1211,26 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	// init list of polygons
 	ODT_Poly_Hdr *odtpolys = (ODT_Poly_Hdr *)genobj->PolyList; // array of polys
 	Poly     *genpolys = gobj->PolyList; //pointer to the new list
-
-	// polyvertex list is after the PolyList in memory
-	dword    *genindxs = (dword *) ( ((unsigned char*)gobj->PolyList) + sz_polylist );
+  dword    *genindxs = (dword *) ( ((unsigned char*)gobj->PolyList) + sz_polylist );
 
 	int numindxs  = 0;
-	//for ( int pct = 0; pct < gobj->NumPolys; pct++){//, odtpolys++, genpolys++ ) {
 	for ( int pct = gobj->NumPolys; pct > 0; pct--, odtpolys++, genpolys++ ) {
 		genpolys->NumVerts  = SWAP_32( odtpolys->NumVerts );
 		genpolys->FaceIndx  = SWAP_32( odtpolys->FaceIndx );
 		genpolys->VertIndxs = genindxs;
 		genpolys->Flags		= POLYFLAG_DEFAULT;
-		//dword vertindxs = SWAP_32( (uintptr_t )(odtpolys[pct].VertIndxs) ) ; 
-		//odtpolys->VertIndxs =(dword)((unsigned char* )vertindxs + newdatabase);
-
+		
 		// grab all vertex indexes
 		dword *odtindxs = (dword *)((unsigned char* )(odtpolys->VertIndxs + newdatabase));//odtpolys->VertIndxs;
 		for ( int vict = 0; vict < genpolys->NumVerts; vict++, numindxs++ ) {
-		//for ( int vict = genpolys[pct].NumVerts; vict > 0; vict--, numindxs++ ) {
-			//ASSERT( numindxs < numpolyvindexs );
-			//genindxs[vict] = SWAP_32(odtindxs[vict]);
+			ASSERT( numindxs < numpolyvindexs );
 			*genindxs = SWAP_32(*odtindxs);
 			genindxs++;
 			odtindxs++;
 			if((void *)genindxs > (void *)gobj->FaceList){
 				int tmp = 1;
 			}
-			assert((void *)genindxs < (void *)gobj->FaceList);
+			//assert((void *)genindxs < (void *)gobj->FaceList);
 		}
 
 		// skip area reserved for additional corner info
@@ -1251,7 +1244,6 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	//ODT_Face_Hdr *odtfcshdr = (ODT_Face_Hdr *)genobj->FaceList;
 	for ( dword faceid = 0; faceid < gobj->NumFaces; faceid++, odtfaces++ ) {
 
-		
 		Face *face = &gobj->FaceList[ faceid ];
 
 		// swap shading and texname fields
@@ -1381,7 +1373,7 @@ void OD2_PreSortAttributes( GenObject *obj )
 // determine if face is texture mapped ----------------------------------------
 //
 PRIVATE
-int OD2_FaceTextured( OD2_Face *face )
+int OD2_FaceTextured( OD2_Face_Hdr *face )
 {
 	return ( ( face->Shading == ( OD2_shad_afftex   & OD2_shadmask_base ) ) ||
 			 ( face->Shading == ( OD2_shad_ipol1tex & OD2_shadmask_base ) ) ||
@@ -1393,7 +1385,7 @@ int OD2_FaceTextured( OD2_Face *face )
 // convert od2 shading spec into internal shader spec -------------------------
 //
 PRIVATE
-void OD2_ConvertShading( GenObject *gobj, dword faceid, OD2_Face *odtface, shader_s *shader )
+void OD2_ConvertShading( GenObject *gobj, dword faceid, OD2_Face_Hdr *odtface, shader_s *shader )
 {
 #ifdef PARSEC_CLIENT
 
@@ -1451,9 +1443,9 @@ geomv_t OD2_Geomv_in( float value )
 // create (internal) object from (external) odt2 object -----------------------
 //
 PRIVATE
-size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
+size_t OD2_CreateObject( OD2_Root_Hdr *tobj, dword flags, shader_s *shader, size_t odtobjsize )
 {
-	ASSERT( cobj != NULL );
+	ASSERT( tobj != NULL );
 
 	// default flags may be requested
 	if ( flags == OBJLOAD_DEFAULT ) {
@@ -1461,35 +1453,41 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 	}
 
 	// currently only version 1.0 valid
-	if ( ( cobj->major != 1 ) || ( cobj->minor != 0 ) ) {
+	if ( ( tobj->major != 1 ) || ( tobj->minor != 0 ) ) {
 		return FALSE;
 	}
 
-	// swap important header fields
-	cobj->rootflags			= SWAP_32( cobj->rootflags );
-	cobj->rootflags2		= SWAP_32( cobj->rootflags2 );
-	cobj->InstanceSize		= SWAP_32( cobj->InstanceSize );
-	cobj->NumVerts 			= SWAP_32( cobj->NumVerts );
-	cobj->NumPolyVerts 		= SWAP_32( cobj->NumPolyVerts );
-	cobj->NumNormals 		= SWAP_32( cobj->NumNormals );
-	cobj->NumPolys			= SWAP_32( cobj->NumPolys );
-	cobj->NumFaces			= SWAP_32( cobj->NumFaces );
-	cobj->NumTextures		= SWAP_32( cobj->NumTextures );
+	OD2_Root *cobj = (OD2_Root *)ALLOCMEM(odtobjsize);
+	memset(cobj,  0, odtobjsize);
 
-	ASSERT( cobj->InstanceSize == sizeof( OD2_Root ) );
+
+	// swap important header fields
+	cobj->rootflags			= SWAP_32( tobj->rootflags );
+	cobj->rootflags2		= SWAP_32( tobj->rootflags2 );
+	cobj->InstanceSize		= SWAP_32( tobj->InstanceSize );
+	cobj->NumVerts 			= SWAP_32( tobj->NumVerts );
+	cobj->NumPolyVerts 		= SWAP_32( tobj->NumPolyVerts );
+	cobj->NumNormals 		= SWAP_32( tobj->NumNormals );
+	cobj->NumPolys			= SWAP_32( tobj->NumPolys );
+	cobj->NumFaces			= SWAP_32( tobj->NumFaces );
+	cobj->NumTextures		= SWAP_32( tobj->NumTextures );
+	cobj->ObjectType = tobj->ObjectType;
+	cobj->ObjectClass = tobj->ObjectClass;
+
+	ASSERT( cobj->InstanceSize == sizeof( OD2_Root_Hdr ) );
 	ASSERT( cobj->NumVerts >= cobj->NumPolyVerts + cobj->NumNormals );
 	ASSERT( cobj->NumPolys >= cobj->NumFaces );
 
 	// new base address for object data
-	size_t newdatabase = (size_t) cobj;
+	size_t newdatabase = (size_t) tobj;
 
 	// correct header relative pointers in object header to absolute pointers
-	cobj->NodeList		= (OD2_Node *)		( SWAP_32( (size_t)cobj->NodeList )		+ newdatabase );
-	cobj->Children[ 0 ]	= (OD2_Child *)		( SWAP_32( (size_t)cobj->Children[ 0 ] )+ newdatabase );
-	cobj->Children[ 1 ]	= (OD2_Child *)		( SWAP_32( (size_t)cobj->Children[ 1 ] )+ newdatabase );
-	cobj->VertexList	= (OD2_Vertex3 *)	( SWAP_32( (size_t)cobj->VertexList )	+ newdatabase );
-	cobj->PolyList		= (OD2_Poly *)		( SWAP_32( (size_t)cobj->PolyList )		+ newdatabase );
-	cobj->FaceList		= (OD2_Face *)		( SWAP_32( (size_t)cobj->FaceList )		+ newdatabase );
+	cobj->NodeList		= (OD2_Node *)		( SWAP_32( (unsigned char *)tobj->NodeList )		+ newdatabase );
+	cobj->Children[ 0 ]	= (OD2_Child *)		( SWAP_32( (unsigned char *)tobj->Children[ 0 ] )+ newdatabase );
+	cobj->Children[ 1 ]	= (OD2_Child *)		( SWAP_32( (unsigned char *)tobj->Children[ 1 ] )+ newdatabase );
+	cobj->VertexList	= (OD2_Vertex3 *)	( SWAP_32( (unsigned char *)tobj->VertexList )	+ newdatabase );
+	cobj->PolyList		= (OD2_Poly *)		( SWAP_32( (unsigned char *)tobj->PolyList )		+ newdatabase );
+	cobj->FaceList		= (OD2_Face *)		( SWAP_32( (unsigned char *)tobj->FaceList )		+ newdatabase );
 
 	// size of generic header plus size of type specific header
 	size_t instancesize = OBJ_FetchTypeSize( cobj->ObjectType );
@@ -1554,8 +1552,7 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 	ASSERT( alignmentpadding <= OBJ_GEOMETRY_ALIGNMENT_VAL );
 
 	// calc some numbers not available in header
-	int numpolyvindexs = ( (size_t)cobj->FaceList - (size_t)cobj->PolyList -
-							cobj->NumPolys * sizeof( OD2_Poly ) ) / sizeof( dword );
+	int numpolyvindexs = ( (unsigned char *)cobj->FaceList - (unsigned char *)cobj->PolyList - cobj->NumPolys * sizeof( OD2_Poly_Hdr ) ) / sizeof( dword );
 
 	// reserve an extended face info for every face
 	int numfaceexinfos = ( numfaceanimstates > 0 ) ? cobj->NumFaces : 0;
@@ -1622,13 +1619,13 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 	gobj->NumPolys			= cobj->NumPolys;
 	gobj->NumFaces			= cobj->NumFaces;
 
-	gobj->VertexList		= (Vertex3 *)	( (char*)gobj					+ instancesize + alignmentpadding );
-	gobj->X_VertexList		= (Vertex3 *)	( (char*)gobj->VertexList		+ sz_vertexlist );
-	gobj->S_VertexList		= (SPoint *)	( (char*)gobj->X_VertexList		+ sz_xvertexlist );
-	gobj->SortedPolyList	= (dword *)		( (char*)gobj->S_VertexList		+ sz_svertexlist );
-	gobj->PolyList			= (Poly *)		( (char*)gobj->SortedPolyList	+ sz_sortedpolylist );
-	gobj->FaceList			= (Face *)		( (char*)gobj->PolyList			+ sz_polylist + sz_polyindexes );
-	gobj->VisPolyList		= (dword *)		( (char*)gobj->FaceList			+ sz_facelist + sz_faceextinfo );
+	gobj->VertexList		= (Vertex3 *)	( (unsigned char*)gobj					+ instancesize + alignmentpadding );
+	gobj->X_VertexList		= (Vertex3 *)	( (unsigned char*)gobj->VertexList		+ sz_vertexlist );
+	gobj->S_VertexList		= (SPoint *)	( (unsigned char*)gobj->X_VertexList		+ sz_xvertexlist );
+	gobj->SortedPolyList	= (dword *)		( (unsigned char*)gobj->S_VertexList		+ sz_svertexlist );
+	gobj->PolyList			= (Poly *)		( (unsigned char*)gobj->SortedPolyList	+ sz_sortedpolylist );
+	gobj->FaceList			= (Face *)		( (unsigned char*)gobj->PolyList			+ sz_polylist + sz_polyindexes );
+	gobj->VisPolyList		= (dword *)		( (unsigned char*)gobj->FaceList			+ sz_facelist + sz_faceextinfo );
 	//						= ( *)			( (char*)gobj->VisPolyList		+ sz_vispolylist );
 	gobj->AuxList			= NULL;
 	gobj->BSPTree			= NULL;
@@ -1637,12 +1634,12 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 	gobj->NumFaceAnims		= numfaceanimstates;
 	gobj->ActiveFaceAnims	= 0;
 	gobj->FaceAnimStates	= ( flags & OBJLOAD_FACEANIMS ) ?
-		(FaceAnimState *) ( (char*)gobj + faceanimstatebase ) : NULL;
+		(FaceAnimState *) ( (unsigned char*)gobj + faceanimstatebase ) : NULL;
 
 	gobj->NumVtxAnims		= numvtxanimstates;
 	gobj->ActiveVtxAnims	= 0;
 	gobj->VtxAnimStates		= ( flags & OBJLOAD_VTXANIMS ) ?
-		(VtxAnimState *) ( (char*)gobj + vtxanimstatebase ) : NULL;
+		(VtxAnimState *) ( (unsigned char*)gobj + vtxanimstatebase ) : NULL;
 
 	dword tmp				= SWAP_32( DW32( cobj->BoundingSphere ) );
 	float boundrad		= *(float *)&tmp;
@@ -1706,24 +1703,23 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 	gobj->BoundingBox[ 1 ].Z = maxs[ 2 ];
 
 	// init list of polygons
-	OD2_Poly *odtpolys = cobj->PolyList;
+	OD2_Poly_Hdr *odtpolys = (OD2_Poly_Hdr *) cobj->PolyList;
 	Poly     *genpolys = gobj->PolyList;
-	dword    *genindxs = (dword *) ( (char*)gobj->PolyList + sz_polylist );
+	dword    *genindxs = (dword *) ( (unsigned char *)gobj->PolyList + sz_polylist );
 
 	int numindxs  = 0;
 	for ( int pct = gobj->NumPolys; pct > 0; pct--, odtpolys++, genpolys++ ) {
-
 		genpolys->NumVerts  = SWAP_32( odtpolys->NumVerts );
 		genpolys->FaceIndx  = SWAP_32( odtpolys->FaceIndx );
 		genpolys->VertIndxs = genindxs;
 		genpolys->Flags		= POLYFLAG_DEFAULT;
-		odtpolys->VertIndxs = (dword *) ( SWAP_32( (size_t)odtpolys->VertIndxs ) + newdatabase );
 
 		// grab all vertex indexes
-		dword *odtindxs = odtpolys->VertIndxs;
-		for ( int vict = genpolys->NumVerts; vict > 0; vict--, numindxs++ ) {
+		dword *odtindxs = (dword *) ( SWAP_32( (size_t)odtpolys->VertIndxs ) + newdatabase ); //odtpolys->VertIndxs;
+		for ( int vict = 0; vict < genpolys->NumVerts; vict++, numindxs++ ) {
 			ASSERT( numindxs < numpolyvindexs );
-			*genindxs++ = SWAP_32( *odtindxs );
+			*genindxs = SWAP_32( *odtindxs );
+			genindxs++;
 			odtindxs++;
 		}
 
@@ -1738,7 +1734,7 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 		ALLOCMEM( textures_used.num * sizeof( TextureMap* ) ) : NULL;
 
 	// init list of faces
-	OD2_Face *odtfaces = cobj->FaceList;
+	OD2_Face_Hdr *odtfaces = (OD2_Face_Hdr *)cobj->FaceList;
 
 	unsigned int numtexturesused = 0;
 	for ( dword faceid = 0; faceid < gobj->NumFaces; faceid++, odtfaces++ ) {
@@ -1746,11 +1742,13 @@ size_t OD2_CreateObject( OD2_Root *cobj, dword flags, shader_s *shader )
 		Face *face = &gobj->FaceList[ faceid ];
 
 		// swap shading and texname fields
-		odtfaces->Shading = SWAP_32( odtfaces->Shading );
-		odtfaces->TexMap  = OD2_FaceTextured( odtfaces ) ? (char *)
-			( SWAP_32( (size_t)odtfaces->TexMap ) + newdatabase ) : NULL;
+		dword texmap = SWAP_32((dword)odtfaces->TexMap);
+		unsigned char *texmap_ptr = (unsigned char *)(texmap + newdatabase);
+		texmap_ptr  = OD2_FaceTextured( odtfaces ) ? ( texmap_ptr ) : NULL;
 
-		face->TexMap		  = OBJODT_FetchTexture( odtfaces->TexMap );
+		face->TexMap		  = OBJODT_FetchTexture( (char *)texmap_ptr );
+		odtfaces->Shading = SWAP_32( odtfaces->Shading );
+		
 		OD2_ConvertShading( gobj, faceid, odtfaces, shader );
 
 		face->ExtInfo		  = NULL;
@@ -2075,13 +2073,13 @@ size_t InitClassFromODT( dword classid, dword flags, shader_s *shader )
 	if ( isodt2 ) {
 
 		// init important header fields
-		OD2_Root *cobj = (OD2_Root *) odtobjmem;
+		OD2_Root_Hdr *cobj = (OD2_Root_Hdr *) odtobjmem;
 
 		cobj->ObjectType	= ObjectInfo[ classid ].type;
 		cobj->ObjectClass	= classid;
 
 		// convert odt2 to internal object format
-		objmemsize = OD2_CreateObject( cobj, flags, shader );
+		objmemsize = OD2_CreateObject( cobj, flags, shader, odtobjsize );
 
 	} else {
 

@@ -290,6 +290,16 @@ struct OD2_Face {
 	dword			ColorModel;		// type of color specification
 };
 
+struct OD2_Face_Hdr {
+
+	dword			TexMap;			// pointer to texture name
+	dword			ColorRGB;		// RGB color for direct color display
+	dword			ColorIndx;		// colorindex for palette mapped display
+	dword			FaceNormalIndx; // index of vertex which is the surface normal
+	OD2_Xmatrx		TexXmatrx;		// matrix for texture placement
+	dword			Shading;		// shading type to apply to this face
+	dword			ColorModel;		// type of color specification
+};
 
 // defines a single object-polygon
 struct OD2_Poly {
@@ -297,6 +307,13 @@ struct OD2_Poly {
 	dword		NumVerts;		// number of vertices (no surface normal!)
 	dword		FaceIndx;		// index of face this polygon belongs to
 	dword*		VertIndxs; 		// list of vertexindexes comprising the polygon
+};
+// defines a single object-polygon
+struct OD2_Poly_Hdr {
+
+	dword		NumVerts;		// number of vertices (no surface normal!)
+	dword		FaceIndx;		// index of face this polygon belongs to
+	dword		VertIndxs; 		// list of vertexindexes comprising the polygon
 };
 
 
@@ -424,6 +441,39 @@ struct OD2_Root {
 	OD2_CullBox		BoundingBox;		// axial bounding box
 };
 
+struct OD2_Root_Hdr {
+
+	char			odt2[ 6 ];			// signature ("ODT2")
+	byte			major;				// major revision
+	byte			minor;				// minor revision
+
+	dword			rootflags;
+	dword			rootflags2;
+
+	dword		NodeList;			// first node in attached list
+	dword		Children[ 2 ];		// child nodes in object graph
+
+	dword			ObjectType; 		// type this object belongs to
+	dword			ObjectClass;		// class this object belongs to
+	dword			InstanceSize;		// size of instance of this object class
+
+	dword			NumVerts;			// number of vertices w/ normals
+	dword			NumPolyVerts;		// number of vertices w/o normals
+	dword			NumNormals; 		// number of face normals
+	dword			VertexList;			// list of all vertices in object space
+
+	dword			NumPolys;			// number of polygons in this object
+	dword 		PolyList;			// list of polygons in this object
+
+	dword			NumFaces;			// number of faces in this object
+	dword			FaceList;			// list of all faces
+
+	dword			NumTextures;		// number of textures
+
+	OD2_Vertex3		BoundingCenter;		// center of bounding sphere
+	float			BoundingSphere; 	// radius of bounding sphere
+	OD2_CullBox		BoundingBox;		// axial bounding box
+};
 
 #endif // _OD_ODT_H_
 
