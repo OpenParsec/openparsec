@@ -29,6 +29,8 @@
 #include <string.h>
 #include <stdint.h>
 
+#define PARSEC_DEBUG
+
 // compilation flags/debug support
 #include "config.h"
 #include "debug.h"
@@ -957,7 +959,7 @@ PRIVATE
 size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader, size_t odtobjsize )
 {
 
-	ASSERT( cobj != NULL )
+	ASSERT( cobj != NULL );
 
 	// default flags may be requested
 	if ( flags == OBJLOAD_DEFAULT ) {
@@ -1061,8 +1063,12 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	// the above assertion may indeed fail. should look into this.
 
 	// calc some numbers not available in header
-	int numpolyvindexs = ( (size_t)genobj->FaceList - (size_t)genobj->PolyList -
-							genobj->NumPolys * sizeof( ODT_Poly ) ) / sizeof( dword );
+	int numpolyvindexs = ( (unsigned char *)genobj->FaceList - (unsigned char *)genobj->PolyList - genobj->NumPolys * sizeof( ODT_Poly_Hdr ) ) / sizeof( dword );
+
+	// a better way to calculate the number of poly v indexes
+	ODT_Poly_Hdr *odtpoly = (ODT_Poly_Hdr *)genobj->PolyList;
+
+
 	int numodtbspnodes = odt_maxnodeid + 1;
 
 	// reserve an extended face info for every face
@@ -1076,6 +1082,11 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	if ( flags & OBJLOAD_POLYWEDGEINDEXES )
 		cornersize++;
 
+	numpolyvindexs = 0;
+	for(int pidx = genobj->NumPolys; pidx > 0; pidx--, odtpoly++){
+		numpolyvindexs += odtpoly->NumVerts;
+		//numpolyvindexs += odtpoly->NumVerts * (cornersize -1 );
+	}
 	// determine sizes of data areas
 	size_t sz_vertexlist	 = genobj->NumVerts * sizeof( Vertex3 );
 	size_t sz_xvertexlist	 = genobj->NumVerts * sizeof( Vertex3 );
@@ -1132,22 +1143,22 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	gobj->NumPolys			= genobj->NumPolys;
 	gobj->NumFaces			= genobj->NumFaces;
 
-	gobj->VertexList		= (Vertex3 *)	( gobj				+ instancesize + alignmentpadding );
-	gobj->X_VertexList		= (Vertex3 *)	( gobj->VertexList	+ sz_vertexlist );
-	gobj->S_VertexList		= (SPoint *)	( gobj->X_VertexList	+ sz_xvertexlist );
-	gobj->PolyList			= (Poly *)		( gobj->S_VertexList	+ sz_svertexlist );
-	gobj->FaceList			= (Face *)		( gobj->PolyList		+ sz_polylist + sz_polyindexes );
-	gobj->VisPolyList		= (dword *)		( gobj->FaceList		+ sz_facelist + sz_faceextinfo );
+	gobj->VertexList		= (Vertex3 *)	( ((unsigned char*) gobj)				+ instancesize + alignmentpadding );
+	gobj->X_VertexList		= (Vertex3 *)	( ((unsigned char*) gobj->VertexList)	+ sz_vertexlist );
+	gobj->S_VertexList		= (SPoint *)	( ((unsigned char*) gobj->X_VertexList)	+ sz_xvertexlist );
+	gobj->PolyList			= (Poly *)		( ((unsigned char*) gobj->S_VertexList)	+ sz_svertexlist );
+	gobj->FaceList			= (Face *)		( ((unsigned char*) gobj->PolyList)		+ sz_polylist + sz_polyindexes );
+	gobj->VisPolyList		= (dword *)		( ((unsigned char*) gobj->FaceList)		+ sz_facelist + sz_faceextinfo );
 	gobj->SortedPolyList	= NULL;
 	gobj->AuxList			= NULL;
-	gobj->BSPTree			= (BSPNode *)	( gobj->VisPolyList	+ sz_vispolylist );
-	gobj->AuxBSPTree		= (CullBSPNode*)( gobj->BSPTree		+ sz_bsptree );
+	gobj->BSPTree			= (BSPNode *)	( ((unsigned char*) gobj->VisPolyList)	+ sz_vispolylist );
+	gobj->AuxBSPTree		= (CullBSPNode*)( ((unsigned char*) gobj->BSPTree)		+ sz_bsptree );
 	//						= ( *)			( (char*)gobj->AuxBSPTree	+ sz_auxbsptree );
 
 	gobj->NumFaceAnims		= numfaceanimstates;
 	gobj->ActiveFaceAnims	= 0;
 	gobj->FaceAnimStates	= ( flags & OBJLOAD_FACEANIMS ) ?
-		(FaceAnimState *) ( (char*)gobj + faceanimstatebase ) : NULL;
+		(FaceAnimState *) ( ((unsigned char*)gobj) + faceanimstatebase ) : NULL;
 
 	gobj->NumVtxAnims		= 0;
 	gobj->ActiveVtxAnims	= 0;
@@ -1198,26 +1209,35 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	gobj->BoundingBox[ 1 ].Z = maxs[ 2 ];
 
 	// init list of polygons
-	ODT_Poly_Hdr *odtpolys = (ODT_Poly_Hdr *)genobj->PolyList;
-	Poly     *genpolys = gobj->PolyList;
-	dword    *genindxs = (dword *) ( (char*)gobj->PolyList + sz_polylist );
+	ODT_Poly_Hdr *odtpolys = (ODT_Poly_Hdr *)genobj->PolyList; // array of polys
+	Poly     *genpolys = gobj->PolyList; //pointer to the new list
+
+	// polyvertex list is after the PolyList in memory
+	dword    *genindxs = (dword *) ( ((unsigned char*)gobj->PolyList) + sz_polylist );
 
 	int numindxs  = 0;
+	//for ( int pct = 0; pct < gobj->NumPolys; pct++){//, odtpolys++, genpolys++ ) {
 	for ( int pct = gobj->NumPolys; pct > 0; pct--, odtpolys++, genpolys++ ) {
-
 		genpolys->NumVerts  = SWAP_32( odtpolys->NumVerts );
 		genpolys->FaceIndx  = SWAP_32( odtpolys->FaceIndx );
 		genpolys->VertIndxs = genindxs;
 		genpolys->Flags		= POLYFLAG_DEFAULT;
-		dword vertindxs = SWAP_32( (uintptr_t )(odtpolys->VertIndxs) ) ; 
-		odtpolys->VertIndxs =(dword)(vertindxs + newdatabase);
+		//dword vertindxs = SWAP_32( (uintptr_t )(odtpolys[pct].VertIndxs) ) ; 
+		//odtpolys->VertIndxs =(dword)((unsigned char* )vertindxs + newdatabase);
 
 		// grab all vertex indexes
-		dword *odtindxs = (dword *)odtpolys->VertIndxs;
-		for ( int vict = genpolys->NumVerts; vict > 0; vict--, numindxs++ ) {
-			ASSERT( numindxs < numpolyvindexs );
-			*genindxs++ = SWAP_32( *odtindxs );
+		dword *odtindxs = (dword *)((unsigned char* )(odtpolys->VertIndxs + newdatabase));//odtpolys->VertIndxs;
+		for ( int vict = 0; vict < genpolys->NumVerts; vict++, numindxs++ ) {
+		//for ( int vict = genpolys[pct].NumVerts; vict > 0; vict--, numindxs++ ) {
+			//ASSERT( numindxs < numpolyvindexs );
+			//genindxs[vict] = SWAP_32(odtindxs[vict]);
+			*genindxs = SWAP_32(*odtindxs);
+			genindxs++;
 			odtindxs++;
+			if((void *)genindxs > (void *)gobj->FaceList){
+				int tmp = 1;
+			}
+			assert((void *)genindxs < (void *)gobj->FaceList);
 		}
 
 		// skip area reserved for additional corner info
@@ -1228,20 +1248,21 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	// init list of faces
 	ODT_Face_Hdr *odtfaces = (ODT_Face_Hdr *)genobj->FaceList;
 
-	ODT_Face_Hdr *odtfcshdr = (ODT_Face_Hdr *)genobj->FaceList;
+	//ODT_Face_Hdr *odtfcshdr = (ODT_Face_Hdr *)genobj->FaceList;
 	for ( dword faceid = 0; faceid < gobj->NumFaces; faceid++, odtfaces++ ) {
 
 		
 		Face *face = &gobj->FaceList[ faceid ];
 
 		// swap shading and texname fields
-		odtfaces->Shading = SWAP_32( odtfaces->Shading );
-		dword texmap = SWAP_32( (uintptr_t)odtfaces->TexMap);
-		dword texmap_ptr = (dword)(texmap + newdatabase );
-		odtfaces->TexMap  = (dword)(ODT_FaceTextured( odtfaces ) ?
+		dword texmap = SWAP_32( (dword)odtfaces->TexMap);
+		unsigned char *texmap_ptr = (unsigned char *)(texmap + newdatabase );
+		texmap_ptr  = (ODT_FaceTextured( odtfaces ) ?
 					(texmap_ptr ) : NULL);
 
-		face->TexMap		  = OBJODT_FetchTexture( (char *)odtfaces->TexMap );
+		face->TexMap		  = OBJODT_FetchTexture( (char *)texmap_ptr );
+		odtfaces->Shading = SWAP_32( odtfaces->Shading );
+		
 		ODT_ConvertShading( gobj, faceid, odtfaces, shader );
 
 		face->ExtInfo		  = NULL;
