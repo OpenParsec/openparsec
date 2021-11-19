@@ -992,7 +992,8 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	genobj->NumNormals 	= SWAP_32( cobj->NumNormals );
 	genobj->NumPolys		= SWAP_32( cobj->NumPolys );
 	genobj->NumFaces		= SWAP_32( cobj->NumFaces );
-
+	genobj->ObjectClass = cobj->ObjectClass;
+	genobj->ObjectType = cobj->ObjectType;
 	//NOTE:
 	// some very old ODT files have an invalid InstanceSize field.
 	// never mind, we recalculate it anyway.
@@ -1294,6 +1295,7 @@ size_t ODT_CreateObject( ODT_GenObject_Hdr *cobj, dword flags, shader_s *shader,
 	// create wedge data structures
 	gobj = OBJODT_CreateWedgeData( gobj, &objmemsize, flags );
 
+	MSGOUT("Writing class id %i\n", gobj->ObjectClass);	
 	// enter object into class array
 	ObjClasses[ gobj->ObjectClass ] = gobj;
 
@@ -1814,6 +1816,7 @@ size_t OD2_CreateObject( OD2_Root_Hdr *tobj, dword flags, shader_s *shader, size
 	}
 
 	// enter object into class array
+	MSGOUT("Writing class id %i\n", gobj->ObjectClass);
 	ObjClasses[ gobj->ObjectClass ] = gobj;
 
 	// init class and type data of object
@@ -2052,7 +2055,7 @@ size_t InitClassFromODT( dword classid, dword flags, shader_s *shader )
 	char *odtobjmem = (char *) ALLOCMEM( odtobjsize );
 	if ( odtobjmem == NULL )
 		OUTOFMEM( no_object_mem );
-	MSGOUT ( "Loading %s ...", ObjectInfo[ classid ].file );
+	MSGOUT ( "Loading %i from file %s ...", classid, ObjectInfo[ classid ].file );
 	FILE *fp = SYS_fopen( ObjectInfo[ classid ].file, "rb" );
 	if ( fp == NULL )
 		FERROR( object_not_found, ObjectInfo[ classid ].file );
