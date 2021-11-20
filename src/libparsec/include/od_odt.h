@@ -71,32 +71,31 @@ enum ODT_shadingtype_t {
 
 // defines a single object-face (size is 128 bytes)
 struct ODT_Face {
-
-	char*			TexMap;			// 4 pointer to texture name
-	ODT_UPoint*		TexEqui;		// 4 (u,v) correspondences (texture placement)
-	dword			ColorRGB;		// 4 RGB color for direct color display
-	dword			ColorIndx;		// 4 colorindex for palette mapped display
-	dword			FaceNormalIndx; // 4 index of vertex which is the surface normal
-	ODT_Xmatrx		TexXmatrx;		// 48 matrix for texture placement
-	dword			_mtxscratch1;	// 4 scratchpad for matrix code
-	ODT_Xmatrx		CurTexXmatrx;	// 48 current transformation screen -> texture
-	dword			Shading;		// 4 shading type to apply to this face
-	dword			_padto_128;		// 4
+	char*			TexMap;			// pointer to texture name
+	ODT_UPoint*		TexEqui;		// (u,v) correspondences (texture placement)
+	dword			ColorRGB;		// RGB color for direct color display
+	dword			ColorIndx;		// colorindex for palette mapped display
+	dword			FaceNormalIndx; // index of vertex which is the surface normal
+	ODT_Xmatrx		TexXmatrx;		// matrix for texture placement
+	dword			_mtxscratch1;	// scratchpad for matrix code
+	ODT_Xmatrx		CurTexXmatrx;	// current transformation screen -> texture
+	dword			Shading;		// shading type to apply to this face
+	dword			_padto_128;
 };
 
-// defines a single object-face (size is 128 bytes)
-struct ODT_Face_Hdr {
 
-	dword			TexMap;			// 4 pointer to texture name
-	dword			TexEqui;		// 4 (u,v) correspondences (texture placement)
-	dword			ColorRGB;		// 4 RGB color for direct color display
-	dword			ColorIndx;		// 4 colorindex for palette mapped display
-	dword			FaceNormalIndx; // 4 index of vertex which is the surface normal
-	ODT_Xmatrx		TexXmatrx;		// 48 matrix for texture placement
-	dword			_mtxscratch1;	// 4 scratchpad for matrix code
-	ODT_Xmatrx		CurTexXmatrx;	// 48 current transformation screen -> texture
-	dword			Shading;		// 4 shading type to apply to this face
-	dword			_padto_128;		// 4
+// defines a single object-face (size is 128 bytes)
+struct ODT_Face32 {
+    dword			pTexMap;			// pointer to texture name
+    dword			pTexEqui;		// (u,v) correspondences (texture placement) ODT_UPoint*
+    dword			ColorRGB;		// RGB color for direct color display
+    dword			ColorIndx;		// colorindex for palette mapped display
+    dword			FaceNormalIndx; // index of vertex which is the surface normal
+    ODT_Xmatrx		TexXmatrx;		// matrix for texture placement
+    dword			_mtxscratch1;	// scratchpad for matrix code
+    ODT_Xmatrx		CurTexXmatrx;	// current transformation screen -> texture
+    dword			Shading;		// shading type to apply to this face
+    dword			_padto_128;
 };
 
 
@@ -107,16 +106,17 @@ struct ODT_Poly {
 	dword		NumVerts;		// number of vertices (no surface normal!)
 	dword		FaceIndx;		// index of face this polygon belongs to
 	dword*		VertIndxs; 		// list of vertexindexes comprising the polygon
-	dword		_padto_16;
 };
 
-struct ODT_Poly_Hdr {
-	dword		NumVerts;		// number of vertices (no surface normal!)
-	dword		FaceIndx;		// index of face this polygon belongs to
-	dword		VertIndxs; 		// list of vertexindexes comprising the polygon
-	dword		_padto_16;
-};
 
+// defines a single object-polygon (size is 16 bytes)
+struct ODT_Poly32 {
+
+    dword		NumVerts;		// number of vertices (no surface normal!)
+    dword		FaceIndx;		// index of face this polygon belongs to
+    dword		pVertIndxs;		// list of vertexindexes comprising the polygon (this is a 32-bit pointer)
+    dword		_padto_16;
+};
 
 // list of indexes of currently visible polygons ( DetermineObjVisibility() )
 struct ODT_VisPolys {
@@ -138,57 +138,9 @@ struct ODT_BSPNode {
 
 // structure of graphical object contained in ODT file ------------------------
 //
-struct ODT_GenObject_Hdr {
-	// this structure is used as a "header" to the file and describes
-	// the data contained within via 32-bit offset variables.  In previous
-	// code, the members listed as offset were pointers.  Here they will
-	// be used to calculate the offset in the data to get the value from.
-	// offsets are forced to dword to force a 32 bit value.
-	
-	dword			NextObj;			// 4 bytes: offset, should be 0 in the file
-	dword			PrevObj;			// 4 bytes: offset, should be 0 in the file
-	dword			NextVisObj;			// 4 bytes: offset, should be 0 in the file
-	dword			ObjectNumber;		// 4 bytes: value, unique number of this objectinstance
-	dword			HostObjNumber;		// 4 bytes: value, number this object has on its host
-	dword			ObjectType; 		// 4 bytes: value, type this object belongs to
-	dword			ObjectClass;		// 4 bytes: value, class this object belongs to
-	dword			InstanceSize;		// 4 bytes: value, size of instance of this object class
-	dword			NumVerts;			// 4 bytes: value, number of vertices w/ normals
-	dword			NumPolyVerts;		// 4 bytes: value, number of vertices w/o normals
-	dword			NumNormals; 		// 4 bytes: value, number of face normals
-	dword			VertexList;			// 4 bytes: offset, list of all vertices in object space
-	dword			X_VertexList;		// 4 bytes: offset, vertices transformed into view space
-	dword			P_VertexList;		// 4 bytes: offset, vtxs projected onto view plane
-	dword			S_VertexList;		// 4 bytes: offset, vtxs converted to screen coordinates
-	dword			NumPolys;			// 4 bytes: value, number of polygons in this object
-	dword			PolyList;			// 4 bytes: offset, list of polygons in this object
-	dword			NumFaces;			// 4 bytes: value, number of faces in this object
-	dword			FaceList;			// 4 bytes: offset, list of all faces
-	dword			VisPolyList;		// 4 bytes: offset, indexes of currently visible polys
-	fixed_t			FarthestZ;			// 4 bytes: value, currently farthest z of all vertices
-	fixed_t			NearestZ;			// 4 bytes: value, currently nearest z of all vertices
-	fixed_t			BoundingSphere; 	// 4 bytes: value, radius of bounding sphere
-	fixed_t			BoundingSphere2;	// 4 bytes: value, radius squared of bounding sphere
-	ODT_Vertex3 	BoundingBox[8]; 	// 128 bytes: value, vertices of bounding box in objectspace ???
-	dword			BSPTree;			// 4 bytes: offset, pointer to root of bsp tree
-	ODT_Vertex3 	LocalCameraLoc; 	// 16 bytes: value, location of camera in object space
-	ODT_Vertex3 	PyrNormals[4];		// 64 bytes: value, normals of view pyramid in obj space
-	dword			_mtxscratch1;		// 4 bytes: value, scratchpad for matrix code
-	ODT_Xmatrx		ObjPosition;		// 48 bytes: value, location and orientation in worldsp.
-	dword			_mtxscratch2;		// 4 bytes: value, scratchpad for matrix code
-	ODT_Xmatrx		CurrentXmatrx;		// 48 bytes: value, current objspace -> viewspace xform
-
-};
-
-
-// structure of graphical object contained in ODT file ------------------------
-//
 struct ODT_GenObject {
-	// this structure is used as a "header" to the file and describes
-	// the data contained within via 32-bit offset variables.  In previous
-	// code, these were pointers.
-	// marking up with sizes in 32 bit land, for 64-bit conversion
-	ODT_GenObject*	NextObj;			//  pointers to next and previous obj in
+
+	ODT_GenObject*	NextObj;			// pointers to next and previous obj in
 	ODT_GenObject*	PrevObj;			//	doubly linked objectinstance list
 	ODT_GenObject*	NextVisObj;			// pointer to next obj in visible list
 	dword			ObjectNumber;		// unique number of this objectinstance
@@ -223,6 +175,46 @@ struct ODT_GenObject {
 
 };
 
+
+
+// structure of graphical object contained in ODT file ------------------------
+//
+struct ODT_GenObject32 {
+
+    dword           pNextObj;			// pointers to next and previous obj in
+    dword           pPrevObj;			//	doubly linked objectinstance list
+    dword       	pNextVisObj;			// pointer to next obj in visible list
+    dword			ObjectNumber;		// unique number of this objectinstance
+    dword			HostObjNumber;		// number this object has on its host
+    dword			ObjectType; 		// type this object belongs to
+    dword			ObjectClass;		// class this object belongs to
+    dword			InstanceSize;		// size of instance of this object class
+    dword			NumVerts;			// number of vertices w/ normals
+    dword			NumPolyVerts;		// number of vertices w/o normals
+    dword			NumNormals; 		// number of face normals
+    dword           pVertexList;			// list of all vertices in object space
+    dword       	pX_VertexList;		// vertices transformed into view space
+    dword       	pP_VertexList;		// vtxs projected onto view plane
+    dword   		pS_VertexList;		// vtxs converted to screen coordinates
+    dword			NumPolys;			// number of polygons in this object
+    dword   		pPolyList;			// list of polygons in this object
+    dword			NumFaces;			// number of faces in this object
+    dword           pFaceList;			// list of all faces
+    dword           pVisPolyList;		// indexes of currently visible polys
+    fixed_t			FarthestZ;			// currently farthest z of all vertices
+    fixed_t			NearestZ;			// currently nearest z of all vertices
+    fixed_t			BoundingSphere; 	// radius of bounding sphere
+    fixed_t			BoundingSphere2;	// radius squared of bounding sphere
+    ODT_Vertex3 	BoundingBox[8]; 	// vertices of bounding box in objectspace ???
+    dword       	pBSPTree;			// pointer to root of bsp tree
+    ODT_Vertex3 	LocalCameraLoc; 	// location of camera in object space
+    ODT_Vertex3 	PyrNormals[4];		// normals of view pyramid in obj space
+    dword			_mtxscratch1;		// scratchpad for matrix code
+    ODT_Xmatrx		ObjPosition;		// location and orientation in worldsp.
+    dword			_mtxscratch2;		// scratchpad for matrix code
+    ODT_Xmatrx		CurrentXmatrx;		// current objspace -> viewspace xform
+
+};
 
 
 //-----------------------------------------------------------------------------
@@ -290,32 +282,31 @@ struct OD2_Face {
 	dword			ColorModel;		// type of color specification
 };
 
-struct OD2_Face_Hdr {
+// defines a single object-face
+struct OD2_Face32 {
 
-	dword			TexMap;			// pointer to texture name
-	dword			ColorRGB;		// RGB color for direct color display
-	dword			ColorIndx;		// colorindex for palette mapped display
-	dword			FaceNormalIndx; // index of vertex which is the surface normal
-	OD2_Xmatrx		TexXmatrx;		// matrix for texture placement
-	dword			Shading;		// shading type to apply to this face
-	dword			ColorModel;		// type of color specification
+    dword			pTexMap;			// pointer to texture name
+    dword			ColorRGB;		// RGB color for direct color display
+    dword			ColorIndx;		// colorindex for palette mapped display
+    dword			FaceNormalIndx; // index of vertex which is the surface normal
+    OD2_Xmatrx		TexXmatrx;		// matrix for texture placement
+    dword			Shading;		// shading type to apply to this face
+    dword			ColorModel;		// type of color specification
 };
 
 // defines a single object-polygon
 struct OD2_Poly {
-
 	dword		NumVerts;		// number of vertices (no surface normal!)
 	dword		FaceIndx;		// index of face this polygon belongs to
 	dword*		VertIndxs; 		// list of vertexindexes comprising the polygon
 };
+
 // defines a single object-polygon
-struct OD2_Poly_Hdr {
-
-	dword		NumVerts;		// number of vertices (no surface normal!)
-	dword		FaceIndx;		// index of face this polygon belongs to
-	dword		VertIndxs; 		// list of vertexindexes comprising the polygon
+struct OD2_Poly32 {
+    dword		NumVerts;		// number of vertices (no surface normal!)
+    dword		FaceIndx;		// index of face this polygon belongs to
+    dword		pVertIndxs; 		// list of vertexindexes comprising the polygon (ptr)
 };
-
 
 // 3-D plane
 struct OD2_Plane {
@@ -441,39 +432,40 @@ struct OD2_Root {
 	OD2_CullBox		BoundingBox;		// axial bounding box
 };
 
-struct OD2_Root_Hdr {
+struct OD2_Root32 {
 
-	char			odt2[ 6 ];			// signature ("ODT2")
-	byte			major;				// major revision
-	byte			minor;				// minor revision
+    char			odt2[ 6 ];			// signature ("ODT2")
+    byte			major;				// major revision
+    byte			minor;				// minor revision
 
-	dword			rootflags;
-	dword			rootflags2;
+    dword			rootflags;
+    dword			rootflags2;
 
-	dword		NodeList;			// first node in attached list
-	dword		Children[ 2 ];		// child nodes in object graph
+    dword    		pNodeList;			// first node in attached list
+    dword   		pChildren[ 2 ];		// child nodes in object graph
 
-	dword			ObjectType; 		// type this object belongs to
-	dword			ObjectClass;		// class this object belongs to
-	dword			InstanceSize;		// size of instance of this object class
+    dword			ObjectType; 		// type this object belongs to
+    dword			ObjectClass;		// class this object belongs to
+    dword			InstanceSize;		// size of instance of this object class
 
-	dword			NumVerts;			// number of vertices w/ normals
-	dword			NumPolyVerts;		// number of vertices w/o normals
-	dword			NumNormals; 		// number of face normals
-	dword			VertexList;			// list of all vertices in object space
+    dword			NumVerts;			// number of vertices w/ normals
+    dword			NumPolyVerts;		// number of vertices w/o normals
+    dword			NumNormals; 		// number of face normals
+    dword       	pVertexList;			// list of all vertices in object space
 
-	dword			NumPolys;			// number of polygons in this object
-	dword 		PolyList;			// list of polygons in this object
+    dword			NumPolys;			// number of polygons in this object
+    dword    		pPolyList;			// list of polygons in this object
 
-	dword			NumFaces;			// number of faces in this object
-	dword			FaceList;			// list of all faces
+    dword			NumFaces;			// number of faces in this object
+    dword    		pFaceList;			// list of all faces
 
-	dword			NumTextures;		// number of textures
+    dword			NumTextures;		// number of textures
 
-	OD2_Vertex3		BoundingCenter;		// center of bounding sphere
-	float			BoundingSphere; 	// radius of bounding sphere
-	OD2_CullBox		BoundingBox;		// axial bounding box
+    OD2_Vertex3		BoundingCenter;		// center of bounding sphere
+    float			BoundingSphere; 	// radius of bounding sphere
+    OD2_CullBox		BoundingBox;		// axial bounding box
 };
+
 
 #endif // _OD_ODT_H_
 
