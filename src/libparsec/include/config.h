@@ -153,8 +153,10 @@
 #ifdef SYSTEM_COMPILER_MSVC
 	#pragma warning ( disable : 4305 )
 	#define PATH_MAX		_MAX_PATH
-//	#define vsnprintf		_vsnprintf
-	#define snprintf		_snprintf
+	#if _MSC_VER < 1900
+//		#define vsnprintf		_vsnprintf
+		#define snprintf		_snprintf
+	#endif
 #endif // SYSTEM_COMPILER_MSVC
 
 #if defined(SYSTEM_COMPILER_GCC) || defined(SYSTEM_COMPILER_CLANG) || defined(SYSTEM_COMPILER_LLVM_GCC)
