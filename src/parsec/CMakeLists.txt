@@ -95,7 +95,7 @@ add_feature_info(FREETYPE_FOUND "libfreetype" "FreeType lib is needed to build t
 include_directories(${FREETYPE_INCLUDE_DIR})
 include_directories(${GLEW_INCLUDE_DIRS})
 
-add_compile_options (-O0 -g -Wall -std=c++14 -fPIC -DPARSEC_CLIENT)
+add_compile_options (-O0 -g -Wall -std=c++14 -fPIC -DPARSEC_CLIENT -DDEBUG)
 link_libraries(SDL2_mixer)
 
 include_directories(${CMAKE_SOURCE_DIR} ../libparsec/include include ../libraries)
@@ -297,6 +297,8 @@ add_executable(${PROJECT_NAME}
     )
 
 target_link_libraries(${PROJECT_NAME} OpenGL::OpenGL GLEW::GLEW SDL2::SDL2)
+
+
 ##
 ##
 ##  Here we describe the files and positions of
