@@ -63,7 +63,7 @@ enum ODT_shadingtype_t {
 	ODT_ipol2tex_shad,		// second order interpolated texture mapping (quad)
 	ODT_persptex_shad,		// perspective correct texmapping w/o interpolation
 	ODT_material_shad,		// shade using material specification
-	ODT_texmat_shad		// composite texture and material specification
+	ODT_texmat_shad	    	// composite texture and material specification
 };
 
 
@@ -137,7 +137,6 @@ struct ODT_BSPNode {
 // structure of graphical object contained in ODT file ------------------------
 //
 struct ODT_GenObject {
-
 	ODT_GenObject*	NextObj;			// pointers to next and previous obj in
 	ODT_GenObject*	PrevObj;			//	doubly linked objectinstance list
 	ODT_GenObject*	NextVisObj;			// pointer to next obj in visible list
@@ -181,7 +180,7 @@ struct ODT_GenObject32 {
 
     dword           pNextObj;			// pointers to next and previous obj in
     dword           pPrevObj;			//	doubly linked objectinstance list
-    dword       	pNextVisObj;			// pointer to next obj in visible list
+    dword       	pNextVisObj;		// pointer to next obj in visible list
     dword			ObjectNumber;		// unique number of this objectinstance
     dword			HostObjNumber;		// number this object has on its host
     dword			ObjectType; 		// type this object belongs to
@@ -190,7 +189,7 @@ struct ODT_GenObject32 {
     dword			NumVerts;			// number of vertices w/ normals
     dword			NumPolyVerts;		// number of vertices w/o normals
     dword			NumNormals; 		// number of face normals
-    dword           pVertexList;			// list of all vertices in object space
+    dword           pVertexList;		// list of all vertices in object space
     dword       	pX_VertexList;		// vertices transformed into view space
     dword       	pP_VertexList;		// vtxs projected onto view plane
     dword   		pS_VertexList;		// vtxs converted to screen coordinates
@@ -283,7 +282,7 @@ struct OD2_Face {
 // defines a single object-face
 struct OD2_Face32 {
 
-    dword			pTexMap;			// pointer to texture name
+    dword			pTexMap;		// pointer to texture name
     dword			ColorRGB;		// RGB color for direct color display
     dword			ColorIndx;		// colorindex for palette mapped display
     dword			FaceNormalIndx; // index of vertex which is the surface normal
@@ -303,7 +302,7 @@ struct OD2_Poly {
 struct OD2_Poly32 {
     dword		NumVerts;		// number of vertices (no surface normal!)
     dword		FaceIndx;		// index of face this polygon belongs to
-    dword		pVertIndxs; 		// list of vertexindexes comprising the polygon (ptr)
+    dword		pVertIndxs; 	// list of vertexindexes comprising the polygon (ptr)
 };
 
 // 3-D plane
@@ -449,7 +448,7 @@ struct OD2_Root32 {
     dword			NumVerts;			// number of vertices w/ normals
     dword			NumPolyVerts;		// number of vertices w/o normals
     dword			NumNormals; 		// number of face normals
-    dword       	pVertexList;			// list of all vertices in object space
+    dword       	pVertexList;		// list of all vertices in object space
 
     dword			NumPolys;			// number of polygons in this object
     dword    		pPolyList;			// list of polygons in this object
