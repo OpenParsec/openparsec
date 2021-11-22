@@ -16,3 +16,6 @@
 *~
 *.sw?
 
+# Visual Studio cached files
+.vs/
+
