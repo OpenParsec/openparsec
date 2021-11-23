@@ -68,7 +68,7 @@ int D_DrawSquare( ugrid_t xko, ugrid_t yko, visual_t col, dword siz )
 	VisualToRGBA( &colrgba, col );
 	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
-	RO_PointSize( (GLfloat)siz );
+	RO_PointSize( (GLfloat)siz * RO_GetPixelDPIScale() );
 	
 	GLshort vertices[] = {(GLshort) xko, (GLshort) yko};
 	
@@ -111,7 +111,7 @@ int D_DrawSquareZ( ugrid_t xko, ugrid_t yko, visual_t col, dword siz, dword zval
 	VisualToRGBA( &colrgba, col );
 	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
-	RO_PointSize( siz );
+	RO_PointSize( siz * RO_GetPixelDPIScale() );
 	
 	GLshort vertices[] = {(GLshort) xko, (GLshort) yko, 0}; // TODO: zvalue
 	
@@ -149,7 +149,7 @@ void D_DrawRadarObj( ugrid_t xko, ugrid_t yko, visual_t col )
 	VisualToRGBA( &colrgba, col );
 	glColor4ub( (GLubyte)colrgba.R, (GLubyte)colrgba.G, (GLubyte)colrgba.B, 255 );
 
-	RO_PointSize( 2.0f );
+	RO_PointSize( 2.0f * RO_GetPixelDPIScale() );
 	
 	GLshort vertices[] = {(GLshort) xko, (GLshort) yko};
 	
