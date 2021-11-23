@@ -136,10 +136,11 @@ struct ODT_VisPolys {
 // node structure for bsp tree nodes (size is 16 bytes)
 struct ODT_BSPNode {
 
-    dword   Polygon;	    // index of polygon contained in this node
-    dword   Contained;	    // index of first node in the same plane (list)
-    dword   FrontTree;	    // index of root-node of front-subtree
-    dword   BackTree;	    // index of root-node of back-subtree
+	dword   Polygon;	    // index of polygon contained in this node
+	dword   Contained;	    // index of first node in the same plane (list)
+	dword   FrontTree;	    // index of root-node of front-subtree
+	dword   BackTree;	    // index of root-node of back-subtree
+
 };
 
 
