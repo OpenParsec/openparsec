@@ -318,9 +318,10 @@ struct OD2_Poly {
 
 // defines a single object-polygon
 struct OD2_Poly32 {
-    dword	NumVerts;	// number of vertices (no surface normal!)
-    dword	FaceIndx;	// index of face this polygon belongs to
-    dword	pVertIndxs;	// list of vertexindexes comprising the polygon (ptr)
+	dword	NumVerts;	// number of vertices (no surface normal!)
+	dword	FaceIndx;	// index of face this polygon belongs to
+	dword	pVertIndxs;	// list of vertexindexes comprising the polygon (ptr)
+
 };
 
 // 3-D plane
