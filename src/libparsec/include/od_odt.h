@@ -347,7 +347,8 @@ struct OD2_CullBox {
 // node structure for bsp tree nodes
 struct OD2_BSPNode {
 
-    dword	flags;		// node/leaf/separator
+	dword	flags;		// node/leaf/separator
+
 
 	short	frontpoly;	// index of first front polygon
 	short	numfront;	// number of front polygons
