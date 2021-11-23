@@ -325,10 +325,11 @@ struct OD2_Poly32 {
 // 3-D plane
 struct OD2_Plane {
 
-    float   X;			// normal[0]
-    float   Y;			// normal[1]
-    float   Z;			// normal[2]
-    float   D;			// distance along normal
+	float   X;			// normal[0]
+	float   Y;			// normal[1]
+	float   Z;			// normal[2]
+	float   D;			// distance along normal
+
 };
 
 
