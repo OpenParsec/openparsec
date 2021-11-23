@@ -409,8 +409,9 @@ struct OD2_Root {
     byte	    major;		// major revision
     byte	    minor;		// minor revision
 
-    dword	    rootflags;
-    dword	    rootflags2;
+	dword	    rootflags;
+	dword	    rootflags2;
+
 
     OD2_Node*	    NodeList;		// first node in attached list
     OD2_Child*	    Children[ 2 ];	// child nodes in object graph
