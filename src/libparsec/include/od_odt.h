@@ -336,8 +336,9 @@ struct OD2_BSPNode {
 
     dword	flags;		// node/leaf/separator
 
-    short	frontpoly;	// index of first front polygon
-    short	numfront;	// number of front polygons
+	short	frontpoly;	// index of first front polygon
+	short	numfront;	// number of front polygons
+
 
     short	backpoly;	// index of first back polygon
     short	numback;	// number of back polygons
