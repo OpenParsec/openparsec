@@ -530,23 +530,23 @@ VtxAnimState *VtxAnimCreateFromFaceList( GenObject *gobj, dword lod, int numface
     baseinfo->mNumVtxAnims = gobj->NumVtxAnims;
 
 	// save base object info
-    baseinfo->mNumVerts       = gobj->NumVerts;
-    baseinfo->mNumPolyVerts   = gobj->NumPolyVerts;
-    baseinfo->mNumNormals     = gobj->NumNormals;
-    baseinfo->mVertexList     = gobj->VertexList;
-    baseinfo->mNumPolys       = gobj->NumPolys;
-    baseinfo->mPolyList       = gobj->PolyList;
-    baseinfo->mNumFaces       = gobj->NumFaces;
-    baseinfo->mFaceList       = gobj->FaceList;
-    baseinfo->mSortedPolyList = gobj->SortedPolyList;
-    baseinfo->mNumWedges      = gobj->NumWedges;
-    baseinfo->mWedgeVertIndxs = gobj->WedgeVertIndxs;
-    baseinfo->mWedgeNormals   = gobj->WedgeNormals;
-    baseinfo->mWedgeColors    = gobj->WedgeColors;
-    baseinfo->mWedgeTexCoords = gobj->WedgeTexCoords;
-    baseinfo->mWedgeLighted   = gobj->WedgeLighted;
-    baseinfo->mWedgeSpecular  = gobj->WedgeSpecular;
-    baseinfo->mWedgeFogged    = gobj->WedgeFogged;
+	baseinfo->mNumVerts       = gobj->NumVerts;
+	baseinfo->mNumPolyVerts   = gobj->NumPolyVerts;
+	baseinfo->mNumNormals     = gobj->NumNormals;
+	baseinfo->mVertexList     = gobj->VertexList;
+	baseinfo->mNumPolys       = gobj->NumPolys;
+	baseinfo->mPolyList       = gobj->PolyList;
+	baseinfo->mNumFaces       = gobj->NumFaces;
+	baseinfo->mFaceList       = gobj->FaceList;
+	baseinfo->mSortedPolyList = gobj->SortedPolyList;
+	baseinfo->mNumWedges      = gobj->NumWedges;
+	baseinfo->mWedgeVertIndxs = gobj->WedgeVertIndxs;
+	baseinfo->mWedgeNormals   = gobj->WedgeNormals;
+	baseinfo->mWedgeColors    = gobj->WedgeColors;
+	baseinfo->mWedgeTexCoords = gobj->WedgeTexCoords;
+	baseinfo->mWedgeLighted   = gobj->WedgeLighted;
+	baseinfo->mWedgeSpecular  = gobj->WedgeSpecular;
+	baseinfo->mWedgeFogged    = gobj->WedgeFogged;
 
 	return anim;
 }
