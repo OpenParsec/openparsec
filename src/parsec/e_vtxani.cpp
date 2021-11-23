@@ -64,7 +64,7 @@ int VtxAnimMakeCurrent( GenObject *gobj, dword animid )
     vtxAnimBaseInfo *baseinfo = (vtxAnimBaseInfo *) &gobj->VtxAnimStates[ gobj->NumVtxAnims ];
 
 	// store id of active subobject
-    baseinfo->mNumVtxAnims = animid;
+	baseinfo->mNumVtxAnims = animid;
 
 	// switch to base object
     gobj->NumVerts		 = baseinfo->mNumVerts;
