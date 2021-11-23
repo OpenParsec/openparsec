@@ -40,8 +40,9 @@ struct ODT_UPoint {
 // 2-D coordinates after projection; not yet converted to screen coordinates
 struct ODT_ProjPoint {
 
-    fixed_t X;
-    fixed_t Y;	    // 8 bytes
+	fixed_t X;
+	fixed_t Y;	    // 8 bytes
+
 };
 
 
