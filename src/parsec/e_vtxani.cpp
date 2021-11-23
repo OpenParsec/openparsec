@@ -67,23 +67,23 @@ int VtxAnimMakeCurrent( GenObject *gobj, dword animid )
 	baseinfo->mNumVtxAnims = animid;
 
 	// switch to base object
-    gobj->NumVerts		 = baseinfo->mNumVerts;
-    gobj->NumPolyVerts	 = baseinfo->mNumPolyVerts;
-    gobj->NumNormals	 = baseinfo->mNumNormals;
-    gobj->VertexList	 = baseinfo->mVertexList;
-    gobj->NumPolys		 = baseinfo->mNumPolys;
-    gobj->PolyList		 = baseinfo->mPolyList;
-    gobj->NumFaces		 = baseinfo->mNumFaces;
-    gobj->FaceList		 = baseinfo->mFaceList;
-    gobj->SortedPolyList = baseinfo->mSortedPolyList;
-    gobj->NumWedges		 = baseinfo->mNumWedges;
-    gobj->WedgeVertIndxs = baseinfo->mWedgeVertIndxs;
-    gobj->WedgeNormals	 = baseinfo->mWedgeNormals;
-    gobj->WedgeColors	 = baseinfo->mWedgeColors;
-    gobj->WedgeTexCoords = baseinfo->mWedgeTexCoords;
-    gobj->WedgeLighted	 = baseinfo->mWedgeLighted;
-    gobj->WedgeSpecular	 = baseinfo->mWedgeSpecular;
-    gobj->WedgeFogged	 = baseinfo->mWedgeFogged;
+	gobj->NumVerts		 = baseinfo->mNumVerts;
+	gobj->NumPolyVerts	 = baseinfo->mNumPolyVerts;
+	gobj->NumNormals	 = baseinfo->mNumNormals;
+	gobj->VertexList	 = baseinfo->mVertexList;
+	gobj->NumPolys		 = baseinfo->mNumPolys;
+	gobj->PolyList		 = baseinfo->mPolyList;
+	gobj->NumFaces		 = baseinfo->mNumFaces;
+	gobj->FaceList		 = baseinfo->mFaceList;
+	gobj->SortedPolyList = baseinfo->mSortedPolyList;
+	gobj->NumWedges		 = baseinfo->mNumWedges;
+	gobj->WedgeVertIndxs = baseinfo->mWedgeVertIndxs;
+	gobj->WedgeNormals	 = baseinfo->mWedgeNormals;
+	gobj->WedgeColors	 = baseinfo->mWedgeColors;
+	gobj->WedgeTexCoords = baseinfo->mWedgeTexCoords;
+	gobj->WedgeLighted	 = baseinfo->mWedgeLighted;
+	gobj->WedgeSpecular	 = baseinfo->mWedgeSpecular;
+	gobj->WedgeFogged	 = baseinfo->mWedgeFogged;
 
 	// switch to subobject
 	if ( animid < gobj->NumVtxAnims ) {
