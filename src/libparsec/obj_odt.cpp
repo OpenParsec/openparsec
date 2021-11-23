@@ -1038,6 +1038,9 @@ size_t ODT_CreateObject(ODT_GenObject32 *c32obj, dword flags, shader_s *shader)
 	cobj->NumNormals = SWAP_32(c32obj->NumNormals);
 	cobj->NumPolys = SWAP_32(c32obj->NumPolys);
 	cobj->NumFaces = SWAP_32(c32obj->NumFaces);
+	cobj->BoundingSphere2 = c32obj->BoundingSphere2;
+	cobj->BoundingSphere = c32obj->BoundingSphere;
+
 
 	//NOTE:
 	// some very old ODT files have an invalid InstanceSize field.
@@ -1562,6 +1565,7 @@ size_t OD2_CreateObject(OD2_Root32 *cobj32, dword flags, shader_s *shader)
 	cobj->NumTextures = SWAP_32(cobj32->NumTextures);
 	cobj->ObjectClass = SWAP_32(cobj32->ObjectClass);
 	cobj->ObjectType = SWAP_32(cobj32->ObjectType);
+	cobj->BoundingSphere = cobj32->BoundingSphere;
 
 	ASSERT(cobj->InstanceSize == sizeof(OD2_Root));
 	ASSERT(cobj->NumVerts >= cobj->NumPolyVerts + cobj->NumNormals);
