@@ -127,8 +127,9 @@ struct ODT_Poly32 {
 // list of indexes of currently visible polygons ( DetermineObjVisibility() )
 struct ODT_VisPolys {
 
-    dword	NumVisPolys;	// number of polygon indexes in list
-    dword	PolyIndxs[ 1 ]; // first element of polygon index list (array)
+	dword	NumVisPolys;	// number of polygon indexes in list
+	dword	PolyIndxs[ 1 ]; // first element of polygon index list (array)
+
 };
 
 
