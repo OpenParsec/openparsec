@@ -79,6 +79,7 @@ struct openglstate_s {
 
 	// point size [glPointSize()]
 	GLfloat		pointsize;
+	float		pixel_dpi_scale;
 
 	// vertex arrays (client states and pointers)
 	dword		clientstate_bits;		// glEnableClientState()
@@ -106,6 +107,7 @@ openglstate_s DefaultOpenGLState = {
 	GL_ALWAYS,
 	0.0f,
 
+	1.0f,
 	1.0f,
 
 	VTXARRAY_NONE,
@@ -201,6 +203,22 @@ void RO_SetCapability(GLenum cap, bool enable)
 			*curstate = enable;
 		}
 	}
+}
+
+
+// set the pixel DPI scale ----------------------------------------------------
+//
+void RO_SetPixelDPIScale(float scale)
+{
+	OpenGLState.pixel_dpi_scale = scale;
+}
+
+
+// get the pixel DPI scale ----------------------------------------------------
+//
+float RO_GetPixelDPIScale()
+{
+	return OpenGLState.pixel_dpi_scale;
 }
 
 

@@ -76,25 +76,25 @@ static char default_player_name[]	= "fragme";
 PRIVATE
 int SLm_PrintCommandLineOptions()
 {
-	MSGOUT( "\nSome valid command line options:\n\n" );
+	printf( "\nSome valid command line options:\n\n" );
 
-	MSGOUT( " -h or --help               display this help page.\n\n" );
+	printf( " -h or --help               display this help page.\n\n" );
 
-	MSGOUT( " -n or --playername <name>  set nickname for network game.\n" );
-	MSGOUT( " -p or --pack <filename>    register additional data package.\n\n" );
-	MSGOUT( " -m or --mod <dirname>      register mod directory.\n\n" );
-	MSGOUT( " -f or --modforce <dirname> register mod directory with override.\n\n" );
+	printf( " -n or --playername <name>  set nickname for network game.\n" );
+	printf( " -p or --pack <filename>    register additional data package.\n\n" );
+	printf( " -m or --mod <dirname>      register mod directory.\n\n" );
+	printf( " -f or --modforce <dirname> register mod directory with override.\n\n" );
 
-	MSGOUT( " -j or --nojoystick         disable joystick.\n" );
-	MSGOUT( " -s or --nosound            disable music and sound effects.\n\n" );
+	printf( " -j or --nojoystick         disable joystick.\n" );
+	printf( " -s or --nosound            disable music and sound effects.\n\n" );
 
-	MSGOUT( " --vidmode <mode>           specify video mode (like: 1024x768x32).\n" );
-	MSGOUT( " --fullscreen               use fullscreen mode.\n" );
-	MSGOUT( " --windowed                 use windowed mode.\n" );
-	MSGOUT( " --flipsync                 synchronize with screen.\n" );
-	MSGOUT( " --noflipsync               do not synchronize with screen.\n\n" );
+	printf( " --vidmode <mode>           specify video mode (like: 1024x768x32).\n" );
+	printf( " --fullscreen               use fullscreen mode.\n" );
+	printf( " --windowed                 use windowed mode.\n" );
+	printf( " --flipsync                 synchronize with screen.\n" );
+	printf( " --noflipsync               do not synchronize with screen.\n\n" );
 
-	MSGOUT( "\n" );
+	printf( "\n" );
 
 	exit( EXIT_SUCCESS );
 }
@@ -451,7 +451,7 @@ void SYSs_CheckCommandLine( int argc, char **argv )
 
 	// exec all registered command line options
 	if ( !OPT_ExecRegisteredOptions( argc, argv ) ) {
-		MSGOUT( options_invalid );
+		printf( options_invalid );
 		exit( EXIT_SUCCESS );
 	}
 }

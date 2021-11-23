@@ -47,6 +47,9 @@ void	RO_InitializeState();
 
 void	RO_SetCapability(GLenum cap, bool enable);
 
+void	RO_SetPixelDPIScale(float scale);
+float	RO_GetPixelDPIScale();
+
 int		RO_DepthCmpEnabled();
 int		RO_DepthWriteEnabled();
 

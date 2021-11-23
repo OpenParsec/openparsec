@@ -27,3 +27,6 @@
 *.includes
 # ignore clion workspace
 .idea
+# Visual Studio cached files
+.vs/
+

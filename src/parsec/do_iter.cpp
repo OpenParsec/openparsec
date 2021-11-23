@@ -600,7 +600,7 @@ void D_DrawIterPoint2( IterPoint2 *itpoint )
 		RO_PointSmooth( TRUE );
 
 	// set point size
-	RO_PointSize( itpoint->pointsize );
+	RO_PointSize( itpoint->pointsize * RO_GetPixelDPIScale() );
 
 	// draw line strip/loop
 	INIT_GL_ARRAYS( itpoint, 0, itpoint->NumVerts );

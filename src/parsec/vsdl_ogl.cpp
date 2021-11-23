@@ -448,10 +448,14 @@ void SDL_RCSetup()
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
 
+	int window_w, window_h;
+	SDL_GetWindowSize(curwindow, &window_w, &window_h);
+
 	// set viewport using the window's pixel backing size, rather than its
 	// "dpi-independent" size.
 	int drawable_w, drawable_h;
 	SDL_GL_GetDrawableSize(curwindow, &drawable_w, &drawable_h);
+
 	glViewport( 0, 0, drawable_w, drawable_h );
 
 	//glFrontFace( GL_CW ); //FIXME: ?? why was this labelled FIXME?
@@ -482,6 +486,8 @@ void SDL_RCSetup()
 
 	// initialize GL state tracking
 	RO_InitializeState();
+
+	RO_SetPixelDPIScale((float)drawable_h / (float)window_h);
 }
 
 
