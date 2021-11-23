@@ -386,8 +386,9 @@ struct OD2_Node_BSP : OD2_Node {
 //
 struct OD2_Child {
 
-    dword	    childflags;
-    dword	    childflags2;
+	dword	    childflags;
+	dword	    childflags2;
+
 
 	OD2_Node*	    NodeList;		// first node in attached list
 	OD2_Child*	    Children[ 2 ];	// child nodes in object graph
