@@ -270,11 +270,12 @@ enum OD2_shadingtype_t {
 // types for color specification
 enum OD2_colormodel_t {
 
-    OD2_col_none,		// shading type has no associated color
-    OD2_col_indexed,		// indexed color (color look up table index)
-    OD2_col_rgb,		// color specified via separate R,G,B channels
-    OD2_col_rgba,		// color specified via separate R,G,B,A channels
-    OD2_col_material,		// use material specification
+	OD2_col_none,		// shading type has no associated color
+	OD2_col_indexed,		// indexed color (color look up table index)
+	OD2_col_rgb,		// color specified via separate R,G,B channels
+	OD2_col_rgba,		// color specified via separate R,G,B,A channels
+	OD2_col_material,		// use material specification
+
 
     OD2_num_colormodels
 };
