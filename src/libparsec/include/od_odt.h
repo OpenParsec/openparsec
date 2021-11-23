@@ -338,8 +338,9 @@ struct OD2_Plane {
 // axial bounding box
 struct OD2_CullBox {
 
-    float	mins[ 3 ];	// bounding box min-point
-    float	maxs[ 3 ];	// bounding box max-point
+	float	mins[ 3 ];	// bounding box min-point
+	float	maxs[ 3 ];	// bounding box max-point
+
 };
 
 
