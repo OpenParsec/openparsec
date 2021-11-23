@@ -11,11 +11,7 @@
 #ifndef GLES
 //
 //  On a linux box use the system path
-#ifdef __linux__
-#include <GL/glew.h>
-#else
 #include <glew/glew.h>
-#endif
 #else
 #include <GLES/gl.h>
 #include <GLES/glext.h>
