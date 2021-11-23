@@ -189,38 +189,39 @@ struct ODT_GenObject {
 //
 struct ODT_GenObject32 {
 
-    dword	    pNextObj;		// pointers to next and previous obj in
-    dword	    pPrevObj;		//  doubly linked objectinstance list
-    dword	    pNextVisObj;	// pointer to next obj in visible list
-    dword	    ObjectNumber;	// unique number of this objectinstance
-    dword	    HostObjNumber;	// number this object has on its host
-    dword	    ObjectType;		// type this object belongs to
-    dword	    ObjectClass;	// class this object belongs to
-    dword	    InstanceSize;	// size of instance of this object class
-    dword	    NumVerts;		// number of vertices w/ normals
-    dword	    NumPolyVerts;	// number of vertices w/o normals
-    dword	    NumNormals;		// number of face normals
-    dword	    pVertexList;	// list of all vertices in object space
-    dword	    pX_VertexList;	// vertices transformed into view space
-    dword	    pP_VertexList;	// vtxs projected onto view plane
-    dword	    pS_VertexList;	// vtxs converted to screen coordinates
-    dword	    NumPolys;		// number of polygons in this object
-    dword	    pPolyList;		// list of polygons in this object
-    dword	    NumFaces;		// number of faces in this object
-    dword	    pFaceList;		// list of all faces
-    dword	    pVisPolyList;	// indexes of currently visible polys
-    fixed_t	    FarthestZ;		// currently farthest z of all vertices
-    fixed_t	    NearestZ;		// currently nearest z of all vertices
-    fixed_t	    BoundingSphere;	// radius of bounding sphere
-    fixed_t	    BoundingSphere2;	// radius squared of bounding sphere
-    ODT_Vertex3	    BoundingBox[8];	// vertices of bounding box in objectspace ???
-    dword	    pBSPTree;		// pointer to root of bsp tree
-    ODT_Vertex3	    LocalCameraLoc;	// location of camera in object space
-    ODT_Vertex3	    PyrNormals[4];	// normals of view pyramid in obj space
-    dword	    _mtxscratch1;	// scratchpad for matrix code
-    ODT_Xmatrx	    ObjPosition;	// location and orientation in worldsp.
-    dword	    _mtxscratch2;	// scratchpad for matrix code
-    ODT_Xmatrx	    CurrentXmatrx;	// current objspace -> viewspace xform
+	dword	    pNextObj;		// pointers to next and previous obj in
+	dword	    pPrevObj;		//  doubly linked objectinstance list
+	dword	    pNextVisObj;	// pointer to next obj in visible list
+	dword	    ObjectNumber;	// unique number of this objectinstance
+	dword	    HostObjNumber;	// number this object has on its host
+	dword	    ObjectType;		// type this object belongs to
+	dword	    ObjectClass;	// class this object belongs to
+	dword	    InstanceSize;	// size of instance of this object class
+	dword	    NumVerts;		// number of vertices w/ normals
+	dword	    NumPolyVerts;	// number of vertices w/o normals
+	dword	    NumNormals;		// number of face normals
+	dword	    pVertexList;	// list of all vertices in object space
+	dword	    pX_VertexList;	// vertices transformed into view space
+	dword	    pP_VertexList;	// vtxs projected onto view plane
+	dword	    pS_VertexList;	// vtxs converted to screen coordinates
+	dword	    NumPolys;		// number of polygons in this object
+	dword	    pPolyList;		// list of polygons in this object
+	dword	    NumFaces;		// number of faces in this object
+	dword	    pFaceList;		// list of all faces
+	dword	    pVisPolyList;	// indexes of currently visible polys
+	fixed_t	    FarthestZ;		// currently farthest z of all vertices
+	fixed_t	    NearestZ;		// currently nearest z of all vertices
+	fixed_t	    BoundingSphere;	// radius of bounding sphere
+	fixed_t	    BoundingSphere2;	// radius squared of bounding sphere
+	ODT_Vertex3	    BoundingBox[8];	// vertices of bounding box in objectspace ???
+	dword	    pBSPTree;		// pointer to root of bsp tree
+	ODT_Vertex3	    LocalCameraLoc;	// location of camera in object space
+	ODT_Vertex3	    PyrNormals[4];	// normals of view pyramid in obj space
+	dword	    _mtxscratch1;	// scratchpad for matrix code
+	ODT_Xmatrx	    ObjPosition;	// location and orientation in worldsp.
+	dword	    _mtxscratch2;	// scratchpad for matrix code
+	ODT_Xmatrx	    CurrentXmatrx;	// current objspace -> viewspace xform
+
 
 };
 
