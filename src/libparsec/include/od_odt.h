@@ -277,7 +277,8 @@ enum OD2_colormodel_t {
 	OD2_col_material,		// use material specification
 
 
-    OD2_num_colormodels
+	OD2_num_colormodels
+
 };
 
 
