@@ -527,7 +527,7 @@ VtxAnimState *VtxAnimCreateFromFaceList( GenObject *gobj, dword lod, int numface
 	vtxAnimBaseInfo*  baseinfo = (vtxAnimBaseInfo *) &gobj->VtxAnimStates[ baseinfoid ];
 
 	// store id of base object as active subobject
-    baseinfo->mNumVtxAnims = gobj->NumVtxAnims;
+	baseinfo->mNumVtxAnims = gobj->NumVtxAnims;
 
 	// save base object info
 	baseinfo->mNumVerts       = gobj->NumVerts;
