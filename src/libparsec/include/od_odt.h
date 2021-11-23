@@ -285,13 +285,14 @@ enum OD2_colormodel_t {
 // defines a single object-face
 struct OD2_Face {
 
-    char*	    TexMap;	    // pointer to texture name
-    dword	    ColorRGB;	    // RGB color for direct color display
-    dword	    ColorIndx;	    // colorindex for palette mapped display
-    dword	    FaceNormalIndx; // index of vertex which is the surface normal
-    OD2_Xmatrx	    TexXmatrx;	    // matrix for texture placement
-    dword	    Shading;	    // shading type to apply to this face
-    dword	    ColorModel;	    // type of color specification
+	char*	    TexMap;	    // pointer to texture name
+	dword	    ColorRGB;	    // RGB color for direct color display
+	dword	    ColorIndx;	    // colorindex for palette mapped display
+	dword	    FaceNormalIndx; // index of vertex which is the surface normal
+	OD2_Xmatrx	    TexXmatrx;	    // matrix for texture placement
+	dword	    Shading;	    // shading type to apply to this face
+	dword	    ColorModel;	    // type of color specification
+
 };
 
 // defines a single object-face
