@@ -49,8 +49,9 @@ struct ODT_ProjPoint {
 // 2-D point in screen coordinates (used in vertex list for the edge tracer)
 struct ODT_SPoint {
 
-    long    X;	    // signed!
-    long    Y;	    // signed!
+	long    X;	    // signed!
+	long    Y;	    // signed!
+
 };
 
 
