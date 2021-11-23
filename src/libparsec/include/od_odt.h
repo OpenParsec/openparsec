@@ -32,8 +32,9 @@ struct ODT_Vertex3 {
 // 2-D point in unsigned integer coordinates (always >= 0)
 struct ODT_UPoint {
 
-    dword   X;	    // unsigned!
-    dword   Y;	    // unsigned!
+	dword   X;	    // unsigned!
+	dword   Y;	    // unsigned!
+
 };
 
 
