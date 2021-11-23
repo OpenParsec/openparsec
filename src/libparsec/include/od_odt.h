@@ -238,10 +238,11 @@ typedef float	OD2_Xmatrx[ 3 ][ 4 ];	    // [0 0 0 1] (line 4) omitted!
 // 3-D vertex coordinates
 struct OD2_Vertex3 {
 
-    float   X;
-    float   Y;
-    float   Z;
-    dword   Flags;  // padding to 16 bytes and flags
+	float   X;
+	float   Y;
+	float   Z;
+	dword   Flags;  // padding to 16 bytes and flags
+
 };
 
 
