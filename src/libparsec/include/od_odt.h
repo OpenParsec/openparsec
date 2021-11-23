@@ -375,7 +375,8 @@ struct OD2_Node_BSP : OD2_Node {
     dword	    NumFaces;		// number of faces in this object
     OD2_Face*	    FaceList;		// list of all faces
 
-    OD2_BSPNode*    BSPTree;		// pointer to root of bsp tree
+	OD2_BSPNode*    BSPTree;		// pointer to root of bsp tree
+
 
     OD2_Vertex3	    BoundingCenter;	// center of bounding sphere
     float	    BoundingSphere;	// radius of bounding sphere
