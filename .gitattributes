@@ -1,9 +1,2 @@
 # Set the default behavior, in case people don't have core.autocrlf set.
 * text=auto
-
-# Set LF for the ending for most source files.
-*.c text eol=lf
-*.h text eol=lf
-*.cpp text eol=lf
-
-*.sln text eol=crlf
