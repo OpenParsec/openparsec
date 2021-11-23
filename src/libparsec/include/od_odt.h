@@ -59,15 +59,16 @@ struct ODT_SPoint {
 // types for shading of faces
 enum ODT_shadingtype_t {
 
-    ODT_no_shad,	    // lighting independent ambient color (no shading!)
-    ODT_flat_shad,	    // flat shading
-    ODT_gouraud_shad,	    // gouraud shading
-    ODT_afftex_shad,	    // affine texture mapping
-    ODT_ipol1tex_shad,	    // first order interpolated texture mapping (lin)
-    ODT_ipol2tex_shad,	    // second order interpolated texture mapping (quad)
-    ODT_persptex_shad,	    // perspective correct texmapping w/o interpolation
-    ODT_material_shad,	    // shade using material specification
-    ODT_texmat_shad	    // composite texture and material specification
+	ODT_no_shad,	    // lighting independent ambient color (no shading!)
+	ODT_flat_shad,	    // flat shading
+	ODT_gouraud_shad,	    // gouraud shading
+	ODT_afftex_shad,	    // affine texture mapping
+	ODT_ipol1tex_shad,	    // first order interpolated texture mapping (lin)
+	ODT_ipol2tex_shad,	    // second order interpolated texture mapping (quad)
+	ODT_persptex_shad,	    // perspective correct texmapping w/o interpolation
+	ODT_material_shad,	    // shade using material specification
+	ODT_texmat_shad	    // composite texture and material specification
+
 };
 
 
