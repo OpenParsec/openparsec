@@ -378,9 +378,10 @@ struct OD2_Node_BSP : OD2_Node {
 	OD2_BSPNode*    BSPTree;		// pointer to root of bsp tree
 
 
-    OD2_Vertex3	    BoundingCenter;	// center of bounding sphere
-    float	    BoundingSphere;	// radius of bounding sphere
-    OD2_CullBox	    BoundingBox;	// axial bounding box
+	OD2_Vertex3	    BoundingCenter;	// center of bounding sphere
+	float	    BoundingSphere;	// radius of bounding sphere
+	OD2_CullBox	    BoundingBox;	// axial bounding box
+
 };
 
 
