@@ -89,16 +89,17 @@ struct ODT_Face {
 
 // defines a single object-face (size is 128 bytes)
 struct ODT_Face32 {
-    dword	    pTexMap;	    // pointer to texture name
-    dword	    pTexEqui;	    // (u,v) correspondences (texture placement) ODT_UPoint*
-    dword	    ColorRGB;	    // RGB color for direct color display
-    dword	    ColorIndx;	    // colorindex for palette mapped display
-    dword	    FaceNormalIndx; // index of vertex which is the surface normal
-    ODT_Xmatrx	    TexXmatrx;	    // matrix for texture placement
-    dword	    _mtxscratch1;   // scratchpad for matrix code
-    ODT_Xmatrx	    CurTexXmatrx;   // current transformation screen -> texture
-    dword	    Shading;	    // shading type to apply to this face
-    dword	    _padto_128;
+	dword	    pTexMap;	    // pointer to texture name
+	dword	    pTexEqui;	    // (u,v) correspondences (texture placement) ODT_UPoint*
+	dword	    ColorRGB;	    // RGB color for direct color display
+	dword	    ColorIndx;	    // colorindex for palette mapped display
+	dword	    FaceNormalIndx; // index of vertex which is the surface normal
+	ODT_Xmatrx	    TexXmatrx;	    // matrix for texture placement
+	dword	    _mtxscratch1;   // scratchpad for matrix code
+	ODT_Xmatrx	    CurTexXmatrx;   // current transformation screen -> texture
+	dword	    Shading;	    // shading type to apply to this face
+	dword	    _padto_128;
+
 };
 
 
