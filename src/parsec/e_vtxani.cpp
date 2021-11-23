@@ -524,7 +524,7 @@ VtxAnimState *VtxAnimCreateFromFaceList( GenObject *gobj, dword lod, int numface
 
 	// vertex anim beyond is treated as base object info array
 	int baseinfoid  = gobj->NumVtxAnims + vtxanimoffset;
-    vtxAnimBaseInfo*  baseinfo = (vtxAnimBaseInfo *) &gobj->VtxAnimStates[ baseinfoid ];
+	vtxAnimBaseInfo*  baseinfo = (vtxAnimBaseInfo *) &gobj->VtxAnimStates[ baseinfoid ];
 
 	// store id of base object as active subobject
     baseinfo->mNumVtxAnims = gobj->NumVtxAnims;
