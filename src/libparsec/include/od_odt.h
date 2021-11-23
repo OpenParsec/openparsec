@@ -21,11 +21,12 @@ typedef fixed_t ODT_Xmatrx[ 3 ][ 4 ];	    // [0 0 0 1] (line 4) omitted!
 // 3-D vertex coordinates
 struct ODT_Vertex3 {
 
-    fixed_t X;
-    fixed_t Y;
-    fixed_t Z;
-    dword   Flags;  // padding to 16 bytes and flags
+	fixed_t X;
+	fixed_t Y;
+	fixed_t Z;
+	dword   Flags;  // padding to 16 bytes and flags
 };
+
 
 
 // 2-D point in unsigned integer coordinates (always >= 0)
