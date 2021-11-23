@@ -117,11 +117,12 @@ struct ODT_Poly {
 // defines a single object-polygon (size is 16 bytes)
 struct ODT_Poly32 {
 
-    dword	NumVerts;	// number of vertices (no surface normal!)
-    dword	FaceIndx;	// index of face this polygon belongs to
-    dword	pVertIndxs;	// list of vertexindexes comprising the polygon (this is a 32-bit pointer)
-    dword	_padto_16;
+	dword	NumVerts;	// number of vertices (no surface normal!)
+	dword	FaceIndx;	// index of face this polygon belongs to
+	dword	pVertIndxs;	// list of vertexindexes comprising the polygon (this is a 32-bit pointer)
+	dword	_padto_16;
 };
+
 
 // list of indexes of currently visible polygons ( DetermineObjVisibility() )
 struct ODT_VisPolys {
