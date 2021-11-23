@@ -354,8 +354,9 @@ struct OD2_BSPNode {
 	short	numfront;	// number of front polygons
 
 
-    short	backpoly;	// index of first back polygon
-    short	numback;	// number of back polygons
+	short	backpoly;	// index of first back polygon
+	short	numback;	// number of back polygons
+
 
     short	fronttree;	// front-subtree
     short	backtree;	// back-subtree
