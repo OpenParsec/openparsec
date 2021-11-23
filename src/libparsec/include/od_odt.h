@@ -389,8 +389,9 @@ struct OD2_Child {
     dword	    childflags;
     dword	    childflags2;
 
-    OD2_Node*	    NodeList;		// first node in attached list
-    OD2_Child*	    Children[ 2 ];	// child nodes in object graph
+	OD2_Node*	    NodeList;		// first node in attached list
+	OD2_Child*	    Children[ 2 ];	// child nodes in object graph
+
 
     ODT_Xmatrx	    NodeTrafo;		// object-space transformation (relative)
 };
