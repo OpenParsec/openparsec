@@ -451,7 +451,7 @@ void SYSs_CheckCommandLine( int argc, char **argv )
 
 	// exec all registered command line options
 	if ( !OPT_ExecRegisteredOptions( argc, argv ) ) {
-		printf( options_invalid );
+		printf( "%s", options_invalid );
 		exit( EXIT_SUCCESS );
 	}
 }
