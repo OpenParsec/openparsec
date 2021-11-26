@@ -5,9 +5,8 @@ Hit us up on discord!!! https://discord.gg/G7ZejM5N5h
 
 Gameplay demonstration:
 
-This is the latest gameplay video it's a bit old but contains all the 0.2 features. Expect an updated video before or after 0.3 release
-
-http://youtu.be/plak2rPU5S0
+This video was made Nov 2021 it shows the current state of the game 
+https://www.youtube.com/watch?v=BbiaSOe4HbI
 
 To build OpenParsec:
 
