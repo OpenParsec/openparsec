@@ -1678,7 +1678,7 @@
 			};
 			buildConfigurationList = FAFEE68C163BDA5E0056CECD /* Build configuration list for PBXProject "Parsec" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -2087,13 +2087,12 @@
 					"\"$(SRCROOT)/../src/parsec\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				TEST_AFTER_BUILD = NO;
-				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -2144,21 +2143,19 @@
 					"\"$(SRCROOT)/../src/parsec\"",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "";
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = "";
 				TEST_AFTER_BUILD = NO;
-				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};
 		FAFEE6A7163BDA5E0056CECD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2180,10 +2177,10 @@
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
 				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "OpenParsec.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = i386;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2191,9 +2188,8 @@
 		FAFEE6A8163BDA5E0056CECD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_CXX0X_EXTENSIONS = NO;
 				CLANG_X86_VECTOR_INSTRUCTIONS = default;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -2214,12 +2210,12 @@
 				INFOPLIST_FILE = "Parsec-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../Libraries";
 				LIBRARY_SEARCH_PATHS = /Library/Frameworks;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "OpenParsec.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = i386;
+				SDKROOT = macosx;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
