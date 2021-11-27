@@ -1428,10 +1428,6 @@ bool_t CheckConsoleInput()
 }
 
 
-// type for writestring function pointer --------------------------------------
-//
-typedef void (*WSFP)( ... );
-
 //NOTE:
 // this declaration is in global scope because of the extern "C".
 // only gcc needs the otherwise redundant curly braces, however.
@@ -1471,17 +1467,14 @@ int QuicksayConsole()
 		edit_ofs_x = cursor_x - ConsoleEnterLength;
 	}
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
 	D_SetWStrContext( CharsetInfo[ HUD_CHARSETNO ].charsetpointer,
 					  CharsetInfo[ HUD_CHARSETNO ].geompointer,
 					  NULL,
 					  CharsetInfo[ HUD_CHARSETNO ].width,
 					  CharsetInfo[ HUD_CHARSETNO ].height );
 
-	// write text translucent only for color depths below 32 bit per pixel
-	WSFP wsfp = translucent ? (WSFP) &D_WriteTrString : (WSFP) &D_WriteString;
+	// used to branch on VID_TRANSLUCENCY_SUPPORTED
+	WSFP wsfp = D_WriteTrString;
 
 	// determine chars to draw
 	if ( edit_ofs_x == 0 ) {

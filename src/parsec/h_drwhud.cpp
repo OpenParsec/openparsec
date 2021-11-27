@@ -306,10 +306,6 @@ void SET_HUD_CHAR_CONTEXT()
 }
 
 
-// type for writestring function pointer --------------------------------------
-//
-typedef void (*WSFP)( ... );
-
 //NOTE:
 // this declaration is in global scope because of the extern "C".
 // only gcc needs the otherwise redundant curly braces.
@@ -390,26 +386,19 @@ void DrawOnlineHelp()
 	int chr_width = CharsetInfo[ HUD_CHARSETNO ].width;
 	int yko 	  = Help_Text_Y;
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
 	int wx = Help_Text_X - HELP_FRAME_LEFT;
 	int wy = Help_Text_Y - HELP_FRAME_TOP;
 	int ww = chr_width * helpwidth + HELP_FRAME_LEFT * 2;
 	int wh = Help_Text_LineDist * NUM_KEYS + HELP_FRAME_TOP * 2;
 
-	if ( translucent ) {
-		D_DrawTrRect( wx, wy, ww, wh, TRTAB_PANELBACK );
+	D_DrawTrRect( wx, wy, ww, wh, TRTAB_PANELBACK );
 
-		DRAW_PanelDecorations( wx, wy, ww, wh );
-	}
+	DRAW_PanelDecorations( wx, wy, ww, wh );
 
 	SET_HUD_CHAR_CONTEXT();
 
-	// write text transparent only for color depths below 32 bit per pixel
-	WSFP wsfp = ( translucent ) ?
-				(WSFP) &D_WriteTrString :
-				(WSFP) &D_WriteString;
+	// used to branch on VID_TRANSLUCENCY_SUPPORTED
+	WSFP wsfp = D_WriteTrString;
 
 	for ( kid = 0; kid < NUM_KEYS; kid++ ) {
 

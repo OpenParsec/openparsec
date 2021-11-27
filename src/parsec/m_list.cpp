@@ -378,10 +378,6 @@ int SlideListWindow()
 }
 
 
-// type for writestring function pointer --------------------------------------
-//
-typedef void (*WSFP)( ... );
-
 //NOTE:
 // this declaration is in global scope because of the extern "C".
 // only gcc needs the otherwise redundant curly braces.
@@ -575,16 +571,11 @@ void DrawDemoListWindow()
 	if ( AUX_DISABLE_FLOATING_MENU_DRAWING )
 		return;
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
-	// write text transparent only for color depths below 32 bit per pixel
-	WSFP wstrfp = translucent ? (WSFP)&D_WriteTrString : (WSFP)&D_WriteString;
+	// used to branch on VID_TRANSLUCENCY_SUPPORTED
+	WSFP wstrfp = D_WriteTrString;
 
 	// draw frame
-	if ( translucent ) {
-		DrawDemoListFrame();
-	}
+	DrawDemoListFrame();
 
 	// draw caption
 	DrawDemoListCaption( wstrfp );
@@ -816,16 +807,11 @@ void DrawRemotePlayerListWindow()
 	if ( AUX_DISABLE_FLOATING_MENU_DRAWING )
 		return;
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
-	// write text transparent only for color depths below 32 bit per pixel
-	WSFP wstrfp = translucent ? (WSFP)&D_WriteTrString : (WSFP)&D_WriteString;
+	// used to branch on VID_TRANSLUCENCY_SUPPORTED
+	WSFP wstrfp = D_WriteTrString;
 
 	// draw frame
-	if ( translucent ) {
-		DrawPlayerListFrame();
-	}
+	DrawPlayerListFrame();
 
 	// draw caption
 	DrawPlayerListCaption( wstrfp );
@@ -982,16 +968,11 @@ void DrawServerListWindow()
 	if ( AUX_DISABLE_FLOATING_MENU_DRAWING )
 		return;
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
-	// write text transparent only for color depths below 32 bit per pixel
-	WSFP wstrfp = translucent ? (WSFP)&D_WriteTrString : (WSFP)&D_WriteString;
+	// used to branch on VID_TRANSLUCENCY_SUPPORTED
+	WSFP wstrfp = D_WriteTrString;
 
 	// draw frame
-	if ( translucent ) {
-		DrawServerListFrame();
-	}
+	DrawServerListFrame();
 
 	// draw caption
 	DrawServerListCaption( wstrfp );

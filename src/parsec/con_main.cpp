@@ -1687,21 +1687,16 @@ void DrawConsole( int numlines )
 	int chrwidth = CharsetInfo[ HUD_CHARSETNO ].width;
 	int linedist = CharsetInfo[ HUD_CHARSETNO ].height + 2;
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
 	// draw console background
 	int px = ConsoleTextX * chrwidth - console_frame_left;
 	int py = ConsoleTextY * linedist - console_frame_top;
 	int pw = ( ConsoleEnterLength + PROMPT_SIZE + 1 ) * chrwidth + ( console_frame_left * 2 );
 	int ph = numlines * linedist + ( console_frame_top * 2 );
 
-	if ( translucent ) {
-		D_DrawTrRect( px + console_frameofs_x, py + console_frameofs_y,
-					  pw, ph, TRTAB_PANELBACK );
+	D_DrawTrRect( px + console_frameofs_x, py + console_frameofs_y,
+				  pw, ph, TRTAB_PANELBACK );
 
-		DRAW_PanelDecorations( px + console_frameofs_x, py + console_frameofs_y, pw, ph );
-	}
+	DRAW_PanelDecorations( px + console_frameofs_x, py + console_frameofs_y, pw, ph );
 
 	// return if caption invisible
 	if ( numlines < 1 ) {
