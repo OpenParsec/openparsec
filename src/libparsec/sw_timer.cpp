@@ -80,7 +80,7 @@ static refframe_t	refframe_count_pauseofs	= 0;
 //  callback for Sec.Timer to set the current framerate -----------------------
 //
 void CALLBACK
-SW_SecTimeProc( UINT uID, UINT uMsg, DWORD dwUser, DWORD dw1, DWORD dw2 )
+SW_SecTimeProc( UINT uID, UINT uMsg, DWORD_PTR dwUser, DWORD_PTR dw1, DWORD_PTR dw2 )
 {
 	FrameRate = FrameCounter;
 	FrameCounter = 0;
