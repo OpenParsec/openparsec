@@ -1,0 +1,7 @@
+# MSVC Release directories
+
+Release/*
+Debug/*
+
+!lib/*/*.lib
+!lib/*/*.dll

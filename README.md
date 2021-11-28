@@ -25,10 +25,10 @@ On Linux:
 - To build both targets: make
 
 On Windows:
-- Visual studio 2012 express and up supported
-- Open the solution file in platforms\vs2012
+- Visual studio 2019 and up supported
+- Open the solution file in platforms\vs
 - Build solution
-- You will need to get the runtime dll libraries for SDL2 and SDL2_mixer from http://libsdl.org
+- You may need to get the runtime dll libraries for SDL2 and SDL2_mixer from http://libsdl.org
 
 On Mac OS X:
 - Mac OS 10.7-10.14
