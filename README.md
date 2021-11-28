@@ -3,13 +3,18 @@ OpenParsec
 
 Hit us up on discord!!! https://discord.gg/G7ZejM5N5h
 
+64bit
+------
+Current 'working' 64bit codebase is under the uberlinuxguy/64bit branch, these are not part of main as of yet
+
 Gameplay demonstration:
+-----------------------
 
-This is the latest gameplay video it's a bit old but contains all the 0.2 features. Expect an updated video before or after 0.3 release
-
-http://youtu.be/plak2rPU5S0
+This video was made Nov 2021 it shows the current state of the game 
+https://www.youtube.com/watch?v=BbiaSOe4HbI
 
 To build OpenParsec:
+--------------------
 
 On Linux:
 - Install premake or grab the premake4 binary and put it somewhere in your $PATH (http://industriousone.com/premake/download)
