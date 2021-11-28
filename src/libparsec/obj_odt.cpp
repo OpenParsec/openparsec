@@ -1536,7 +1536,7 @@ geomv_t OD2_Geomv_in(float value)
 PRIVATE
 size_t OD2_CreateObject(OD2_Root32 *cobj32, dword flags, shader_s *shader)
 {
-	ASSERT(cobj != NULL);
+	ASSERT(cobj32 != NULL);
 
 	// default flags may be requested
 	if (flags == OBJLOAD_DEFAULT)
