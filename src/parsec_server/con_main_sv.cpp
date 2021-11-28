@@ -1532,7 +1532,7 @@ void DrawConsole( bool_t bClear )
 	if ( bClear )
 		wclear( g_curses_in_win );
 
-	mvwprintw( g_curses_in_win, 0, 0, con_lines[ con_bottom ] );
+	mvwprintw( g_curses_in_win, 0, 0, "%s", con_lines[ con_bottom ] );
 	wmove( g_curses_in_win, 0, cursor_x + PROMPT_SIZE );
 	wrefresh( g_curses_in_win );
 }
