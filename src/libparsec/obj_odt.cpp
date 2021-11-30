@@ -1567,7 +1567,7 @@ size_t OD2_CreateObject(OD2_Root32 *cobj32, dword flags, shader_s *shader)
 	cobj->ObjectType = SWAP_32(cobj32->ObjectType);
 	cobj->BoundingSphere = cobj32->BoundingSphere;
 
-	ASSERT(cobj->InstanceSize == sizeof(OD2_Root));
+	ASSERT(cobj->InstanceSize == sizeof(OD2_Root32));
 	ASSERT(cobj->NumVerts >= cobj->NumPolyVerts + cobj->NumNormals);
 	ASSERT(cobj->NumPolys >= cobj->NumFaces);
 
