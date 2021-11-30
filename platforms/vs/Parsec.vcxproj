@@ -542,7 +542,7 @@
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>SYSTEM_ENABLE_SDL;PARSEC_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SYSTEM_ENABLE_SDL;PARSEC_CLIENT;PARSEC_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\src\parsec\include;..\..\src\libparsec\include;..\..\src\libraries;include;include\SDL2;include\SDL2_mixer;include\libjpeg</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -564,7 +564,7 @@
     <ClCompile>
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>SYSTEM_ENABLE_SDL;PARSEC_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>SYSTEM_ENABLE_SDL;PARSEC_CLIENT;PARSEC_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\src\parsec\include;..\..\src\libparsec\include;..\..\src\libraries;include;include\SDL2;include\SDL2_mixer;include\libjpeg</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
