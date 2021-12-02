@@ -18,6 +18,7 @@ jobs:
     - name: Parsec client
       run: |
            echo "Install packages..."
+           sudo apt-get update
            sudo apt-get install g++-multilib libsdl2-dev libsdl2-mixer-dev -y
            echo "Build Client...."
            make client
