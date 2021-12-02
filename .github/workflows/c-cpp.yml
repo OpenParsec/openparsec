@@ -1,0 +1,21 @@
+name: C/C++ CI test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: change directory
+      run: cd platforms/premake
+    - name: Parsec client
+      run: make client
+    - name: make server
+      run: make server
