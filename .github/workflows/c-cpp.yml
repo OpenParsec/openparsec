@@ -1,5 +1,8 @@
 name: C/C++ CI test
-
+defaults:
+  run:
+    shell: bash
+    working-directory: platforms/premake
 on:
   push:
     branches: [ main ]
@@ -13,9 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: change directory
-      run: cd platforms/premake
     - name: Parsec client
       run: make client
-    - name: make server
+    - name: Parsec Server
       run: make server
