@@ -9,8 +9,6 @@
 
 // FIXME: use gles header instead of glew when compiling for OpenGL ES.
 #ifndef GLES
-//
-//  On a linux box use the system path
 #include <glew/glew.h>
 #else
 #include <GLES/gl.h>
