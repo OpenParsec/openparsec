@@ -17,10 +17,13 @@ jobs:
     - uses: actions/checkout@v2
     - name: Parsec client
       run: |
+           export config=debug_x64
            echo "Install packages..."
            sudo apt-get update
-           sudo apt-get install g++-multilib libsdl2-dev libsdl2-mixer-dev -y
+           sudo apt-get install libsdl2-dev libsdl2-mixer-dev -y
            echo "Build Client...."
            make client
     - name: Parsec Server
-      run: make server
+      run: |
+            export config=debug_x64
+            make server
