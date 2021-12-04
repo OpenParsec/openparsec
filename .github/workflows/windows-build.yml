@@ -3,7 +3,9 @@ on:
   push:
   pull_request:
     branches: [ main ]
-
+defaults:
+  run:
+    working-directory: platforms\vs
 jobs:
   build:
 
@@ -11,6 +13,8 @@ jobs:
     steps:
       - name: Check out repo        
         uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
@@ -18,6 +22,10 @@ jobs:
           msbuild-architecture: x64
 
       - name: Build app for release
-        run: msbuild platforms\vs\Parsec.vcxproj -t:rebuild -property:Configuration=Release /p:Platform=x64
+        run: msbuild Parsec.vcxproj -t:rebuild -property:Configuration=Release /p:Platform=x64
 
-      
+      - name: Create nsis installer
+        uses: joncloud/makensis-action@v3.3
+        with: 
+          script-file: openparsec.nsi
+          

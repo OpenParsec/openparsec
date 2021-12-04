@@ -27,14 +27,14 @@ Section "" ;No components page, name is not important
   
   ; Put file there
   SetOutPath "$INSTDIR\cons\"
-  File /a /r "cons\"
+  File /a /r "..\..\openparsec-assets\cons\"
   SetOutPath "$INSTDIR\Images\"
-  File /a /r "Images\"
+  File /a /r "..\..\openparsec-assets\Images\"
   
   ; Set output path to the installation directory.
   SetOutPath $INSTDIR
   
-  File init.con
+  File ..\..\openparsec-assets\init.con
   File libFLAC-8.dll
   File libmodplug-1.dll
   File libmpg123-0.dll
@@ -43,14 +43,14 @@ Section "" ;No components page, name is not important
   File libopusfile-0.dll
   File libvorbis-0.dll
   File libvorbisfile-3.dll
-  File LICENSE.artwork_sound
-  File openparsec.ico
-  File parsecrc.con
-  File pscdata0.dat
-  File pscdata1.dat
-  File pscdata2.dat
-  File pscdata3.dat
-  File README.md
+  File ..\..\openparsec-assets\LICENSE.artwork_sound
+  File ..\..\openparsec-assets\openparsec.ico
+  File ..\..\openparsec-assets\parsecrc.con
+  File ..\..\openparsec-assets\pscdata0.dat
+  File ..\..\openparsec-assets\pscdata1.dat
+  File ..\..\openparsec-assets\pscdata2.dat
+  File ..\..\openparsec-assets\pscdata3.dat
+  File ..\..\openparsec-assets\README.md
   File SDL2.dll
   File SDL2_mixer.dll
   File Parsec.exe
