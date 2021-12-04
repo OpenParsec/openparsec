@@ -1064,7 +1064,10 @@ void BOT_ClientSide::Start()
 void BOT_ClientSide::Stop()
 {
 	if ( m_Started ) {
-		CALLBACK_DestroyCallback( CBTYPE_USER_INPUT | CBFLAG_PERSISTENT, (void *) this );
+		int numremoved = CALLBACK_DestroyCallback( CBTYPE_USER_INPUT | CBFLAG_PERSISTENT, (void *) this );
+#ifndef PARSEC_DEBUG
+		PARSEC_UNUSED(numremoved);
+#endif
 		if(!headless_bot)
 			ASSERT( numremoved <= 1 );
 		m_Started = FALSE;

@@ -133,9 +133,9 @@ int SYSs_AcquireScriptPath( char *path, int comtype, char *prefix )
 
 	// open script directory
 	struct _finddata_t  c_file;
-	long hFile = _findfirst( path, &c_file );
+	intptr_t hFile = _findfirst( path, &c_file );
 
-	if ( hFile != -1L ) {
+	if ( hFile != -1LL ) {
 
 		int countbase = num_external_commands;
 

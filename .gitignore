@@ -16,6 +16,17 @@
 *~
 *.sw?
 
+# qtcreator files.
+#
+*.cflags
+*.config
+*.creator
+*.creator.user
+*.cxxflags
+*.files
+*.includes
+# ignore clion workspace
+.idea
 # Visual Studio cached files
 .vs/
 

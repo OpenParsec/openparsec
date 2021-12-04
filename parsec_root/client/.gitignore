@@ -9,3 +9,11 @@ pscdata?.dat
 # Screenshots!
 parsec??.png
 
+# parsec_root junk
+
+cons/
+Images/
+init.con
+LICENSE*
+*.ico
+README.md

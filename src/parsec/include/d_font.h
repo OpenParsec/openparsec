@@ -18,6 +18,9 @@ int  D_GetPStringWidth( char *string );
 void D_TexfontWrite( const char *string, IterTexfont *itexfont );
 int  D_TexfontGetWidth( const char *string, IterTexfont *itexfont );
 
+// type for writestring function pointer --------------------------------------
+//
+typedef void (*WSFP)( const char *string, ugrid_t putx, ugrid_t puty, dword brightx );
 
 #endif // _D_FONT_H_
 

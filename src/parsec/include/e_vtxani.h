@@ -5,6 +5,26 @@
 #ifndef _E_VTXANI_H_
 #define _E_VTXANI_H_
 
+struct vtxAnimBaseInfo {
+	dword      mNumVtxAnims;
+	dword      mNumVerts;
+	dword      mNumPolyVerts;
+	dword      mNumNormals;
+	Vertex3*   mVertexList;
+	dword      mNumPolys;
+	Poly*      mPolyList;
+	dword      mNumFaces;
+	Face*      mFaceList;
+	dword*     mSortedPolyList;
+	dword      mNumWedges;
+	dword*     mWedgeVertIndxs;
+	Vector3*   mWedgeNormals;
+	colrgba_s* mWedgeColors;
+	TexCoord2* mWedgeTexCoords;
+	colrgba_s* mWedgeLighted;
+	colrgba_s* mWedgeSpecular;
+	colrgba_s* mWedgeFogged;
+};
 
 // external functions
 

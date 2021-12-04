@@ -73,6 +73,7 @@
 #endif // PARSEC_DEBUG
 */
 
+#define PARSEC_UNUSED(x) (void)sizeof(x)
 
 // define heap functions to use
 

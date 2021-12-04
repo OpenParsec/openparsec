@@ -98,9 +98,6 @@ extern int*				VidInfo_SupportedTexFormats;
 // determine current color depth
 #define VID_CUR_COLBITS					( GameScreenBPP )
 
-// determine whether translucency supported in current video mode
-#define VID_TRANSLUCENCY_SUPPORTED		TRUE
-
 
 
 #endif // _VID_GLOB_H_

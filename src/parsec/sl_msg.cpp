@@ -114,88 +114,93 @@ int SL_MsgOut( const char *format, va_list ap )
 		rc = vsprintf( paste_str, format, ap );
 		//Dump to STDOUT
 		printf("%s",paste_str);
-		
-	}
-	if ( TextModeActive ) {
-
-		//NOTE:
-		// if no new-line terminates the string
-		// it is appended automatically, except
-		// SYSs_MsgPut() was used.
-
-		// compose string
-		rc = vsprintf( paste_str, format, ap );
-
-		// output string in splash screen
-		ISDL_SplashTextLine( paste_str );
-
-		// append new-line if needed
-		if ( newlinemissing && append_nl ) {
-			size_t len = strlen( paste_str );
-			paste_str[ len ]     = '\n';
-			paste_str[ len + 1 ] = 0;
-		}
-
 		// optionally append to log file
-		if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x01 ) {
+		if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x02 ) {
 			SLm_WriteLogFileMessage( paste_str );
 		}
-
-		// output string
-		ISDL_LogWinTextLine( paste_str );
-			
-
+		
 	} else {
-
-		if ( console_init_done ) {
+		if ( TextModeActive ) {
 
 			//NOTE:
-			// if the string ends with a newline the current
-			// input in the console is not preserved. that is,
-			// the string is output on its own line, just below
-			// the current input line. then, a cursor-only line
-			// is output below the string output line.
+			// if no new-line terminates the string
+			// it is appended automatically, except
+			// SYSs_MsgPut() was used.
 
-			// create valid console string
-			vsprintf( paste_str, format, ap );
+			// compose string
+			rc = vsprintf( paste_str, format, ap );
 
-			if ( newlinemissing ) {
+			// output string in splash screen
+			ISDL_SplashTextLine( paste_str );
 
-				// optionally append to log file
-				if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x04 ) {
-					if ( append_nl ) {
-						int len = strlen( paste_str );
-						paste_str[len]	= '\n';
-						paste_str[len+1]= 0;
-					}
-					
-					SLm_WriteLogFileMessage( paste_str );
-				}
-				
-				ProcessExternalLine( paste_str );
-
-				// preserve current console line
-				CON_AddMessage( paste_str );
-
-			} else {
-
-				// optionally append to log file
-				if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x02 ) {
-					SLm_WriteLogFileMessage( paste_str );
-				}
-				
-				ProcessExternalLine( paste_str );
-
-				// terminate old line's input before
-				// printing the string on its own line.
-				CON_AddLine( paste_str );
-				CON_AddLineFeed();
+			// append new-line if needed
+			if ( newlinemissing && append_nl ) {
+				size_t len = strlen( paste_str );
+				paste_str[ len ]     = '\n';
+				paste_str[ len + 1 ] = 0;
 			}
+
+			// optionally append to log file
+			if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x01 ) {
+				SLm_WriteLogFileMessage( paste_str );
+			}
+
+			// output string
+			ISDL_LogWinTextLine( paste_str );
+			
+
+		} else {
+
+			if ( console_init_done ) {
+
+				//NOTE:
+				// if the string ends with a newline the current
+				// input in the console is not preserved. that is,
+				// the string is output on its own line, just below
+				// the current input line. then, a cursor-only line
+				// is output below the string output line.
+
+				// create valid console string
+				vsprintf( paste_str, format, ap );
+
+				if ( newlinemissing ) {
+
+					// optionally append to log file
+					if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x04 ) {
+						if ( append_nl ) {
+							int len = strlen( paste_str );
+							paste_str[len]	= '\n';
+							paste_str[len+1]= 0;
+						}
+					
+						SLm_WriteLogFileMessage( paste_str );
+					}
+				
+					ProcessExternalLine( paste_str );
+
+					// preserve current console line
+					CON_AddMessage( paste_str );
+
+				} else {
+
+					// optionally append to log file
+					if ( AUX_ENABLE_CONSOLE_MESSAGE_LOG & 0x02 ) {
+						SLm_WriteLogFileMessage( paste_str );
+					}
+				
+					ProcessExternalLine( paste_str );
+
+					// terminate old line's input before
+					// printing the string on its own line.
+					CON_AddLine( paste_str );
+					CON_AddLineFeed();
+				}
+			}
+
+			rc = 0;
 		}
-
-		rc = 0;
 	}
-
+	
 	return rc;
 }
 

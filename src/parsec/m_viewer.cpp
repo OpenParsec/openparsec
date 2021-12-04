@@ -848,10 +848,6 @@ int SlideFinishedRing()
 }
 
 
-// type for writestring function pointer --------------------------------------
-//
-typedef void (*WSFP)( ... );
-
 //NOTE:
 // this declaration is in global scope because of the extern "C".
 // only gcc needs the otherwise redundant curly braces.
@@ -881,19 +877,14 @@ void DrawViewerTexts()
 	int chwidth  = CharsetInfo[ HUD_CHARSETNO ].width;
 	int chheight = hud_line_dist;
 
-	// determine whether translucency should be used
-	int translucent = VID_TRANSLUCENCY_SUPPORTED;
-
 	D_SetWStrContext( CharsetInfo[ HUD_CHARSETNO ].charsetpointer,
 					CharsetInfo[ HUD_CHARSETNO ].geompointer,
 					NULL,
 					CharsetInfo[ HUD_CHARSETNO ].width,
 					CharsetInfo[ HUD_CHARSETNO ].height );
 
-	// write text transparent only for color depths below 32 bit per pixel
-	WSFP wstrfp = ( translucent ) ?
-					(WSFP) &D_WriteTrString :
-					(WSFP) &D_WriteString;
+	// used to branch on VID_TRANSLUCENCY_SUPPORTED
+	WSFP wstrfp = D_WriteTrString;
 
 	unsigned int	text_x = (unsigned int)(SCV_TEXT_X * Screen_Width);
 	unsigned int text_y = (unsigned int)(SCV_TEXT_Y * Screen_Height);
