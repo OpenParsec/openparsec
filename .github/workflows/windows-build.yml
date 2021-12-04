@@ -1,0 +1,23 @@
+name: Build on windoows.
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+    steps:
+      - name: Check out repo        
+        uses: actions/checkout@v2
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: Build app for release
+        run: msbuild src\platforms\vs\Parsec.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+
+      
