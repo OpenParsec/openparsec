@@ -28,9 +28,10 @@ jobs:
         uses: joncloud/makensis-action@v3.3
         with: 
           script-file: platforms\vs\openparsec.nsi
+          arguments: "/V3"
 
       - name: Artifact
         uses: actions/upload-artifact@v1
         with:
           name: openparsec-installer.exe
-          path: installer
+          path: openparsec-installer.exe

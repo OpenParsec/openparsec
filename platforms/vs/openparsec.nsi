@@ -2,7 +2,7 @@
 Name "Open Parsec 0.3"
 
 ; The file to write
-OutFile "openparsec-0.3.exe"
+OutFile "openparsec-installer.exe"
 
 ; Request application privileges for Windows Vista
 RequestExecutionLevel admin
