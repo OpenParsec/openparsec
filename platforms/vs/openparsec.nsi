@@ -45,7 +45,7 @@ Section "" ;No components page, name is not important
   File lib\x64\libvorbisfile-3.dll
   File ..\..\openparsec-assets\LICENSE.artwork_sound
   File ..\..\openparsec-assets\openparsec.ico
-  File ..\..\openparsec-assets\parsecrc.con
+  ;File ..\..\openparsec-assets\parsecrc.con
   File ..\..\openparsec-assets\pscdata0.dat
   File ..\..\openparsec-assets\pscdata1.dat
   File ..\..\openparsec-assets\pscdata2.dat
