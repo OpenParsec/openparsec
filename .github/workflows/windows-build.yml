@@ -18,6 +18,6 @@ jobs:
           msbuild-architecture: x64
 
       - name: Build app for release
-        run: msbuild src\platforms\vs\Parsec.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
+        run: msbuild platforms\vs\Parsec.vcxproj -t:rebuild -verbosity:diag -property:Configuration=Release
 
       
