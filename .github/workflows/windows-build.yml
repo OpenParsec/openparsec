@@ -18,6 +18,6 @@ jobs:
           msbuild-architecture: x64
 
       - name: Build app for release
-        run: msbuild platforms\vs\Parsec.vcxproj -t:rebuild -property:Configuration=Release
+        run: msbuild platforms\vs\Parsec.vcxproj -t:rebuild -property:Configuration=Release /p:Platform=x64
 
       
