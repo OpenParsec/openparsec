@@ -5,7 +5,7 @@ Hit us up on discord!!! https://discord.gg/G7ZejM5N5h
 
 64bit
 ------
-Current 'working' 64bit codebase is under the uberlinuxguy/64bit branch, these are not part of main as of yet
+64bit has been merged back into main now, you should be able to make working 64bit servers and clients. Please report bugs as this is a very new change
 
 Gameplay demonstration:
 -----------------------
