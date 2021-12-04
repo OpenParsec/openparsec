@@ -34,4 +34,4 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: openparsec-installer.exe
-          path: openparsec-installer.exe
+          path: platforms\vs\openparsec-installer.exe
