@@ -35,14 +35,14 @@ Section "" ;No components page, name is not important
   SetOutPath $INSTDIR
   
   File ..\..\openparsec-assets\init.con
-  File libFLAC-8.dll
-  File libmodplug-1.dll
-  File libmpg123-0.dll
-  File libogg-0.dll
-  File libopus-0.dll
-  File libopusfile-0.dll
-  File libvorbis-0.dll
-  File libvorbisfile-3.dll
+  File lib\x64\libFLAC-8.dll
+  File lib\x64\libmodplug-1.dll
+  File lib\x64\libmpg123-0.dll
+  File lib\x64\libogg-0.dll
+  File lib\x64\libopus-0.dll
+  File lib\x64\libopusfile-0.dll
+  File lib\x64\libvorbis-0.dll
+  File lib\x64\libvorbisfile-3.dll
   File ..\..\openparsec-assets\LICENSE.artwork_sound
   File ..\..\openparsec-assets\openparsec.ico
   File ..\..\openparsec-assets\parsecrc.con
@@ -51,9 +51,9 @@ Section "" ;No components page, name is not important
   File ..\..\openparsec-assets\pscdata2.dat
   File ..\..\openparsec-assets\pscdata3.dat
   File ..\..\openparsec-assets\README.md
-  File SDL2.dll
-  File SDL2_mixer.dll
-  File Parsec.exe
+  File lib\x64\SDL2.dll
+  File lib\x64\SDL2_mixer.dll
+  File x64\Release\Parsec.exe
   
   CreateDirectory "$SMPROGRAMS\OpenParsec"
   CreateShortcut "$SMPROGRAMS\OpenParsec\Open Parsec.lnk" "$INSTDIR\Parsec.exe" "" "$INSTDIR\openparsec.ico"
