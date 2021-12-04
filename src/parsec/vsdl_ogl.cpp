@@ -384,6 +384,14 @@ void VSDL_InitGLExtensions()
 #endif
 }
 
+void GLAPIENTRY
+ParsecGLMessageCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam)
+{
+	printf("GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+		(type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : ""),
+		type, severity, message);
+}
+
 
 // setup current rendering context --------------------------------------------
 //
@@ -391,6 +399,14 @@ PRIVATE
 void SDL_RCSetup()
 {
 	VSDL_InitGLExtensions();
+
+#ifdef PARSEC_DEBUG
+	if (GLEW_VERSION_4_3) {
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback(ParsecGLMessageCallback, 0);
+	}
+#endif
 	
 	// attempt to enable MSAA if set
 	if (AUX_MSAA > 0) {
