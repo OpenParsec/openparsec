@@ -30,3 +30,5 @@
 # Visual Studio cached files
 .vs/
 
+platforms/vs/parsec.log
+platforms/vs/Parsec.vcxproj.user
