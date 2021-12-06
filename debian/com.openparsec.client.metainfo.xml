@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.openparsec.client</id>
+  
+  <name>OpenParsec</name>
+  <summary>3D space shooter multiplayer game</summary>
+  
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-2.0-only</project_license>
+  
+  <recommends>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>gamepad</control>
+  </recommends>
+  
+  <description>
+    <p>
+      Fast-paced multiplayer cross-platform   3D Internet space combat game
+    </p>
+  </description>
+  
+  <launchable type="desktop-id">com.openparsec.openparsec.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://www.philtopia.com/wp-uploads//2013/01/stargate04.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.philtopia.com/wp-uploads//2012/02/upload2.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://www.philtopia.com/wp-uploads//2012/02/upload.png</image>
+    </screenshot>
+  </screenshots>
+</component>

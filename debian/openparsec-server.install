@@ -1,0 +1,4 @@
+# You must remove unused comment lines for the released package.
+debian/parsec-server				usr/games
+platforms/premake/build/server/parsec_server	usr/share/games/openparsec/server
+parsec_root/server/*				usr/share/games/openparsec/server

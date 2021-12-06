@@ -1,0 +1,12 @@
+#!/bin/sh
+# If this exists, it is installed into lib/systemd/system/openparsec.service in openparsec
+# See dh_systemd_enable(1).
+
+[Unit]
+Description=OpenParsec space shooter server
+
+[Service]
+ExecStart=/usr/games/openparsec-server
+
+[Install]
+WantedBy=multi-user.target

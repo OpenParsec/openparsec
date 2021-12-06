@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=OpenParsec
+Comment=3D space shooter multiplayer game
+Categories=Game;ActionGame;
+
+Icon=openparsec
+Exec=parsec
+Terminal=false

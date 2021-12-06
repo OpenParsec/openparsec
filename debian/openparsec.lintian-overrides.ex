@@ -1,0 +1,3 @@
+# See dh_lintian(1)
+#   http://www.debian.org/doc/manuals/maint-guide/dother.en.html#lintian
+# cut and paste the lintian(1) outputs without leading "E: ", "W: ", ...
