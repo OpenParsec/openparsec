@@ -46,6 +46,74 @@
       },
       // Use the standard MS compiler pattern to detect errors, warnings and infos
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "(Premake - client) x64 - Release",
+      "type": "shell",
+      "command": "make",
+      "args": [
+        "config=release_x64",
+      ],
+      "group": "build",
+      "presentation": {
+        // Reveal the output only if unrecognized errors occur.
+        "reveal": "always"
+      },
+      "options":{
+        "cwd": "${workspaceFolder}/platforms/premake/build/client/",
+      },
+      
+    },
+    {
+      "label": "(Premake - client) x64 - Debug",
+      "type": "shell",
+      "command": "make",
+      "args": [
+        "config=debug_x64",
+      ],
+      "group": "build",
+      "presentation": {
+        // Reveal the output only if unrecognized errors occur.
+        "reveal": "always"
+      },
+      "options":{
+        "cwd": "${workspaceFolder}/platforms/premake/build/client/",
+      },
+      
+    },
+    {
+      "label": "(Premake - server) x64 - Release",
+      "type": "shell",
+      "command": "make",
+      "args": [
+        "config=release_x64",
+      ],
+      "group": "build",
+      "presentation": {
+        // Reveal the output only if unrecognized errors occur.
+        "reveal": "always"
+      },
+      "options":{
+        "cwd": "${workspaceFolder}/platforms/premake/build/server/",
+      },
+      
+    },
+    {
+      "label": "(Premake - server) x64 - Debug",
+      "type": "shell",
+      "command": "make",
+      "args": [
+        "config=debug_x64",
+      ],
+      "group": "build",
+      "presentation": {
+        // Reveal the output only if unrecognized errors occur.
+        "reveal": "always"
+      },
+      "options":{
+        "cwd": "${workspaceFolder}/platforms/premake/build/server/",
+      },
+      
     }
   ]
 }
