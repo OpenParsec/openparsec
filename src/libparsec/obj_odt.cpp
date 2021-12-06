@@ -1332,6 +1332,9 @@ size_t ODT_CreateObject(ODT_GenObject32 *c32obj, dword flags, shader_s *shader)
 	// enter object into class array
 	ObjClasses[gobj->ObjectClass] = gobj;
 
+	// free our temp object from the beginning of the function.
+	FREEMEM(cobj);
+
 	// init class and type data of object
 	OBJ_InitClass(gobj->ObjectClass);
 	//    OBJODT_DumpPoly(gobj);
@@ -1922,6 +1925,9 @@ size_t OD2_CreateObject(OD2_Root32 *cobj32, dword flags, shader_s *shader)
 
 	// init class and type data of object
 	OBJ_InitClass(gobj->ObjectClass);
+
+	// free temporary variable.
+	FREEMEM(cobj);
 
 	// return mem size of object
 	return objmemsize;
