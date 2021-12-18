@@ -457,13 +457,13 @@ void CON_InitConsole()
 
 		// there's no reason to run the external scripts when we are only
 		// running in master server mode.
-		if(!TheServer->GetServerIsMaster()) {
+		//if(!TheServer->GetServerIsMaster()) {
 			// build list of external commands
 			BuildExternalCommandList();
 
 			// exec boot.con (also for registered mods)
 			ExecStartupScript( ECHO_STARTUP_SCRIPT );
-		}
+		//}
 #endif // PROCESS_STARTUP_SCRIPT
 
 		//CAVEAT:

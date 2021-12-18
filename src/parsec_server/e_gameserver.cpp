@@ -378,7 +378,7 @@ int	E_GameServer::ParseCommandLine( int argc, char** argv )
 
 		switch(optchar){
 			case 'm':
-				// TODO: set the option in server config to say we are a master server
+				// set the option in server config to say we are a master server
 				this->m_ServerIsMaster = 1;
 				break;
 			case '?':

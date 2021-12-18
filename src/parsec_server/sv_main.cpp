@@ -46,7 +46,7 @@
 // proprietary module headers
 #include "e_gameserver.h"
 #include "sys_util_sv.h"
-
+#include "e_global_sv.h"
 #include "MasterServer.h"
 
 // main entrypoint function for the gameserver --------------------------------

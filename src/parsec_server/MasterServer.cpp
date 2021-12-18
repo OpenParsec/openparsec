@@ -86,6 +86,23 @@ MasterServer::MasterServer() {
 
 MasterServer::MasterServer(E_GameServer* gameserver) {
 
+	// TODO: register binary settings in con_aux_sv.cpp for AuxEnabling
+	// TODO: register string inputs as commands 
+
+	/*
+	
+	user_command_s regcom;
+	memset( &regcom, 0, sizeof( user_command_s ) );
+
+
+	// register dummy command
+	regcom.command = ms.somthing;
+	regcom.numparams = 1;
+	regcom.execute	 = Cmd_SomeFunction; // should not be class based!
+	regcom.statedump = NULL;
+	CON_RegisterUserCommand( &regcom );
+	*/
+
 	last_check=0;
 }
 
@@ -123,3 +140,20 @@ int MasterServer::RemoveStaleEntries(){
 	}
 	
 }
+
+
+/*
+ *
+ * Master Server Player Transfer
+ * 
+ * If a player jumps from one server to another, a quick check is done by the destination server that the source server is 
+ * part of the same fedid AND knows about the fedid-pass which the master server is authoritative for.  Here is an example 
+ * of the flow:
+ * 
+ * - source server, if sv.transfer-player is set sends a  pre-join packet to the destination.
+ * 		- dest server gets pre-join packet
+ * 		- dest server asks source server for fedid and fedid-pass
+ * 		- dest server verifies both with the master server
+ * 		- dest server asks source for player info, (ie: weapons, power ups, speed, energy, etc.)
+ * - if no valid reply to prejoin packet, souce assumes no player transfer is possible
+ * - normal join happens.
