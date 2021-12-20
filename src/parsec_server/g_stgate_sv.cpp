@@ -68,6 +68,8 @@
 #include "obj_creg.h"
 #include "obj_cust.h"
 #include "e_simulator.h"
+#include "e_world.h"
+#include "e_global_sv.h"
 
 // stargate limits and constants ----------------------------------------------
 //
@@ -477,17 +479,17 @@ int StargateCollide( CustomObject *base )
 		return TRUE;
 	}
 
-/*	int inrange = 0x00;
+	int inrange = 0x00;
 
 	// check local ship
 	if ( ShipInStargateRange( stargate, MyShip, stargate->actdistance ) ) {
 		inrange |= 0x01;
 	}
 
-	// check all other ships
+	// check if any ship is in activation distance.
 	if ( inrange == 0x00 ) {
 
-		ShipObject *walkships = FetchFirstShip();
+		ShipObject *walkships =  TheWorld->FetchFirstShip();
 		for ( ; walkships; walkships = (ShipObject *) walkships->NextObj ) {
 
 			if ( ShipInStargateRange( stargate, walkships, stargate->actdistance ) ) {
@@ -504,8 +506,8 @@ int StargateCollide( CustomObject *base )
 
 			if ( !stargate->active ) {
 
-				// create the active stargate particles
-				StargateModify_CreateActiveParticles( stargate );
+				// // create the active stargate particles
+				// StargateModify_CreateActiveParticles( stargate );
 
 				// activate stargate
 				stargate->active = TRUE;
@@ -529,48 +531,28 @@ int StargateCollide( CustomObject *base )
 		return TRUE;
 	}
 
-#ifdef LINKED_PROTOCOL_GAMESERVER
-
-	// check for fly-through sequence if connected to game server
-	if ( !NET_ConnectedGMSV() ) {
-		return TRUE;
-	}
 
 	// radius of hemisphere used for jump range detection
 	geomv_t jumpdistance = FLOAT_TO_GEOMV( stargate->radius * 0.25f );
 
-	// check local ship for jump
-	if ( ( inrange == 0x01 ) && ShipInStargateJumpRange( stargate, MyShip, jumpdistance ) ) {
 
-		// schedule server jump if not already done
-		if ( CurJumpServer == NULL ) {
+	
+	// check if any ship is in jump distance.
+	ShipObject *walkships = TheWorld->FetchFirstShip();
+	for ( ; walkships; walkships = (ShipObject *) walkships->NextObj ) {
 
-			CurJumpServer = (char *) ALLOCMEM( strlen( stargate->destination_ip ) + 1 );
-			if ( CurJumpServer == NULL )
-				OUTOFMEM( 0 );
-			strcpy( CurJumpServer, stargate->destination_ip );
+		if ( ShipInStargateJumpRange( stargate, walkships, jumpdistance ) ) {
+			// TODO: Start the jump sequence with the client
 
-			//TODO:
-			// initiate animation and sfx
-			ShowMessage( "prepare to jump!!!" );
-		}
+			// FIXME: For now, send the client a jump packet with the destination IP
+			// of the stargate destination`
 
-	} else {
-
-		// check all other ships
-		ShipObject *walkships = FetchFirstShip();
-		for ( ; walkships; walkships = (ShipObject *) walkships->NextObj ) {
-
-			if ( ShipInStargateJumpRange( stargate, walkships, jumpdistance ) ) {
-
-				stargate->modulfade = 120.0f;
-				break;
-			}
+			// TODO: Change this to the new server to server transfer jump sequence once implimented.
+			stargate->modulfade = 120.0f;
+			break;
 		}
 	}
 
-#endif // LINKED_PROTOCOL_GAMESERVER
-*/
 	return TRUE;
 }
 

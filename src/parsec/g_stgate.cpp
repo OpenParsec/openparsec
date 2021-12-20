@@ -1662,7 +1662,7 @@ void StargateRegisterCustomType()
 	info.callback_instant	= StargateInstantiate;
 	info.callback_destroy	= StargateDestroy;
 	info.callback_animate	= StargateAnimate;
-	info.callback_collide	= StargateCollide;
+	info.callback_collide	= NULL;
 	info.callback_notify	= NULL;
 	info.callback_persist   = StargatePersistFromStream;
 

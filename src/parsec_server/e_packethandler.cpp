@@ -78,6 +78,7 @@
 #include "e_relist.h"
 #include "e_simulator.h"
 #include "MasterServer.h"
+#include "sys_msg_sv.h"
 
 // ----------------------------------------------------------------------------
 // public methods

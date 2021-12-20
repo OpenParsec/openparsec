@@ -9,7 +9,7 @@
 // parsec client/server protocol version number -------------------------------
 //
 #define CLSV_PROTOCOL_MAJOR			0
-#define CLSV_PROTOCOL_MINOR			22
+#define CLSV_PROTOCOL_MINOR			23
 extern int clsv_protocol_minor_internal;
 
 #ifdef PARSEC_CLIENT
@@ -25,6 +25,7 @@ extern int clsv_protocol_minor_internal;
 #define	NAMESTRING1					"namereq %s"
 #define PINGSTRING1					"p %d"
 #define INFOSTRING1					"reqinfo %d"
+#define ACKJUMP						"ackjump"  // ACK a server jump
 
 //FIXME: define these and use in RE_CommandInfo::code
 /*#define PROT_GIVECHALLENGE_CODE		0
@@ -47,18 +48,29 @@ extern int clsv_protocol_minor_internal;
 #define RECVSTR_NAME_INVALID		"nameinval"
 #define RECVSTR_LINK_SERVER			"linkserv %s:%d %d %d %d"
 #define RECVSTR_CHALL_INVALID		"challinv"
-#define RECVSTR_PING_REPLY			   "p s %d r %d p %d/%d"
+#define RECVSTR_PING_REPLY			"p s %d r %d p %d/%d"
 #define RECVSTR_INFO_REPLY			"info s %d r %d p %d/%d v %d.%d n %s"
 #define LISTSTR_ADDED_IN_SLOT		"addslot %d nick %s"
 #define LISTSTR_REMOVED_FROM_SLOT	"rmvslot %d"
 #define LISTSTR_NAME_UPDATED		"updslot %d nick %s"
+#define START_JUMP					"jump %s" // jump <server_ip>  A server telling the client it should jump
+#define JUMP_OK						"jumpok"
+#define JUMP_FAIL					"jumpfail"
 
 
 // gameserver -> masterserver
 #define MASV_CHALLSTRING			"c2 %02d.%02d ch %d n %s p %d/%d s %d os %s pt %d"
+#define VERIFY_TRANS_PASS			"transpass %s uuid %s" // expects an ACKTRANS with the provided UUID
+
+// gameserver -> gameserver
+#define NEW_CLIENT					"newclient" // new player transfer from server to server, arg is master pass for the fed id
+#define ACK_NEW_CLIENT				"acknewclient"
+
 
 // masterserver -> gameserver
 #define MASV_RESPONSE_NEW_CHALL		RECVSTR_CHALLENGE
+#define ACKTRANS					"acktrans %s" // ACK a trans pass request.
+#define NACKTRANS					"nacktrans" // Decline a tranfer request
 
 // client -> masterserver
 #define MASV_LIST					"list"
