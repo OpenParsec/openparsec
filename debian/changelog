@@ -1,0 +1,10 @@
+openparsec (0.3) UNRELEASED; urgency=low
+
+  [ Vítězslav Dvořák ]
+  * Initial release. Closes: #nnnn
+    <nnnn is the bug number of your ITP>
+
+  [ vitex ]
+  * 64bit supported now
+
+ -- vitex <info@vitexsoftware.cz>  Thu, 25 Nov 2021 20:29:06 +0100

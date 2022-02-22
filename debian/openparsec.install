@@ -1,0 +1,11 @@
+# You must remove unused comment lines for the released package.
+debian/parsec               usr/games
+parsec_root/client/*		usr/share/games/openparsec/client
+openparsec-assets/cons/*	usr/share/games/openparsec/client/cons
+openparsec-assets/Images/*	usr/share/games/openparsec/client/Images
+openparsec-assets/*	    	usr/share/games/openparsec/client
+platforms/premake/build/client/parsec	usr/share/games/openparsec/client
+debian/com.openparsec.client.desktop        usr/share/applications/
+debian/com.openparsec.client.metainfo.xml   usr/share/metainfo/
+debian/openparsec.png        usr/share/icons/hicolor/256x256/apps/
+

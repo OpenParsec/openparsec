@@ -1,0 +1,12 @@
+# Defaults for openparsec initscript
+# sourced by /etc/init.d/openparsec
+# installed at /etc/default/openparsec by the maintainer scripts
+
+#
+# This is a POSIX shell fragment
+#
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS=""
+OPENPARSEC_SERVER_ENABLED="false"
+

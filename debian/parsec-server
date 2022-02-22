@@ -1,0 +1,4 @@
+#!/bin/sh
+cd /usr/share/games/openparsec/server
+./parsec_server "$@"
+cd -
