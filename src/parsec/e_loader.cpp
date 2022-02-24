@@ -1216,7 +1216,8 @@ void LoadObjectData()
 void LoadData( char *cfn, int dispinfo )
 {
 	ASSERT( cfn != NULL );
-
+	extern int headless_bot;
+	
 	ctrl_file_name	= cfn;
 	display_info	= FALSE; //dispinfo;
 
@@ -1227,12 +1228,14 @@ void LoadData( char *cfn, int dispinfo )
 	// just be irritating.
 
 	ParseCtrlFile( PARSE_EVERYTHING );
-
-	ReadPalettes();
-	ReadTextures();
-	ReadSamples();
+	if(!headless_bot){
+		ReadPalettes();
+		ReadTextures();
+		ReadSamples();
+		ReadBitmapsAndCharsets();
+	}
 	LoadObjectData();
-	ReadBitmapsAndCharsets();
+	
 }
 
 

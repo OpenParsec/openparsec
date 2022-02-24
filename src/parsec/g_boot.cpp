@@ -327,7 +327,8 @@ int GameBoot()
 	limit_timeval_cur = 1000000000;
 
 	// init color maps
-	InitColorMaps();
+	if(!headless_bot)
+		InitColorMaps();
 
 	// alloc storage for MyShip
 	AllocMyShip();
