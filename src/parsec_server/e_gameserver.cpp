@@ -283,9 +283,10 @@ int	E_GameServer::Init()
 		// register all AUX/SV vars
 		CON_AUX_SV_Register();
 	}
+#ifndef _DISABLE_SCREEN_OUTPUT
 	// init CURSES
 	CON_InitCurses();
-
+#endif
 	// init the input system
 	INP_Init();
 
@@ -807,7 +808,7 @@ int	E_GameServer::MainLoop()
 
 		//Run Server Frame
 		ServerFrame();
-		
+
 		// process console input
 		CON_ConsoleMain();
 	}
