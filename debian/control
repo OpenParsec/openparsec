@@ -1,0 +1,32 @@
+Source: openparsec
+Section: games
+Priority: optional
+Maintainer: Vítězslav Dvořák <info@vitexsoftware.cz>
+Build-Depends: debhelper-compat (= 12), premake4, libc6-dev, libsdl2-dev, libsdl2-mixer-dev, libncurses-dev
+Standards-Version: 4.5.0
+Homepage: https://www.openparsec.com/
+Vcs-Git: https://github.com/OpenParsec/openparsec.git
+Vcs-Browser: https://www.openparsec.com/
+
+Package: openparsec
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+	${shlibs:Depends},
+Description: 3D space shooter game
+  Fast-paced multiplayer cross-platform 3D Internet space combat game with amazing soundtrack
+
+Package: openparsec-server
+Architecture: any
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+	${shlibs:Depends},
+Description: 3D space shooter game server
+  Fast-paced multiplayer cross-platform
+  3D Internet space combat game server
+
+Package: openparsec-dbg
+Architecture: any
+Multi-Arch: foreign
+Description: 3D space shooter game debug symbols
+

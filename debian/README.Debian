@@ -1,0 +1,9 @@
+openparsec for Debian
+
+
+set Jenkins custom environment variable to test launching:
+
+POSTINST=/usr/games/parsec-server;/usr/games/parsec
+
+
+ -- Vítězslav Dvořák <info@vitexsoftware.cz>  Thu, 25 Nov 2021 19:41:51 +0100

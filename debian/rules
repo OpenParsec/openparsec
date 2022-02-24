@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+# You must remove unused comment lines for the released package.
+export DH_VERBOSE = 1
+#export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_CFLAGS_MAINT_APPEND  = -Wno-error -fno-strict-overflow
+#export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
+
+config := debug64
+
+%:
+	dh $@
+
+override_dh_prep:
+	dh_prep
+	rm -rvf platforms/premake/build/*/obj
+	chmod uag-x parsec_root/server/* parsec_root/client/*
+	rm -f parsec_root/parsec_server.log
+	if [ ! -f openparsec-assets/init.con ]; then git clone --depth=1 https://github.com/OpenParsec/openparsec-assets.git; else cd openparsec-assets; git pull; cd ..; fi;
+
+override_dh_install:
+	cd platforms/premake && premake4 gmake && CFLAGS=-DPARSEC_DEBUG make config=$(config)
+	dh_install
+
+override_dh_dwz:
+	echo dh_dwz fail on buster
+
+override_dh_strip:
+	dh_strip -k --dbg-package=openparsec-dbg 
+
+#echo stripped binaries caught buffer overflow detected
+override_dh_installdeb:
+	cp -f platforms/premake/build/client/parsec  debian/openparsec/usr/share/games/openparsec/client/parsec
+	cp -f platforms/premake/build/server/parsec_server  debian/openparsec-server/usr/share/games/openparsec/server/parsec_server
