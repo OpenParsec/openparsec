@@ -32,6 +32,8 @@
 #include <string.h>
 #include "debug.h"
 
+//SDL Gamepad
+#include <SDL_gamecontroller.h>
 
 // general definitions
 #include "general.h"
@@ -66,6 +68,7 @@
 // maximum number of joystick devices we support ------------------------------
 //
 #define				MAX_JOYSTICK_DEVICES	4
+#define NUM_IL_JOY_INT_COMMANDS CALC_NUM_ARRAY_ENTRIES( il_joy_int_commands )
 
 // external variables ---------------------------------------------------------
 //
@@ -83,6 +86,8 @@ extern joystate_s	JoyState;				// generic joystick data
 //
 int                 isdl_joyOutput;         //When enabled output joy button states to console
 SDL_Joystick*		isdl_joyHandle;			// handle to the open joystick
+SDL_GameController* isdl_controllerHandle;  //Handle for Game Controller type
+SDL_JoystickGUID    isdl_controllerGUID;
 byte				isdl_NumAxes;			// number of axes for this joystick
 byte				isdl_NumButtons;		// number of buttons for this joystick
 int                 isdl_FireGun;
@@ -129,7 +134,7 @@ void ISDL_JoyInitHandler()
 	isdl_nJoystickFound = SDL_NumJoysticks();
     MSGOUT("isdl_joy: Found %d joysticks.\n", isdl_nJoystickFound);
     if(isdl_nJoystickFound > 0)
-    {
+	{
 		//TODO: Implement support for more than one stick when we have more flexible input layer stuff
 		MSGOUT("isdl_joy: ... but we don't care, because Parsec only has one JoyState\n");
 		isdl_joyHandle = SDL_JoystickOpen(0);
@@ -139,7 +144,43 @@ void ISDL_JoyInitHandler()
 		MSGOUT("isdl_joy: Joystick%d has %d axes and %d buttons\n", 0, isdl_NumAxes, isdl_NumButtons);
 		QueryJoystick = TRUE;
 		JoystickDisabled = FALSE;
-    }
+		if(!SDL_GameControllerAddMappingsFromFile("gamecontrollerdb.txt")) MSGOUT("FAILED TO LOAD CONTROLLER DATABASE"); //Load game controller mapping database
+		else {
+			MSGOUT("LOADED CONTROLLER DATABASE");
+			isdl_controllerHandle = SDL_GameControllerOpen(0); //Open Game controller object
+			isdl_controllerGUID = SDL_JoystickGetDeviceGUID(0);
+			MSGOUT("Device mapping in system: %s", SDL_GameControllerMapping(isdl_controllerHandle)); //Log mapping for debugging
+			if(SDL_GameControllerMapping(isdl_controllerHandle)) { //If a mapping exists proceed to map controller
+				SDL_GameControllerAddMapping(SDL_GameControllerMappingForGUID(isdl_controllerGUID));
+				//Default mappings for fire, missle, accel, decel, next gun, next missle and dpad based on controller mapping
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_A))
+				    isdl_FireGun     = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_A).value.button; //A for shoot
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_B))
+				    isdl_FireMissile = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_B).value.button; //B for missile
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_X))
+				    isdl_Accelerate  = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_X).value.button; //X for accelerate
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_Y))
+				    isdl_Deccelerate = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_Y).value.button; //Y for Deccelerate
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_LEFTSHOULDER))
+				    isdl_NextGun     = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_LEFTSHOULDER).value.button; //Select gun
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_RIGHTSHOULDER))
+				    isdl_NextMissile = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_RIGHTSHOULDER).value.button; //Select Missile
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_BACK))
+					isdl_Target = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_BACK).value.button; //Target somethng
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_START))
+					isdl_Emp = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_START).value.button; //Activate EMP
+			/*	if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_UP))
+				    isdl_Dup         = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_UP).value.button;
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_DOWN))
+			        isdl_Ddown       = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_DOWN).value.button;
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_LEFT))
+			        isdl_Dleft       = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_LEFT).value.button;
+				if(SDL_GameControllerHasButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
+			        isdl_Dright      = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_DPAD_RIGHT).value.button;
+			 */
+			}
+		}
+	}
 }
 
 
@@ -147,6 +188,7 @@ void ISDL_JoyInitHandler()
 //
 void ISDL_JoyKillHandler()
 {
+	SDL_GameControllerClose(isdl_controllerHandle);
 	SDL_JoystickClose(isdl_joyHandle);
 	return;
 	/*
@@ -228,6 +270,7 @@ int ISDL_ApplyDZ(int value, int axis)
 //
 void ISDL_JoyCollect()
 {
+	SDL_GameControllerButtonBind gcDebug;
 	if ( !QueryJoystick )
 			return;
 
@@ -273,8 +316,12 @@ void ISDL_JoyCollect()
 	ASSERT( KeyAdditional->size <= KEY_ADDITIONS_MAX );
 	for (int button = 0; button < isdl_NumButtons; button++) {
 		JoyState.Buttons[button] = SDL_JoystickGetButton(isdl_joyHandle, button);
-		if(isdl_joyOutput && JoyState.Buttons[button])
+		if(isdl_joyOutput && JoyState.Buttons[button]) {
 			MSGOUT("Joy button %d pressed",button);
+			gcDebug = SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_X);
+			MSGOUT("Game Controller bind %d",SDL_GameControllerGetBindForButton(isdl_controllerHandle,SDL_CONTROLLER_BUTTON_X).value.button);
+		    
+		}
 		
 #ifdef JOY_AKC_SUPPORT
         if ( _OldJoyState.Buttons[button] != JoyState.Buttons[button]) {
@@ -321,14 +368,14 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.deadzone_max_axis_2", 0,  32767, &isdl_joyDeadZone_Max[2] , NULL, NULL    },
 	{ 0x01, "isdl.deadzone_max_axis_3", 0,  32767, &isdl_joyDeadZone_Max[3] , NULL, NULL    },
 	{ 0x01, "isdl.showjoy_input"      , 0,      1, &isdl_joyOutput          , NULL, NULL,0  }, //default off
-	{ 0x01, "isdl.jbind_gun"          , -1,     64,&isdl_FireGun            , NULL, NULL,2  }, //button 2 default
-	{ 0x01, "isdl.jbind_missile"      , -1,     64,&isdl_FireMissile        , NULL, NULL,1  }, //button 1 default
-	{ 0x01, "isdl.jbind_accel"        , -1,     64,&isdl_Accelerate         , NULL, NULL,0  }, //button 0 default
-	{ 0x01, "isdl.jbind_decel"        , -1,     64,&isdl_Deccelerate        , NULL, NULL,3  }, //button 3 default
+	{ 0x01, "isdl.jbind_gun"          , -1,     64,&isdl_FireGun            , NULL, NULL,-1  }, //button 2 default
+	{ 0x01, "isdl.jbind_missile"      , -1,     64,&isdl_FireMissile        , NULL, NULL,-1  }, //button 1 default
+	{ 0x01, "isdl.jbind_accel"        , -1,     64,&isdl_Accelerate         , NULL, NULL,-1 }, //button 0 default
+	{ 0x01, "isdl.jbind_decel"        , -1,     64,&isdl_Deccelerate        , NULL, NULL,-1  }, //button 3 default
 	{ 0x01, "isdl.jbind_rollleft"     , -1,     64,&isdl_Rollleft           , NULL, NULL,-1 }, //disabled until bound
 	{ 0x01, "isdl.jbind_rollright"    , -1,     64,&isdl_RollRight          , NULL, NULL,-1 },
-	{ 0x01, "isdl.jbind_nextgun"      , -1,     64,&isdl_NextGun            , NULL, NULL,4  }, //button 4 default
-	{ 0x01, "isdl.jbind_nextmissile"  , -1,     64,&isdl_NextMissile        , NULL, NULL,5  }, //button 5 default
+	{ 0x01, "isdl.jbind_nextgun"      , -1,     64,&isdl_NextGun            , NULL, NULL,-1  }, //button 4 default
+	{ 0x01, "isdl.jbind_nextmissile"  , -1,     64,&isdl_NextMissile        , NULL, NULL,-1  }, //button 5 default
 	{ 0x01, "isdl.analogthrottle"     , 0,      1, &isdl_RudderToggle       , NULL, NULL,0  }, //default off
 	{ 0x01, "isdl.analogrudder"       , 0,      1, &isdl_ThrottleToggle     , NULL, NULL,0  },
     { 0x01, "isdl.jbind_aburn"        , -1,     64,&isdl_Aburn              , NULL, NULL,-1 },
@@ -352,9 +399,6 @@ int_command_s il_joy_int_commands[] = {
 	{ 0x01, "isdl.jbind_axisrudder"   , -1,     64,&isdl_AxisRudder         , NULL, NULL,3  }, //default 3
 	
 };
-
-#define NUM_IL_JOY_INT_COMMANDS CALC_NUM_ARRAY_ENTRIES( il_joy_int_commands )
-
 
 // module registration function -----------------------------------------------
 //
