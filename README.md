@@ -24,6 +24,10 @@ On Linux:
 - To build the server: make server
 - To build both targets: make
 
+On ChromeBook:
+- Install the Linux extension and then you can compile as if it were a Linux system
+- https://support.google.com/chromebook/answer/9145439?hl=en
+
 On Windows:
 - Visual studio 2019 and up supported
 - Open the solution file in platforms\vs
