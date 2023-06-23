@@ -33,7 +33,11 @@
 #include "debug.h"
 
 //SDL Gamepad
-#include <SDL_gamecontroller.h>
+#ifdef SYSTEM_TARGET_LINUX
+	#include <SDL2/SDL_gamecontroller.h>
+#else
+    #include <SDL_gamecontroller.h>
+#endif
 
 // general definitions
 #include "general.h"
