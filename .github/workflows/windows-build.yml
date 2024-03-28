@@ -1,4 +1,4 @@
-name: Build on windoows.
+name: Build on windows.
 on:
   push:
   pull_request:
