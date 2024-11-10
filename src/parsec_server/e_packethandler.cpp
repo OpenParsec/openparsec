@@ -1174,17 +1174,20 @@ int E_PacketHandler::_ParseHBPacket_MASTER(char* recvline) {
 	// check to see if the server already exists in the ServerList.  If so, update it.  If not, add it.
 	// if the info doesn't match, ignore the packet
 	int i = 0;
-	for(i=0; i<TheMaster->ServerList.size(); i++){
+	std::vector<MasterServerItem>::iterator it=TheMaster->ServerList.begin();
+	std::vector<MasterServerItem>::iterator it_end=TheMaster->ServerList.end();
+
+	for(it; it != it_end; ++it){
 
 
-		word SrvID = (word)TheMaster->ServerList[i].GetSrvID();
+		word SrvID = (word)it->GetSrvID();
 		if(SrvID == ServerID) {
 			// double check the ID against the node address.
 			node_t node_ck;
-			TheMaster->ServerList[i].GetNode(&node_ck);
+			it->GetNode(&node_ck);
 			if(NODE_AreSame(&node_ck, &_Node)){
 				// they are the same, so update the record in the server list
-				TheMaster->ServerList[i].update(ServerID,CurrPlayers,MaxPlayers,PMajor,PMinor,ServerName,OS,&_Node);
+				it->update(ServerID,CurrPlayers,MaxPlayers,PMajor,PMinor,ServerName,OS,&_Node);
 				return TRUE;
 			} else {
 				// if we get here, the requested ServerID exists, but the node address

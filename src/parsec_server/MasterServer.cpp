@@ -82,6 +82,7 @@
 MasterServer::MasterServer() {
 	// TODO Auto-generated constructor stub
 	last_check=0;
+	ServerList.clear();
 }
 
 MasterServer::MasterServer(E_GameServer* gameserver) {
@@ -121,5 +122,5 @@ int MasterServer::RemoveStaleEntries(){
 		}
 	last_check=curr_check;
 	}
-	
+	return 0;
 }
