@@ -72,7 +72,10 @@ int main( int argc, char** argv )
 		// and overload ourselves to a MasterServer Object
 		// if we are.
 		if(TheServer->GetServerIsMaster()){
-			TheMaster = (MasterServer *)TheServer;  //clever...
+			// re-initialize ourselves as a master.
+			TheMaster = new MasterServer();
+			TheServer = (E_GameServer *)TheMaster;
+			TheServer->SetServerIsMaster(TRUE);
 		}
 
 		// initialize the server components
