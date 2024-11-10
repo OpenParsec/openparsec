@@ -5,6 +5,7 @@
   "version": "0.2.0",
   "configurations":
   [
+
     {
       "name": "(Linux) Client Debug x64 - gdb",
       "type": "cppdbg",
@@ -16,6 +17,7 @@
       "environment": [],
       "externalConsole": false,
       "MIMode": "gdb",
+      "preLaunchTask": "(Premake - client) x64 - Debug",
       "setupCommands": [
           {
               "description": "Enable pretty-printing for gdb",
@@ -29,12 +31,13 @@
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/parsec_root/server/parsec_server",
-      "args": [],
+      "args": [  ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}/parsec_root/server/",
       "environment": [],
       "externalConsole": false,
       "MIMode": "gdb",
+      "preLaunchTask": "(Premake - server) x64 - Debug",
       "setupCommands": [
           {
               "description": "Enable pretty-printing for gdb",
