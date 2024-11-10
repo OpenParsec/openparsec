@@ -80,20 +80,24 @@
 #include "MasterServer.h"
 
 MasterServer::MasterServer() {
-	// TODO Auto-generated constructor stub
-	last_check=0;
-	ServerList.clear();
+	_init();
 }
 
 MasterServer::MasterServer(E_GameServer* gameserver) {
+	_init();
 
-	last_check=0;
 }
 
 MasterServer::~MasterServer() {
 	// TODO Auto-generated destructor stub
 }
 
+
+void MasterServer::_init(){
+	last_check=0;
+	ServerList.clear();
+	ServerList.resize(0);
+}
 
 int MasterServer::RemoveStaleEntries(){
 	// TODO: remove stale entries from the list.

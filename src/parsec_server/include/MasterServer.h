@@ -22,6 +22,7 @@ public:
 	MasterServer();
 	MasterServer(E_GameServer *);
 	virtual ~MasterServer();
+	void _init();
 
 	int RemoveStaleEntries();
 
