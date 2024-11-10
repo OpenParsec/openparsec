@@ -31,7 +31,7 @@ jobs:
           arguments: "/V3"
 
       - name: Artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: openparsec-installer.exe
           path: platforms\vs\openparsec-installer.exe
