@@ -31,6 +31,7 @@ const char IOData3D::AOD_SIGNATURE_1_1[]	= "#AOD V1.1 ascii";
 const char IOData3D::BSP_SIGNATURE_1_1[]	= "#BSP V1.1 ascii";
 const char IOData3D::VRML_SIGNATURE_1_0[]	= "#VRML V1.0 ascii";
 const char IOData3D::_3DX_SIGNATURE_1_0[]	= "3DX File 1.0";
+const char IOData3D::GLTF_SIGNATURE_2_0[]	= "{";
 //ADD_FORMAT:
 
 

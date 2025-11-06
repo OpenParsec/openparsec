@@ -10,6 +10,7 @@
 #include "AodInput.h"
 #include "BspInput.h"
 #include "VrmlFile.h"
+#include "GltfFile.h"
 //ADD_FORMAT:
 
 
@@ -41,6 +42,10 @@ InputData3D::InputData3D( BspObjectList objectlist, const char *filename, int fo
 		case _3DX_FORMAT_1_0:
 			//m_data = new ThreeDXInput( objectlist, filename );
 			//TODO: add 3dx support
+			break;
+
+		case GLTF_FORMAT_2_0:
+			m_data = new GltfFile( objectlist, filename );
 			break;
 
 		//ADD_FORMAT:
@@ -91,6 +96,8 @@ int InputData3D::ReadFileSignature()
 		filetype = VRML_FORMAT_1_0;
 	else if ( strncmp( line, _3DX_SIGNATURE_1_0, strlen( _3DX_SIGNATURE_1_0 ) ) == 0 )
 		filetype = _3DX_FORMAT_1_0;
+	else if ( strncmp( line, GLTF_SIGNATURE_2_0, strlen( GLTF_SIGNATURE_2_0 ) ) == 0 )
+		filetype = GLTF_FORMAT_2_0;
 	//ADD_FORMAT:
 
 	return filetype;

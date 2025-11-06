@@ -31,6 +31,7 @@ public:
 		VRML_FORMAT_1_0		= 0x0003,	// vrml v1.0
 		BSP_FORMAT_1_1		= 0x0004,	// bsp  v1.1
 		_3DX_FORMAT_1_0		= 0x0005,	// 3dx  v1.0
+		GLTF_FORMAT_2_0		= 0x0006,	// gltf v2.0
 		//ADD_FORMAT:
 	};
 
@@ -61,6 +62,7 @@ protected:
 	static const char VRML_SIGNATURE_1_0[];
 	static const char  BSP_SIGNATURE_1_1[];
 	static const char _3DX_SIGNATURE_1_0[];
+	static const char GLTF_SIGNATURE_2_0[];
 	//ADD_FORMAT:
 
 	// storage for a single line of text
@@ -73,4 +75,3 @@ BSPLIB_NAMESPACE_END
 
 
 #endif // _IODATA3D_H_
-

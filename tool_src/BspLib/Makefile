@@ -36,7 +36,8 @@ Transform3.cpp\
 TriMapping.cpp\
 Vertex.cpp\
 VertexChunk.cpp\
-VrmlFile.cpp
+VrmlFile.cpp\
+GltfFile.cpp
 
 
 CFLAGS = -g -O2 -I../QvLib -I. -fno-for-scope\
@@ -57,6 +58,3 @@ libbsp.a: $(CFILES:.cpp=.o)
 
 clean:
 	rm -f *.o *.a *~
-
-
-
